@@ -39,10 +39,10 @@
 
 ### Executando
 
-- Para iniciar o bot use o comando ```python3 bot.py```
-- E pronto! o bot agora está executando
+- Para iniciar o UserBot use o comando ```python3 bot.py```
+- E pronto! o UserBot agora está executando
 - Agora você pode ir para os sites informados no config.py e conseguir as keys para comandos especiais (opcionais)
 
 ### Nota
 
-- Caso encontre algum bug no bot, crie um issue [aqui](https://github.com/AmanoTeam/UserLixo/issues) ou converse cmg no [pv](https://t.me/OLixaoX)
+- Caso encontre algum bug no UserBot, crie um issue [aqui](https://github.com/AmanoTeam/UserLixo/issues) ou converse cmg no [pv](https://t.me/OLixaoX)
