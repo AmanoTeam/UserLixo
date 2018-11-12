@@ -40,7 +40,7 @@ def welcome(client, message):
 def echo(client, message):
 	if message.text.lower() == '/ping' or message.text.lower() == '!ping' or message.text.lower() == 'ping':
 		first_time = time.time()
-		sent = client.send_message(message.chat.id,'**Pong!**')
+		sent = client.send_message(message.chat.id,'**Pong!**',reply_to_message_id=message.message_id)
 		second_time = time.time()
 		client.edit_message_text(message.chat.id, sent.message_id,'**Pong!** `{}`s'.format(str(second_time - first_time)[:5]))
 	if message.text.startswith('/print ') or message.text.startswith('!print '):
