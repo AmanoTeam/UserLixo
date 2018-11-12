@@ -1,6 +1,6 @@
 <h6 align="center">
   <a href="https://t.me/olixaox">
-    <img src="https://tlgur.com/d/4yAvM1b4" alt="UserLixo" height="150px">
+    <img src="http://piics.ml/i/005.png" alt="UserLixo" height="150px">
   </a>
   <h2 align="center">UserLixo</h2>
   <h5 align="center">Userbot para o Telegram com várias funções.</h5>
