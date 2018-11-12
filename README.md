@@ -35,7 +35,7 @@
 - Vá ao [Telegram Apps](https://my.telegram.org/apps) e cadastre-se.
 - Renomeie o arquivo `config.ini.example` para `config.ini` e abra ele
 - Substitia os campos `aqui` com os dados no site
-- Coloque sua ID em `sudos` (Caso você não saiba a sua envie o comando `/id` no [EduuRobot](https://t.me/EduuRobot)
+- Coloque sua ID em `sudos` (Caso você não saiba a sua envie o comando `/id` no [EduuRobot](https://t.me/EduuRobot))
 
 ### Executando
 
