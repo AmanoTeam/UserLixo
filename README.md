@@ -45,4 +45,4 @@
 
 ### Nota
 
-- Caso encontre algum bug no UserBot , AGUARDE...
+- Caso encontre algum bug no bot, crie um issue [aqui](https://github.com/AmanoTeam/UserLixo/issues) ou converse cmg no [pv](https://t.me/OLixaoX)
