@@ -1,12 +1,12 @@
 <h6 align="center">
-  <a href="https://t.me/olixaox">
+  <a href="https://t.me/kkeaemen">
     <img src="http://piics.ml/i/005.png" alt="UserLixo" height="150px">
   </a>
   <h2 align="center">UserLixo</h2>
   <h5 align="center">Userbot para o Telegram com várias funções.</h5>
 </h6>
 <h6 align="center">
-  <a href="https://t.me/OLixaoX"><img src="https://img.shields.io/badge/Versão-v 0.0.1-0688CB.svg" /></a>
+  <a href="https://t.me/kkeaemen"><img src="https://img.shields.io/badge/Versão-v 0.0.1-0688CB.svg" /></a>
   <a href="https://t.me/AmanoChat"><img src="https://img.shields.io/badge/Support-Chat-0688CB.svg" /></a>
   <a href="https://t.me/AmanoTeam"><img src="https://img.shields.io/badge/Telegram-Channel-0688CB.svg" /></a>
 </h6>
@@ -40,9 +40,10 @@
 ### Executando
 
 - Para iniciar o UserBot use o comando ```python3 bot.py```
+- Insira os dados da conta em que o userbot vai funcionar no terminal 
 - E pronto! o UserBot agora está executando
 - Agora você pode ir para os sites informados no config.py e conseguir as keys para comandos especiais (opcionais)
 
 ### Nota
 
-- Caso encontre algum bug no UserBot, crie um issue [aqui](https://github.com/AmanoTeam/UserLixo/issues) ou converse cmg no [pv](https://t.me/OLixaoX)
+- Caso encontre algum bug no UserBot, crie um issue [aqui](https://github.com/AmanoTeam/UserLixo/issues) ou converse cmg no [pv](https://t.me/OLixao)
