@@ -3,19 +3,56 @@ import threading
 import io
 import urllib
 import os
+import json
 import time
+import random
 import subprocess
 from plugns import youtube
 from plugns import traduzir
 from contextlib import redirect_stdout
+from pyrogram.api import functions
 from pyrogram import Client, Filters
 
 app = config.app
+
+def is_admin(client,message):
+	a = client.get_chat_members(message.chat.id,query=str(message.from_user.first_name))
+	for i in a['chat_members']:
+		if str(message.from_user.id) in str(i['user']['id']):
+			if i['status'] == 'member':
+				return False
+			else:
+				return True
+
 
 def exec_thread(target, *args, **kwargs):
 	t = threading.Thread(target=target, args=args, kwargs=kwargs)
 	t.daemon = True
 	t.start()
+
+@app.on_message(Filters.left_chat_member)
+def goodbye(client, message):
+	goodbye = config.db.hget('goodbye', message.chat.id)
+	try:
+		goodbye = goodbye.decode('utf-8').replace("\'", "\"")
+		goodbye = json.loads(goodbye)
+	except:
+		goodbye = {"power":'on',"goodbye":"Flw $name"}
+	if not 'current' in goodbye:
+		if 'sticker' in goodbye:
+			goodbye['current'] = 'sticker'
+		else:
+			goodbye['current'] = 'text'
+	if goodbye['current'] == 'sticker' and goodbye['power'] == 'on':
+		client.send_sticker(message.chat.id,goodbye['sticker'],reply_to_message_id=message.message_id)
+	if goodbye['current'] == 'photo' and goodbye['power'] == 'on':
+		client.send_photo(message.chat.id,goodbye['photo'],reply_to_message_id=message.message_id)
+	if goodbye['current'] == 'gif' and goodbye['power'] == 'on':
+		client.send_animation(message.chat.id,goodbye['gif'],reply_to_message_id=message.message_id)
+	if goodbye['current'] == 'text' and goodbye['power'] == 'on':
+		new_members = f'[{message.left_chat_member.first_name}](tg://user?id={message.left_chat_member.id})'
+		goodbye = goodbye['welcome'].replace('$name',new_members).replace('$title',message.chat.title)
+		client.send_message(message.chat.id,welcome,reply_to_message_id=message.message_id,disable_web_page_preview=True)
 
 @app.on_message(Filters.new_chat_members)
 def welcome(client, message):
@@ -24,16 +61,27 @@ def welcome(client, message):
 	else:
 		welcome = config.db.hget('welcomeee', message.chat.id)
 		try:
-			client.send_sticker(message.chat.id,welcome.decode('utf-8'),reply_to_message_id=message.message_id)
+			welcome = welcome.decode('utf-8').replace("\'", "\"")
+			welcome = json.loads(welcome)
 		except:
+			welcome = {"power":'on',"welcome":"Olá $name, seja bem-vindo ao **$title**!","current":"text"}
+		if not 'current' in welcome:
+			if 'sticker' in welcome:
+				welcome['current'] = 'sticker'
+			else:
+				welcome['current'] = 'text'
+		if welcome['current'] == 'sticker' and welcome['power'] == 'on':
+			client.send_sticker(message.chat.id,welcome['sticker'],reply_to_message_id=message.message_id)
+		if welcome['current'] == 'photo' and welcome['power'] == 'on':
+			client.send_photo(message.chat.id,welcome['photo'],reply_to_message_id=message.message_id)
+		if welcome['current'] == 'gif' and welcome['power'] == 'on':
+			client.send_animation(message.chat.id,welcome['gif'],reply_to_message_id=message.message_id)
+		if welcome['current'] == 'text' and welcome['power'] == 'on':
 			new_members = "".join([
 				"[{}](tg://user?id={})".format(i.first_name, i.id)
 				for i in message.new_chat_members
 			])
-			if welcome != None:
-				welcome = welcome.decode('utf-8').replace('$name',new_members).replace('$title',message.chat.title)
-			else:
-				welcome = "Olá {}, seja bem-vindo ao **{}**!".format(new_members,message.chat.title)
+			welcome = welcome['welcome'].replace('$name',new_members).replace('$title',message.chat.title)
 			client.send_message(message.chat.id,welcome,reply_to_message_id=message.message_id,disable_web_page_preview=True)
 
 @app.on_message(Filters.text)
@@ -104,6 +152,11 @@ def echo(client, message):
 				b += 1
 				a = True
 				time.sleep(0.5)
+	if message.text == '/admin':
+		if is_admin(client,message) or message.from_user.id in config.sudos:
+			client.send_message(message.chat.id,'Você é admin',reply_to_message_id=message.message_id)
+		else:
+			client.send_message(message.chat.id,'Você não é admin',reply_to_message_id=message.message_id)
 	if message.text.startswith('!doc'):
 		if message.from_user.id in config.sudos:
 			file = message.text[5:]
@@ -136,19 +189,76 @@ def echo(client, message):
 				else:
 					client.send_message(message.from_user.id,frase)
 			client.send_message(message.chat.id,'sussesso',reply_to_message_id=message.message_id)
-	if message.text.startswith('/welcome'):
-		try:
-			config.db.hset('welcomeee',message.chat.id,message.reply_to_message.sticker.file_id)
-			kk = 'sucesso'
-		except:
-			text = message.text[9:]
+	if message.text.split()[0] == '/welcome':
+		text = message.text.split(' ', 1)
+		if is_admin(client,message) or message.from_user.id in config.sudos:
+			welcome = config.db.hget('welcomeee',message.chat.id)
 			try:
-				config.db.hset('welcomeee',message.chat.id,text)
-				kk = 'sucesso'
-			except Exception as erro:
-				print(erro)
-				kk = 'erro'
-		client.send_message(message.chat.id,kk,reply_to_message_id=message.message_id)
+				welcome = welcome.decode('utf-8').replace("\'", "\"")
+				welcome = json.loads(welcome)
+			except:
+				welcome = {"power":'on',"welcome":"Olá $name, seja bem-vindo ao **$title**!","current":"text"}
+			if message.reply_to_message and message.reply_to_message.sticker:
+				welcome['current'] = "sticker"
+				welcome['sticker'] = message.reply_to_message.sticker.file_id
+				client.send_message(message.chat.id,'O seu sticker de boas vindas foi definido com sucesso',reply_to_message_id=message.message_id)
+			elif message.reply_to_message and message.reply_to_message.photo:
+				welcome['current'] = "photo"
+				welcome['photo'] = message.reply_to_message.photo.sizes[-1].file_id
+				client.send_message(message.chat.id,'A sua imagem de boas vindas foi definida com sucesso',reply_to_message_id=message.message_id)
+			elif message.reply_to_message and message.reply_to_message.animation:
+				welcome["current"] = "gif"
+				welcome["gif"] = message.reply_to_message.animation.file_id
+				client.send_message(message.chat.id,'O seu gif de boas vindas foi definida com sucesso',reply_to_message_id=message.message_id)
+			elif len(text) == 1:
+				client.send_message(message.chat.id,'uso:\n/welcome on/off/reset ou a mensagem de boas vindas',reply_to_message_id=message.message_id)
+			elif text[1] == 'on':
+				welcome['power'] = 'on'
+				client.send_message(message.chat.id,'as mensagens de boas vindas foram ativadas',reply_to_message_id=message.message_id)
+			elif text[1] == 'reset':
+				welcome = {"power":'on',"welcome":"Olá $name, seja bem-vindo ao **$title**!","current":"text"}
+				client.send_message(message.chat.id,'as mensagens de boas vindas foram resetada',reply_to_message_id=message.message_id)
+			elif text[1] == 'off':
+				welcome['power'] = 'off'
+				client.send_message(message.chat.id,'as mensagens de boas vindas foram desativadas',reply_to_message_id=message.message_id)
+			else:
+				text = text[1]
+				welcome['current'] = "text"
+				welcome['welcome'] = text
+				client.send_message(message.chat.id,'a sua mensagem de boas vindas foi definida com sucesso',reply_to_message_id=message.message_id)
+			config.db.hset('welcomeee',str(message.chat.id),str(welcome))
+		else:
+			client.send_message(message.chat.id,'somente administradores podem mudar isso',reply_to_message_id=message.message_id)
+	if message.text.split()[0] == '/goodbye':
+		text = message.text.split(' ', 1)
+		if is_admin(client,message) or message.from_user.id in config.sudos:
+			goodbye = config.db.hget('goodbye',message.chat.id)
+			try:
+				goodbye = goodbye.decode('utf-8').replace("\'", "\"")
+				goodbye = json.loads(goodbye)
+			except:
+				goodbye = {"power":'on',"goodbye":"Flw $name"}
+			if message.reply_to_message and message.reply_to_message.sticker:
+				goodbye['sticker'] = message.reply_to_message.sticker.file_id
+				client.send_message(message.chat.id,'O seu sticker de adeus foi definido com sucesso',reply_to_message_id=message.message_id)
+			elif len(text) == 1:
+				client.send_message(message.chat.id,'uso:\n/goodbye on/off/reset ou a mensagem de adeus',reply_to_message_id=message.message_id)
+			elif text[1] == 'on':
+				goodbye['power'] = 'on'
+				client.send_message(message.chat.id,'as mensagens de adeus foram ativadas',reply_to_message_id=message.message_id)
+			elif text[1] == 'reset':
+				goodbye = {"power":'on',"goodbye":"Flw $name"}
+				client.send_message(message.chat.id,'as mensagens de adeus foram resetada',reply_to_message_id=message.message_id)
+			elif text[1] == 'off':
+				goodbye['power'] = 'off'
+				client.send_message(message.chat.id,'as mensagens de adeus foram desativadas',reply_to_message_id=message.message_id)
+			else:
+				text = text[1]
+				goodbye['goodbye'] = text
+				client.send_message(message.chat.id,'a sua mensagem de adeus foi definida com sucesso',reply_to_message_id=message.message_id)
+			config.db.hset('goodbye',str(message.chat.id),str(goodbye))
+		else:
+			client.send_message(message.chat.id,'somente administradores podem mudar isso',reply_to_message_id=message.message_id)
 	if message.text == '/suco':
 		if message.from_user.id in config.sudos:
 			l = '✅'
