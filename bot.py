@@ -124,6 +124,52 @@ def echo(client, message):
 			client.send_document(chat_id=chat_id,document='backup-' + hora + '-{}-.tar.gz'.format(client.get_me().first_name))
 			os.remove('backup-' + hora + '-{}-.tar.gz'.format(client.get_me().first_name))
 			client.edit_message_text(message.chat.id, sent.message_id,text='Concluído')
+	if message.text.startswith('/fake'):
+		if message.from_user.id in config.sudos:
+			if message.reply_to_message:
+				user_id = message.reply_to_message.from_user.id
+			else:
+				if message.text[6:] == '':
+					user_id = client.get_me().id
+				else:
+					try:
+						user_id = int(message.text[6:])
+					except:
+						user_id = message.text[6:]
+			cha = client.get_chat(user_id)
+			if cha.type != 'private':
+				message.reply('só funciona com perfis')
+			elif cha.id == client.get_me().id:
+				first_name = 'кк'
+				last_name = 'εαε мεη'
+				description = 'Userbot do @OLixaoX'
+				pic = 'AgADAQADs6cxG-i6tyHvwbtIwfkp4AMnFDAABAg02rmvwcl7TW0AAgI'
+				frase = 'sem fake'
+			else:
+				frase = 'Novo fake na área'
+				pic = client.get_user_profile_photos(user_id, limit=1).photos[0].sizes[-1].file_id
+				if cha.description:
+					description = cha.description[:69]
+				else:
+					description = ''
+				if cha.last_name:
+					last_name = cha.last_name
+				else:
+					last_name = ''
+				first_name = cha.first_name
+			app.send(
+				functions.account.UpdateProfile(
+					first_name=first_name, last_name=last_name,
+					about=description
+					)
+				)
+			try:
+				a = client.download_media(pic)
+				client.set_user_profile_photo(a)
+				os.remove(a)
+			except:
+				pass
+			client.send_message(message.chat.id,frase,reply_to_message_id=message.message_id)
 	if message.text.startswith('/tr'):
 		exec_thread(traduzir.traduzir, message, client)
 	if message.text.startswith('/text'):
