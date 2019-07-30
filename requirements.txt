@@ -1,6 +1,0 @@
-pyrogram
-redis
-youtube-dl
-requests
-bs4
-TgCrypto
