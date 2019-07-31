@@ -19,3 +19,5 @@ personal_data = {
         'pic':'AgADAQAD1qkxG-i6tyEYH2iy1a0tRmMC',#only id of a telegram document
         'description':'userbot de testes da @AmanoTeam'
         }
+
+git_repo = ('https://github.com/AmanoTeam/UserLixo', 'new-version')
