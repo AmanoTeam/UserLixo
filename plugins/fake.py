@@ -34,7 +34,7 @@ def fake(client,message):
             else:
                 last_name = ''
             dat = {
-                    'pic':client.get_profile_photos(user_id, limit=1).profile_photos[0].file_id,
+                    'pic':client.get_profile_photos(user_id, limit=1)[0].file_id,
                     'description':description,
                     'last_name':last_name,
                     'first_name':cha.first_name
