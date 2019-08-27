@@ -1,6 +1,7 @@
 from pyrogram import Client, Filters
 from db import db
 from db import save
+import config
 
 print(db["chats"])
 
@@ -27,7 +28,7 @@ def welcome(client, message):
 @Client.on_message(Filters.command("welcome", prefix = ['!','/']))
 def welcom(client, message):
     adm = client.get_chat_member(message.chat.id,message.from_user.id)
-    if adm['status'] != 'member':
+    if adm['status'] != 'member' or message.from_user.id in config.sudos:
         text = message.text.split(' ', 1)
         if message.chat.id in db and db["chats"][message.chat.id].get("welcome"):
             welcome = db["chats"][message.chat.id]["welcome"]
