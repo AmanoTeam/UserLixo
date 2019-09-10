@@ -18,7 +18,7 @@ def fake(client,message):
                 except:
                     user_id = text
         cha = client.get_chat(user_id)
-        if cha.type != 'private':
+        if cha.type != 'private' or cha.type != 'bot':
             message.reply('only works with profiles')
         elif cha.id == client.get_me().id:
             dat = config.personal_data
