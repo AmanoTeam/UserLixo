@@ -1,7 +1,7 @@
 from pyrogram import Client, Filters
 from datetime import datetime
 
-@Client.on_message(Filters.command("ping", prefix = ['/','!',''], separator = '.'))
+@Client.on_message(Filters.command("ping", prefix = ['/','!'], separator = '.'))
 def ping(client,message):
     t1 = datetime.now()
     a = message.reply('**Pong!**')
