@@ -52,3 +52,5 @@ def fake(client,message):
         except:
             pass
         message.reply(text)
+
+        
