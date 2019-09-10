@@ -19,7 +19,7 @@ def fake(client,message):
                     user_id = text
         cha = client.get_chat(user_id)
         if cha.type == 'private' or cha.type == 'bot':
-            elif cha.id == client.get_me().id:
+            if cha.id == client.get_me().id:
                 dat = config.personal_data
                 text = 'No fake'
             else:
