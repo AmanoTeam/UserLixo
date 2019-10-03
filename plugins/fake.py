@@ -3,7 +3,7 @@ from pyrogram.api import functions
 import config
 import os
 
-@Client.on_message(Filters.command("fake", prefix = ['!','/']))
+@Client.on_message(Filters.command("fake", prefixes = ['!','/']))
 def fake(client,message):
     if message.from_user.id in config.sudos:
         text = message.text[6:]

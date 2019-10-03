@@ -25,7 +25,7 @@ def welcome(client, message):
 			])
         welcome = welcome['welcome'].replace('$name',new_members).replace('$title',message.chat.title)
         client.send_message(message.chat.id,welcome,reply_to_message_id=message.message_id,disable_web_page_preview=True)
-@Client.on_message(Filters.command("welcome", prefix = ['!','/']))
+@Client.on_message(Filters.command("welcome", prefixes = ['!','/']))
 def welcom(client, message):
     adm = client.get_chat_member(message.chat.id,message.from_user.id)
     if adm['status'] != 'member' or message.from_user.id in config.sudos:

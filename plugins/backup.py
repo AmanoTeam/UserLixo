@@ -3,7 +3,7 @@ import utils
 from pyrogram import Client, Filters
 import os
 
-@Client.on_message(Filters.command("backup", prefix = '!'))
+@Client.on_message(Filters.command("backup", prefixes = '!'))
 def backup(client, message):
     if message.from_user.id in config.sudos:
         mess = message.reply('Ok...')

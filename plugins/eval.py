@@ -1,7 +1,7 @@
 from pyrogram import Client, Filters
 from config import sudos
 
-@Client.on_message(Filters.command("eval", prefix="!"))
+@Client.on_message(Filters.command("eval", prefixes="!"))
 def seval(client, message):
     if message.from_user.id in sudos:
         expression = " ".join(message.command[1:])

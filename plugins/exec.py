@@ -4,7 +4,7 @@ from contextlib import redirect_stdout
 import traceback
 import io
 
-@Client.on_message(Filters.command("exec", prefix="!"))
+@Client.on_message(Filters.command("exec", prefixes="!"))
 def sexec(client, message):
     if message.from_user.id in sudos:
         expression = " ".join(message.command[1:])

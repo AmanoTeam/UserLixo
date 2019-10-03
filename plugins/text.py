@@ -1,6 +1,6 @@
 from pyrogram import Client, Filters
 
-@Client.on_message(Filters.command("text", prefix = ['/','!']))
+@Client.on_message(Filters.command("text", prefixes = ['/','!']))
 def ping(client,message):
     ch = ''
     text = message.text.split(' ',1)[1]

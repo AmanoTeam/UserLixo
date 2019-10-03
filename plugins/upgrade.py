@@ -7,7 +7,7 @@ import os
 import time
 import threading
 
-@Client.on_message(Filters.command("upgrade", prefix="!"))
+@Client.on_message(Filters.command("upgrade", prefixes="!"))
 def uprade(client, message):
     if message.from_user.id in sudos:
         a = message.reply('Atualizando...')

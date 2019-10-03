@@ -1,7 +1,7 @@
 from pyrogram import Client, Filters
 import random
 
-@Client.on_message(Filters.command("roleta", prefix = ['!','/'], separator = '.'))
+@Client.on_message(Filters.command("roleta", prefixes = ['!','/']))
 def roleta(client, message):
     if message.chat.id == -1001388201593:
         res = random.choice(['Bam', 'passou', 'passou', 'passou', 'passou', 'passou'])

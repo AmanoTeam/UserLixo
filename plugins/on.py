@@ -3,7 +3,7 @@ import time
 import json
 from datetime import datetime
 
-@Client.on_message(Filters.command(["on","off"], prefix="/"))
+@Client.on_message(Filters.command(["on","off"], prefixes="/"))
 def on(client, message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id

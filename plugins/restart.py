@@ -6,7 +6,7 @@ import sys
 import threading
 import time
 
-@Client.on_message(Filters.command("restart", prefix="!"))
+@Client.on_message(Filters.command("restart", prefixes="!"))
 def restart(client, message):
     if message.from_user.id in sudos:
         sent = message.reply('Reiniciando...')

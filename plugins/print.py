@@ -4,7 +4,7 @@ import time
 import re
 import os
 
-@Client.on_message(Filters.command("print", prefix = ['!','/'], separator = ' '))
+@Client.on_message(Filters.command("print", prefixes = ['!','/']))
 def print(client, message):
     url = message.text.split(' ',1)[1]
     ctime = time.time()

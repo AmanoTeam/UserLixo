@@ -1,6 +1,6 @@
 from pyrogram import Client, Filters
 
-@Client.on_message(Filters.command("save", prefix = ['/','!']))
+@Client.on_message(Filters.command("save", prefixes = ['/','!']))
 def ping(client,message):
     if message.reply_to_message:
         a = message.reply_to_message.forward(message.from_user.id)

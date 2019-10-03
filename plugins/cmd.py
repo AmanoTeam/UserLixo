@@ -3,7 +3,7 @@ from config import sudos
 import subprocess
 import re
 
-@Client.on_message(Filters.command("cmd", prefix="!"))
+@Client.on_message(Filters.command("cmd", prefixes="!"))
 def cmd(client, message):
     if message.from_user.id in sudos:
         text = message.text[5:]
