@@ -20,4 +20,4 @@ personal_data = {
         'description':'userbot de testes da @AmanoTeam'
         }
 
-git_repo = ('https://github.com/AmanoTeam/UserLixo', 'new-version')
+git_repo = ('https://github.com/AmanoTeam/UserLixo', 'master')
