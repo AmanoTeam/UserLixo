@@ -1,6 +1,4 @@
-pyrogram
-redis
+schedule
+pyrogram>=0.16.0
+tgcrypto
 youtube-dl
-requests
-bs4
-TgCrypto
