@@ -7,11 +7,12 @@ from datetime import datetime
 def on(client, message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
+    # User ids: integers
+    elif message.command[1].isdigit():
+        user_id = int(message.command[1])
+    # Usernames and phone numbers with +
     else:
-        try:
-            user_id = int(message.text.split(' ')[1])
-        except:
-            user_id = message.text.split(' ')[1]
+        user_id = message.command[1]
     usr = client.get_users(user_id)
     if usr.is_bot:
         message.reply('does not work with bots')
