@@ -7,7 +7,7 @@ import io
 @Client.on_message(Filters.command("exec", prefixes="!"))
 def sexec(client, message):
     if message.from_user.id in sudos:
-        expression = message.command[1]
+        expression = message.text[6:]
         if expression:
             frass = f'**Exec Expression:**\n```{expression}```\n'
             m = message.reply(frass+'**Running...**')
