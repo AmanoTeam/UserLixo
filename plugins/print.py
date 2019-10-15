@@ -11,7 +11,7 @@ def print(client, message):
     try:
         if not re.match(r'^[a-z]+://', url):
             url = 'http://'+url
-        r = requests.post("https://api.olixao.ml/print", params=dict(q=url))
+        r = requests.post("http://amn-api.herokuapp.com/print", params=dict(q=url))
         with open(f'{ctime}.png', 'wb') as f:
             f.write(r.content)
         client.send_photo(message.chat.id,f"{ctime}.png")
