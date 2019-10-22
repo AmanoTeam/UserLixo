@@ -21,6 +21,7 @@ def print(client, message):
         os.remove(f'{ctime}.png')
         ctime = time.time()
     else:
+        ctime = time.time()
         try:
             if not re.match(r'^[a-z]+://', url):
                 url = 'http://'+url
