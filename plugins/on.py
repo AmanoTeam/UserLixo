@@ -22,7 +22,7 @@ def on(client, message):
         message.reply('This person has disabled his last seen')
     else:
         c = int(time.time()-usr.last_online_date)
-        date = datetime.utcfromtimestamp(c).strftime('{"year":"%y","months":"%-m","days":"%-d","hours":"%-H","minutes":"%-M","seconds":"%-S"}')
+        date = datetime.utcfromtimestamp(c).strftime('{"year":"%Y","months":"%-m","days":"%-d","hours":"%-H","minutes":"%-M","seconds":"%-S"}')
         f'{usr.first_name} is off for: \n » **%H** Hours\n » **%M** Minutes\n » **%S** Seconds'
         frase = f'{usr.first_name} is off for: \n'
         date = json.loads(date)
