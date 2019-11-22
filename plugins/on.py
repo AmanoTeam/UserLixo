@@ -28,9 +28,8 @@ def on(client, message):
         date = json.loads(date)
         date["days"] = int(date["days"])-1
         date["months"] = int(date["months"])-1
-        date["year"] = int(date["days"])[1]
-        if date["year"] != 0:
-            frase += f' » **{date["year"]}** year\n'
+        if date["year"][1] != 0:
+            frase += f' » **{date["year"][1]}** year\n'
         if date["months"] != 0:
             frase += f' » **{date["months"]}** months\n'
         if date["days"] != 0:
