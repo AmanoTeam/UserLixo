@@ -26,10 +26,11 @@ def on(client, message):
         f'{usr.first_name} is off for: \n » **%H** Hours\n » **%M** Minutes\n » **%S** Seconds'
         frase = f'{usr.first_name} is off for: \n'
         date = json.loads(date)
+        date["year"] = int(date["year"][1])
         date["days"] = int(date["days"])-1
         date["months"] = int(date["months"])-1
-        if date["year"][1] != 0:
-            frase += f' » **{date["year"][1]}** year\n'
+        if date["year"] != 0:
+            frase += f' » **{date["year"]}** year\n'
         if date["months"] != 0:
             frase += f' » **{date["months"]}** months\n'
         if date["days"] != 0:
