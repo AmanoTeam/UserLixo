@@ -2,9 +2,9 @@ from pyrogram import Client, Filters
 import time
 import re
 import os
-import chomeprinter
+import chromeprinter
 
-a = chomeprinter.Client()
+a = chromeprinter.Client()
 
 @Client.on_message(Filters.command("print", prefixes = ['!','/']))
 def print(client, message):
