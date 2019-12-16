@@ -13,7 +13,14 @@ def ytdlv(client, message):
     m = message.reply(f'Downloading `{yt["title"]}`')
     yt = ydl.extract_info(url, download=True)
     client.send_chat_action(message.chat.id,'UPLOAD_VIDEO')
-    m.edit(f'Sending `{yt["title"]}`')
-    client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],supports_streaming=True,reply_to_message_id=message.message_id)
+    a = f'Sending `{yt["title"]}`'
+    m.edit(a)
+    try:
+        client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
+    except:
+        client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
     m.delete()
     os.remove(ydl.prepare_filename(yt))
+    
+def progress(current, total, m, a):
+    m.edit(a + '\n' + "{:.1f}%".format(current * 100 / total))
