@@ -16,7 +16,7 @@ def ytdlv(client, message):
     a = f'Sending `{yt["title"]}`'
     m.edit(a)
     try:
-        client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
+        client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],duration=yt['duration'],thumb=['thumbnail'],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
     except:
         client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
     m.delete()
