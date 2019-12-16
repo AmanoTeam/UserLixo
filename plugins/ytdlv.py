@@ -1,7 +1,6 @@
 from pyrogram import Client, Filters
 import youtube_dl
 import os
-import requests
 
 @Client.on_message(Filters.command("ytdlv"))
 def ytdlv(client, message):
@@ -15,6 +14,6 @@ def ytdlv(client, message):
     yt = ydl.extract_info(url, download=True)
     client.send_chat_action(message.chat.id,'UPLOAD_VIDEO')
     m.edit(f'Sending `{yt["title"]}`')
-    client.send_document(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],reply_to_message_id=message.message_id)
+    client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],supports_streaming=True,reply_to_message_id=message.message_id)
     m.delete()
     os.remove(ydl.prepare_filename(yt))
