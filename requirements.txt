@@ -3,3 +3,4 @@ pyrogram>=0.16.0
 tgcrypto
 youtube-dl
 chromeprinter
+dicioinformal
