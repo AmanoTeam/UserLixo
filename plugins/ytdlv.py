@@ -1,6 +1,8 @@
 from pyrogram import Client, Filters
 import youtube_dl
 import os
+import time
+import requests
 
 @Client.on_message(Filters.command("ytdlv"))
 def ytdlv(client, message):
@@ -15,12 +17,14 @@ def ytdlv(client, message):
     client.send_chat_action(message.chat.id,'UPLOAD_VIDEO')
     a = f'Sending `{yt["title"]}`'
     m.edit(a)
-    try:
-        client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],duration=yt['duration'],thumb=['thumbnail'],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
-    except:
-        client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
+    ctime = time.time()
+    r = requests.get(yt['thumbnail'])
+    with open(f'{ctime}.png', 'wb') as f:
+        f.write(r.content)
+    client.send_video(message.chat.id,ydl.prepare_filename(yt),caption=yt["title"],duration=yt['duration'],thumb=f'{ctime}.png',progress=progress,progress_args=(m,a),supports_streaming=True,reply_to_message_id=message.message_id)
     m.delete()
     os.remove(ydl.prepare_filename(yt))
+    os.remove(f'{ctime}.png')
     
 def progress(current, total, m, a):
     m.edit(a + '\n' + "{:.1f}%".format(current * 100 / total))
