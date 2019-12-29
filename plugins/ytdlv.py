@@ -27,4 +27,6 @@ def ytdlv(client, message):
     os.remove(f'{ctime}.png')
     
 def progress(current, total, m, a):
-    m.edit(a + '\n' + "{:.1f}%".format(current * 100 / total))
+    temp = current * 100 / total
+    if '0' in str(temp): 
+        m.edit(a + '\n' + "{:.1f}%".format(temp))
