@@ -47,7 +47,7 @@ def fake(client,message):
                     )
             try:
                 a = client.download_media(dat['pic']['file_id'],dat['pic']['file_ref'])
-                client.set_profile_photo()
+                client.set_profile_photo(photo=a)
                 os.remove(a)
             except:
                 pass
