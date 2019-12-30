@@ -32,8 +32,9 @@ def fake(client,message):
                     last_name = cha.last_name
                 else:
                     last_name = ''
+                a = client.get_profile_photos(user_id, limit=1)[0]
                 dat = {
-                        'pic':client.get_profile_photos(user_id, limit=1)[0].file_id,
+                        'pic':{'file_id':a.file_id,'file_ref':a.file_ref},
                         'description':description,
                         'last_name':last_name,
                         'first_name':cha.first_name
@@ -45,8 +46,8 @@ def fake(client,message):
                         )
                     )
             try:
-                a = client.download_media(dat['pic'])
-                client.set_profile_photo(a)
+                a = client.download_media(dat['pic']['file_id'],dat['pic']['file_ref'])
+                client.set_profile_photo()
                 os.remove(a)
             except:
                 pass
