@@ -15,5 +15,7 @@ def print(client, message):
     else:
         url = 'http://'+url
     a.make_screenshot(url,f'{ctime}.png')
-    client.send_photo(message.chat.id,f"{ctime}.png")
-    os.remove(f'{ctime}.png')
+    try:
+    	client.send_photo(message.chat.id,f"{ctime}.png")
+    finally:
+    	os.remove(f'{ctime}.png')
