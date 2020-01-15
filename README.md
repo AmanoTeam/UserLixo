@@ -30,4 +30,4 @@ If you find any bugs/issues with the bot you have three options:
 - Send the bug to [AmanoChat](https://t.me/AmanoChat)
 - If you know how to fix the issue, fork our repo and open up a pull request
 
-©2019 - [AmanoTeam™](https://amanoteam.com)
+©2020 - [AmanoTeam™](https://amanoteam.com)
