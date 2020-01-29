@@ -7,7 +7,7 @@ import os
 import time
 import threading
 
-@Client.on_message(Filters.command("upgrade", prefixes="!"))
+@Client.on_message(Filters.command("upgrade", prefixes=".") & Filters.me)
 def uprade(client, message):
     a = client.send_message('me', 'Atualizando...')
     out = subprocess.getstatusoutput('git pull {}'.format(' '.join(git_repo)))[1]
