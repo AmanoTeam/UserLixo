@@ -1,11 +1,14 @@
-from pyrogram import Client, Filters
-from config import git_repo
-import subprocess
-from db import db, save
-import sys
 import os
-import time
+import subprocess
+import sys
 import threading
+import time
+
+from pyrogram import Client, Filters
+
+from config import git_repo
+from db import db, save
+
 
 @Client.on_message(Filters.command("upgrade", prefixes=".") & Filters.me)
 def uprade(client, message):
@@ -13,7 +16,7 @@ def uprade(client, message):
     out = subprocess.getstatusoutput('git pull {}'.format(' '.join(git_repo)))[1]
     a.edit(f'Resultado da atualização:\n{out}')
     sent = message.edit('Reiniciando...')
-    db["restart"] = {'cid':message.chat.id, 'mid':sent.message_id}
+    db["restart"] = {'cid': message.chat.id, 'mid': sent.message_id}
     save(db)
     time.sleep(1)
     os.execl(sys.executable, sys.executable, *sys.argv)

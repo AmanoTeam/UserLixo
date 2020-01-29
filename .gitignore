@@ -1,4 +1,7 @@
 __pycache__/
+.idea/
+.vscode/
+avatar.png
 db.json
 *.session
 config.py

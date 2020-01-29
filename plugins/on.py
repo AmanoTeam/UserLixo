@@ -1,9 +1,11 @@
-from pyrogram import Client, Filters
-import time
 import json
+import time
 from datetime import datetime
 
-@Client.on_message(Filters.command(["on","off"], prefixes=".") & Filters.me)
+from pyrogram import Client, Filters
+
+
+@Client.on_message(Filters.command(["on", "off"], prefixes=".") & Filters.me)
 def on(client, message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
@@ -21,14 +23,15 @@ def on(client, message):
     elif not usr.last_online_date:
         message.edit('This person has disabled his last seen')
     else:
-        c = int(time.time()-usr.last_online_date)
-        date = datetime.utcfromtimestamp(c).strftime('{"year":"%y","months":"%-m","days":"%-d","hours":"%-H","minutes":"%-M","seconds":"%-S"}')
+        c = int(time.time() - usr.last_online_date)
+        date = datetime.utcfromtimestamp(c).strftime(
+            '{"year":"%y","months":"%-m","days":"%-d","hours":"%-H","minutes":"%-M","seconds":"%-S"}')
         f'{usr.first_name} is off for: \n » **%H** Hours\n » **%M** Minutes\n » **%S** Seconds'
         frase = f'{usr.first_name} is off for: \n'
         date = json.loads(date)
         date["year"] = int(date["year"][1])
-        date["days"] = int(date["days"])-1
-        date["months"] = int(date["months"])-1
+        date["days"] = int(date["days"]) - 1
+        date["months"] = int(date["months"]) - 1
         if date["year"] != 0:
             frase += f' » **{date["year"]}** year\n'
         if date["months"] != 0:

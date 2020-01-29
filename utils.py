@@ -1,6 +1,7 @@
-import time
 import os
+import time
 import zipfile
+
 
 def backup_sources(output_file=None):
     ctime = int(time.time())

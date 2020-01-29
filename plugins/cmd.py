@@ -1,9 +1,10 @@
-from pyrogram import Client, Filters
 import subprocess
-import re
+
+from pyrogram import Client, Filters
+
 
 @Client.on_message(Filters.command("cmd", prefixes=".") & Filters.me)
 def cmd(client, message):
     text = message.text[5:]
-    res = subprocess.getstatusoutput(text)[1] or 'Comando execultado'
+    res = subprocess.getstatusoutput(text)[1] or 'Comando executado'
     message.edit(res)

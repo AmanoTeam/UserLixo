@@ -1,10 +1,13 @@
 import os
 import time
-import schedule
 from datetime import datetime
-from utils import backup_sources
 from threading import Thread
+
+import schedule
 from config import backups_chat, backup_hours, app
+
+from utils import backup_sources
+
 
 def backup_func():
     print('ok...4')
@@ -12,6 +15,8 @@ def backup_func():
     file = backup_sources()
     app.send_document(backups_chat, file, caption="📅 " + cstrftime + "\n__Auto generated.__")
     os.remove(file)
+
+
 def backup_scheduler(target):
     print('ok...3')
     for hour in backup_hours:
@@ -20,6 +25,8 @@ def backup_scheduler(target):
     while True:
         schedule.run_pending()
         time.sleep(2)
+
+
 def backup_service():
     print('ok...2')
     t = Thread(target=backup_scheduler, args=(backup_func,))

@@ -1,13 +1,15 @@
-from pyrogram import Client, Filters
 import math
-from PIL import Image
+import os
 import time
 import urllib.request
 from time import sleep
-import os
 
-@Client.on_message(Filters.command("kibe", prefixes = '.') & Filters.me)
-def kibe(client,message):
+from PIL import Image
+from pyrogram import Client, Filters
+
+
+@Client.on_message(Filters.command("kibe", prefixes='.') & Filters.me)
+def kibe(client, message):
     emoji = message.text[6:]
     rsize = False
     ctime = time.time()
@@ -19,23 +21,26 @@ def kibe(client,message):
     rmessage = message.reply_to_message
     if rmessage and rmessage.media:
         if rmessage.photo:
-            photo = client.download_media(rmessage.photo.file_id, rmessage.photo.file_ref,file_name=f'./{ctime}.png')
+            photo = client.download_media(rmessage.photo.file_id, rmessage.photo.file_ref, file_name=f'./{ctime}.png')
             rsize = True
         if rmessage.document:
-            photo = client.download_media(rmessage.document.file_id, rmessage.document.file_ref,file_name=f'./{ctime}.png')
+            photo = client.download_media(rmessage.document.file_id, rmessage.document.file_ref,
+                                          file_name=f'./{ctime}.png')
             rsize = True
         elif rmessage.sticker:
             if len(emoji) == 0:
                 emoji = rmessage.sticker.emoji
             if rmessage.sticker.is_animated:
-                photo = client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,file_name=f'./{ctime}.tgs')
+                photo = client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
+                                              file_name=f'./{ctime}.tgs')
                 packname += '_animated'
                 packnick += ' animated'
             else:
-                photo = client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,file_name=f'./{ctime}.webp')
+                photo = client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
+                                              file_name=f'./{ctime}.webp')
                 rsize = True
         if rsize:
-            photo = resize_photo(photo,ctime)
+            photo = resize_photo(photo, ctime)
         print(f'packname: "{packname}", packnick: "{packnick}')
         response = urllib.request.urlopen(
             urllib.request.Request(f'http://t.me/addstickers/{packname}'))
@@ -69,7 +74,8 @@ def kibe(client,message):
             client.send_message(st, packname)
             message.edit(f'[kibed](http://t.me/addstickers/{packname})')
         os.remove(photo)
-            
+
+
 def resize_photo(photo, ctime):
     """ Resize the given photo to 512x512 """
     image = Image.open(photo)
@@ -95,4 +101,3 @@ def resize_photo(photo, ctime):
     image.save(f'./{ctime}.png')
 
     return f'./{ctime}.png'
-
