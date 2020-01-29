@@ -1,8 +1,7 @@
 from pyrogram import Client, Filters
-from config import sudos
 
-@Client.on_message(Filters.command("doc", prefixes="!"))
+@Client.on_message(Filters.command("doc", prefixes=".") & Filters.me)
 def doc(client, message):
-    if message.from_user.id in sudos:
-        doc = message.text.split(' ',1)[1]
-        message.reply_document(doc)
+    doc = message.text.split(' ',1)[1]
+    client.send_document(message.chat.id, doc)
+    message.delete()

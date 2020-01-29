@@ -3,3 +3,4 @@ db.json
 *.session
 config.py
 dls/
+my_account.session-journal

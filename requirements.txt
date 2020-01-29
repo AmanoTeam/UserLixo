@@ -4,3 +4,4 @@ tgcrypto
 youtube-dl
 chromeprinter
 dicioinformal
+gtts

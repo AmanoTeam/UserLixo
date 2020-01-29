@@ -1,7 +1,5 @@
 from pyrogram import Client, Filters
 from db import db
-from db import save
-import config
 
 print(db["chats"])
 
@@ -11,7 +9,7 @@ def welcome(client, message):
     if db["chats"].get(str(message.chat.id)) and db["chats"][str(message.chat.id)].get("welcome"):
         welcome = db["chats"][str(message.chat.id)]["welcome"]
     else:
-        welcome = {"power":'on',"welcome":"Hello $name, welcome to **$title**!","current":"text"}
+        welcome = {"power":'off',"welcome":"Hello $name, welcome to **$title**!","current":"text"}
     if welcome['current'] == 'sticker' and welcome['power'] == 'on':
         client.send_sticker(message.chat.id,welcome['sticker'],reply_to_message_id=message.message_id)
     if welcome['current'] == 'photo' and welcome['power'] == 'on':
@@ -25,46 +23,43 @@ def welcome(client, message):
 			])
         welcome = welcome['welcome'].replace('$name',new_members).replace('$title',message.chat.title)
         client.send_message(message.chat.id,welcome,reply_to_message_id=message.message_id,disable_web_page_preview=True)
-@Client.on_message(Filters.command("welcome", prefixes = ['!','/']))
+
+@Client.on_message(Filters.command("welcome", prefixes=".") & Filters.me)
 def welcom(client, message):
-    adm = client.get_chat_member(message.chat.id,message.from_user.id)
-    if adm['status'] != 'member' or message.from_user.id in config.sudos:
-        text = message.text.split(' ', 1)
-        if message.chat.id in db and db["chats"][message.chat.id].get("welcome"):
-            welcome = db["chats"][message.chat.id]["welcome"]
-        else:
-            welcome = {"power":'on',"welcome":"Hello $name, welcome to **$title**!","current":"text"}
-        if message.reply_to_message and message.reply_to_message.sticker:
-            welcome['current'] = "sticker"
-            welcome['sticker'] = message.reply_to_message.sticker.file_id
-            client.send_message(message.chat.id,'Your welcome sticker has been successfully defined',reply_to_message_id=message.message_id)
-        elif message.reply_to_message and message.reply_to_message.photo:
-            welcome['current'] = "photo"
-            welcome['photo'] = message.reply_to_message.photo.sizes[-1].file_id
-            client.send_message(message.chat.id,'Your welcome image has been successfully defined',reply_to_message_id=message.message_id)
-        elif message.reply_to_message and message.reply_to_message.animation:
-            welcome["current"] = "gif"
-            welcome["gif"] = message.reply_to_message.animation.file_id
-            client.send_message(message.chat.id,'Your welcome GIF was successfully defined',reply_to_message_id=message.message_id)
-        elif len(text) == 1:
-            client.send_message(message.chat.id,'use:/n/welcome on/off/reset or the welcome message',reply_to_message_id=message.message_id)
-        elif text[1] == 'on':
-            welcome['power'] = 'on'
-            client.send_message(message.chat.id,'welcome messages were activated',reply_to_message_id=message.message_id)
-        elif text[1] == 'reset':
-            welcome = {"power":'on',"welcome":"Hello $name, welcome to **$title**!","current":"text"}
-            client.send_message(message.chat.id,'the welcome messages were reset',reply_to_message_id=message.message_id)
-        elif text[1] == 'off':
-            welcome['power'] = 'off'
-            client.send_message(message.chat.id,'welcome messages have been disabled',reply_to_message_id=message.message_id)
-        else:
-            text = text[1]
-            welcome['current'] = "text"
-            welcome['welcome'] = text
-            client.send_message(message.chat.id,'Your welcome message was successfully defended.',reply_to_message_id=message.message_id)
-        if not db["chats"].get(str(message.chat.id)):
-            db["chats"][str(message.chat.id)] = {}
-        db["chats"][str(message.chat.id)]["welcome"] = welcome
-        save(db)
+    text = message.text.split(' ', 1)
+    if message.chat.id in db and db["chats"][message.chat.id].get("welcome"):
+        welcome = db["chats"][message.chat.id]["welcome"]
     else:
-        client.send_message(message.chat.id,'only administrators can change this',reply_to_message_id=message.message_id)
+        welcome = {"power":'on',"welcome":"Hello $name, welcome to **$title**!","current":"text"}
+    if message.reply_to_message and message.reply_to_message.sticker:
+        welcome['current'] = "sticker"
+        welcome['sticker'] = message.reply_to_message.sticker.file_id
+        message.edit('Your welcome sticker has been successfully defined')
+    elif message.reply_to_message and message.reply_to_message.photo:
+        welcome['current'] = "photo"
+        welcome['photo'] = message.reply_to_message.photo.sizes[-1].file_id
+        message.edit('Your welcome image has been successfully defined')
+    elif message.reply_to_message and message.reply_to_message.animation:
+        welcome["current"] = "gif"
+        welcome["gif"] = message.reply_to_message.animation.file_id
+        message.edit('Your welcome GIF was successfully defined')
+    elif len(text) == 1:
+        message.edit('use:/n/welcome on/off/reset or the welcome message')
+    elif text[1] == 'on':
+        welcome['power'] = 'on'
+        message.edit(message.chat.id,'welcome messages were activated')
+    elif text[1] == 'reset':
+        welcome = {"power":'on',"welcome":"Hello $name, welcome to **$title**!","current":"text"}
+        message.edit(message.chat.id,'the welcome messages were reset')
+    elif text[1] == 'off':
+        welcome['power'] = 'off'
+        message.edit(message.chat.id,'welcome messages have been disabled')
+    else:
+        text = text[1]
+        welcome['current'] = "text"
+        welcome['welcome'] = text
+        message.edit(message.chat.id,'Your welcome message was successfully defended.')
+    if not db["chats"].get(str(message.chat.id)):
+        db["chats"][str(message.chat.id)] = {}
+    db["chats"][str(message.chat.id)]["welcome"] = welcome
+    save(db)

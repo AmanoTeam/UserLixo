@@ -1,19 +1,17 @@
 from pyrogram import Client, Filters
-from config import sudos
 
-@Client.on_message(Filters.command("eval", prefixes="!"))
+@Client.on_message(Filters.command("eval", prefixes=".") & Filters.me)
 def seval(client, message):
-    if message.from_user.id in sudos:
-        expression = " ".join(message.command[1:])
-        if expression:
-            frass = f'**Eval Expression:**\n```{expression}```\n'
-            m = message.reply(frass+'**Running...**')
-            try:
-                result = eval(expression)   
-            except Exception as error:
-                m.edit(frass+f'**Error:**\n```{error}```')
+    expression = message.text[6:]
+    if expression:
+        frass = f'**Eval Expression:**\n```{expression}```\n'
+        message.edit(frass+'**Running...**')
+        try:
+            result = eval(expression)   
+        except Exception as error:
+            message.edit(frass+f'**Error:**\n```{error}```')
+        else:
+            if not result:
+                message.edit(frass+'**Success**')
             else:
-                if not result:
-                    m.edit(frass+'**Success**')
-                else:
-                    m.edit(frass+f'**Result:**\n```{result}```')
+                message.edit(frass+f'**Result:**\n```{result}```')

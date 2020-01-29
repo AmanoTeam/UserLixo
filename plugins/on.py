@@ -3,7 +3,7 @@ import time
 import json
 from datetime import datetime
 
-@Client.on_message(Filters.command(["on","off"], prefixes="/"))
+@Client.on_message(Filters.command(["on","off"], prefixes=".") & Filters.me)
 def on(client, message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
@@ -15,11 +15,11 @@ def on(client, message):
         user_id = message.command[1]
     usr = client.get_users(user_id)
     if usr.is_bot:
-        message.reply('does not work with bots')
+        message.edit('does not work with bots')
     elif usr.status == 'online':
-        message.reply(f'{usr.first_name} is on')
+        message.edit(f'{usr.first_name} is on')
     elif not usr.last_online_date:
-        message.reply('This person has disabled his last seen')
+        message.edit('This person has disabled his last seen')
     else:
         c = int(time.time()-usr.last_online_date)
         date = datetime.utcfromtimestamp(c).strftime('{"year":"%y","months":"%-m","days":"%-d","hours":"%-H","minutes":"%-M","seconds":"%-S"}')
@@ -41,4 +41,4 @@ def on(client, message):
             frase += f' » **{date["minutes"]}** Minutes\n'
         if date["seconds"] != "0":
             frase += f' » **{date["seconds"]}** Seconds'
-        message.reply(frase)
+        message.edit(frase)

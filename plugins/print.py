@@ -6,9 +6,10 @@ import chromeprinter
 
 a = chromeprinter.Client()
 
-@Client.on_message(Filters.command("print", prefixes = ['!','/']))
+@Client.on_message(Filters.command("print", prefixes=".") & Filters.me)
 def print(client, message):
     url = message.text.split(' ',1)[1]
+    message.edit(f'printing: {url}')
     ctime = time.time()
     if re.match(r'^[a-z]+://', url):
         url = url
@@ -19,3 +20,4 @@ def print(client, message):
     	client.send_photo(message.chat.id,f"{ctime}.png")
     finally:
     	os.remove(f'{ctime}.png')
+    message.delete()
