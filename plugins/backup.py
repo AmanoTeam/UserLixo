@@ -7,8 +7,8 @@ import utils
 
 @Client.on_message(Filters.command("backup", prefixes='.') & Filters.me)
 def backup(client, message):
-    mess = message.reply('Ok...')
+    message.edit('Ok...')
     arq = utils.backup_sources()
     client.send_document(chat_id="me", document=arq)
-    mess.edit('Completed')
+    message.edit('Completed')
     os.remove(arq)
