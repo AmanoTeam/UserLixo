@@ -1,6 +1,5 @@
 import config
 
-import backups
 from db import db, save
 
 if "restart" in db:
@@ -9,9 +8,5 @@ if "restart" in db:
     del db["restart"]
     save(db)
     config.app.stop()
-
-if config.backups_chat:
-    print('ok...')
-    backups.backup_service()
 
 config.app.run()
