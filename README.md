@@ -14,13 +14,19 @@ Setup
 =====
 - Install the required modules from the requirements.txt with ``pip3 install -rU requirements.txt``
 - Go to https://my.telegram.org/apps and create a new app
-- Rename config.py.exemple to ``config.py``
-- Put your tokens, ids and keys to your config.py file
+- run ``python3 GenerateStringSession.py`` to configure your UserBot
 - run ``python3 bot.py`` and login
 
 Running
 =======
 - To run the bot you just need to run ``python3 bot.py``
+
+Heroku
+======
+- running on Heroku is not 100% stable
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+-  Run on Heroku console ``python3 GenerateStringSession.py``
 
 Note
 ====
