@@ -56,7 +56,7 @@ def kibe(client, message):
             sleep(0.3)
             ms = client.send_message(st, packname)
             print(ms.message_id+1)
-            sleep(0.3)
+            sleep(0.7)
             if '120' in client.get_messages(message.chat.id, ms.message_id+1).text:
                 pack += 1
                 db['sticker'] = pack
