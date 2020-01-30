@@ -24,8 +24,7 @@ def ytdlv(client, message):
     with open(f'{ctime}.png', 'wb') as f:
         f.write(r.content)
     client.send_video(message.chat.id, ydl.prepare_filename(yt), caption=yt["title"], duration=yt['duration'],
-                      thumb=f'{ctime}.png', progress=progress, progress_args=(message, a), supports_streaming=True,
-                      reply_to_message_id=message.message_id)
+                      thumb=f'{ctime}.png', progress=progress, progress_args=(message, a), supports_streaming=True)
     message.delete()
     os.remove(ydl.prepare_filename(yt))
     os.remove(f'{ctime}.png')
