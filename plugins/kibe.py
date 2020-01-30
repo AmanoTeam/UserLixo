@@ -5,6 +5,7 @@ import urllib.request
 from time import sleep
 
 from PIL import Image
+from db import db, save
 from pyrogram import Client, Filters
 
 
@@ -16,8 +17,12 @@ def kibe(client, message):
     user = client.get_me()
     if not user.username:
         user.username = user.first_name
-    packname = f"a{user.id}_by_{user.username}_amn"
-    packnick = f"@{user.username}'s kibe pack"
+    if 'sticker' in db:
+        pack = db['sticker']
+    else:
+        pack = 1
+    packname = f"a{user.id}_by_{user.username}_{pack}"
+    packnick = f"@{user.username}'s kibe pack V{pack}.0"
     rmessage = message.reply_to_message
     if rmessage and rmessage.media:
         if rmessage.photo:
@@ -49,31 +54,24 @@ def kibe(client, message):
         if "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>." not in htmlstr:
             client.send_message(st, '/addsticker')
             sleep(0.3)
-            client.send_message(st, packname)
-            print(photo)
-            client.send_document(st, photo)
+            ms = client.send_message(st, packname)
+            print(ms.message_id+1)
             sleep(0.3)
-            client.send_message(st, emoji)
-            sleep(0.3)
-            client.send_message(st, '/done')
-            message.edit(f'[kibed](http://t.me/addstickers/{packname})')
+            if '120' in client.get_messages(message.chat.id, ms.message_id+1).text:
+                pack += 1
+                db['sticker'] = pack
+                save(db)
+                crate_pack(message, client, st, packnick, photo, emoji, packname)
+            else:
+                client.send_document(st, photo)
+                sleep(0.3)
+                client.send_message(st, emoji)
+                sleep(0.5)
+                client.send_message(st, '/done')
+                message.edit(f'[kibed](http://t.me/addstickers/{packname})')
+                os.remove(photo)
         else:
-            message.edit('criando novo pack')
-            client.send_message(st, '/newpack')
-            sleep(0.3)
-            client.send_message(st, packnick)
-            sleep(0.3)
-            client.send_document(st, photo)
-            sleep(0.3)
-            client.send_message(st, emoji)
-            sleep(0.5)
-            client.send_message(st, '/publish')
-            sleep(0.3)
-            client.send_message(st, '/skip')
-            sleep(0.3)
-            client.send_message(st, packname)
-            message.edit(f'[kibed](http://t.me/addstickers/{packname})')
-        os.remove(photo)
+            crate_pack(message, client, st, packnick, photo, emoji, packname)
 
 
 def resize_photo(photo, ctime):
@@ -101,3 +99,21 @@ def resize_photo(photo, ctime):
     image.save(f'./{ctime}.png')
 
     return f'./{ctime}.png'
+
+def crate_pack(message, client, st, packnick, photo, emoji, packname):
+    message.edit('criando novo pack')
+    client.send_message(st, '/newpack')
+    sleep(0.3)
+    client.send_message(st, packnick)
+    sleep(0.3)
+    client.send_document(st, photo)
+    sleep(0.3)
+    client.send_message(st, emoji)
+    sleep(0.5)
+    client.send_message(st, '/publish')
+    sleep(0.3)
+    client.send_message(st, '/skip')
+    sleep(0.3)
+    client.send_message(st, packname)
+    message.edit(f'[kibed](http://t.me/addstickers/{packname})')
+    os.remove(photo)
