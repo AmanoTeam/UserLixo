@@ -5,6 +5,8 @@ a = ['api_id','api_hash']
 for i in a:
     exec(f"{i} = input('{i}: ')")
     con = con.replace(f"{i} = ''",f"{i} = '{eval(i)}'")
+    
+open('config.py','w').write(con)
 
 from config import app
 
