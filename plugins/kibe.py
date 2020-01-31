@@ -1,12 +1,12 @@
 import math
 import os
 import time
-import urllib.request
-from time import sleep
 
 from PIL import Image
 from db import db, save
 from pyrogram import Client, Filters
+from pyrogram.errors import StickersetInvalid
+from pyrogram.api import functions, types
 
 
 @Client.on_message(Filters.command("kibe", prefixes='.') & Filters.me)
@@ -28,7 +28,7 @@ def kibe(client, message):
         if rmessage.photo:
             photo = client.download_media(rmessage.photo.file_id, rmessage.photo.file_ref, file_name=f'./{ctime}.png')
             rsize = True
-        if rmessage.document:
+        elif rmessage.document:
             photo = client.download_media(rmessage.document.file_id, rmessage.document.file_ref,
                                           file_name=f'./{ctime}.png')
             rsize = True
@@ -44,34 +44,39 @@ def kibe(client, message):
                 photo = client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
                                               file_name=f'./{ctime}.webp')
                 rsize = True
+        if not emoji:
+            emoji = "👍"
         if rsize:
             photo = resize_photo(photo, ctime)
-        print(f'packname: "{packname}", packnick: "{packnick}')
-        response = urllib.request.urlopen(
-            urllib.request.Request(f'http://t.me/addstickers/{packname}'))
-        htmlstr = response.read().decode("utf8").split('\n')
-        st = 'Stickers'
-        if "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>." not in htmlstr:
-            client.send_message(st, '/addsticker')
-            sleep(0.3)
-            ms = client.send_message(st, packname)
-            print(ms.message_id+1)
-            sleep(0.7)
-            if '120' in client.get_messages(message.chat.id, ms.message_id+1).text:
-                pack += 1
-                db['sticker'] = pack
-                save(db)
-                crate_pack(message, client, st, packnick, photo, emoji, packname)
-            else:
-                client.send_document(st, photo)
-                sleep(0.3)
-                client.send_message(st, emoji)
-                sleep(0.5)
-                client.send_message(st, '/done')
-                message.edit(f'[kibed](http://t.me/addstickers/{packname})')
-                os.remove(photo)
+        try:
+            stickerpack = client.send(functions.messages.GetStickerSet(stickerset=types.InputStickerSetShortName(short_name=packname)))
+        except StickersetInvalid:
+            pack_exists = False
         else:
-            crate_pack(message, client, st, packnick, photo, emoji, packname)
+            pack_exists = True
+        st = 'Stickers'
+        if not pack_exists:
+            create_pack(message, client, st, packnick, photo, emoji, packname)
+        elif stickerpack.set.count > 119:
+            pack += 1
+            db['sticker'] = pack
+            save(db)
+            packname = f"a{user.id}_by_{user.username}_{pack}"
+            create_pack(message, client, st, packnick, photo, emoji, packname)
+        else:
+            # Add a new sticker
+            client.send_message(st, '/addsticker')
+            # Define pack name
+            client.send_message(st, packname)
+            # Send sticker image
+            client.send_document(st, photo)
+            # Send sticker emoji
+            client.send_message(st, emoji)
+            time.sleep(0.3)
+            # We are done
+            client.send_message(st, '/done')
+            message.edit(f'[kibed](http://t.me/addstickers/{packname})')
+            os.remove(photo)
 
 
 def resize_photo(photo, ctime):
@@ -100,20 +105,23 @@ def resize_photo(photo, ctime):
 
     return f'./{ctime}.png'
 
-def crate_pack(message, client, st, packnick, photo, emoji, packname):
+
+def create_pack(message, client, st, packnick, photo, emoji, packname):
     message.edit('criando novo pack')
+    # Create pack
     client.send_message(st, '/newpack')
-    sleep(0.3)
+    # Set a name for it
     client.send_message(st, packnick)
-    sleep(0.3)
+    # Send the first sticker of the pack
     client.send_document(st, photo)
-    sleep(0.3)
+    # Send the emoji for the first sticker
     client.send_message(st, emoji)
-    sleep(0.5)
+    time.sleep(0.3)
+    # Publish the sticker pack
     client.send_message(st, '/publish')
-    sleep(0.3)
+    # Skip setting sticker pack icon
     client.send_message(st, '/skip')
-    sleep(0.3)
+    # Set sticker pack url
     client.send_message(st, packname)
     message.edit(f'[kibed](http://t.me/addstickers/{packname})')
     os.remove(photo)
