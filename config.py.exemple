@@ -5,10 +5,10 @@ api_id = ''
 api_hash = ''
 app = Client("my_account", api_id, api_hash, plugins=plugins)
 
-personal_data = {
-    'first_name': 'кк',
-    'last_name': 'εαε мεη',
-    'description': 'userbot da @AmanoTeam'
-}
+personal_data = dict(
+    first_name='кк',
+    last_name='εαε мεη',
+    description='userbot da @AmanoTeam'
+)
 
 git_repo = ('https://github.com/AmanoTeam/UserLixo', 'new-version')
