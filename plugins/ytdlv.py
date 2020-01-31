@@ -16,7 +16,6 @@ def ytdlv(client, message):
     yt = ydl.extract_info(url, download=False)
     message.edit(f'Downloading `{yt["title"]}`')
     yt = ydl.extract_info(url, download=True)
-    client.send_chat_action(message.chat.id, 'UPLOAD_VIDEO')
     a = f'Sending `{yt["title"]}`'
     message.edit(a)
     ctime = time.time()
@@ -24,13 +23,14 @@ def ytdlv(client, message):
     with open(f'{ctime}.png', 'wb') as f:
         f.write(r.content)
     client.send_video(message.chat.id, ydl.prepare_filename(yt), caption=yt["title"], duration=yt['duration'],
-                      thumb=f'{ctime}.png', progress=progress, progress_args=(message, a))
+                      thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
     message.delete()
     os.remove(ydl.prepare_filename(yt))
     os.remove(f'{ctime}.png')
 
 
-def progress(current, total, m, a):
+def progress(current, total, c, m, a):
     temp = current * 100 / total
     if '0' in "{:.1f}%".format(temp):
+        c.send_chat_action(m.chat.id, 'UPLOAD_VIDEO')
         m.edit(a + '\n' + "{:.1f}%".format(temp))
