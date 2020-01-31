@@ -3,10 +3,11 @@ import os
 import time
 
 from PIL import Image
-from db import db, save
 from pyrogram import Client, Filters
-from pyrogram.errors import StickersetInvalid
 from pyrogram.api import functions, types
+from pyrogram.errors import StickersetInvalid
+
+from db import db, save
 
 
 @Client.on_message(Filters.command("kibe", prefixes='.') & Filters.me)
@@ -49,7 +50,8 @@ def kibe(client, message):
         if rsize:
             photo = resize_photo(photo, ctime)
         try:
-            stickerpack = client.send(functions.messages.GetStickerSet(stickerset=types.InputStickerSetShortName(short_name=packname)))
+            stickerpack = client.send(
+                functions.messages.GetStickerSet(stickerset=types.InputStickerSetShortName(short_name=packname)))
         except StickersetInvalid:
             pack_exists = False
         else:

@@ -2,7 +2,7 @@ from pyrogram import Client, Filters
 
 
 @Client.on_message(Filters.command("save", prefixes=".") & Filters.me)
-def ping(client, message):
+def save(client, message):
     if message.reply_to_message:
         a = message.reply_to_message.forward("me")
         if message.text.split(' ', 1)[1]:
