@@ -1,9 +1,9 @@
 __pycache__/
-.idea/
 .vscode/
-avatar.png
-db.json
-*.session
-config.py
+.idea/
 dls/
-my_account.session-journal
+config.py
+db.json
+*.session-journal
+*.session
+*.png
