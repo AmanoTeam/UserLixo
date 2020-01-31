@@ -4,6 +4,7 @@ import time
 import requests
 import youtube_dl
 from pyrogram import Client, Filters
+from pyrogram.errors import MessageNotModified
 
 
 @Client.on_message(Filters.command("ytdlv", prefixes=".") & Filters.me)
@@ -33,4 +34,7 @@ def progress(current, total, c, m, a):
     temp = current * 100 / total
     if '0' in "{:.1f}%".format(temp):
         c.send_chat_action(m.chat.id, 'UPLOAD_VIDEO')
-        m.edit(a + '\n' + "{:.1f}%".format(temp))
+        try:
+            m.edit(a + '\n' + "{:.1f}%".format(temp))
+        except MessageNotModified:
+            pass
