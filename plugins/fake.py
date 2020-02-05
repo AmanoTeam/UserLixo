@@ -2,7 +2,7 @@ import os
 
 from pyrogram import Client, Filters
 from pyrogram.api import functions
-from pyrogram.errors import UserIdInvalid
+from pyrogram.errors import BadRequest, UsernameNotOccupied, UsernameInvalid, PeerIdInvalid
 
 import config
 
@@ -21,8 +21,12 @@ def fake(client, message):
         cha = client.send(
             functions.users.GetFullUser(id=client.resolve_peer(user_id))
         )
-    except UserIdInvalid:
-        message.edit('only works with profiles')
+    except (UsernameInvalid, UsernameNotOccupied):
+        message.edit(f'invalid username @{user_id}.')
+    except PeerIdInvalid:
+        message.edit('This user is not in my database.')
+    except BadRequest:
+        message.edit('only works with profiles.')
     else:
         if cha.user.is_self:
             dat = config.personal_data
