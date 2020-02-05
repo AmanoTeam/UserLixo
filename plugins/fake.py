@@ -2,6 +2,7 @@ import os
 
 from pyrogram import Client, Filters
 from pyrogram.api import functions
+from pyrogram.errors import UserIdInvalid
 
 import config
 
@@ -17,11 +18,13 @@ def fake(client, message):
         user_id = int(text) if text.lstrip('-').isdigit() else text
 
     try:
-        cha = client.get_users(user_id)
-    except IndexError:
+        cha = client.send(
+            functions.users.GetFullUser(id=client.resolve_peer(user_id))
+        )
+    except UserIdInvalid:
         message.edit('only works with profiles')
     else:
-        if cha.is_self:
+        if cha.user.is_self:
             dat = config.personal_data
             try:
                 client.set_profile_photo(photo='avatar.png')
@@ -30,14 +33,14 @@ def fake(client, message):
             text = 'No fake'
         else:
             text = 'new fake'
-            if cha.description:
-                description = cha.description[:70]
+            if cha.about:
+                description = cha.about[:70]
             else:
                 description = ''
             a = client.get_profile_photos(user_id, limit=1)[0]
             dat = dict(
-                first_name=cha.first_name,
-                last_name=cha.last_name or '',
+                first_name=cha.user.first_name,
+                last_name=cha.user.last_name or '',
                 description=description
             )
             try:
