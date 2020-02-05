@@ -4,7 +4,7 @@ from pyrogram import Client, Filters
 from pyrogram.api import functions
 from pyrogram.errors import BadRequest, UsernameNotOccupied, UsernameInvalid, PeerIdInvalid
 
-import config
+from db import db, save
 
 
 @Client.on_message(Filters.command("fake", prefixes=".") & Filters.me)
@@ -29,7 +29,7 @@ def fake(client, message):
         message.edit('only works with profiles.')
     else:
         if cha.user.is_self:
-            dat = config.personal_data
+            dat = db['personal_data']
             try:
                 client.set_profile_photo(photo='avatar.png')
             except (BadRequest, FileNotFoundError):
@@ -68,6 +68,14 @@ def savepic(client, message):
     a = client.get_profile_photos("me", limit=1)[0]
     try:
         client.download_media(a.file_id, a.file_ref, file_name='./avatar.png')
+        b = client.get_chat(client.get_me().id)
+        personal_data = dict(
+            first_name=b.first_name,
+            last_name=b.last_name or '',
+            description=b.description or ''
+        )
+        db['personal_data'] = personal_data
+        save(db)
         message.edit('saved')
     except Exception as e:
         message.edit(f'not saved\n\nCause: {e}')

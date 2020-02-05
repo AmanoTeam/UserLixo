@@ -1,3 +1,5 @@
+from db import db, save
+
 print('Confifurando...')
 con = open('config.py.example','r').read()
 a = ['api_id','api_hash']
@@ -13,14 +15,17 @@ from config import app
 print('login')
 app.start()
 b = app.get_chat(app.get_me().id)
+a = app.get_profile_photos("me", limit=1)[0]
+try:
+    app.download_media(a.file_id, a.file_ref, file_name='./avatar.png')
+except Exception as e:
+        print(f'not saved\n\nCause: {e}')
+
+personal_data = dict(
+    first_name=b.first_name,
+    last_name=b.last_name or '',
+    description=b.description or ''
+)
+db['personal_data'] = personal_data
+save(db)
 app.stop()
-con = con.replace('кк',b.first_name)
-if b.last_name:
-    con = con.replace('εαε мεη',b.last_name)
-else:
-    con = con.replace('εαε мεη','')
-if b.description:
-    con = con.replace('userbot da @AmanoTeam',b.description)
-else:
-    con = con.replace('userbot da @AmanoTeam','')
-open('config.py','w').write(con)
