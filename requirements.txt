@@ -7,3 +7,5 @@ youtube-dl
 chromeprinter
 dicioinformal
 gtts
+wikipedia
+desciclopedia
