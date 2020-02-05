@@ -32,7 +32,7 @@ def fake(client, message):
             dat = config.personal_data
             try:
                 client.set_profile_photo(photo='avatar.png')
-            except:
+            except (BadRequest, FileNotFoundError):
                 pass
             text = 'No fake'
         else:
