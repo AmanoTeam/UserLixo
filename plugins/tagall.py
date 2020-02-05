@@ -8,7 +8,7 @@ def tagall(client, message):
     for x in client.iter_chat_members(message.chat.id):
         if x.user.status == 'online':
             a += f"[‌](tg://user?id={x.user.id})"
-    client.send_message(message.chat.id, a,reply_to_message_id=message.message_id)
+    client.send_message(message.chat.id, a)
 
 
 @Client.on_message(Filters.command("admin", prefixes=".") & Filters.me)
@@ -18,21 +18,4 @@ def admin(client, message):
     for x in client.iter_chat_members(message.chat.id, filter='administrators'):
         if x.user.status == 'online':
             a += f"[­](tg://user?id={x.user.id})"
-    client.send_message(message.chat.id, a)
-    
-@Client.on_message(Filters.command("tagalln", prefixes=".") & Filters.me)
-def tagalln(client, message):
-    message.delete()
-    a = message.text.split(' ', 1)[1] or ''
-    for x in client.iter_chat_members(message.chat.id):
-        a += f"[‌](tg://user?id={x.user.id})"
-    client.send_message(message.chat.id, a,reply_to_message_id=message.message_id)
-
-
-@Client.on_message(Filters.command("adminn", prefixes=".") & Filters.me)
-def adminn(client, message):
-    message.delete()
-    a = message.text.split(' ', 1)[1] or ''
-    for x in client.iter_chat_members(message.chat.id, filter='administrators'):
-        a += f"[­](tg://user?id={x.user.id})"
     client.send_message(message.chat.id, a)
