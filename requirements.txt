@@ -1,7 +1,8 @@
 pillow
 requests
 schedule
-pyrogram>=0.16.0
+# Pyrogram asyncio-dev currently has less bugs than asyncio.
+https://github.com/pyrogram/pyrogram/archive/asyncio-dev.zip
 tgcrypto
 youtube-dl
 chromeprinter
