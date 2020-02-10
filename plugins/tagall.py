@@ -10,6 +10,15 @@ async def tagall(client, message):
             a += f"[‌](tg://user?id={x.user.id})"
     await client.send_message(message.chat.id, a)
 
+@Client.on_message(Filters.command("ftagall", prefixes=".") & Filters.me)
+async def ftagall(client, message):
+    await message.delete()
+    a = message.text.split(' ', 1)[1] or ''
+    async for x in client.iter_chat_members(message.chat.id):
+        if x.user.id:
+            a += f"[‌](tg://user?id={x.user.id})"
+    await client.send_message(message.chat.id, a)
+
 
 @Client.on_message(Filters.command("admin", prefixes=".") & Filters.me)
 async def admin(client, message):
