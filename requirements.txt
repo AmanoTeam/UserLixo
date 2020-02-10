@@ -1,6 +1,5 @@
 pillow
 requests
-schedule
 # Pyrogram asyncio-dev currently has less bugs than asyncio.
 https://github.com/pyrogram/pyrogram/archive/asyncio-dev.zip
 tgcrypto
