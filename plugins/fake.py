@@ -8,30 +8,30 @@ from db import db, save
 
 
 @Client.on_message(Filters.command("fake", prefixes=".") & Filters.me)
-def fake(client, message):
+async def fake(client, message):
     text = message.text[6:]
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     elif not text:
-        user_id = client.get_me().id
+        user_id = (await client.get_me()).id
     else:
         user_id = int(text) if text.lstrip('-').isdigit() else text
 
     try:
-        cha = client.send(
-            functions.users.GetFullUser(id=client.resolve_peer(user_id))
+        cha = await client.send(
+            functions.users.GetFullUser(id=await client.resolve_peer(user_id))
         )
     except (UsernameInvalid, UsernameNotOccupied):
-        message.edit(f'invalid username @{user_id}.')
+        await message.edit(f'invalid username @{user_id}.')
     except PeerIdInvalid:
-        message.edit('This user is not in my database.')
+        await message.edit('This user is not in my database.')
     except BadRequest:
-        message.edit('only works with profiles.')
+        await message.edit('only works with profiles.')
     else:
         if cha.user.is_self:
             dat = db['personal_data']
             try:
-                client.set_profile_photo(photo='avatar.png')
+                await client.set_profile_photo(photo='avatar.png')
             except (BadRequest, FileNotFoundError):
                 pass
             text = 'No fake'
@@ -41,34 +41,34 @@ def fake(client, message):
                 description = cha.about[:70]
             else:
                 description = ''
-            a = client.get_profile_photos(user_id, limit=1)[0]
+            a = (await client.get_profile_photos(user_id, limit=1))[0]
             dat = dict(
                 first_name=cha.user.first_name,
                 last_name=cha.user.last_name or '',
                 description=description
             )
             try:
-                a = client.download_media(a.file_id, a.file_ref)
-                client.set_profile_photo(photo=a)
+                a = await client.download_media(a.file_id, a.file_ref)
+                await client.set_profile_photo(photo=a)
                 os.remove(a)
             except:
                 pass
         # TODO: Switch to client.update_profile when the next pyrogram version is released.
-        client.send(
+        await client.send(
             functions.account.UpdateProfile(
                 first_name=dat['first_name'], last_name=dat['last_name'],
                 about=dat['description']
             )
         )
-        message.edit(text)
+        await message.edit(text)
 
 
 @Client.on_message(Filters.command("savepic", prefixes=".") & Filters.me)
-def savepic(client, message):
-    a = client.get_profile_photos("me", limit=1)[0]
+async def savepic(client, message):
+    a = (await client.get_profile_photos("me", limit=1))[0]
     try:
-        client.download_media(a.file_id, a.file_ref, file_name='./avatar.png')
-        b = client.get_chat(client.get_me().id)
+        await client.download_media(a.file_id, a.file_ref, file_name='./avatar.png')
+        b = await client.get_chat("me")
         personal_data = dict(
             first_name=b.first_name,
             last_name=b.last_name or '',
@@ -76,6 +76,6 @@ def savepic(client, message):
         )
         db['personal_data'] = personal_data
         save(db)
-        message.edit('saved')
+        await message.edit('saved')
     except Exception as e:
-        message.edit(f'not saved\n\nCause: {e}')
+        await message.edit(f'not saved\n\nCause: {e}')

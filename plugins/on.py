@@ -6,7 +6,7 @@ from pyrogram import Client, Filters
 
 
 @Client.on_message(Filters.command(["on", "off"], prefixes=".") & Filters.me)
-def on(client, message):
+async def on(client, message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     # User ids: integers
@@ -15,13 +15,13 @@ def on(client, message):
     # Usernames and phone numbers with +
     else:
         user_id = message.command[1]
-    usr = client.get_users(user_id)
+    usr = await client.get_users(user_id)
     if usr.is_bot:
-        message.edit('does not work with bots')
+        await message.edit('does not work with bots')
     elif usr.status == 'online':
-        message.edit(f'{usr.first_name} is on')
+        await message.edit(f'{usr.first_name} is on')
     elif not usr.last_online_date:
-        message.edit('This person has disabled his last seen')
+        await message.edit('This person has disabled his last seen')
     else:
         c = int(time.time() - usr.last_online_date)
         date = datetime.utcfromtimestamp(c).strftime(
@@ -44,4 +44,4 @@ def on(client, message):
             frase += f' » **{date["minutes"]}** Minutes\n'
         if date["seconds"] != "0":
             frase += f' » **{date["seconds"]}** Seconds'
-        message.edit(frase)
+        await message.edit(frase)

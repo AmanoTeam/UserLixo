@@ -4,9 +4,9 @@ from pyrogram import Client, Filters
 
 
 @Client.on_message(Filters.command("ping", prefixes='.') & Filters.me)
-def ping(client, message):
+async def ping(client, message):
     t1 = datetime.now()
-    a = message.reply_text('**Pong!**')
+    a = await message.reply_text('**Pong!**')
     t2 = datetime.now()
-    message.edit(f'**Pong!** `{(t2 - t1).microseconds / 1000}`ms')
-    a.delete()
+    await message.edit(f'**Pong!** `{(t2 - t1).microseconds / 1000}`ms')
+    await a.delete()

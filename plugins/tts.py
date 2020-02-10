@@ -6,7 +6,7 @@ from pyrogram import Client, Filters
 
 
 @Client.on_message(Filters.command("tts", prefixes=".") & Filters.me)
-def tts(client, message):
+async def tts(client, message):
     langs = False
     txt = False
     a = message.text[5:]
@@ -24,9 +24,9 @@ def tts(client, message):
     gtts = gTTS(txt, lang=langs)
     ctime = time.time()
     gtts.save(f'{ctime}.mp3')
-    message.delete()
+    await message.delete()
     if message.reply_to_message:
-        client.send_voice(message.chat.id, f'{ctime}.mp3', reply_to_message_id=message.reply_to_message.message_id)
+        await client.send_voice(message.chat.id, f'{ctime}.mp3', reply_to_message_id=message.reply_to_message.message_id)
     else:
-        client.send_voice(message.chat.id, f'{ctime}.mp3')
+        await client.send_voice(message.chat.id, f'{ctime}.mp3')
     os.remove(f'{ctime}.mp3')

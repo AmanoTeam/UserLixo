@@ -1,18 +1,20 @@
 from pyrogram import Client, Filters
 
+from utils import meval
+import traceback
+import html
 
 @Client.on_message(Filters.command("eval", prefixes=".") & Filters.me)
-def seval(client, message):
-    expression = message.text[6:]
-    if expression:
-        frass = f'**Eval Expression:**\n```{expression}```\n'
-        message.edit(frass + '**Running...**')
+async def evals(client, message):
+    text = message.text[6:]
+    try:
+        res = await meval(text, locals())
+    except:
+        ev = traceback.format_exc()
+        await message.edit(ev)
+        return
+    else:
         try:
-            result = eval(expression)
-        except Exception as error:
-            message.edit(frass + f'**Error:**\n```{error}```')
-        else:
-            if not result:
-                message.edit(frass + '**Success**')
-            else:
-                message.edit(frass + f'**Result:**\n```{result}```')
+            await message.edit(f"<code>{html.escape(str(res))}</code>")
+        except Exception as e:
+            await message.edit(e)

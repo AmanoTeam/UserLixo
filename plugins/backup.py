@@ -6,9 +6,9 @@ import utils
 
 
 @Client.on_message(Filters.command("backup", prefixes='.') & Filters.me)
-def backup(client, message):
-    message.edit('Ok...')
+async def backup(client, message):
+    await message.edit('Ok...')
     arq = utils.backup_sources()
-    client.send_document(chat_id="me", document=arq)
-    message.edit('Completed')
+    await client.send_document(chat_id="me", document=arq)
+    await message.edit('Completed')
     os.remove(arq)
