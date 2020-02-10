@@ -102,7 +102,7 @@ async def resize_photo(photo, ctime):
         image = image.resize(sizenew)
     else:
         image.thumbnail(maxsize)
-        
+
     os.remove(photo)
 
     image.save(f'./{ctime}.png')

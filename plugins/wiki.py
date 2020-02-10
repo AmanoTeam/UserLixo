@@ -9,7 +9,8 @@ async def dwiki(client, message):
     a = desciclopedia.search(txt)
     a = desciclopedia.page(a[0])
     await message.edit(f'[{a.title}]({a.url}):\n\n{a.content[:910]+"..."}')
-    
+
+
 @Client.on_message(Filters.command("wiki", prefixes='.') & Filters.me)
 async def wiki(client, message):
     txt = message.text[6:]
