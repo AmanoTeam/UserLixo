@@ -2,7 +2,7 @@ import os
 import time
 from glob import glob
 
-import requests
+import aiohttp
 import youtube_dl
 from pyrogram import Client, Filters
 from pyrogram.errors import MessageNotModified
@@ -32,13 +32,14 @@ async def ytdlv(client, message):
     a = f'Sending `{yt["title"]}`'
     await message.edit(a)
     ctime = time.time()
-    r = requests.get(yt['thumbnail'])
+    async with aiohttp.ClientSession() as session:
+        r = await session.get(yt['thumbnail'])
     with open(f'{ctime}.png', 'wb') as f:
-        f.write(r.content)
+        f.write(await r.read())
     # Workaround for when youtube-dl changes file extension without telling us.
     filename = ydl.prepare_filename(yt).rsplit(".", 1)[0]
     filename = glob(f"{filename}.*")[0]
-    
+
     if vid:
         await client.send_video(message.chat.id, filename, caption=yt["title"], duration=yt['duration'],
                           thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
@@ -50,11 +51,11 @@ async def ytdlv(client, message):
             title = yt["title"]
         await client.send_audio(message.chat.id, filename, title=title, performer=performer, duration=yt['duration'],
                           thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
-        
+
     await message.delete()
     os.remove(filename)
     os.remove(f'{ctime}.png')
-    
+
 
 async def progress(current, total, c, m, a):
     global last_edit
