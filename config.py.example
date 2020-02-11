@@ -5,4 +5,4 @@ api_id = ''
 api_hash = ''
 app = Client("my_account", api_id, api_hash, plugins=plugins)
 
-git_repo = ('https://github.com/AmanoTeam/UserLixo', 'new-version')
+git_repo = ('https://github.com/AmanoTeam/UserLixo', 'master')
