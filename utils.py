@@ -6,8 +6,22 @@ import ast
 import importlib.util
 import types
 from asyncio.futures import Future
+from functools import wraps, partial
+from typing import Coroutine, Callable
+from asyncio import get_event_loop
 
 
+def aiowrap(fn: Callable) -> Coroutine:
+    @wraps(fn)
+    def decorator(*args, **kwargs):
+        wrapped = partial(fn, *args, **kwargs)
+
+        return get_event_loop().run_in_executor(None, wrapped)
+
+    return decorator
+
+
+@aiowrap
 def backup_sources(output_file=None):
     ctime = int(time.time())
 

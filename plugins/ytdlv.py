@@ -4,10 +4,16 @@ from glob import glob
 
 import aiohttp
 import youtube_dl
+from utils import aiowrap
 from pyrogram import Client, Filters
 from pyrogram.errors import MessageNotModified
 
 last_edit = 0
+
+
+@aiowrap
+def extract_info(instance, url, download=True):
+    return instance.extract_info(url, download)
 
 
 @Client.on_message(Filters.command("ytdlv", prefixes=".") & Filters.me)
@@ -22,13 +28,14 @@ async def ytdlv(client, message):
         ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'noplaylist': True})
         vid = True
     if 'youtu.be' not in url and 'youtube.com' not in url:
-        yt = ydl.extract_info('ytsearch:' + url, download=False)['entries'][0]
+        yt = await extract_info(ydl, 'ytsearch:' + url, download=False)
+        yt = yt['entries'][0]
         url = 'https://www.youtube.com/watch?v=' + yt['id']
     else:
-        yt = ydl.extract_info(url, download=False)
+        yt = await extract_info(ydl, url, download=False)
         url = 'https://www.youtube.com/watch?v=' + yt['id']
     await message.edit(f'Downloading `{yt["title"]}`')
-    yt = ydl.extract_info(url, download=True)
+    yt = await extract_info(ydl, url, download=True)
     a = f'Sending `{yt["title"]}`'
     await message.edit(a)
     ctime = time.time()
