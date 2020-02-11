@@ -22,7 +22,7 @@ async def kibe(client, message):
         pack = db['sticker']
     else:
         pack = 1
-    packname = f"a{user.id}_byy_{user.username}_{pack}"
+    packname = f"a{user.id}_by_{user.username}_{pack}"
     packnick = f"@{user.username}'s kibe pack V{pack}.0"
     rmessage = message.reply_to_message
     if rmessage and rmessage.media:
