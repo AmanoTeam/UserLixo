@@ -41,8 +41,8 @@ async def ytdlv(client, message):
     ctime = time.time()
     async with aiohttp.ClientSession() as session:
         r = await session.get(yt['thumbnail'])
-    with open(f'{ctime}.png', 'wb') as f:
-        f.write(await r.read())
+        with open(f'{ctime}.png', 'wb') as f:
+            f.write(await r.read())
     # Workaround for when youtube-dl changes file extension without telling us.
     filename = ydl.prepare_filename(yt).rsplit(".", 1)[0]
     filename = glob(f"{filename}.*")[0]
