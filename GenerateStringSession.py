@@ -18,7 +18,7 @@ async def init():
 	b = await app.get_chat(app.get_me().id)
 	a = await app.get_profile_photos("me", limit=1)[0]
 	try:
-	    await app.download_media(a.file_id, a.file_ref, file_name='./avatar.png')
+	    await app.download_media(a.file_id, a.file_ref, file_name='./avatar.jpg')
 	except Exception as e:
 	        print(f'not saved\n\nCause: {e}')
 	

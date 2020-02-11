@@ -31,7 +31,7 @@ async def fake(client, message):
         if cha.user.is_self:
             dat = db['personal_data']
             try:
-                await client.set_profile_photo(photo='avatar.png')
+                await client.set_profile_photo(photo='avatar.jpg')
             except (BadRequest, FileNotFoundError):
                 pass
             text = 'No fake'
@@ -67,7 +67,7 @@ async def fake(client, message):
 async def savepic(client, message):
     a = (await client.get_profile_photos("me", limit=1))[0]
     try:
-        await client.download_media(a.file_id, a.file_ref, file_name='./avatar.png')
+        await client.download_media(a.file_id, a.file_ref, file_name='./avatar.jpg')
         b = await client.get_chat("me")
         personal_data = dict(
             first_name=b.first_name,
