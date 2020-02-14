@@ -16,6 +16,7 @@ async def download(client, message):
         else:
             url = message.text[4:]
             name = message.text.split('/',--1)[1]
+        dw1 = time.time()
         downloader = SmartDL(url, './dl/'+name, progress_bar=False)
         downloader.start(blocking=False)
         await message.edit(f'downloading...')
@@ -25,10 +26,13 @@ async def download(client, message):
                     a = str(downloader.get_progress())[:3]
                     await message.edit(f'downloading... {a}')
         if downloader.isSuccessful():
+            dw2 = time.time()
+            up1 = time.time()
             a = f'Sending...'
             await message.edit(a)
             await client.send_document(message.chat.id, downloader.get_dest(),caption=url, progress=progress, progress_args=(client, message, a))
-            await message.delete()
+            up2 = time.time()
+            await message.edit(f'Status:\nDownload: {(dw2-dw1)[:3]}\nUpload: {(up2-up1)[:3]}\nTotal: {up2-dw1)[:3]}s')
             os.remove('dl/')
             
 async def progress(current, total, c, m, a):
