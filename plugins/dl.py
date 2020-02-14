@@ -32,7 +32,7 @@ async def download(client, message):
             await message.edit(a)
             await client.send_document(message.chat.id, downloader.get_dest(),caption=url, progress=progress, progress_args=(client, message, a))
             up2 = time.time()
-            await message.edit(f'Status:\nDownload: {(dw2-dw1)[:3]}\nUpload: {(up2-up1)[:3]}\nTotal: {up2-dw1)[:3]}s')
+            await message.edit(f'Status:\nDownload: {(dw2-dw1)[:3]}\nUpload: {(up2-up1)[:3]}\nTotal: {(up2-dw1)[:3]}s')
             os.remove('dl/')
             
 async def progress(current, total, c, m, a):
