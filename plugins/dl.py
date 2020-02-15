@@ -17,8 +17,12 @@ async def download(client, message):
             url = message.text[4:]
             name = message.text.split('/',--1)[1]
         dw1 = time.time()
-        downloader = SmartDL(url, './dl/'+name, progress_bar=False)
-        downloader.start(blocking=False)
+        try:
+            downloader = SmartDL(url, './dl/'+name, progress_bar=False)
+            downloader.start(blocking=False)
+        except Exception as e:
+            await message.edit(f'an error has occurred: {e}')
+            return
         await message.edit(f'downloading...')
         a = str(downloader.get_progress())[:3]
         while not downloader.isFinished():
@@ -30,13 +34,18 @@ async def download(client, message):
             up1 = time.time()
             a = f'Sending...'
             await message.edit(a)
-            await client.send_document(message.chat.id, downloader.get_dest(),caption=url, progress=progress, progress_args=(client, message, a))
+            loc = downloader.get_dest()
+            try:
+                await client.send_document(message.chat.id, loc,caption=url, progress=progress, progress_args=(client, message, a))
+            except Exception as e:
+                await message.edit(f'an error has occurred: {e}')
+                return
             up2 = time.time()
-            dw = str(dw2-dw1)
-            up = str(up2-up1)
-            to = str(up2-dw1)
-            await message.edit(f'Status:\nDownload: {dw[:3]}\nUpload: {up[:3]}\nTotal: {to[:3]}s')
-            os.remove('dl/')
+            dw = round(dw2-dw1, 3)
+            up = round(up2-up1, 3)
+            to = round(up2-dw1, 3)
+            await message.edit(f'Status:\nDownload: `{dw}`s\nUpload: `{up}`s\nTotal: `{to}`s')
+            os.remove(loc.split('dl/',1)[1])
 
 async def progress(current, total, c, m, a):
     global last_edit
