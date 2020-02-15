@@ -39,6 +39,7 @@ async def download(client, message):
                 await client.send_document(message.chat.id, loc,caption=url, progress=progress, progress_args=(client, message, a))
             except Exception as e:
                 await message.edit(f'an error has occurred: {e}')
+                os.remove(loc.split('dl/',1)[1])
                 return
             up2 = time.time()
             dw = round(dw2-dw1, 3)
