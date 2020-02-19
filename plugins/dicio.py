@@ -1,6 +1,8 @@
 import dicioinformal
 from pyrogram import Client, Filters
 
+from config import cmds
+
 
 @Client.on_message(Filters.command("dicio", prefixes=".") & Filters.me)
 async def dicio(client, message):
@@ -11,3 +13,5 @@ async def dicio(client, message):
     else:
         frase = 'sem resultado'
     await message.edit(frase)
+
+cmds.update({'.dicio':'Search from dicioinformal'})

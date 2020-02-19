@@ -6,6 +6,8 @@ from contextlib import redirect_stdout
 
 from pyrogram import Client, Filters
 
+from config import cmds
+
 
 @Client.on_message(Filters.command("exec", prefixes=".") & Filters.me)
 async def execs(client, message):
@@ -23,3 +25,5 @@ async def execs(client, message):
     else:
         out = "Command executed."
     await message.edit(out, parse_mode="HTML")
+
+cmds.update({'.exec':'Run commands on python'})

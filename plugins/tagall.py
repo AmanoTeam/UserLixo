@@ -1,5 +1,7 @@
 from pyrogram import Client, Filters
 
+from config import cmds
+
 
 @Client.on_message(Filters.command("tagall", prefixes=".") & Filters.me)
 async def tagall(client, message):
@@ -28,3 +30,7 @@ async def admin(client, message):
         if x.user.status == 'online':
             a += f"[­](tg://user?id={x.user.id})"
     await client.send_message(message.chat.id, a)
+
+cmds.update({'.tagall':'Mark all online members of the group',
+             '.ftagall':'Mark all admins online members of the group',
+             '.admin':'Mark all members of the group'})

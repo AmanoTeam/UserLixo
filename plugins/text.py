@@ -1,4 +1,5 @@
 from time import sleep
+from config import cmds
 
 from pyrogram import Client, Filters
 
@@ -14,3 +15,5 @@ async def text(client, message):
         sleep(0.3)
         ms = await ms.edit(f'`{ch.strip()}`')
         sleep(0.3)
+
+cmds.update({'.text':'Show text being typed'})

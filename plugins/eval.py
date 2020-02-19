@@ -1,5 +1,6 @@
 from pyrogram import Client, Filters
 
+from config import cmds
 from utils import meval
 import traceback
 import html
@@ -18,3 +19,5 @@ async def evals(client, message):
             await message.edit(f"<code>{html.escape(str(res))}</code>")
         except Exception as e:
             await message.edit(e)
+
+cmds.update({'.eval':'Run commands on eval'})

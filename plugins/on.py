@@ -2,6 +2,8 @@ import json
 import time
 from datetime import datetime
 
+from config import cmds
+
 from pyrogram import Client, Filters
 
 
@@ -45,3 +47,5 @@ async def on(client, message):
         if date["seconds"] != "0":
             frase += f' » **{date["seconds"]}** Seconds'
         await message.edit(frase)
+
+cmds.update({'.on':'Check if the person is online'})

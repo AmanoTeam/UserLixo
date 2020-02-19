@@ -2,6 +2,8 @@ from pyrogram import Client, Filters
 from pySmartDL import SmartDL
 from pyrogram.errors import MessageNotModified
 
+from config import cmds
+
 import os
 import time
 
@@ -59,3 +61,5 @@ async def progress(current, total, c, m, a):
             pass
         finally:
             last_edit = time.time()
+
+cmds.update({'.dl':'Download files and send to telegram'})

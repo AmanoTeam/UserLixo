@@ -3,6 +3,7 @@ import os
 from pyrogram import Client, Filters
 
 import utils
+from config import cmds
 
 
 @Client.on_message(Filters.command("backup", prefixes='.') & Filters.me)
@@ -12,3 +13,5 @@ async def backup(client, message):
     await client.send_document(chat_id="me", document=arq)
     await message.edit('Completed')
     os.remove(arq)
+    
+cmds.update({'.backup':'Make a backup'})

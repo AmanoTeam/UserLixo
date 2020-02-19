@@ -8,6 +8,7 @@ from pyrogram.api import functions, types
 from pyrogram.errors import StickersetInvalid
 
 from db import db, save
+from config import cmds
 
 
 @Client.on_message(Filters.command("kibe", prefixes='.') & Filters.me)
@@ -129,3 +130,5 @@ async def create_pack(message, client, st, packnick, photo, emoji, packname):
     await client.send_message(st, packname)
     await message.edit(f'[kibed](http://t.me/addstickers/{packname})')
     os.remove(photo)
+
+cmds.update({'.kibe':'Kibe a image or sticker'})

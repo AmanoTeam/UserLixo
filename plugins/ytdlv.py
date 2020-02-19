@@ -4,6 +4,7 @@ from glob import glob
 
 import aiohttp
 import youtube_dl
+from config import cmds
 from utils import aiowrap
 from pyrogram import Client, Filters
 from pyrogram.errors import MessageNotModified
@@ -75,3 +76,5 @@ async def progress(current, total, c, m, a):
             pass
         finally:
             last_edit = time.time()
+
+cmds.update({'.ytdlv':'Download a youtube video'})

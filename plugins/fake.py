@@ -5,6 +5,7 @@ from pyrogram.api import functions
 from pyrogram.errors import BadRequest, UsernameNotOccupied, UsernameInvalid, PeerIdInvalid
 
 from db import db, save
+from config import cmds
 
 
 @Client.on_message(Filters.command("fake", prefixes=".") & Filters.me)
@@ -79,3 +80,6 @@ async def savepic(client, message):
         await message.edit('saved')
     except Exception as e:
         await message.edit(f'not saved\n\nCause: {e}')
+
+cmds.update({'.fake':"Copy the person's profile",
+             ".savepic":"Save your profile"})

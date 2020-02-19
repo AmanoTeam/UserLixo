@@ -1,6 +1,8 @@
 import os
 import time
 
+from config import cmds
+
 from gtts import gTTS, lang
 from pyrogram import Client, Filters
 
@@ -30,3 +32,5 @@ async def tts(client, message):
     else:
         await client.send_voice(message.chat.id, f'{ctime}.mp3')
     os.remove(f'{ctime}.mp3')
+
+cmds.update({'.tts':'Convert text to speech with Google APIs'})

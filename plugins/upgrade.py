@@ -4,6 +4,8 @@ import asyncio
 
 from pyrogram import Client, Filters
 
+from config import cmds
+
 from db import db, save
 
 
@@ -26,3 +28,5 @@ async def upgrade(client, message):
         await message.edit(f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}")
         proc = await asyncio.create_subprocess_shell("git pull --no-edit")
         stdout = await proc.communicate()
+
+cmds.update({'.upgrade':'Upgrade a bot souce'})

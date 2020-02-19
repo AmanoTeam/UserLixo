@@ -2,6 +2,8 @@ import os
 import re
 import time
 
+from config import cmds
+
 import chromeprinter
 from pyrogram import Client, Filters
 
@@ -23,3 +25,5 @@ async def prints(client, message):
     finally:
         os.remove(f'{ctime}.png')
     await message.delete()
+
+cmds.update({'.print':'Submit a print of a website'})

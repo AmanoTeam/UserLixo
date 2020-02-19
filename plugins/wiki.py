@@ -1,5 +1,7 @@
 from pyrogram import Client, Filters
 
+from config import cmds
+
 import desciclopedia
 import wikipedia
 
@@ -18,3 +20,6 @@ async def wiki(client, message):
     wikipedia.set_lang('pt')
     a = wikipedia.page(a[0])
     await message.edit(f'[{a.title}]({a.url}):\n\n{a.content[:910]+"..."}')
+
+cmds.update({'.wiki':'Search meaning of a word on wikipedia',
+             '.dwiki':'Search meaning of a word on desciclopedia'})
