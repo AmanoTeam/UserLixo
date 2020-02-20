@@ -49,7 +49,7 @@ async def ytdlv(client, message):
     filename = glob(f"{filename}.*")[0]
 
     if vid:
-        await client.send_video(message.chat.id, filename, caption=yt["title"], duration=yt['duration'],
+        await client.send_video(message.chat.id, filename, width=int(1920), height=int(1080), caption=yt["title"], duration=yt['duration'],
                           thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
     else:
         if ' - ' in yt["title"]:
