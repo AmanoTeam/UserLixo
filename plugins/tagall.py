@@ -1,7 +1,8 @@
 from pyrogram import Client, Filters
 
 from config import cmds
-
+import html
+char = html.unescape('&#8204;')
 
 @Client.on_message(Filters.command("tagall", prefixes=".") & Filters.me)
 async def tagall(client, message):
