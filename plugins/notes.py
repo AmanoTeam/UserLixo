@@ -54,7 +54,7 @@ async def onnotes(client, message):
         if not len(notes):
             await message.edit("No notes have been created yet.")
         else:
-            text = "\n".join(['<code>%s</code>'.format(html.escape(note_key)) for note_key in notes.keys()])
+            text = "Saved notes:\n"+"\n".join(['- <code>{}</code>'.format(html.escape(note_key)) for note_key in notes.keys()])
             await message.edit(text)
     else:
         command = parts[1]
@@ -64,6 +64,8 @@ async def onnotes(client, message):
             await client.send_document("me", document="notes.json")
             os.remove('notes.json')
             await message.edit("notes.json sent to Saved Messages.")
+        elif command == 'remove':
+            pass #soon
 
 @Client.on_message(Filters.regex("^#") & Filters.me)
 async def onsharp(client, message):
