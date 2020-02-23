@@ -74,7 +74,7 @@ async def onnotes(client, message):
                 else:
                     await message.edit(f"There isn't a note named '<code>{html.escape(note_key)}</code>'.")
             else:
-                first_key = list(notes.keys())[0
+                first_key = list(notes.keys())[0]
                 await message.edit(f"Missing argument: you need to specify the note you want to remove. Example: <code>.notes remove {html.escape(first_key)}</code>")
 
 @Client.on_message(Filters.regex("^#") & Filters.me)
