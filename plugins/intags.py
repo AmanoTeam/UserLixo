@@ -3,8 +3,8 @@ import re
 
 @Client.on_message(Filters.regex(r'[\s\S]*\<py\>[\s\S]+\</py\>') & Filters.me)
 async def pytag(client, message):
-	for match in re.finditer(r'\<py\>(.+?)\</py\>', message.text):
-	    strio = io.StringIO()
+    for match in re.finditer(r'\<py\>(.+?)\</py\>', message.text):
+        strio = io.StringIO()
         code = match[1].strip()
         exec('async def __ex(client, message): ' + ' '.join('\n ' + l for l in code.split('\n')))
         with redirect_stdout(strio):
