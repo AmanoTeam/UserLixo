@@ -9,6 +9,22 @@ async def run_client():
 	    del db["restart"]
 	    save(db)
 	
+	# Saving the account data on startup
+	a = (await config.app.get_profile_photos("me", limit=1))[0]
+    try:
+        await config.app.download_media(a.file_id, a.file_ref, file_name='./avatar.jpg')
+        b = await config.app.get_chat("me")
+        personal_data = dict(
+            first_name=b.first_name,
+            last_name=b.last_name or '',
+            description=b.description or ''
+        )
+        db['personal_data'] = personal_data
+        save(db)
+        print('Personal account data updated!')
+    except Exception as e:
+        print(f'Could not save the personal account data on startup. Cause: {e}')
+        
 	await config.app.idle()
 
 loop = asyncio.get_event_loop()
