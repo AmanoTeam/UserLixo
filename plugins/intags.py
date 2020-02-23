@@ -1,5 +1,7 @@
 from pyrogram import Client, Filters
 import re
+import io
+import html
 
 @Client.on_message(Filters.regex(r'[\s\S]*\<py\>[\s\S]+\</py\>') & Filters.me)
 async def pytag(client, message):
@@ -18,3 +20,4 @@ async def pytag(client, message):
         else:
             out = "<py></py>"
         message.text = message.text.replace(match[0], out)
+    message.edit(message.text)
