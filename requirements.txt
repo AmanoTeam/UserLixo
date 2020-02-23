@@ -9,3 +9,4 @@ dicioinformal
 gtts
 wikipedia
 desciclopedia
+pySmartDL
