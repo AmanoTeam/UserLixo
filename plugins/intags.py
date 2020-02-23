@@ -23,4 +23,4 @@ async def pytag(client, message):
         else:
             out = "<py></py>"
         message.text = message.text.replace(match[0], out)
-    message.edit(message.text)
+    await message.edit(message.text)
