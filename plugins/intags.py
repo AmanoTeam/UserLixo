@@ -36,7 +36,7 @@ async def shtag(client, message):
 
 @Client.on_message(Filters.regex(r'.*<#.+?>') & Filters.me)
 async def sharptag(client, message):
-	changed = False
+    changed = False
     for match in re.finditer(r'<#(.+?)>', message.text):
         note_key = match[1]
         exists = note_key in db['notes']
