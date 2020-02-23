@@ -89,10 +89,19 @@ async def onsharp(client, message):
     if exists:
         note_obj = db['notes'][note_key]
         if note_obj['type'] == 'text':
-            await message.edit(note_obj['value'])
-
+            text = note_obj['value']
+            msg = await message.edit(text)
+            
+            if text.startswith('.exec'):
+                from plugins.execs import execs
+                await execs(client, msg)
+            elif text.startswith('.cmd'):
+                from plugins.cmd import cmd
+                await cmd(client, msg)
+            
+            
 cmds.update({
-    ".note": "Add/update a note",
+    ".note": "Add/update a note. Pass the name of the note as second parameter and the value after (or reply to a message to use its contents)",
     ".notes": "List the saved notes.",
     ".notes backup": "Backup the notes into Saved Messages",
     ".notes remove": "Remove the specified note",
