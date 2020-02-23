@@ -74,8 +74,12 @@ async def onnotes(client, message):
                 else:
                     await message.edit(f"There isn't a note named '<code>{html.escape(note_key)}</code>'.")
             else:
-                first_key = list(notes.keys())[0]
-                await message.edit(f"Missing argument: you need to specify the note you want to remove. Example: <code>.notes remove {html.escape(first_key)}</code>")
+                keys = list(notes.keys())
+                if len(keys):
+                    example_key = keys[0]
+                else:
+                    example_key = 'note_key'
+                await message.edit(f"Missing argument: you need to specify the note you want to remove.\nExample: <code>.notes remove {html.escape(example_key)}</code>")
 
 @Client.on_message(Filters.regex("^#") & Filters.me)
 async def onsharp(client, message):
