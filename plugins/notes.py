@@ -65,7 +65,17 @@ async def onnotes(client, message):
             os.remove('notes.json')
             await message.edit("notes.json sent to Saved Messages.")
         elif command == 'remove':
-            pass #soon
+            if len(parts) == 3:
+                note_key = parts[2]
+                if note_key in notes:
+                    del db['notes'][note_key]
+                    save(db)
+                    await message.edit(f"Note '<code>{html.escape(note_key)}</code>' deleted.")
+                else:
+                    await message.edit(f"There isn't a note named '<code>{html.escape(note_key)}</code>'.")
+            else:
+                first_key = list(notes.keys())[0
+                await message.edit(f"Missing argument: you need to specify the note you want to remove. Example: <code>.notes remove {html.escape(first_key)}</code>")
 
 @Client.on_message(Filters.regex("^#") & Filters.me)
 async def onsharp(client, message):
@@ -78,7 +88,9 @@ async def onsharp(client, message):
             await message.edit(note_obj['value'])
 
 cmds.update({
-    "note": "Add/update a note",
-    "notes": "List the saved notes. Pass 'backup' as argument to get a backup file",
+    ".note": "Add/update a note",
+    ".notes": "List the saved notes.",
+    ".notes backup": "Backup the notes into Saved Messages",
+    ".notes remove": "Remove the specified note",
     "#<note>": html.escape("Get a note. Replace '<note>' with the note key")
 })
