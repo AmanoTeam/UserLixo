@@ -3,6 +3,7 @@ import re
 import io
 import html
 import traceback
+import subprocess
 from contextlib import redirect_stdout
 from config import cmds
 
@@ -22,5 +23,16 @@ async def pytag(client, message):
             out = f"{html.escape(strio.getvalue())}"
         else:
             out = "<py></py>"
-        message.text = message.text.replace(match[0], out)
+        message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
+
+@Client.on_message(Filters.regex(r'[\s\S]*\<sh\>[\s\S]+\</sh\>') & Filters.me)
+async def pytag(client, message):
+    for match in re.finditer(r'\<sh\>(.+?)\</sh\>', message.text):
+        out = subprocess.getstatusoutput(match[1])[1] or '<sh></sh>'
+        message.text = message.text.replace(match[0], html.escape(out))
+    await message.edit(message.text)
+cmds.update({
+    '<py>':'Run the python code inside the tag and replace it with the result',
+    '<sh>':'Run the shell command inside the tag and replace it with the result'
+})
