@@ -1,11 +1,12 @@
 import json
 
 try:
-    db = json.load(open('db.json', 'r'))
+	with open('db.json', 'r') as fp:
+        db = json.load(fp)
 except FileNotFoundError:
-    with open('db.json', 'w') as memoria:
-        memoria.write('{"chats": {}, "privates": {}}')
-    db = json.load(open('db.json', 'r'))
+	db = {"chats": {}, "privates": {}, "personal_data":{}, "notes":{}}
+    with open('db.json', 'w') as fp:
+        json.dump(db, fp)
 
 
 def save(rq):
