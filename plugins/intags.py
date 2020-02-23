@@ -7,9 +7,9 @@ import subprocess
 from contextlib import redirect_stdout
 from config import cmds
 
-@Client.on_message(Filters.regex(r'[\s\S]*\<py\>[\s\S]+\</py\>') & Filters.me)
+@Client.on_message(Filters.regex(r'.*<py>.+</py>', re.S) & Filters.me)
 async def pytag(client, message):
-    for match in re.finditer(r'\<py\>(.+?)\</py\>', message.text):
+    for match in re.finditer(r'<py>(.+?)</py>', message.text):
         strio = io.StringIO()
         code = match[1].strip()
         exec('async def __ex(client, message): ' + ' '.join('\n ' + l for l in code.split('\n')))
@@ -26,12 +26,13 @@ async def pytag(client, message):
         message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
 
-@Client.on_message(Filters.regex(r'[\s\S]*\<sh\>[\s\S]+\</sh\>') & Filters.me)
-async def pytag(client, message):
-    for match in re.finditer(r'\<sh\>(.+?)\</sh\>', message.text):
+@Client.on_message(Filters.regex(r'.*<sh>.+</sh>') & Filters.me)
+async def shtag(client, message):
+    for match in re.finditer(r'<sh>(.+?)</sh>', message.text):
         out = subprocess.getstatusoutput(match[1])[1] or '<sh></sh>'
         message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
+
 cmds.update({
     '<py>':'Run the python code inside the tag and replace it with the result',
     '<sh>':'Run the shell command inside the tag and replace it with the result'
