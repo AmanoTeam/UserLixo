@@ -23,7 +23,10 @@ async def onnote(client, message):
                 media = msg.audio or msg.document or msg.photo or msg.sticker or msg.video or msg.animation or msg.voice or msg.video_note
                 if not media:
                     return await message.edit('Non-supported media')
-                note_obj = dict(type='media', value={"file_id":media.file_id, "file_ref":media.file_ref, "caption":msg.caption})
+                note_value = {"file_id":media.file_id, "file_ref":media.file_ref}
+                if msg.caption:
+                    note_value['caption'] = msg.caption
+                note_obj = dict(type='media', value=note_value)
             else:
                 return await message.edit('Nothing to save here.')
             
