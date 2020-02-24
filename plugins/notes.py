@@ -80,6 +80,8 @@ async def onnotes(client, message):
                 else:
                     example_key = 'note_key'
                 await message.edit(f"Missing argument: you need to specify the note you want to remove.\nExample: <code>.notes remove {html.escape(example_key)}</code>")
+        elif command == 'merge':
+            pass # soon
 
 @Client.on_message(Filters.regex("^#") & Filters.me)
 async def onsharp(client, message):

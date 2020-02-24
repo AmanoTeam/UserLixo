@@ -5,7 +5,10 @@ from db import db, save
 async def run_client():
     await config.app.start()
     if "restart" in db:
-        await config.app.edit_message_text(db["restart"]["cid"], db["restart"]["mid"], 'Reiniciado')
+        text = 'Restarted'
+        if 'branch' in db['restart']:
+            text += f". Upgraded from the branch '<code>{db['restart']['branch']}</code>'"
+        await config.app.edit_message_text(db["restart"]["cid"], db["restart"]["mid"], text)
         del db["restart"]
         save(db)
     
