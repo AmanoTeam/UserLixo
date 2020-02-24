@@ -19,8 +19,13 @@ async def onnote(client, message):
             msg = message.reply_to_message
             if msg.text:
                 note_obj = dict(type='text', value=msg.text)
+            elif msg.media:
+                media = msg.audio or msg.document or msg.photo or msg.sticker or msg.video or msg.animation or msg.voice or msg.video_note
+                if not media:
+                    return await message.edit('Non-supported media')
+                note_obj = dict(type='media', value={"file_id":media.file_id, "file_ref":media.file_ref, "caption":msg.caption})
             else:
-                return await message.edit('Saving nontextual notes is not supported yet')
+                return await message.edit('Nothing to save here.')
             
             db['notes'][note_key] = note_obj
             save(db)
@@ -31,6 +36,9 @@ async def onnote(client, message):
                 note_obj = db['notes'][note_key]
                 if note_obj['type'] == 'text':
                     await message.edit(note_obj['value'])
+                elif note_obj['type'] == 'media':
+                    await message.delete()
+                    await client.send_cached_media(message.chat.id, **note_obj['value'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
             else:
                 await message.edit(f"There isn't a note named '<code>{html.escape(note_key)}</code>'.")
     else:
@@ -100,6 +108,9 @@ async def onsharp(client, message):
             elif text.startswith('.cmd'):
                 from plugins.cmd import cmd
                 await cmd(client, msg)
+        elif note_obj['type'] == 'media':
+            await message.delete()    
+            await client.send_cached_media(message.chat.id, **note_obj['value'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
             
             
 cmds.update({

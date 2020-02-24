@@ -27,7 +27,7 @@ async def run_client():
         print('Personal account data updated!')
     except Exception as e:
         print(f'Could not save the personal account data on startup. Cause: {e}')
-        
+    
     await config.app.idle()
 
 loop = asyncio.get_event_loop()
