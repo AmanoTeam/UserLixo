@@ -7,6 +7,7 @@ import subprocess
 from contextlib import redirect_stdout
 from config import cmds
 from db import db
+from utils import meval
 
 @Client.on_message(Filters.regex(r'.*<py>.+</py>', re.S) & Filters.me)
 async def pytag(client, message):
@@ -50,9 +51,20 @@ async def sharptag(client, message):
     if changed:
         await message.edit(message.text)
         
-
+@Client.on_message(Filters.regex(r'.*<ev>.+</ev>') & Filters.me)
+async def evtag(client, message):
+    for match in re.finditer(r'<ev>(.+?)</ev>', message.text):
+        try:
+            res = (await meval(match[1], locals())) or '<ev></ev>'
+        except:
+            return await message.reply_text(traceback.format_exc()) 
+        else:
+            message.text = message.text.replace(match[0], html.escape(str(res)))
+    await message.edit(message.text)
+        
 cmds.update({
     '<py>':'Run the python code inside the tag and replace it with the result',
     '<sh>':'Run the shell command inside the tag and replace it with the result',
+    '<ev>': 'Evaluate the inner content with Python and replace the tag with the result',
     '<#%note>': "Search for a note named %note (replace with the name of the wanted note) and replace the tag with it",
 })

@@ -1,8 +1,8 @@
 from pyrogram import Client
 
 plugins = dict(root="plugins")
-api_id = ''
-api_hash = ''
+api_id = '{api_id}'
+api_hash = '{api_hash}'
 app = Client("my_account", api_id, api_hash, plugins=plugins)
 
 cmds = {}
