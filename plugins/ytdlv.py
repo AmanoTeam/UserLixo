@@ -22,11 +22,11 @@ async def ytdlv(client, message):
     url = message.text[7:]
     if '-m4a' in url:
         url = url.replace(' -m4a','')
-        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'format': '140', 'noplaylist': True})
+        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(id)s%(ext)s', 'format': '140', 'noplaylist': True})
         vid = False
     else:
         url = url.replace(' -mp4','')
-        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'noplaylist': True})
+        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(id)s%(ext)s', 'noplaylist': True})
         vid = True
     if 'youtu.be' not in url and 'youtube.com' not in url:
         yt = await extract_info(ydl, 'ytsearch:' + url, download=False)
@@ -45,11 +45,11 @@ async def ytdlv(client, message):
         with open(f'{ctime}.png', 'wb') as f:
             f.write(await r.read())
     # Workaround for when youtube-dl changes file extension without telling us.
-    filename = ydl.prepare_filename(yt).rsplit(".", 1)[0]
-    filename = glob(f"{filename}.*")[0]
+    os.rename('dls/'+yt['id']+'mp4', 'dls/'+yt['title']+'.mp4')
+    
 
     if vid:
-        await client.send_video(message.chat.id, filename, width=int(1920), height=int(1080), caption=yt["title"], duration=yt['duration'],
+        await client.send_video(message.chat.id, 'dls/'+yt['title']+'.mp4', width=int(1920), height=int(1080), caption=yt["title"], duration=yt['duration'],
                           thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
     else:
         if ' - ' in yt["title"]:
@@ -57,11 +57,11 @@ async def ytdlv(client, message):
         else:
             performer = yt.get('creator') or yt.get('uploader')
             title = yt["title"]
-        await client.send_audio(message.chat.id, filename, title=title, performer=performer, duration=yt['duration'],
+        await client.send_audio(message.chat.id, 'dls/'+yt['title']+'.mp4', width=int(1920), height=int(1080), title=title, performer=performer, duration=yt['duration'],
                           thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
 
     await message.delete()
-    os.remove(filename)
+    os.remove('dls/'+yt['title']+'.mp4')
     os.remove(f'{ctime}.png')
 
 
