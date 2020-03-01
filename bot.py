@@ -8,7 +8,7 @@ from db import db, save
 
 async def run_client():
     await config.app.start()
-    config.app.set_parse_mode('html')
+    config.app.set_parse_mode('combined')
     if "restart" in db:
         text = 'Restarted'
         if 'branch' in db['restart']:
