@@ -9,7 +9,7 @@ async def onsed(client, message):
         return
     match = message.matches[0]
     flags = 0
-    if 'flags' in match.groupdict():
+    if match['flags']:
         for flag in match['flags']:
             flag = switch_case(flag.lower(), {
                 'i': re.I,
