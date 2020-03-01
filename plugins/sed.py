@@ -3,7 +3,7 @@ from config import cmds
 from utils import switch_case
 import re
 
-@Client.on_message(Filters.regex("s/(?P<search>.+)/(?P<replace>.+)(?:/(?P<flags>.+))?") & Filters.me)
+@Client.on_message(Filters.regex(r"\.?s/(?P<search>.+)/(?P<replace>.+)(?:/(?P<flags>.+))?") & Filters.me)
 async def onsed(client, message):
     if not message.reply_to_message or not message.reply_to_message.from_user or message.reply_to_message.from_user.id != (await client.get_me()).id:
         return
