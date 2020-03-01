@@ -1,9 +1,14 @@
-import config
+try:
+    import config
+except ModuleNotFoundError:
+	import GenerateStringSession
+	import config
 import asyncio
 from db import db, save
 
 async def run_client():
     await config.app.start()
+    config.app.set_parse_mode('html')
     if "restart" in db:
         text = 'Restarted'
         if 'branch' in db['restart']:
