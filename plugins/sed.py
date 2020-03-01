@@ -22,5 +22,5 @@ async def onsed(client, message):
             if flag != None:
                 flags |= flag
     text = message.reply_to_message.text.html
-    text = re.sub(match['search'], message['replace'], 0, flags)
+    text = re.sub(match['search'], match['replace'], 0, flags)
     await message.reply_to_message.edit(text, parse_mode="HTML")
