@@ -1,10 +1,8 @@
 import os
+import utils
 
 from pyrogram import Client, Filters
-
-import utils
 from config import cmds
-
 
 @Client.on_message(Filters.command("backup", prefixes='.') & Filters.me)
 async def backup(client, message):
