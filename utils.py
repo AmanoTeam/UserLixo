@@ -92,3 +92,11 @@ async def meval(code, local_vars):
     finally:
         globals().update(**globs)
     return r
+
+def switch_case(switch, cases):
+    if switch in cases:
+        return cases[switch]
+    elif 'default_case' in cases:
+        return cases['default_case']
+    else:
+        return None
