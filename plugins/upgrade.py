@@ -8,7 +8,6 @@ from config import cmds
 
 from db import db, save
 
-
 @Client.on_message(Filters.command("upgrade", prefixes=".") & Filters.me)
 async def upgrade(client, message):
     branch = 'master'
