@@ -25,7 +25,7 @@ async def tts(client, message):
         if message.reply_to_message.text:
             txt = message.reply_to_message.text
         elif message.reply_to_message.document:
-            path = await message.reply_to_message.download(message.message_id+message.reply_to_message.message_id+'tts')
+            path = await message.reply_to_message.download(f'{message.message_id}_{message.reply_to_message.message_id}_tts')
             with open(path) as fp:
                 txt = fp.read()
                 os.remove(fp.name)
