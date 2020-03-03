@@ -5,6 +5,8 @@ except ModuleNotFoundError:
 	import config
 import asyncio
 from db import db, save
+import pyrogram
+pyrogram.test = "Tested!!!"
 
 async def run_client():
     await config.app.start()
