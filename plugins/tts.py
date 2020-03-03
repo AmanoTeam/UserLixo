@@ -28,6 +28,7 @@ async def tts(client, message):
             path = await message.reply_to_message.download(message.message_id+message.reply_to_message.message_id+'tts')
             with open(path) as fp:
                 txt = fp.read()
+                os.remove(fp.name)
         else:
             return await message.edit('Nothing to use')
     gtts = gTTS(txt, lang=langs)
