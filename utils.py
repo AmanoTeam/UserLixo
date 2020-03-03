@@ -1,22 +1,24 @@
 import os
 import time
 import zipfile
-
+import pyrogram
 import ast
 import importlib.util
 import types
+import asyncio
+
 from asyncio.futures import Future
 from functools import wraps, partial
 from typing import Coroutine, Callable
-from asyncio import get_event_loop
 
+loop = asyncio.get_event_loop()
 
 def aiowrap(fn: Callable) -> Coroutine:
     @wraps(fn)
     def decorator(*args, **kwargs):
         wrapped = partial(fn, *args, **kwargs)
 
-        return get_event_loop().run_in_executor(None, wrapped)
+        return loop.run_in_executor(None, wrapped)
 
     return decorator
 

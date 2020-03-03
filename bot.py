@@ -1,41 +1,44 @@
-try:
-    import config
-except ModuleNotFoundError:
-	import GenerateStringSession
-	import config
+import config
 import asyncio
-from db import db, save
 import pyrogram
-pyrogram.test = "Tested!!!"
+import sys
+import os
 
-async def run_client():
-    await config.app.start()
-    config.app.set_parse_mode('combined')
+from db import db, save
+
+async def run_client(client):
+    try:
+        await client.start()
+    except AttributeError as e:
+        return print(str(e).split('. ')[0]+f". Run '{os.path.basename(sys.executable)} setup.py' first.")
+    client.set_parse_mode('combined')
+    
     if "restart" in db:
         text = 'Restarted'
         if 'branch' in db['restart']:
             text += f". Upgraded from the branch '<code>{db['restart']['branch']}</code>'"
-        await config.app.edit_message_text(db["restart"]["cid"], db["restart"]["mid"], text)
+        await client.edit_message_text(db["restart"]["cid"], db["restart"]["mid"], text)
         del db["restart"]
         save(db)
     
     # Saving the account data on startup
-    a = (await config.app.get_profile_photos("me", limit=1))[0]
+    photo = (await client.get_profile_photos("me", limit=1))[0]
     try:
-        await config.app.download_media(a.file_id, a.file_ref, file_name='./avatar.jpg')
-        b = await config.app.get_chat("me")
+        await client.download_media(photo.file_id, photo.file_ref, file_name='./avatar.jpg')
+        info = await client.get_chat("me")
         personal_data = dict(
-            first_name=b.first_name,
-            last_name=b.last_name or '',
-            description=b.description or ''
+            first_name=info.first_name,
+            last_name=info.last_name or '',
+            description=info.description or ''
         )
+        
         db['personal_data'] = personal_data
         save(db)
         print('Personal account data updated!')
     except Exception as e:
         print(f'Could not save the personal account data on startup. Cause: {e}')
     
-    await config.app.idle()
+    await client.idle()
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(run_client())
+loop.run_until_complete(run_client(config.app))
