@@ -22,7 +22,14 @@ async def tts(client, message):
     if not langs:
         langs = 'pt-BR'
     if not txt and message.reply_to_message:
-        txt = message.reply_to_message.text
+        if message.reply_to_message.text:
+            txt = message.reply_to_message.text
+        elif message.reply_to_message.document:
+            path = await message.reply_to_message.download(message.message_id+message.reply_to_message.message_id+'tts')
+            with open(path) as fp:
+                txt = fp.read()
+        else:
+            return await message.edit('Nothing to use')
     gtts = gTTS(txt, lang=langs)
     ctime = time.time()
     gtts.save(f'{ctime}.mp3')
