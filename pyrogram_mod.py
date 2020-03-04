@@ -1,7 +1,7 @@
 import asyncio
 import functools
 import pyrogram
-from pyrogram import *
+from pyrogram_mod import *
 
 loop = asyncio.get_event_loop()
 
@@ -38,4 +38,4 @@ class MessageHandler(MessageHandler):
 			callback(client, message, *args)
 
 pyrogram.client.client.Client = Client
-pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
+pyrogram.MessageHandler = pyrogram.client.handlers.MessageHandler = pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler

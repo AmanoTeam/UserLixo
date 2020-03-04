@@ -1,6 +1,6 @@
 import os
 
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 from pyrogram.api import functions
 from pyrogram.errors import BadRequest, UsernameNotOccupied, UsernameInvalid, PeerIdInvalid
 
@@ -54,7 +54,7 @@ async def fake(client, message):
                 os.remove(a)
             except:
                 pass
-        # TODO: Switch to client.update_profile when the next pyrogram version is released.
+        # TODO: Switch to client.update_profile when the next pyrogram_modversion is released.
         await client.send(
             functions.account.UpdateProfile(
                 first_name=dat['first_name'], last_name=dat['last_name'],

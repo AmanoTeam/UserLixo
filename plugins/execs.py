@@ -4,7 +4,7 @@ import html
 import traceback
 from contextlib import redirect_stdout
 
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 
 from config import cmds
 

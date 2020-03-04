@@ -1,6 +1,5 @@
 import config
 import asyncio
-import pyrogram
 import sys
 import os
 

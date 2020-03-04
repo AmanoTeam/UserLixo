@@ -1,7 +1,7 @@
 import os
 import sys
 
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 
 from db import db, save
 from config import cmds

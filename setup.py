@@ -1,7 +1,7 @@
 import asyncio
 import configparser
 
-from pyrogram import Client
+from pyrogram_mod import Client
 
 print('Creating config.ini...')
 
