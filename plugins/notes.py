@@ -2,7 +2,7 @@ import html
 import os
 import json
 
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 from config import cmds
 from db import db, save
 

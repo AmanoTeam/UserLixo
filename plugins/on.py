@@ -4,7 +4,7 @@ from datetime import datetime
 
 from config import cmds
 
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 
 
 @Client.on_message(Filters.command(["on", "off"], prefixes=".") & Filters.me)

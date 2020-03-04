@@ -1,6 +1,6 @@
 import os
 
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 from pyrogram.api import functions
 from pyrogram.errors import BadRequest, UsernameNotOccupied, UsernameInvalid, PeerIdInvalid
 

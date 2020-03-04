@@ -1,4 +1,4 @@
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 import re
 import io
 import html

@@ -1,7 +1,7 @@
 import html
 
 from config import cmds
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 
 @Client.on_message(Filters.command("help", prefixes=".") & Filters.me)
 async def chelp(client, message):

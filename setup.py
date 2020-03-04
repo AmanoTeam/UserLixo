@@ -3,7 +3,7 @@ import sys
 import asyncio
 import configparser
 
-from pyrogram_mod import Client
+from pyrogram import Client
 
 print('Creating config.ini...')
 
