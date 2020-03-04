@@ -13,7 +13,7 @@ class Client(Client):
         super().__init__(*args, **kwargs)
 
     def listen(self, chat_id, filters=None, timeout=300):
-        chat = await self.get_chat(chat_id)
+        chat = loop.run_until_complete(self.get_chat(chat_id))
         chat_id = chat.id
         
         future = loop.create_future()
