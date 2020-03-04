@@ -77,3 +77,4 @@ class User(User):
 pyrogram.Client = pyrogram.client.Client = pyrogram.client.client.Client = Client
 pyrogram.MessageHandler = pyrogram.client.handlers.MessageHandler = pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
 pyrogram.User = pyrogram.client.types.User = pyrogram.client.types.user_and_chats.User = pyrogram.client.types.user_and_chats.user.User = User
+pyrogram.Chat = pyrogram.client.types.Chat = pyrogram.client.types.user_and_chats.Chat = pyrogram.client.types.user_and_chats.chat.Chat = Chat
