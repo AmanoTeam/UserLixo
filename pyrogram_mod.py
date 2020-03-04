@@ -38,4 +38,4 @@ class MessageHandler(MessageHandler):
 			callback(client, message, *args)
 
 pyrogram.client.client.Client = Client
-pyrogram.client.handlers.MessageHandler = MessageHandler
+pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
