@@ -56,6 +56,7 @@ class MessageHandler(MessageHandler):
             await self.user_callback(client, message, *args)
             
     def check(self, update):
+        client = update._client
         listener = client.deferred_listeners[update.chat.id] if update.chat.id in client.deferred_listeners else None
         if listener and not listener.future.done() and (listener.filters(update) if callable(listener.filters) else True):
             return True
