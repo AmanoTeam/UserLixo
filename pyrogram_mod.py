@@ -1,7 +1,7 @@
 import asyncio
 import functools
 import pyrogram
-from pyrogram_mod import *
+from pyrogram import *
 
 loop = asyncio.get_event_loop()
 
