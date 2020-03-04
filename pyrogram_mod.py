@@ -24,5 +24,16 @@ class Client(Client):
     def remove_future(self, chat_id, future):
         if future == self.deferred_listeners[chat_id]:
             self.deferred_listeners.pop(chat_id, None)
-            
+
+class MessageHandler(MessageHandler):
+	def __init__(self, callback: callable, filters=None):
+		super().__init__(functools.partial(self.retrieveListener, callback), filters)
+	
+	def retrieveListener(self, callback, client, message, *args):
+		if message.chat and message.chat.id in client.deferred_listeners:
+			client.deferred_listeners[message.chat.id].set_result(message)
+		else:
+			callback(client, message, *args)
+
 pyrogram.client.client.Client = Client
+pyrogram.client.handlers.MessageHandler = MessageHandler
