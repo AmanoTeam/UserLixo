@@ -4,7 +4,7 @@ import pyrogram
 from pyrogram import *
 
 loop = asyncio.get_event_loop()
-        
+
 class Client(Client):
     def __init__(self, *args, **kwargs):
         # print('Client.__init__ called')
@@ -13,6 +13,9 @@ class Client(Client):
         super().__init__(*args, **kwargs)
 
     def listen(self, chat_id, filters=None, timeout=300):
+        chat = await self.get_chat(chat_id)
+        chat_id = chat.id
+        
         future = loop.create_future()
         future.add_done_callback(
             functools.partial(self.clearListener, chat_id)
@@ -62,5 +65,15 @@ class MessageHandler(MessageHandler):
             else True
         )
 
+class Chat(Chat):
+	def listen(self, *args, **kwargs):
+		return self._client.listen(self.id, *args, **kwargs)
+
+class User(User):
+	def listen(self, *args, **kwargs):
+		return self._client.listen(self.id, *args, **kwargs)
+
+
 pyrogram.Client = pyrogram.client.Client = pyrogram.client.client.Client = Client
 pyrogram.MessageHandler = pyrogram.client.handlers.MessageHandler = pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
+pyrogram.User = pyrogram.client.types.User = pyrogram.client.types.user_and_chats.User = pyrogram.client.types.user_and_chats.user.User = User
