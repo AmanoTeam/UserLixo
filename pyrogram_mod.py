@@ -66,5 +66,5 @@ class MessageHandler(MessageHandler):
             else True
         )
 
-pyrogram.client.client.Client = Client
+pyrogram.Client = pyrogram.client.Client = pyrogram.client.client.Client = Client
 pyrogram.MessageHandler = pyrogram.client.handlers.MessageHandler = pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
