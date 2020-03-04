@@ -2,6 +2,7 @@ import config
 import asyncio
 import sys
 import os
+import pyrogram_mod
 
 from db import db, save
 
