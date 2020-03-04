@@ -1,0 +1,28 @@
+import asyncio
+import functools
+import pyrogram
+from pyrogram import *
+
+loop = asyncio.get_event_loop()
+
+class Client(Client):
+    def __init__(self, *args, **kwargs):
+        self.deferred_listeners = {}
+        
+        super().__init__(*args, **kwargs)
+
+    def listen(self, chat_id, timeout=300):
+        future = loop.create_future()
+        future.add_done_callback(
+            functools.partial(self.remove_future, chat_id)
+        )
+        self.deferred_listeners.update(
+            {chat_id: {"future": future}}
+        )
+        return asyncio.wait_for(future, timeout)
+        
+    def remove_future(self, chat_id, future):
+        if future == self.deferred_listeners[chat_id]:
+            self.deferred_listeners.pop(chat_id, None)
+            
+pyrogram.client.client.Client = Client
