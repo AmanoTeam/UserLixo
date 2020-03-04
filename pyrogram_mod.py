@@ -7,6 +7,7 @@ loop = asyncio.get_event_loop()
 
 class Client(Client):
     def __init__(self, *args, **kwargs):
+        print('Client.__init__ called')
         self.deferred_listeners = {}
         
         super().__init__(*args, **kwargs)
@@ -32,7 +33,7 @@ class MessageHandler(MessageHandler):
 		super().__init__(self.retrieveListener, filters)
 	
 	async def retrieveListener(self, client, message, *args):
-		print('retrieveListener called')
+		print('retrieveListener called with text ', message.text)
 		print('message.chat', message.chat)
 		print('message.chat.id', message.chat.id)
 		print('message.chat.id in client.deferred_listeners', message.chat.id in client.deferred_listeners)
