@@ -23,13 +23,19 @@ class Client(Client):
         self.deferred_listeners.update(
             {chat_id: {"future": future, "filters": filters}}
         )
-        return await asyncio.wait_for(future, timeout)
+        response = await asyncio.wait_for(future, timeout)
+        return response
         
+    async def ask(self, chat_id, text, filters=None, timeout=300, *args, **kwargs):
+        request = await self.send_message(chat_id, text, *args, **kwargs)
+        response = await self.listen(chat_id, filters, timeout)
+        return response
+       
     def clearListener(self, chat_id, future):
         # print('Future done')
         if future == self.deferred_listeners[chat_id]:
             self.deferred_listeners.pop(chat_id, None)
-
+            
 class MessageHandler(MessageHandler):
     def __init__(self, callback: callable, filters=None):
         self.user_callback = callback
@@ -68,11 +74,15 @@ class MessageHandler(MessageHandler):
 class Chat(Chat):
     def listen(self, *args, **kwargs):
         return self._client.listen(self.id, *args, **kwargs)
-
+    def ask(self, *args, **kwargs):
+        return self._client.ask(self.id, *args, **kwargs)
+        
 class User(User):
     def listen(self, *args, **kwargs):
         return self._client.listen(self.id, *args, **kwargs)
-
+    def ask(self, *args, **kwargs):
+        return self._client.ask(self.id, *args, **kwargs)
+        
 
 pyrogram.Client = pyrogram.client.Client = pyrogram.client.client.Client = Client
 pyrogram.MessageHandler = pyrogram.client.handlers.MessageHandler = pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
