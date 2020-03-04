@@ -13,7 +13,7 @@ class Client(Client):
         super().__init__(*args, **kwargs)
 
     def listen(self, chat_id, filters=None, timeout=300):
-        chat = loop.run_until_complete(self.get_chat(chat_id))
+        chat = asyncio.ensure_future(self.get_chat(chat_id)).result()
         chat_id = chat.id
         
         future = loop.create_future()
