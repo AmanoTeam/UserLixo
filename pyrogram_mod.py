@@ -66,12 +66,12 @@ class MessageHandler(MessageHandler):
         )
 
 class Chat(Chat):
-	def listen(self, *args, **kwargs):
-		return self._client.listen(self.id, *args, **kwargs)
+    def listen(self, *args, **kwargs):
+        return self._client.listen(self.id, *args, **kwargs)
 
 class User(User):
-	def listen(self, *args, **kwargs):
-		return self._client.listen(self.id, *args, **kwargs)
+    def listen(self, *args, **kwargs):
+        return self._client.listen(self.id, *args, **kwargs)
 
 
 pyrogram.Client = pyrogram.client.Client = pyrogram.client.client.Client = Client
