@@ -22,6 +22,7 @@ class Client(Client):
         return asyncio.wait_for(future, timeout)
         
     def remove_future(self, chat_id, future):
+        print('Future done')
         if future == self.deferred_listeners[chat_id]:
             self.deferred_listeners.pop(chat_id, None)
 
@@ -31,7 +32,13 @@ class MessageHandler(MessageHandler):
 		super().__init__(self.retrieveListener, filters)
 	
 	async def retrieveListener(self, client, message, *args):
+		print('retrieveListener called')
+		print('message.chat', message.chat)
+		print('message.chat.id', message.chat.id)
+		print('message.chat.id in client.deferred_listeners', message.chat.id in client.deferred_listeners)
+		print('client.deferred_listeners', client.deferred_listeners)
 		if message.chat and message.chat.id in client.deferred_listeners:
+			print('Setting result')
 			client.deferred_listeners[message.chat.id]['future'].set_result(message)
 		else:
 			await self.user_callback(client, message, *args)
