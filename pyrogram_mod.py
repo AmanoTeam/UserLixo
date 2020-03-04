@@ -31,7 +31,7 @@ class MessageHandler(MessageHandler):
 	
 	def retrieveListener(self, callback, client, message, *args):
 		if message.chat and message.chat.id in client.deferred_listeners:
-			client.deferred_listeners[message.chat.id].set_result(message)
+			client.deferred_listeners[message.chat.id]['future'].set_result(message)
 		else:
 			callback(client, message, *args)
 
