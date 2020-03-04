@@ -7,7 +7,7 @@ loop = asyncio.get_event_loop()
 
 class Client(Client):
     def __init__(self, *args, **kwargs):
-        print('Client.__init__ called')
+        # print('Client.__init__ called')
         self.deferred_listeners = {}
         
         super().__init__(*args, **kwargs)
@@ -23,7 +23,7 @@ class Client(Client):
         return asyncio.wait_for(future, timeout)
         
     def remove_future(self, chat_id, future):
-        print('Future done')
+        # print('Future done')
         if future == self.deferred_listeners[chat_id]:
             self.deferred_listeners.pop(chat_id, None)
 
@@ -33,15 +33,17 @@ class MessageHandler(MessageHandler):
 		super().__init__(self.retrieveListener, filters)
 	
 	async def retrieveListener(self, client, message, *args):
+		"""
 		print('retrieveListener called with text ', message.text)
 		print('message.chat', message.chat)
 		print('message.chat.id', message.chat.id)
 		print('message.chat.id in client.deferred_listeners', message.chat.id in client.deferred_listeners)
 		print('client.deferred_listeners', client.deferred_listeners)
+		"""
 		
 		future_exists = message.chat.id in client.deferred_listeners
 		if future_exists and not client.deferred_listeners[message.chat.id]['future'].done():
-			print('Setting result')
+			# print('Setting result')
 			client.deferred_listeners[message.chat.id]['future'].set_result(message)
 		else:
 			if future_exists and client.deferred_listeners[message.chat.id]['future'].done():
