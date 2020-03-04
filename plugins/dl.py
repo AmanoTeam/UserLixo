@@ -1,4 +1,4 @@
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 from pySmartDL import SmartDL
 from pyrogram.errors import MessageNotModified
 

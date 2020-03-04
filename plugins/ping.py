@@ -2,7 +2,7 @@ from datetime import datetime
 
 from config import cmds
 
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 
 
 @Client.on_message(Filters.command("ping", prefixes='.') & Filters.me)

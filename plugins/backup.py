@@ -1,7 +1,7 @@
 import os
 import utils
 
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 from config import cmds
 
 @Client.on_message(Filters.command("backup", prefixes='.') & Filters.me)

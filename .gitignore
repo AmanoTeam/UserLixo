@@ -2,8 +2,10 @@ __pycache__/
 .vscode/
 .idea/
 dls/
-config.py
+downloads/
 db.json
 *.session-journal
 *.session
 *.png
+*.jpg
+config.ini

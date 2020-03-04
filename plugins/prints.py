@@ -5,7 +5,7 @@ import time
 from config import cmds
 
 import chromeprinter
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 
 a = chromeprinter.Client()
 

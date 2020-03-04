@@ -4,7 +4,7 @@ import time
 from config import cmds
 
 from gtts import gTTS, lang
-from pyrogram import Client, Filters
+from pyrogram_mod import Client, Filters
 
 
 @Client.on_message(Filters.command("tts", prefixes=".") & Filters.me)

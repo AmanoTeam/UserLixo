@@ -2,38 +2,36 @@
 
 UserLixo
 =========
-
-Telegram's userbot
+Multipurpose Python userbot for Telegram
 
 Requirements
 ============
 - Python 3.6+
-- An Unix-like operating system (Windows may work, but isn't tested yet)
+- An Unix-like operating system
 
 Setup
 =====
-- Install the required modules from the requirements.txt with ``pip3 install -rU requirements.txt``
-- Go to https://my.telegram.org/apps and create a new app
-- run ``python3 GenerateStringSession.py`` to configure your UserBot
-- run ``python3 bot.py`` and login
+- Install the requirements by running ``pip3 install -rU requirements.txt``
+- Go to https://my.telegram.org/apps, create a new app and save its api_id and api_hash
+- Run ``python3 setup.py`` to save the configurations
+- Run ``python3 bot.py`` and login
 
 Running
 =======
-- To run the bot you just need to run ``python3 bot.py``
+- Just run ``python3 bot.py`` (you may also want to use tmux or screen to keep it running 24*7)
 
 Heroku
 ======
-- running on Heroku is not 100% stable
+Running on Heroku isn't stable and it’s not guaranteed to work
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
--  Run on Heroku console ``python3 GenerateStringSession.py``
+-  Follow the steps of the section "Setup"
 
-Note
+Notes
 ====
-If you find any bugs/issues with the bot you have three options:
-
-- Create a new issue in our [GitHub](https://github.com/AmanoTeam/UserLixo) describing the issue
-- Send the bug to [AmanoChat](https://t.me/AmanoChat)
-- If you know how to fix the issue, fork our repo and open up a pull request
+If you find any bugs/issues you can report them by:
+- Creating a new issue in this repo
+- Sending the issue details to [the chat on Telegram](https://t.me/AmanoChat)
+- If you know how to fix the issue, fork this repo and open up a pull request
 
 ©2020 - [AmanoTeam™](https://amanoteam.com)
