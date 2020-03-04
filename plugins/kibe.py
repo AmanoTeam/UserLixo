@@ -3,7 +3,7 @@ import os
 import time
 
 from PIL import Image
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 from pyrogram.api import functions, types
 from pyrogram.errors import StickersetInvalid
 

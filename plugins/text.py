@@ -1,7 +1,7 @@
 import asyncio
 from config import cmds
 
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 
 
 @Client.on_message(Filters.command("text", prefixes=".") & Filters.me)

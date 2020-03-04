@@ -6,7 +6,7 @@ import aiohttp
 import youtube_dl
 from config import cmds
 from utils import aiowrap
-from pyrogram_mod import Client, Filters
+from pyrogram import Client, Filters
 from pyrogram.errors import MessageNotModified
 
 last_edit = 0
