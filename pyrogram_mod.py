@@ -28,27 +28,27 @@ class Client(Client):
             self.deferred_listeners.pop(chat_id, None)
 
 class MessageHandler(MessageHandler):
-	def __init__(self, callback: callable, filters=None):
-		self.user_callback = callback
-		super().__init__(self.retrieveListener, filters)
-	
-	async def retrieveListener(self, client, message, *args):
-		"""
-		print('retrieveListener called with text ', message.text)
-		print('message.chat', message.chat)
-		print('message.chat.id', message.chat.id)
-		print('message.chat.id in client.deferred_listeners', message.chat.id in client.deferred_listeners)
-		print('client.deferred_listeners', client.deferred_listeners)
-		"""
-		
-		future_exists = message.chat.id in client.deferred_listeners
-		if future_exists and not client.deferred_listeners[message.chat.id]['future'].done():
-			# print('Setting result')
-			client.deferred_listeners[message.chat.id]['future'].set_result(message)
-		else:
-			if future_exists and client.deferred_listeners[message.chat.id]['future'].done():
-				client.remove_future(message.chat.id, client.deferred_listeners[message.chat.id]['future'])
-			await self.user_callback(client, message, *args)
+    def __init__(self, callback: callable, filters=None):
+        self.user_callback = callback
+        super().__init__(self.retrieveListener, filters)
+    
+    async def retrieveListener(self, client, message, *args):
+        """
+        print('retrieveListener called with text ', message.text)
+        print('message.chat', message.chat)
+        print('message.chat.id', message.chat.id)
+        print('message.chat.id in client.deferred_listeners', message.chat.id in client.deferred_listeners)
+        print('client.deferred_listeners', client.deferred_listeners)
+        """
+        
+        future_exists = message.chat.id in client.deferred_listeners
+        if future_exists and not client.deferred_listeners[message.chat.id]['future'].done():
+            # print('Setting result')
+            client.deferred_listeners[message.chat.id]['future'].set_result(message)
+        else:
+            if future_exists and client.deferred_listeners[message.chat.id]['future'].done():
+                client.remove_future(message.chat.id, client.deferred_listeners[message.chat.id]['future'])
+            await self.user_callback(client, message, *args)
 
 pyrogram.client.client.Client = Client
 pyrogram.MessageHandler = pyrogram.client.handlers.MessageHandler = pyrogram.client.handlers.message_handler.MessageHandler = MessageHandler
