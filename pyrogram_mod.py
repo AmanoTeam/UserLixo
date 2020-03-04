@@ -4,16 +4,11 @@ import pyrogram
 from pyrogram import *
 
 loop = asyncio.get_event_loop()
-
-class AttrDict(dict):
-    def __init__(self, *args, **kwargs):
-        super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self
         
 class Client(Client):
     def __init__(self, *args, **kwargs):
         # print('Client.__init__ called')
-        self.deferred_listeners = AttrDict()
+        self.deferred_listeners = {}
         
         super().__init__(*args, **kwargs)
 
@@ -58,7 +53,7 @@ class MessageHandler(MessageHandler):
     def check(self, update):
         client = update._client
         listener = client.deferred_listeners[update.chat.id] if update.chat.id in client.deferred_listeners else None
-        if listener and not listener.future.done() and (listener.filters(update) if callable(listener.filters) else True):
+        if listener and not listener['future'].done() and (listener['filters'](update) if callable(listener['filters']) else True):
             return True
             
         return (
