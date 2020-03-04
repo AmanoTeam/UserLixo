@@ -39,11 +39,12 @@ class MessageHandler(MessageHandler):
 		print('message.chat.id in client.deferred_listeners', message.chat.id in client.deferred_listeners)
 		print('client.deferred_listeners', client.deferred_listeners)
 		
-		if message.chat and message.chat.id in client.deferred_listeners and not client.deferred_listeners[message.chat.id]['future'].done():
+		future_exists = message.chat.id in client.deferred_listeners
+		if future_exists and not client.deferred_listeners[message.chat.id]['future'].done():
 			print('Setting result')
 			client.deferred_listeners[message.chat.id]['future'].set_result(message)
 		else:
-			if client.deferred_listeners[message.chat.id]['future'].done():
+			if future_exists and client.deferred_listeners[message.chat.id]['future'].done():
 				client.remove_future(message.chat.id, client.deferred_listeners[message.chat.id]['future'])
 			await self.user_callback(client, message, *args)
 
