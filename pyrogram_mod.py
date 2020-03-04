@@ -27,9 +27,11 @@ class Client(Client):
 
 class MessageHandler(MessageHandler):
 	def __init__(self, callback: callable, filters=None):
+		print('pyrogram_mod.MessageHandler initiated')
 		super().__init__(functools.partial(self.retrieveListener, callback), filters)
 	
 	def retrieveListener(self, callback, client, message, *args):
+		print('pyrogram_mod.MessageHandler.retrieveListener called')
 		if message.chat and message.chat.id in client.deferred_listeners:
 			client.deferred_listeners[message.chat.id]['future'].set_result(message)
 		else:
