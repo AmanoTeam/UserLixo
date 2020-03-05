@@ -3,7 +3,6 @@ import functools
 import pyrogram
 from pyrogram import *
 
-
 loop = asyncio.get_event_loop()
 
 class Client(Client):
