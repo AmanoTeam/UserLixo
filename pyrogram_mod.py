@@ -29,6 +29,7 @@ class Client(Client):
     async def ask(self, chat_id, text, filters=None, timeout=300, *args, **kwargs):
         request = await self.send_message(chat_id, text, *args, **kwargs)
         response = await self.listen(chat_id, filters, timeout)
+        response.request = request
         return response
        
     def clearListener(self, chat_id, future):
