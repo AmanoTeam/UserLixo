@@ -12,7 +12,7 @@ class Client(Client):
         
         super().__init__(*args, **kwargs)
 
-    async def listen(self, chat_id, filters=None, timeout=300):
+    async def listen(self, chat_id, filters=None, timeout=30):
         chat = await self.get_chat(chat_id)
         chat_id = chat.id
         
@@ -26,7 +26,7 @@ class Client(Client):
         response = await asyncio.wait_for(future, timeout)
         return response
         
-    async def ask(self, chat_id, text, filters=None, timeout=300, *args, **kwargs):
+    async def ask(self, chat_id, text, filters=None, timeout=30, *args, **kwargs):
         request = await self.send_message(chat_id, text, *args, **kwargs)
         response = await self.listen(chat_id, filters, timeout)
         response.request = request
