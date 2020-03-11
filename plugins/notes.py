@@ -107,7 +107,7 @@ async def onnotes(client, message):
                     added_notes.append(note_key)
                     db['notes'][note_key] = {key: note_obj[key] for key in note_obj.keys() & ['type', 'value']}
                 save(db)
-                await message.edit('Notes restored:\n'+"\n - ".join(added_notes))
+                await message.edit('Notes restored:\n - '+"\n - ".join(added_notes))
             except:
                 return await message.edit('An error ocurred while opening the json.')
             
