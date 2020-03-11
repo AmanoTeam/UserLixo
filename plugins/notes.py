@@ -100,7 +100,7 @@ async def onnotes(client, message):
                     restore = json.load(fp)
                 
                 added_notes = []
-                for note_key, note_obj of restore.items():
+                for note_key, note_obj in restore.items():
                     if not note_key or 'type' not in note_obj or 'value' not in note_obj:
                         return await message.edit('Invalid notes.json')
                     
