@@ -41,14 +41,14 @@ async def download(client, message):
                 await client.send_document(message.chat.id, loc,caption=url, progress=progress, progress_args=(client, message, a))
             except Exception as e:
                 await message.edit(f'an error has occurred: {e}')
-                os.remove(loc.split('dl/',1)[1])
+                os.remove('dl/'+name)
                 return
             up2 = time.time()
             dw = round(dw2-dw1, 3)
             up = round(up2-up1, 3)
             to = round(up2-dw1, 3)
             await message.edit(f'Status:\nDownload: `{dw}`s\nUpload: `{up}`s\nTotal: `{to}`s')
-            os.remove(loc.split('dl/',1)[1])
+            os.remove('dl/'+name)
 
 async def progress(current, total, c, m, a):
     global last_edit
