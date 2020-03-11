@@ -131,7 +131,7 @@ async def onsharp(client, message):
                 from plugins.cmd import cmd
                 await cmd(client, msg)
         elif note_obj['type'] == 'media':
-            await message.delete()    
+            await message.delete()
             await client.send_cached_media(message.chat.id, note_obj['value']['file_id'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
             
             
