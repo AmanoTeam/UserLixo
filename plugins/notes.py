@@ -41,7 +41,7 @@ async def onnote(client, message):
                     await message.edit(note_obj['value'])
                 elif note_obj['type'] == 'media':
                     await message.delete()
-                    await client.send_cached_media(message.chat.id, **note_obj['value'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
+                    await client.send_cached_media(message.chat.id, note_obj['value']['file_id'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
             else:
                 await message.edit(f"There isn't a note named '<code>{html.escape(note_key)}</code>'.")
     else:
@@ -132,7 +132,7 @@ async def onsharp(client, message):
                 await cmd(client, msg)
         elif note_obj['type'] == 'media':
             await message.delete()    
-            await client.send_cached_media(message.chat.id, **note_obj['value'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
+            await client.send_cached_media(message.chat.id, note_obj['value']['file_id'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
             
             
 cmds.update({
