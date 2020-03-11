@@ -1,14 +1,13 @@
 import asyncio
 import functools
 import pyrogram
-from pyrogram import *
-
 
 loop = asyncio.get_event_loop()
 
 class Client(Client):
     def __init__(self, *args, **kwargs):
         self.deferred_listeners = {}
+        self.using_mod = True
         
         super().__init__(*args, **kwargs)
 
