@@ -4,7 +4,7 @@ import pyrogram
 
 loop = asyncio.get_event_loop()
 
-class Client(Client):
+class Client(pyrogram.Client):
     def __init__(self, *args, **kwargs):
         self.deferred_listeners = {}
         self.using_mod = True
@@ -35,7 +35,7 @@ class Client(Client):
         if future == self.deferred_listeners[chat_id]:
             self.deferred_listeners.pop(chat_id, None)
             
-class MessageHandler(MessageHandler):
+class MessageHandler(pyrogram.MessageHandler):
     def __init__(self, callback: callable, filters=None):
         self.user_callback = callback
         super().__init__(self.resolveListener, filters)
@@ -61,13 +61,13 @@ class MessageHandler(MessageHandler):
             else True
         )
 
-class Chat(Chat):
+class Chat(pyrogram.Chat):
     def listen(self, *args, **kwargs):
         return self._client.listen(self.id, *args, **kwargs)
     def ask(self, *args, **kwargs):
         return self._client.ask(self.id, *args, **kwargs)
         
-class User(User):
+class User(pyrogram.User):
     def listen(self, *args, **kwargs):
         return self._client.listen(self.id, *args, **kwargs)
     def ask(self, *args, **kwargs):
