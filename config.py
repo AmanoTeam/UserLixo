@@ -1,4 +1,5 @@
-from pyrogram_mod import Client
+import pyrogram_mod
+from pyrogram import Client
 
 app = Client("my_account")
 

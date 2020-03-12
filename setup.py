@@ -24,6 +24,6 @@ async def init():
     await client.stop()
 
 loop = asyncio.get_event_loop()
-if not os.path.exists('my_account.session')
+if not os.path.exists('my_account.session'):
     loop.run_until_complete(init())
-print('Done.')
+print(f"Done. Now install the requirements (if not installed yet) and run '{os.path.basename(sys.executable)} bot.py'.")
