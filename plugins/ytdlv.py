@@ -57,7 +57,7 @@ async def ytdlv(client, message):
         else:
             performer = yt.get('creator') or yt.get('uploader')
             title = yt["title"]
-        await client.send_audio(message.chat.id, filename, width=int(1920), height=int(1080), title=title, performer=performer, duration=yt['duration'],
+        await client.send_audio(message.chat.id, filename,  title=title, performer=performer, duration=yt['duration'],
                           thumb=f'{ctime}.png', progress=progress, progress_args=(client, message, a))
 
     await message.delete()
