@@ -22,11 +22,11 @@ async def ytdlv(client, message):
     url = message.text.split(' ',1)[1]
     if '-m4a' in url:
         url = url.replace(' -m4a','')
-        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(id)s%(ext)s', 'format': '140', 'noplaylist': True})
+        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'format': '140', 'noplaylist': True})
         vid = False
     else:
         url = url.replace(' -mp4','')
-        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(id)s%(ext)s', 'noplaylist': True})
+        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'noplaylist': True})
         vid = True
     if 'youtu.be' not in url and 'youtube.com' not in url:
         yt = await extract_info(ydl, 'ytsearch:' + url, download=False)
