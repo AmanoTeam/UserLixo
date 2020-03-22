@@ -2,12 +2,21 @@ from pyrogram import Client, Filters
 from pySmartDL import SmartDL
 from pyrogram.errors import MessageNotModified
 
+from utils import aiowrap
 from config import cmds
 
 import os
 import time
 
 last_edit = 0
+
+@aiowrap
+def grogress(message, downloader):
+    a = str(downloader.get_progress())[:3]
+    while not downloader.isFinished():
+        if a != str(downloader.get_progress())[:3]:
+            a = str(downloader.get_progress())[:3]
+            await message.edit(f'downloading... {a}')
 
 @Client.on_message(Filters.command("dl", prefixes=".") & Filters.me)
 async def download(client, message):
@@ -26,11 +35,7 @@ async def download(client, message):
             await message.edit(f'an error has occurred: {e}')
             return
         await message.edit(f'downloading...')
-        a = str(downloader.get_progress())[:3]
-        while not downloader.isFinished():
-            if a != str(downloader.get_progress())[:3]:
-                    a = str(downloader.get_progress())[:3]
-                    await message.edit(f'downloading... {a}')
+        grogress(message, downloader)
         if downloader.isSuccessful():
             dw2 = time.time()
             up1 = time.time()
