@@ -13,13 +13,13 @@ last_edit = 0
 async def download(client, message):
     await message.edit("Processing ...")
     if not message.reply_to_message:
-        if '|' in message.text:
-            url, name = message.text[4:].split('|')
-        else:
-            url = message.text[4:]
-            name = message.text.split('/',--1)[1]
-        dw1 = time.time()
         try:
+            if '|' in message.text:
+                url, name = message.text[4:].split('|')
+            else:
+                url = message.text[4:]
+                name = message.text.split('/',--1)[1]
+            dw1 = time.time()
             downloader = SmartDL(url, './dl/'+name, progress_bar=False)
             downloader.start(blocking=False)
         except Exception as e:
