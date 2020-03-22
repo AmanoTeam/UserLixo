@@ -35,7 +35,7 @@ async def download(client, message):
             await message.edit(f'an error has occurred: {e}')
             return
         await message.edit(f'downloading...')
-        grogress(message, downloader)
+        await grogress(message, downloader)
         if downloader.isSuccessful():
             dw2 = time.time()
             up1 = time.time()
