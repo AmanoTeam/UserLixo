@@ -16,7 +16,7 @@ def grogress(message, downloader):
     while not downloader.isFinished():
         if a != str(downloader.get_progress())[:3]:
             a = str(downloader.get_progress())[:3]
-            await message.edit(f'downloading... {a}')
+            message.edit(f'downloading... {a}')
 
 @Client.on_message(Filters.command("dl", prefixes=".") & Filters.me)
 async def download(client, message):
