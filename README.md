@@ -11,7 +11,7 @@ Requirements
 
 Setup
 =====
-- Install the requirements by running ``pip3 install -rU requirements.txt``
+- Install the requirements by running ``pip3 install -Ur requirements.txt``
 - Go to https://my.telegram.org/apps, create a new app and save its api_id and api_hash
 - Run ``python3 setup.py`` to save the configurations
 - Run ``python3 bot.py`` and login
