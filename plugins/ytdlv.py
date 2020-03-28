@@ -17,8 +17,8 @@ def extract_info(instance, url, download=True):
     return instance.extract_info(url, download)
 
 
-@Client.on_message(Filters.command("ytdl", prefixes=".") & Filters.me)
-async def ytdl(client, message):
+@Client.on_message(Filters.command("ytdlv", prefixes=".") & Filters.me)
+async def ytdlv(client, message):
     url = message.text.split(' ',1)[1]
     if '-m4a' in url:
         url = url.replace(' -m4a','')
