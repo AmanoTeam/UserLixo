@@ -17,8 +17,8 @@ def extract_info(instance, url, download=True):
     return instance.extract_info(url, download)
 
 
-@Client.on_message(Filters.command("ytdlv", prefixes=".") & Filters.me)
-async def ytdlv(client, message):
+@Client.on_message(Filters.command("ytdl", prefixes=".") & Filters.me)
+async def ytdl(client, message):
     url = message.text.split(' ',1)[1]
     if '-m4a' in url:
         url = url.replace(' -m4a','')
@@ -45,8 +45,8 @@ async def ytdlv(client, message):
         with open(f'{ctime}.png', 'wb') as f:
             f.write(await r.read())
     # Workaround for when youtube-dl changes file extension without telling us.
-    filename = ydl.prepare_filename(yt).rsplit(".", 1)[0]
-    filename = glob(f"{filename}.*")[0]
+    filename = ydl.prepare_filename(yt)
+
 
     if vid:
         await client.send_video(message.chat.id, filename, width=int(1920), height=int(1080), caption=yt["title"], duration=yt['duration'],
@@ -77,4 +77,4 @@ async def progress(current, total, c, m, a):
         finally:
             last_edit = time.time()
 
-cmds.update({'.ytdlv':'Download a youtube video'})
+cmds.update({'.ytdl':'Download a youtube video'})
