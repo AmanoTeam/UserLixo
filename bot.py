@@ -1,31 +1,34 @@
-import config
 import asyncio
-import sys
+import config
 import os
+import sys
 
-from db import db, save
+from db import Info
+from termcolor import cprint
 
 async def run_client(client):
     try:
         await client.start()
     except AttributeError as e:
-        return print(str(e).split('. ')[0]+f". Run '{os.path.basename(sys.executable)} setup.py' first.")
-    client.set_parse_mode('combined')
+        if 'key' in str(e).lower():
+            return cprint(str(e).split('. ')[0]+f". Run '{os.path.basename(sys.executable)} setup.py' first.", 'red')
+        raise e
     
-    if "restart" in db:
-        text = 'Restarted'
-        if 'branch' in db['restart']:
-            text += f". Upgraded from the branch '<code>{db['restart']['branch']}</code>'"
-        await client.edit_message_text(db["restart"]["cid"], db["restart"]["mid"], text)
-        del db["restart"]
-        save(db)
+    if len(Info.objects.query(Info.restart_info).all()):
+        text = lang.RESTARTED
+        restart_info = Info.objects.query(Info.restart_info).get(1)
+        
+        if 'branch' in restart_info:
+            text += lang.UPGRADED_FROM_BRANCH(restart_info['branch'])
+        await client.edit_message_text(restart_info['chat_id'], restart_info['message_id'], text)
+        restart_info.delete()
     
     # Saving the account data on startup
     photo = (await client.get_profile_photos("me", limit=1))[0]
     try:
-        await client.download_media(photo.file_id, photo.file_ref, file_name='./avatar.jpg')
+        await client.download_media(photo.file_id, photo.file_ref, file_name='./profile_pic.jpg')
         info = await client.get_chat("me")
-        personal_data = dict(
+        p = dict(
             first_name=info.first_name,
             last_name=info.last_name or '',
             description=info.description or ''

@@ -1,11 +1,12 @@
-import os
-import time
-import zipfile
-import pyrogram
 import ast
-import importlib.util
-import types
 import asyncio
+import os
+import pyrogram
+import time
+import types
+import zipfile
+
+import importlib.util
 
 from asyncio.futures import Future
 from functools import wraps, partial
@@ -22,23 +23,20 @@ def aiowrap(fn: Callable) -> Coroutine:
 
     return decorator
 
-
 @aiowrap
-def backup_sources(output_file=None):
+def backup_sources(output_file: str = 'backup'):
     ctime = int(time.time())
 
-    if output_file is not None and isinstance(output_file, str) and not output_file.lower().endswith('.zip'):
+    if not output_file.lower().endswith('.zip'):
         output_file += '.zip'
 
-    fname = output_file or 'backup-{}.zip'.format(ctime)
-
-    with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as backup:
+    with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as backup:
         for folder, _, files in os.walk('.'):
             for file in files:
-                if file != fname and not file.endswith('.pyc') and '.heroku' not in folder.split('/') and 'dls' not in folder.split('/'):
+                if file != output_file and not file.endswith('.pyc') and '.heroku' not in folder.split('/') and 'dls' not in folder.split('/'):
                     backup.write(os.path.join(folder, file))
 
-    return fname
+    return output_file
 
 async def meval(code, local_vars):
     # Don't clutter locals

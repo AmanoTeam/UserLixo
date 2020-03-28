@@ -7,31 +7,34 @@ Multipurpose Python userbot for Telegram
 Requirements
 ============
 - Python 3.6+
-- An Unix-like operating system
+- An Unix-like OS
+- The api_id and api_hash [from your own Telegram app](https://my.telegram.org/apps) (don't worry, it's easy to get them)
 
 Setup
 =====
-- Install the requirements by running ``pip3 install -rU requirements.txt``
-- Go to https://my.telegram.org/apps, create a new app and save its api_id and api_hash
-- Run ``python3 setup.py`` to save the configurations
-- Run ``python3 bot.py`` and login
+- Install the requirements by running `pip3 install -U -r requirements.txt`
+- Run `python3 setup.py` and login
 
 Running
 =======
-- Just run ``python3 bot.py`` (you may also want to use tmux or screen to keep it running 24*7)
+- Just run `python3 bot.py` (you may want to use tmux or screen to keep it running 24*7)
 
 Heroku
 ======
-Running on Heroku isn't stable and it’s not guaranteed to work
+Running UserLixo in Heroku is easier but requires an extra step. You firstly need to login locally (can be in your mobile, using Termux) to generate the values PYROGRAM_SESSION and PYROGRAM_CONFIG, that are required to run on Heroku.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
--  Follow the steps of the section "Setup"
+First install the requirements: `pip3 install -U -r basic_requirements.txt`
+Then login normally: `python3 setup.py`
+
+Once the values are generated, access the button below to deploy a new app and paste the values of PYROGRAM_SESSION and PYROGRAM_CONFIG on the desired places.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmanoTeam/UserLixo/tree/beta)
 
 Notes
 ====
 If you find any bugs/issues you can report them by:
 - Creating a new issue in this repo
 - Sending the issue details to [the chat on Telegram](https://t.me/AmanoChat)
-- If you know how to fix the issue, fork this repo and open up a pull request
+- Forking this repo and opening a pull request with the fix
 
 ©2020 - [AmanoTeam™](https://amanoteam.com)

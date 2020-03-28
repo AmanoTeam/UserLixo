@@ -9,3 +9,4 @@ db.json
 *.png
 *.jpg
 config.ini
+*.sqlite
