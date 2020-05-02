@@ -38,11 +38,13 @@ async def kibe(client, message):
             if len(emoji) == 0:
                 emoji = rmessage.sticker.emoji
             if rmessage.sticker.is_animated:
+                anim = True
                 photo = await client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
                                               file_name=f'./{ctime}.tgs')
                 packname += '_animated'
                 packnick += ' animated'
             else:
+                anim = False
                 photo = await client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
                                               file_name=f'./{ctime}.webp')
                 rsize = True
@@ -59,7 +61,7 @@ async def kibe(client, message):
             pack_exists = True
         st = 'Stickers'
         if not pack_exists:
-            await create_pack(message, client, st, packnick, photo, emoji, packname)
+            await create_pack(anim, message, client, st, packnick, photo, emoji, packname)
         elif stickerpack.set.count > 119:
             pack += 1
             db['sticker'] = pack
@@ -111,10 +113,13 @@ async def resize_photo(photo, ctime):
     return f'./{ctime}.png'
 
 
-async def create_pack(message, client, st, packnick, photo, emoji, packname):
+async def create_pack(anim, message, client, st, packnick, photo, emoji, packname):
     await message.edit('criando novo pack')
     # Create pack
-    await client.send_message(st, '/newpack')
+    if not anim:
+        await client.send_message(st, '/newpack')
+    else:
+        await client.send_message(st, '/newanimated')
     # Set a name for it
     await client.send_message(st, packnick)
     # Send the first sticker of the pack
@@ -124,6 +129,8 @@ async def create_pack(message, client, st, packnick, photo, emoji, packname):
     time.sleep(0.8)
     # Publish the sticker pack
     await client.send_message(st, '/publish')
+    if anim:
+        await client.send_message(st, '<'+packnick+'>')
     # Skip setting sticker pack icon
     await client.send_message(st, '/skip')
     # Set sticker pack url
