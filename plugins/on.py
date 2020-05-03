@@ -11,6 +11,8 @@ from pyrogram import Client, Filters
 async def on(client, message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
+    elif message.entities and 'text_mention' in message.entities[0]['type']:
+        user_id = message.entities[0].user.id
     # User ids: integers
     elif message.command[1].isdigit():
         user_id = int(message.command[1])
@@ -21,15 +23,14 @@ async def on(client, message):
     if usr.is_bot:
         await message.edit('does not work with bots')
     elif usr.status == 'online':
-        await message.edit(f'{usr.first_name} is on')
+        await message.edit(f'<a href="tg://user?id={usr.id}">{usr.first_name}</a> is on')
     elif not usr.last_online_date:
         await message.edit('This person has disabled his last seen')
     else:
         c = int(time.time() - usr.last_online_date)
         date = datetime.utcfromtimestamp(c).strftime(
             '{"year":"%y","months":"%-m","days":"%-d","hours":"%-H","minutes":"%-M","seconds":"%-S"}')
-        f'{usr.first_name} is off for: \n » **%H** Hours\n » **%M** Minutes\n » **%S** Seconds'
-        frase = f'{usr.first_name} is off for: \n'
+        frase = f'<a href="tg://user?id={usr.id}">{usr.first_name}</a> is off for: \n'
         date = json.loads(date)
         date["year"] = int(date["year"][1])
         date["days"] = int(date["days"]) - 1
