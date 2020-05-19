@@ -1,6 +1,5 @@
 import os
 import time
-from glob import glob
 
 import aiohttp
 import youtube_dl
@@ -26,7 +25,7 @@ async def ytdl(client, message):
         vid = False
     else:
         url = url.replace(' -mp4','')
-        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'noplaylist': True})
+        ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'format': 'mp4', 'noplaylist': True})
         vid = True
     if 'youtu.be' not in url and 'youtube.com' not in url:
         yt = await extract_info(ydl, 'ytsearch:' + url, download=False)
