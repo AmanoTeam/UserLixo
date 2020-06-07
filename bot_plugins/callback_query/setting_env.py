@@ -42,7 +42,7 @@ async def on_edit(client, query):
     
     try:
         while True:
-            msg = await query.message.chat.listen(Filters.text, None)
+            msg = await query.message.from_user.listen(Filters.text & ~Filters.edited, None)
             await last_msg.remove_keyboard()
             await Config.get(key=key).update(value=msg.text)
             text = lang.edit_env_text(
