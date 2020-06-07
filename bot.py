@@ -22,7 +22,6 @@ async def main():
     
     await client.start()
     info['user'] = await client.get_me()
-    sudoers.append(info['user'].id)
     
     await bot.start()
     info['bot'] = await bot.get_me()

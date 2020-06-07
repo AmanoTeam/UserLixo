@@ -58,7 +58,7 @@ for string_file in glob.glob('strings/*.yml'):
 
 langs = Langs(**strings, escape_html=True)
 
-sudoers = []
+sudoers = ["me"]
 
 environment_vars = ['DATABASE_URL', 'LOGS_CHAT', 'SUDOERS_LIST', 'LANGUAGE', 'BOT_TOKEN']
 
