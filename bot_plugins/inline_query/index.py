@@ -3,7 +3,7 @@ from database import Message
 from pyrogram import Client, Filters, InlineQueryResultArticle, InputTextMessageContent
 from pyromod.helpers import ikb
 
-@Client.on_inline_query(Filters.regex('^\d+') & Filters.sudoers)
+@Client.on_inline_query(Filters.su_cmd('^\d+'))
 async def on_index(client, query):
     index = int(query.matches[0][0])
     message = await Message.get_or_none(key=index)

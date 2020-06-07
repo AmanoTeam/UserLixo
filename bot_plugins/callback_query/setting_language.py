@@ -4,10 +4,7 @@ from database import Config
 from pyrogram import Client, Filters
 from pyromod.helpers import ikb, array_chunk
 
-def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
-
-@Client.on_callback_query(cmd('^setting_language'))
+@Client.on_callback_query(Filters.su_cmd('^setting_language'))
 async def on_setting_language(client, query):
     lang = query.lang
     buttons = []
@@ -19,7 +16,7 @@ async def on_setting_language(client, query):
     keyboard = ikb(lines)
     await query.edit(lang.choose_language, keyboard)
 
-@Client.on_callback_query(cmd(r'^set_language (?P<code>\w+)'))
+@Client.on_callback_query(Filters.su_cmd(r'^set_language (?P<code>\w+)'))
 async def on_set_language(client, query):
     lang = query.lang
     match = query.matches[0]

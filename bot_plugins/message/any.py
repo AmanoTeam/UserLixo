@@ -7,3 +7,7 @@ from pyrogram import Client, Filters
 @Client.on_message(group=-2)
 async def deflang(client, message):
     message.lang = langs.get_language(os.getenv('LANGUAGE'))
+
+@Client.on_message(~Filters.sudoers | Filters.edited)
+async def to_reject(client, message):
+    message.stop_propagation()

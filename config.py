@@ -59,8 +59,11 @@ def filter_sudoers(flt, update):
         return
     user = update.from_user
     return user.id in sudoers or (user.username and user.username.lower() in sudoers)
+def filter_su_cmd(pattern, *args, **kwargs):
+    return Filters.create(Filters.sudoers & Filters.regex(pattern, *args, **kwargs))
 
 pyrogram.client.filters.Filters.sudoers = Filters.create(filter_sudoers)
+pyrogram.client.filters.Filters.su_cmd = filter_su_cmd
 pyrogram.client.types.CallbackQuery.edit = query_edit
 pyrogram.client.types.Message.remove_keyboard = remove_keyboard
 pyrogram.client.types.Message.reply = reply_text

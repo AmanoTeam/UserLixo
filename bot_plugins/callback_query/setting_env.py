@@ -1,4 +1,3 @@
-import asyncio
 import os
 from config import sudoers
 from database import Config
@@ -6,13 +5,10 @@ from pyrogram import errors, Client, Filters
 from pyromod.helpers import ikb, array_chunk
 from utils import info
 
-def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
-
-@Client.on_callback_query(cmd('^setting_env'))
+@Client.on_callback_query(Filters.su_cmd('^setting_env'))
 async def on_setting_env(client, query):
     if query.message:
-        client.cancelListeners(query.message.chat.id)
+        query.message.chat.cancel_listener()
     lang = query.lang
     buttons = []
     async for row in Config.all():
@@ -25,7 +21,7 @@ async def on_setting_env(client, query):
     keyboard = ikb(lines)
     await query.edit(lang.settings_env_text, keyboard)
 
-@Client.on_callback_query(cmd('^edit_env (?P<key>.+)'))
+@Client.on_callback_query(Filters.su_cmd('^edit_env (?P<key>.+)'))
 async def on_edit(client, query):
     lang = query.lang
     key = query.matches[0]['key']
@@ -42,7 +38,7 @@ async def on_edit(client, query):
     
     try:
         while True:
-            msg = await query.message.from_user.listen(Filters.text & ~Filters.edited, None)
+            msg = await query.from_user.listen(Filters.text & ~Filters.edited, None)
             await last_msg.remove_keyboard()
             await Config.get(key=key).update(value=msg.text)
             text = lang.edit_env_text(
@@ -53,10 +49,10 @@ async def on_edit(client, query):
                 [(lang.back, 'setting_env')]
             ])
             last_msg = await msg.reply_text(text, reply_markup=keyboard)
-    except (errors.ListenerCanceled, asyncio.TimeoutError):
+    except errors.ListenerCanceled:
         pass
 
-@Client.on_callback_query(cmd('^view_env (?P<key>.+)'))
+@Client.on_callback_query(Filters.su_cmd('^view_env (?P<key>.+)'))
 async def on_view(client, query):
     key = query.matches[0]['key']
     value = (await Config.get_or_none(key=key)).value

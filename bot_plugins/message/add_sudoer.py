@@ -3,10 +3,7 @@ from config import sudoers
 from database import Config
 from pyrogram import Client, Filters
 
-def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
-
-@Client.on_message(cmd('^/(start )?add_sudoer'))
+@Client.on_message(Filters.su_cmd('^/(start )?add_sudoer'))
 async def on_add_sudoer(client, message):
     lang = message.lang
     text = lang.add_sudoer_ask
