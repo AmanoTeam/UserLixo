@@ -5,7 +5,7 @@ from pyromod.helpers import ikb, array_chunk
 from utils import info
 
 def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.user(sudoers)
+    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
 
 async def sudoers_interface(query):
     lang = query.lang

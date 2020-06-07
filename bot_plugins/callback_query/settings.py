@@ -3,7 +3,7 @@ from pyrogram import Client, Filters
 from pyromod.helpers import ikb
 
 def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.user(sudoers)
+    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
 
 @Client.on_callback_query(cmd('^settings$'))
 async def on_settings(client, query):

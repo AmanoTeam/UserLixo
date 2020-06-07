@@ -6,7 +6,7 @@ import re
 from config import sudoers
 from pyrogram import Client, Filters
 
-@Client.on_message(Filters.regex(r"^\Wcmd\s+(?P<code>.+)", re.S) & Filters.user(sudoers))
+@Client.on_message(Filters.regex(r"^\Wcmd\s+(?P<code>.+)", re.S) & Filters.sudoers)
 async def cmd(client, message):
     lang = message.lang
     code = message.matches[0]['code']

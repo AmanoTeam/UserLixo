@@ -7,7 +7,7 @@ from pyromod.helpers import ikb, array_chunk
 from utils import info
 
 def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.user(sudoers)
+    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
 
 @Client.on_callback_query(cmd('^setting_env'))
 async def on_setting_env(client, query):

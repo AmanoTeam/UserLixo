@@ -5,7 +5,7 @@ from pyrogram import Client, Filters
 from pyromod.helpers import ikb, array_chunk
 
 def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.user(sudoers)
+    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
 
 @Client.on_callback_query(cmd('^setting_language'))
 async def on_setting_language(client, query):

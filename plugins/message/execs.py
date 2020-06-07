@@ -9,7 +9,7 @@ from config import sudoers
 from contextlib import redirect_stdout
 from pyrogram import Client, Filters
 
-@Client.on_message(Filters.regex(r"^\Wexec\s+(?P<code>.+)", re.S) & Filters.user(sudoers))
+@Client.on_message(Filters.regex(r"^\Wexec\s+(?P<code>.+)", re.S) & Filters.sudoers)
 async def execs(client, message):
     lang = message.lang
     strio = io.StringIO()

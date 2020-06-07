@@ -32,12 +32,35 @@ for required in required_env_vars:
     if not os.getenv(required):
         raise ValueError(f'Invalid value for required env variable {required}')
 
+sudoers = []
+environment_vars = ['DATABASE_URL', 'LOGS_CHAT', 'SUDOERS_LIST', 'LANGUAGE', 'BOT_TOKEN']
+
+async def load_env():
+    if not os.getenv('LOGS_CHAT'):
+        os.environ['LOGS_CHAT'] = 'me'
+    if not os.getenv('LANGUAGE'):
+        os.environ['LANGUAGE'] = 'en'
+    
+    for env_key in environment_vars:
+        os.environ[env_key] = (await Config.get_or_create({"value": os.getenv(env_key, '')}, key=env_key))[0].value
+    
+    sudoers.extend(
+        [*map(lambda s: s.lstrip('@').lower() if type(s) == str else s, os.getenv('SUDOERS_LIST').split())]
+    )
+
 # Extra **kwargs for creating pyrogram.Client
 pyrogram_config = os.getenv('PYROGRAM_CONFIG') or b64encode('{}')
 pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
 
 # All monkeypatch stuff must be done before the Client instance is created
+def filter_sudoers(flt, update):
+    if not update.from_user:
+        return
+    user = update.from_user
+    return user.id in sudoers or (user.username and user.username.lower() in sudoers)
+
+pyrogram.client.filters.Filters.sudoers = Filters.create(filter_sudoers)
 pyrogram.client.types.CallbackQuery.edit = query_edit
 pyrogram.client.types.Message.remove_keyboard = remove_keyboard
 pyrogram.client.types.Message.reply = reply_text
@@ -57,20 +80,5 @@ for string_file in glob.glob('strings/*.yml'):
     strings[language_code] = open_yml(string_file)
 
 langs = Langs(**strings, escape_html=True)
-
-sudoers = ["me"]
-
-environment_vars = ['DATABASE_URL', 'LOGS_CHAT', 'SUDOERS_LIST', 'LANGUAGE', 'BOT_TOKEN']
-
-async def load_env():
-    if not os.getenv('LOGS_CHAT'):
-        os.environ['LOGS_CHAT'] = 'me'
-    if not os.getenv('LANGUAGE'):
-        os.environ['LANGUAGE'] = 'en'
-    
-    for env_key in environment_vars:
-        os.environ[env_key] = (await Config.get_or_create({"value": os.getenv(env_key, '')}, key=env_key))[0].value
-    
-    sudoers.extend(os.getenv('SUDOERS_LIST').split())
 
 bot = Client('bot', plugins={"root": "bot_plugins"}, bot_token=os.getenv('BOT_TOKEN'))

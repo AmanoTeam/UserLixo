@@ -4,7 +4,7 @@ from database import Config
 from pyrogram import Client, Filters
 
 def cmd(pattern, *args, **kwargs):
-    return Filters.regex(pattern, *args, **kwargs) & Filters.user(sudoers)
+    return Filters.regex(pattern, *args, **kwargs) & Filters.sudoers
 
 @Client.on_message(cmd('^/(start )?add_sudoer'))
 async def on_add_sudoer(client, message):
