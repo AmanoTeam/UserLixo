@@ -1,2 +1,12 @@
-https://github.com/pyrogram/pyrogram/archive/asyncio-dev.zip
+https://github.com/pyrogram/pyrogram/archive/asyncio.zip
+pyromod
 tgcrypto
+pyyaml
+langs
+termcolor
+meval
+python-dotenv
+
+tortoise-orm
+asyncpg
+psycopg2-binary

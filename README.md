@@ -12,7 +12,7 @@ Requirements
 
 Setup
 =====
-- Install the requirements by running `pip3 install -U -r requirements.txt`
+- Install the requirements by running `pip3 install -Ur requirements.txt`
 - Run `python3 setup.py` and login
 
 Running
@@ -21,9 +21,9 @@ Running
 
 Heroku
 ======
-Running UserLixo in Heroku is easier but requires an extra step. You firstly need to login locally (can be in your mobile, using Termux) to generate the values PYROGRAM_SESSION and PYROGRAM_CONFIG, that are required to run on Heroku.
+Running UserLixo in Heroku is easier but requires an extra step. You firstly need to login locally (can be done in your mobile, using Termux) to generate the values PYROGRAM_SESSION and PYROGRAM_CONFIG, that are required to run on Heroku.
 
-First install the requirements: `pip3 install -U -r basic_requirements.txt`
+First install the requirements: `pip3 install -Ur basic_requirements.txt`
 Then login normally: `python3 setup.py`
 
 Once the values are generated, access the button below to deploy a new app and paste the values of PYROGRAM_SESSION and PYROGRAM_CONFIG on the desired places.

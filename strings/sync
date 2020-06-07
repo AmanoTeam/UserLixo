@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+import os
+import re
+import yaml
+
+from glob import glob
+from langs import Langs
+from termcolor import cprint
+
+reserved = dir(Langs)
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = dir_path.rstrip('/')
+
+lang_regex = re.compile(r'lang\.(?P<key>\w+)')
+all_keys = []
+
+for root, directories, filenames in os.walk('.'):
+    for name in filenames:
+        if not name.endswith('.py'):
+            continue
+        with open(os.path.join(root, name)) as fp:
+            contents = fp.read()
+        for match in lang_regex.finditer(contents):
+            all_keys.append(match['key'])
+
+for strings_path in glob(dir_path+'/*.yml'):
+    synced = True
+    with open(strings_path) as file:
+        obj = yaml.safe_load(file)
+        cprint(f"\n- {obj['NAME']} ({obj['LANGUAGE_CODE']})", 'blue')
+    
+    not_in_yml = [key for key in all_keys if key not in obj.keys() and key not in reserved]
+    for key in not_in_yml:
+        to_write =f"\n{key}: |-\n    {key.upper()}\n"
+        with open(strings_path, 'a') as file:
+            if file.write(to_write):
+                synced = False
+                cprint(f'    New key "{key}" written into {os.path.basename(file.name)}', 'green')
+    
+    not_in_py = [key for key in obj.keys() if key not in all_keys and not key.isupper()]
+    for key in not_in_py:
+        synced = False
+        cprint(f'    The key "{key}" is not being used in any script', 'yellow')
+    
+    if synced:
+        cprint(f'    The file "{os.path.basename(strings_path)}" is already synced', 'green')

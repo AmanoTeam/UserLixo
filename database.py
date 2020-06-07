@@ -1,40 +1,28 @@
 import asyncio
-import databases
-import orm
 import os
-import sqlalchemy
-import threading
 
-from functools import partial
-from orm import Model, JSON, DateTime, Integer, String
-from sqlalchemy.sql import func
-from sqlalchemy.orm import sessionmaker
+from tortoise import fields
+from tortoise import Tortoise
+from tortoise.models import Model
 
+class Message(Model):
+    key = fields.IntField(pk=True)
+    text = fields.CharField(max_length=255)
+    keyboard = fields.JSONField(default=[])
 
-database = databases.Database(os.getenv('DATABASE_URL'))
-metadata = sqlalchemy.MetaData()
+class Config(Model):
+    id = fields.IntField(pk=True)
+    key = fields.CharField(max_length=255)
+    value = fields.CharField(max_length=255)
 
-class Info(Model):
-	__tablename__ = 'info'
-	__database__ = database
-	__metadata__ = metadata
-	
-	key = Integer(primary_key=True)
-	restart_info = JSON(default='{"chat_id": "", "message_id": ""}')
-	profile = JSON(default='{"first_name": "", "last_name": "", "bio": "", "photo": ""}')
-	notes = JSON(default='{}')
-	timezone = String(default='America/Sao_Paulo')
-
-engine = sqlalchemy.create_engine(str(database.url))
-metadata.create_all(engine, checkfirst=True)
-
-Session = sessionmaker(bind=engine)
-session = Session()
-
-async def create_db():
-	return await database.connect()
-
-# Need to run asyncio.run_coroutine_threadsafe with a loop in another thread. Otherwise this block will get stuck forever.
-# I create a new loop to be able to use run_forever() and then stop() without affecting our main loop
-loop = asyncio.get_event_loop()
-threading.Thread(target=partial(asyncio.run_coroutine_threadsafe, create_db(), loop), daemon=True).start()
+async def connect_database():
+    await Tortoise.init({
+        'connections': {
+            'bot_db': os.getenv('DATABASE_URL')
+        },
+        'apps': {
+            'bot': {'models': [__name__], 'default_connection': 'bot_db'}
+        }
+    })
+    # Generate the schema
+    await Tortoise.generate_schemas()

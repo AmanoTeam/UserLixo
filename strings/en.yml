@@ -1,0 +1,73 @@
+# Environment variables that the bot may use
+NAME: English
+LANGUAGE_CODE: en
+TIMEZONE: UTC
+
+# the back button on many menus
+back: «
+
+executed_cmd: Command executed
+
+settings_text: |-
+    🛠 <b>UserLixo settings</b>
+
+language: |-
+    🌎 Language
+choose_language: |-
+    🌎 Choose your language:
+language_chosen: |-
+    ✅ Language set!
+
+sudoers: |-
+    🛂 Sudoers
+
+env_vars: |-
+    ⚙ Config vars
+
+help_text: |-
+    ❔ <b>Help</b>
+
+about_userlixo: |-
+    ℹ️ About UserLixo
+
+commands: |-
+    👾 Commands
+
+plugins: |-
+    🖇 Plugins
+
+chat: |-
+    👥 Chat
+
+channel: |-
+    📢 Channel
+
+setting_sudoers_text: |-
+    🛂 <b>Sudoers</b>
+    - The userbot sudoers are allowed to do... everything (even add and remove other sudoers).
+    - Below are listed the actual sudoers of the userbot (also with you and the userbot itself). Through the inline keyboard you can remove (🗑) and add (➕) new sudoers.
+
+add_sudoer: |-
+    ➕ Add sudoer
+refresh: |-
+    🔄 Refresh
+
+refreshed: |-
+    🔄 Refreshed!
+
+add_sudoer_ask: |-
+    💬 Send me the username or id of the user you want to add as sudoer.
+
+add_sudoer_not_match: |-
+    ❕ Your message contains characters not allowed for usernames and ids. Check if it's correct, send /add_sudoer and try again.
+
+sudoer_added: |-
+    ✅ Sudoer registered
+settings_env_text: |-
+    ⚙ <b>Config vars</b>
+
+edit_env_text: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Value: "<code>{value}</code>"
+    
+    To edit it, send the new value in this chat.
