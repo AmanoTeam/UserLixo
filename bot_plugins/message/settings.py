@@ -2,7 +2,7 @@ from config import sudoers
 from pyrogram import Client, Filters
 from pyromod.helpers import ikb
 
-@Client.on_message(Filters.su_cmd('^/settings'))
+@Client.on_message(Filters.su_regex('^/settings'))
 async def on_settings(client, message):
     lang = message.lang
     keyboard = ikb([

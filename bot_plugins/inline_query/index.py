@@ -3,7 +3,7 @@ from database import Message
 from pyrogram import Client, Filters, InlineQueryResultArticle, InputTextMessageContent
 from pyromod.helpers import ikb
 
-@Client.on_inline_query(Filters.su_cmd('^\d+'))
+@Client.on_inline_query(Filters.su_regex('^\d+'))
 async def on_index(client, query):
     index = int(query.matches[0][0])
     message = await Message.get_or_none(key=index)
@@ -11,7 +11,7 @@ async def on_index(client, query):
         results = [
             InlineQueryResultArticle(title="undefined index", input_message_content=InputTextMessageContent(f"Undefined index {index}"))
         ]
-        return await query.answer(results, is_personal=True)
+        return await query.answer(results, cache_time=0)
     
     keyboard = ikb(message.keyboard)
     text = message.text
@@ -20,5 +20,5 @@ async def on_index(client, query):
         InlineQueryResultArticle(title="index", input_message_content=InputTextMessageContent(text), reply_markup=keyboard)
     ]
     
-    await query.answer(results, is_personal=True)
+    await query.answer(results, cache_time=0)
     await Message.get(key=message.key).delete()

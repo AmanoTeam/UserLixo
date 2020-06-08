@@ -1,7 +1,7 @@
 from config import sudoers
 from pyrogram import Client, Filters
 
-@Client.on_message(Filters.su_cmd(r'^\Whelp'))
+@Client.on_message(Filters.su_cmd('help'))
 async def on_settings(client, message):
     lang = message.lang
     keyboard = [

@@ -8,7 +8,7 @@ from config import sudoers
 from pyrogram import Client, Filters
 from meval import meval
 
-@Client.on_message(Filters.su_cmd(r"^\Weval\s+(?P<code>.+)", re.S))
+@Client.on_message(Filters.su_cmd(r"eval\s+(?P<code>.+)", flags=re.S))
 async def evals(client, message):
     eval_code = message.matches[0]['code']
     

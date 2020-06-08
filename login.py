@@ -28,9 +28,7 @@ elif os.path.exists(os.path.expanduser('~/.pyrogramrc')):
 
 config.setdefault('pyrogram', {})
 
-fields = ['api_id', 'api_hash', 'bot_token'];
-if len(argv) > 1 and argv[1] == 'user':
-    fields.pop()
+fields = ['api_id', 'api_hash']
 
 for key in fields:
     ask_text = f"\nType your {key}"
