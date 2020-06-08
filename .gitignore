@@ -58,3 +58,4 @@ config.env
 *.sqlite*
 debug.*
 *errors.txt
+custom/

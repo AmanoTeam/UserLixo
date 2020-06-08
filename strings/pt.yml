@@ -73,3 +73,7 @@ edit_env_text: |-
     👁‍🗨 Valor: "<code>{value}</code>"
     
     Para editar, envie o novo valor neste chat.
+about_userlixo_text: |-
+    ℹ️ UserLixo é um userbot feito por diversão pela @AmanoTeam u.u
+
+    ⚙ Esta é a branch <code>rewritten-version</code>, que ainda está em desenvolvimento. Ela pode conter bugs, então por gentileza reporte-os para o @usernein (quem está reescrevendo).
