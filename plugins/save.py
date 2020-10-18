@@ -1,9 +1,9 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 
 
-@Client.on_message(Filters.command("save", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("save", prefixes=".") & filters.me)
 async def save(client, message):
     if message.reply_to_message:
         a = await message.reply_to_message.forward("me")

@@ -1,4 +1,4 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 import re
 import io
 import html
@@ -9,7 +9,7 @@ from config import cmds
 from db import db
 from utils import meval
 
-@Client.on_message(Filters.regex(r'.*<py>.+</py>', re.S) & Filters.me)
+@Client.on_message(filters.regex(r'.*<py>.+</py>', re.S) & filters.me)
 async def pytag(client, message):
     for match in re.finditer(r'<py>(.+?)</py>', message.text):
         strio = io.StringIO()
@@ -28,14 +28,14 @@ async def pytag(client, message):
         message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
 
-@Client.on_message(Filters.regex(r'.*<sh>.+</sh>') & Filters.me)
+@Client.on_message(filters.regex(r'.*<sh>.+</sh>') & filters.me)
 async def shtag(client, message):
     for match in re.finditer(r'<sh>(.+?)</sh>', message.text):
         out = subprocess.getstatusoutput(match[1])[1] or '<sh></sh>'
         message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
 
-@Client.on_message(Filters.regex(r'.*<#.+?>') & Filters.me)
+@Client.on_message(filters.regex(r'.*<#.+?>') & filters.me)
 async def sharptag(client, message):
     changed = False
     for match in re.finditer(r'<#(.+?)>', message.text):
@@ -51,7 +51,7 @@ async def sharptag(client, message):
     if changed:
         await message.edit(message.text)
         
-@Client.on_message(Filters.regex(r'.*<ev>.+</ev>') & Filters.me)
+@Client.on_message(filters.regex(r'.*<ev>.+</ev>') & filters.me)
 async def evtag(client, message):
     for match in re.finditer(r'<ev>(.+?)</ev>', message.text):
         try:

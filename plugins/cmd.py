@@ -1,11 +1,11 @@
 import asyncio
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 
 
-@Client.on_message(Filters.command("cmd", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("cmd", prefixes=".") & filters.me)
 async def cmd(client, message):
     text = message.text[5:]
     proc = await asyncio.create_subprocess_shell(text,

@@ -1,11 +1,11 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 from utils import meval
 import traceback
 import html
 
-@Client.on_message(Filters.command("eval", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("eval", prefixes=".") & filters.me)
 async def evals(client, message):
     text = message.text[6:]
     try:

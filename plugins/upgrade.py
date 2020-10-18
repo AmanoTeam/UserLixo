@@ -2,13 +2,13 @@ import os
 import sys
 import asyncio
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 
 from db import db, save
 
-@Client.on_message(Filters.command("upgrade", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("upgrade", prefixes=".") & filters.me)
 async def upgrade(client, message):
     branch = 'master'
     parts = message.text.split(' ', 1)

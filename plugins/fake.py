@@ -1,14 +1,14 @@
 import os
 
-from pyrogram import Client, Filters
-from pyrogram.api import functions
+from pyrogram import Client, filters
+from pyrogram.raw import functions
 from pyrogram.errors import BadRequest, UsernameNotOccupied, UsernameInvalid, PeerIdInvalid
 
 from db import db, save
 from config import cmds
 
 
-@Client.on_message(Filters.command("fake", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("fake", prefixes=".") & filters.me)
 async def fake(client, message):
     text = message.text[6:]
     if message.reply_to_message:
@@ -64,7 +64,7 @@ async def fake(client, message):
         await message.edit(text)
 
 
-@Client.on_message(Filters.command("savepic", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("savepic", prefixes=".") & filters.me)
 async def savepic(client, message):
     a = (await client.get_profile_photos("me", limit=1))[0]
     try:

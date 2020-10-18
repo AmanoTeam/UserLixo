@@ -1,10 +1,10 @@
 import os
 import utils
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from config import cmds
 
-@Client.on_message(Filters.command("backup", prefixes='.') & Filters.me)
+@Client.on_message(filters.command("backup", prefixes='.') & filters.me)
 async def backup(client, message):
     await message.edit('Ok...')
     arq = await utils.backup_sources()

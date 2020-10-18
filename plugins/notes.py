@@ -2,11 +2,11 @@ import html
 import os
 import json
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from config import cmds
 from db import db, save
 
-@Client.on_message(Filters.command("note", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("note", prefixes=".") & filters.me)
 async def onnote(client, message):
     parts = message.text.split(' ', 2)
     if len(parts) == 1:
@@ -56,7 +56,7 @@ async def onnote(client, message):
         action = 'updated' if exists else 'created'
         await message.edit(f"Note '<code>{html.escape(note_key)}</code>' {action}.")
         
-@Client.on_message(Filters.command("notes", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("notes", prefixes=".") & filters.me)
 async def onnotes(client, message):
     notes = db['notes']
     
@@ -113,7 +113,7 @@ async def onnotes(client, message):
             
             
 
-@Client.on_message(Filters.regex("^#") & Filters.me)
+@Client.on_message(filters.regex("^#") & filters.me)
 async def onsharp(client, message):
     note_key = message.text[1:]
     exists = note_key in db['notes']

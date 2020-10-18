@@ -1,4 +1,4 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from pySmartDL import SmartDL
 from pyrogram.errors import MessageNotModified
 
@@ -18,7 +18,7 @@ def grogress(message, downloader):
             a = str(downloader.get_progress())[:3]
             message.edit(f'downloading... {a}')
 
-@Client.on_message(Filters.command("dl", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("dl", prefixes=".") & filters.me)
 async def download(client, message):
     await message.edit("Processing ...")
     if not message.reply_to_message:

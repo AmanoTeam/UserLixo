@@ -2,10 +2,10 @@ from datetime import datetime
 
 from config import cmds
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 
-@Client.on_message(Filters.command("ping", prefixes='.') & Filters.me)
+@Client.on_message(filters.command("ping", prefixes='.') & filters.me)
 async def ping(client, message):
     t1 = datetime.now()
     a = await message.reply_text('**Pong!**')

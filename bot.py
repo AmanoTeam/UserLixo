@@ -3,6 +3,8 @@ import asyncio
 import sys
 import os
 
+from pyrogram import idle
+
 from db import db, save
 
 async def run_client(client):
@@ -37,7 +39,7 @@ async def run_client(client):
     except Exception as e:
         print(f'Could not save the personal account data on startup. Cause: {e}')
     
-    await client.idle()
+    await idle()
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run_client(config.app))

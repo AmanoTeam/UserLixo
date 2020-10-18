@@ -1,9 +1,9 @@
 import html
 
 from config import cmds
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
-@Client.on_message(Filters.command("help", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("help", prefixes=".") & filters.me)
 async def chelp(client, message):
     if message.text[6:]:
         a = message.text[6:]

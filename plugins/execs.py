@@ -4,12 +4,12 @@ import html
 import traceback
 from contextlib import redirect_stdout
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 
 
-@Client.on_message(Filters.command("exec", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("exec", prefixes=".") & filters.me)
 async def execs(client, message):
     strio = io.StringIO()
     code = re.split(r"[\n ]+", message.text, 1)[1]

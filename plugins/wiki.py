@@ -1,11 +1,11 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 
 import desciclopedia
 import wikipedia
 
-@Client.on_message(Filters.command("dwiki", prefixes='.') & Filters.me)
+@Client.on_message(filters.command("dwiki", prefixes='.') & filters.me)
 async def dwiki(client, message):
     txt = message.text[7:]
     a = desciclopedia.search(txt)
@@ -16,7 +16,7 @@ async def dwiki(client, message):
         await message.edit(f"No results found for \"`{txt}`\"")
 
 
-@Client.on_message(Filters.command("wiki", prefixes='.') & Filters.me)
+@Client.on_message(filters.command("wiki", prefixes='.') & filters.me)
 async def wiki(client, message):
     txt = message.text[6:]
     a = wikipedia.search(txt)

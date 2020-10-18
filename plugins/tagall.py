@@ -1,10 +1,10 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 from config import cmds
 import html
 char = html.unescape('&#8204;')
 
-@Client.on_message(Filters.command("tagall", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("tagall", prefixes=".") & filters.me)
 async def tagall(client, message):
     await message.delete()
     
@@ -22,7 +22,7 @@ async def tagall(client, message):
         kwargs['reply_to_message_id'] = message.reply_to_message.message_id
     await client.send_message(message.chat.id, a, **kwargs)
 
-@Client.on_message(Filters.command("ftagall", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("ftagall", prefixes=".") & filters.me)
 async def ftagall(client, message):
     await message.delete()
     
@@ -41,7 +41,7 @@ async def ftagall(client, message):
     await client.send_message(message.chat.id, a, **kwargs)
 
 
-@Client.on_message(Filters.command("admin", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("admin", prefixes=".") & filters.me)
 async def admin(client, message):
     await message.delete()
     
@@ -59,7 +59,7 @@ async def admin(client, message):
         kwargs['reply_to_message_id'] = message.reply_to_message.message_id
     await client.send_message(message.chat.id, a, **kwargs)
 
-@Client.on_message(Filters.command("fadmin", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("fadmin", prefixes=".") & filters.me)
 async def fadmin(client, message):
     await message.delete()
     

@@ -1,10 +1,10 @@
 import asyncio
 from config import cmds
 
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 
-@Client.on_message(Filters.command("text", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("text", prefixes=".") & filters.me)
 async def text(client, message):
     ch = ''
     txt = message.text.split(' ', 1)[1]

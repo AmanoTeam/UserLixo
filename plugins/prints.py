@@ -5,12 +5,12 @@ import time
 from config import cmds
 
 import chromeprinter
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 a = chromeprinter.Client()
 
 
-@Client.on_message(Filters.command("print", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("print", prefixes=".") & filters.me)
 async def prints(client, message):
     url = message.text.split(' ', 1)[1]
     await message.edit(f'printing: {url}')

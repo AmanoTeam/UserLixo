@@ -1,6 +1,6 @@
 pillow
 aiohttp
-https://github.com/pyrogram/pyrogram/archive/asyncio.zip
+pyrogram==1.0.*
 tgcrypto
 youtube-dl
 chromeprinter

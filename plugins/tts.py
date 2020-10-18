@@ -4,10 +4,10 @@ import time
 from config import cmds
 
 from gtts import gTTS, lang
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 
-@Client.on_message(Filters.command("tts", prefixes=".") & Filters.me)
+@Client.on_message(filters.command("tts", prefixes=".") & filters.me)
 async def tts(client, message):
     langs = False
     txt = False
