@@ -8,7 +8,7 @@ from pyrogram import Client
 print('Creating config.ini...')
 
 config = configparser.ConfigParser()
-config['pyrogram'] = {}    
+config['pyrogram'] = {}
 config['pyrogram']['api_id'] = sys.argv[1] if 1 < len(sys.argv) else input('api_id: ')
 config['pyrogram']['api_hash'] = sys.argv[2] if 2 < len(sys.argv) else input('api_hash: ')
 config['plugins'] = {}

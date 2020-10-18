@@ -11,7 +11,7 @@ async def chelp(client, message):
             await message.edit(f'<code>{html.escape(a)}</code>: {cmds[a]}')
         else:
             await message.edit(f'Command \'<code>{html.escape(a)}</code>\' not found.')
-            
+
     else:
         a = ['<code>{}</code>: {}'.format(html.escape(i), cmds[i]) for i in cmds]
         await message.edit('\n'.join(a))

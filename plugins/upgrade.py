@@ -31,5 +31,5 @@ async def upgrade(client, message):
         await message.edit(f"Upgrade from branch '{branch}' failed (process exited with {proc.returncode}):\n{stdout.decode()}")
         proc = await asyncio.create_subprocess_shell("git merge --abort")
         await proc.communicate()
-        
+
 cmds.update({'.upgrade':'Upgrade the userbot source'})

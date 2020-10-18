@@ -14,7 +14,7 @@ async def onnote(client, message):
     elif len(parts) == 2:
         note_key = parts[1]
         exists = note_key in db['notes']
-        
+
         if message.reply_to_message:
             msg = message.reply_to_message
             if msg.text:
@@ -29,7 +29,7 @@ async def onnote(client, message):
                 note_obj = dict(type='media', value=note_value)
             else:
                 return await message.edit('Nothing to save here.')
-            
+
             db['notes'][note_key] = note_obj
             save(db)
             action = 'updated' if exists else 'created'
@@ -48,18 +48,18 @@ async def onnote(client, message):
         note_key = parts[1]
         note_value = parts[2]
         exists = note_key in db['notes']
-        
+
         note_obj = dict(type='text', value=note_value)
-        
+
         db['notes'][note_key] = note_obj
         save(db)
         action = 'updated' if exists else 'created'
         await message.edit(f"Note '<code>{html.escape(note_key)}</code>' {action}.")
-        
+
 @Client.on_message(filters.command("notes", prefixes=".") & filters.me)
 async def onnotes(client, message):
     notes = db['notes']
-    
+
     parts = message.text.split(' ', 2)
     if len(parts) == 1:
         if not len(notes):
@@ -98,32 +98,32 @@ async def onnotes(client, message):
             try:
                 with open(path) as fp:
                     restore = json.load(fp)
-                
+
                 added_notes = []
                 for note_key, note_obj in restore.items():
                     if not note_key or 'type' not in note_obj or 'value' not in note_obj:
                         return await message.edit('Invalid notes.json')
-                    
+
                     added_notes.append(note_key)
                     db['notes'][note_key] = {key: note_obj[key] for key in note_obj.keys() & ['type', 'value']}
                 save(db)
                 await message.edit('Notes restored:\n - '+"\n - ".join(added_notes))
             except:
                 return await message.edit('An error ocurred while opening the json.')
-            
-            
+
+
 
 @Client.on_message(filters.regex("^#") & filters.me)
 async def onsharp(client, message):
     note_key = message.text[1:]
     exists = note_key in db['notes']
-    
+
     if exists:
         note_obj = db['notes'][note_key]
         if note_obj['type'] == 'text':
             text = note_obj['value']
             msg = await message.edit(text)
-            
+
             if text.startswith('.exec'):
                 from plugins.execs import execs
                 await execs(client, msg)
@@ -133,8 +133,8 @@ async def onsharp(client, message):
         elif note_obj['type'] == 'media':
             await message.delete()
             await client.send_cached_media(message.chat.id, note_obj['value']['file_id'], reply_to_message_id=(message.reply_to_message.message_id if message.reply_to_message else None))
-            
-            
+
+
 cmds.update({
     ".note": "Add/update a note. Pass the name of the note as second parameter and the value after (or reply to a message to use its contents)",
     ".notes": "List the saved notes.",

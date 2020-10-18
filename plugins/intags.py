@@ -20,7 +20,7 @@ async def pytag(client, message):
                 await locals()["__ex"](client, message)
             except:
                 return await message.reply_text(html.escape(traceback.format_exc()), parse_mode="HTML")
-    
+
         if strio.getvalue():
             out = f"{html.escape(strio.getvalue())}"
         else:
@@ -41,7 +41,7 @@ async def sharptag(client, message):
     for match in re.finditer(r'<#(.+?)>', message.text):
         note_key = match[1]
         exists = note_key in db['notes']
-        
+
         if exists:
             changed = True
             note_obj = db['notes'][note_key]
@@ -50,18 +50,18 @@ async def sharptag(client, message):
                 message.text = message.text.replace(match[0], html.escape(text))
     if changed:
         await message.edit(message.text)
-        
+
 @Client.on_message(filters.regex(r'.*<ev>.+</ev>') & filters.me)
 async def evtag(client, message):
     for match in re.finditer(r'<ev>(.+?)</ev>', message.text):
         try:
             res = (await meval(match[1], locals())) or '<ev></ev>'
         except:
-            return await message.reply_text(traceback.format_exc()) 
+            return await message.reply_text(traceback.format_exc())
         else:
             message.text = message.text.replace(match[0], html.escape(str(res)))
     await message.edit(message.text)
-        
+
 cmds.update({
     '<py>':'Run the python code inside the tag and replace it with the result',
     '<sh>':'Run the shell command inside the tag and replace it with the result',
