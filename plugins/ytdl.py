@@ -66,11 +66,11 @@ async def ytdl(client, message):
 
 async def progress(current, total, c, m, a):
     global last_edit
-    temp = current * 100 / total
-    if last_edit + 1 < int(time.time()):
+    percent = current * 100 / total
+    if last_edit + 1 < int(time.time()) or current == total:
         await c.send_chat_action(m.chat.id, 'UPLOAD_VIDEO')
         try:
-            await m.edit(a + '\n' + "{:.1f}%".format(temp))
+            await m.edit(a + '\n' + "{:.1f}%".format(percent))
         except MessageNotModified:
             pass
         finally:
