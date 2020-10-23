@@ -67,13 +67,13 @@ async def ytdl(client, message):
 async def progress(current, total, c, m, a):
     global last_edit
     temp = current * 100 / total
-    if last_edit + 3 < time.time():
+    if last_edit + 1 < int(time.time()):
         await c.send_chat_action(m.chat.id, 'UPLOAD_VIDEO')
         try:
             await m.edit(a + '\n' + "{:.1f}%".format(temp))
         except MessageNotModified:
             pass
         finally:
-            last_edit = time.time()
+            last_edit = int(time.time())
 
 cmds.update({'.ytdl':'Download a youtube video'})
