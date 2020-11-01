@@ -5,6 +5,7 @@ import aiohttp
 import youtube_dl
 from config import cmds
 from utils import aiowrap
+from functools import partial
 from pyrogram import Client, filters
 from pyrogram.errors import MessageNotModified
 
@@ -18,7 +19,7 @@ def extract_info(instance, url, download=True):
 
 @Client.on_message(filters.command("ytdl", prefixes=".") & filters.me)
 async def ytdl(client, message):
-    url = message.text.split(' ',1)[1]
+    url = message.text.split(maxsplit=1)[1]
     if '-m4a' in url:
         url = url.replace(' -m4a','')
         ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s-%(id)s.%(ext)s', 'format': '140', 'noplaylist': True})
@@ -34,7 +35,11 @@ async def ytdl(client, message):
     else:
         yt = await extract_info(ydl, url, download=False)
         url = 'https://www.youtube.com/watch?v=' + yt['id']
-    await message.edit(f'Downloading `{yt["title"]}`')
+    a = f'Downloading `{yt["title"]}`'
+    await message.edit(a)
+
+    progress_hook = partial(ydl_progress, client, message, a)
+    ydl.add_progress_hook(progress_hook)
     yt = await extract_info(ydl, url, download=True)
     a = f'Sending `{yt["title"]}`'
     await message.edit(a)
@@ -43,7 +48,7 @@ async def ytdl(client, message):
         r = await session.get(yt['thumbnail'])
         with open(f'{ctime}.png', 'wb') as f:
             f.write(await r.read())
-    # Workaround for when youtube-dl changes file extension without telling us.
+
     filename = ydl.prepare_filename(yt)
 
 
@@ -71,6 +76,20 @@ async def progress(current, total, c, m, a):
         await c.send_chat_action(m.chat.id, 'UPLOAD_VIDEO')
         try:
             await m.edit(a + '\n' + "{:.1f}%".format(percent))
+        except MessageNotModified:
+            pass
+        finally:
+            last_edit = int(time.time())
+
+
+def ydl_progress(c, m, a, status):
+    global last_edit
+    if status["status"] == "finished":
+        return
+    percent = status["_percent_str"]
+    if last_edit + 1 < int(time.time()):
+        try:
+            m.edit_text(a + f"{a}\n{percent}")
         except MessageNotModified:
             pass
         finally:
