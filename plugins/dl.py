@@ -27,7 +27,7 @@ async def download(client, message):
                 url, name = message.text[4:].split('|')
             else:
                 url = message.text[4:]
-                name = message.text.split('/',--1)[1]
+                name = message.text.split('/', 1)[1]
             dw1 = time.time()
             downloader = SmartDL(url, './dl/'+name, progress_bar=False)
             downloader.start(blocking=False)

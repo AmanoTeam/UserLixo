@@ -67,7 +67,7 @@ async def kibe(client, message):
             db['sticker'] = pack
             save(db)
             packname = f"a{user.id}_by_{user.username}_{pack}"
-            await create_pack(message, client, st, packnick, photo, emoji, packname)
+            await create_pack(anim, message, client, st, packnick, photo, emoji, packname)
         else:
             # Add a new sticker
             await client.send_message(st, '/addsticker')
