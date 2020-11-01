@@ -10,8 +10,13 @@ from db import db, save
 
 @Client.on_message(filters.command("upgrade", prefixes=".") & filters.me)
 async def upgrade(client, message):
-    branch = 'master'
-    parts = message.text.split(' ', 1)
+    try:
+        with open(os.path.join(".git", "HEAD")) as f:
+            branch = f.read().split("/")[-1].rstrip()
+    except FileNotFoundError:
+        return await message.edit_text("Error: You must be inside a git repository to upgrade.")
+
+    parts = message.text.split(maxsplit=1)
     if len(parts) == 2:
         branch = parts[1]
     await message.edit(f"Upgrading source from branch '{branch}'...")
