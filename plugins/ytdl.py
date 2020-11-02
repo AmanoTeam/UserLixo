@@ -89,7 +89,7 @@ def ydl_progress(c, m, a, status):
     percent = status["_percent_str"]
     if last_edit + 1 < int(time.time()):
         try:
-            m.edit_text(a + f"{a}\n{percent}")
+            m.edit_text(f"{a}\n{percent}")
         except MessageNotModified:
             pass
         finally:
