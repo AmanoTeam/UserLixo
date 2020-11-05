@@ -54,13 +54,9 @@ async def fake(client, message):
                 os.remove(a)
             except:
                 pass
-        # TODO: Switch to client.update_profile when the next pyrogram_modversion is released.
-        await client.send(
-            functions.account.UpdateProfile(
-                first_name=dat['first_name'], last_name=dat['last_name'],
-                about=dat['description']
-            )
-        )
+        await client.update_profile(first_name=dat['first_name'],
+                                    last_name=dat['last_name'],
+                                    bio=dat['description'])
         await message.edit(text)
 
 
