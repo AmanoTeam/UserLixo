@@ -7,9 +7,9 @@ import traceback
 
 from config import sudoers
 from contextlib import redirect_stdout
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
-@Client.on_message(Filters.su_cmd(r"exec\s+(?P<code>.+)", flags=re.S))
+@Client.on_message(filters.su_cmd(r"exec\s+(?P<code>.+)", flags=re.S))
 async def execs(client, message):
     lang = message.lang
     strio = io.StringIO()

@@ -8,5 +8,3 @@ meval
 python-dotenv
 
 tortoise-orm
-asyncpg
-psycopg2-binary

@@ -1,7 +1,7 @@
 import os
 from config import langs
 from database import Config
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
 # Getting the language to use
 @Client.on_inline_query(group=-2)

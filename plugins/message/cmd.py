@@ -4,9 +4,9 @@ import os
 import re
 
 from config import sudoers
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 
-@Client.on_message(Filters.su_cmd(r"cmd\s+(?P<code>.+)", flags=re.S))
+@Client.on_message(filters.su_cmd(r"cmd\s+(?P<code>.+)", flags=re.S))
 async def cmd(client, message):
     lang = message.lang
     code = message.matches[0]['code']

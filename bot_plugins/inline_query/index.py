@@ -1,11 +1,12 @@
 from config import sudoers
 from database import Message
-from pyrogram import Client, Filters, InlineQueryResultArticle, InputTextMessageContent
+from pyrogram import Client, filters
+from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent
 from pyromod.helpers import ikb
 
-@Client.on_inline_query(Filters.su_regex('^\d+'))
+@Client.on_inline_query(filters.sudoers & filters.regex('^(?P<index>\d+)'))
 async def on_index(client, query):
-    index = int(query.matches[0][0])
+    index = int(query.matches[0]['index'])
     message = await Message.get_or_none(key=index)
     if not message:
         results = [

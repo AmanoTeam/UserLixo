@@ -1,6 +1,6 @@
 from config import sudoers
 from database import Config
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from pyromod.helpers import ikb, array_chunk
 from utils import info
 
@@ -36,13 +36,13 @@ async def sudoers_interface(query):
     keyboard = ikb(lines)
     return text, keyboard
 
-@Client.on_callback_query(Filters.su_regex('^setting_sudoers'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^setting_sudoers'))
 async def on_setting_language(client, query):
     lang = query.lang
     text, keyboard = await sudoers_interface(query)
     await query.edit(text, keyboard)
 
-@Client.on_callback_query(Filters.su_regex('^remove_sudoer (?P<who>\w+)'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^remove_sudoer (?P<who>\w+)'))
 async def on_remove_sudoer(client, query):
     lang = query.lang
     who = query.matches[0]['who']

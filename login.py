@@ -61,7 +61,7 @@ async def init():
     session_config = json.dumps(session_config)
     session_config = b64encode(session_config)
     
-    session_string = client.export_session_string()
+    session_string = await client.export_session_string()
     
     me = await client.get_me()
     mention = f"@{me.username}" if me.username else me.first_name

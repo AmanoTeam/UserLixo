@@ -1,8 +1,9 @@
-import os
 from config import load_env, sudoers, client, bot
 from database import connect_database
+from pyrogram import idle
 from tortoise import run_async
 from utils import info
+import os
 
 async def alert_startup():
     plugins = [(handler.user_callback if hasattr(handler, 'user_callback') else handler.callback) for group in client.dispatcher.groups.values() for handler in group]
@@ -28,6 +29,6 @@ async def main():
     info['bot'] = await bot.get_me()
     
     await alert_startup()
-    await client.idle()
+    await idle()
     
 run_async(main())

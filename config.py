@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from langs import Langs
 
 from pyromod import listen, filters
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from utils import tryint, query_edit, remove_keyboard, reply_text
 
 # Load variables on config.env to os.environ
@@ -56,24 +56,21 @@ pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
 
 # All monkeypatch stuff must be done before the Client instance is created
-def filter_sudoers(flt, update):
+def filter_sudoers(flt, client, update):
     if not update.from_user:
         return
     user = update.from_user
     return user.id in sudoers or (user.username and user.username.lower() in sudoers)
-def filter_su_regex(pattern, *args, **kwargs):
-    return Filters.create(Filters.sudoers & Filters.regex(pattern, *args, **kwargs))
 def filter_su_cmd(command, prefixes=None, *args, **kwargs):
     prefixes = ''.join(prefixes) if type(prefixes) == list else prefixes or os.getenv('PREFIXES') or '.'
     prefix = f"^[{re.escape(prefixes)}]"
-    return Filters.su_regex(prefix+command, *args, **kwargs)
+    return filters.sudoers & filters.regex(prefix+command, *args, **kwargs)
 
-pyrogram.client.filters.Filters.sudoers = Filters.create(filter_sudoers)
-pyrogram.client.filters.Filters.su_regex = filter_su_regex
-pyrogram.client.filters.Filters.su_cmd = filter_su_cmd
-pyrogram.client.types.CallbackQuery.edit = query_edit
-pyrogram.client.types.Message.remove_keyboard = remove_keyboard
-pyrogram.client.types.Message.reply = reply_text
+pyrogram.filters.sudoers = filters.create(filter_sudoers, 'FilterSudoers')
+pyrogram.filters.su_cmd = filter_su_cmd
+pyrogram.types.CallbackQuery.edit = query_edit
+pyrogram.types.Message.remove_keyboard = remove_keyboard
+pyrogram.types.Message.reply = reply_text
 
 # I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't exist. I want to use the fallback also when the key exists but it's invalid
 client = Client(os.getenv('PYROGRAM_SESSION') or 'client', plugins={"root":"plugins"}, **pyrogram_config)

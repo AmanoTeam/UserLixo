@@ -1,11 +1,11 @@
 import os
 from config import sudoers
 from database import Config
-from pyrogram import errors, Client, Filters
+from pyrogram import errors, Client, filters
 from pyromod.helpers import ikb, array_chunk
 from utils import info
 
-@Client.on_callback_query(Filters.su_regex('^setting_env'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^setting_env'))
 async def on_setting_env(client, query):
     if query.message:
         query.message.chat.cancel_listener()
@@ -21,7 +21,7 @@ async def on_setting_env(client, query):
     keyboard = ikb(lines)
     await query.edit(lang.settings_env_text, keyboard)
 
-@Client.on_callback_query(Filters.su_regex('^edit_env (?P<key>.+)'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^edit_env (?P<key>.+)'))
 async def on_edit(client, query):
     lang = query.lang
     key = query.matches[0]['key']
@@ -38,7 +38,7 @@ async def on_edit(client, query):
     
     try:
         while True:
-            msg = await query.from_user.listen(Filters.text & ~Filters.edited, None)
+            msg = await query.from_user.listen(filters.text & ~filters.edited, None)
             await last_msg.remove_keyboard()
             await Config.get(key=key).update(value=msg.text)
             text = lang.edit_env_text(
@@ -52,7 +52,7 @@ async def on_edit(client, query):
     except errors.ListenerCanceled:
         pass
 
-@Client.on_callback_query(Filters.su_regex('^view_env (?P<key>.+)'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^view_env (?P<key>.+)'))
 async def on_view(client, query):
     key = query.matches[0]['key']
     value = (await Config.get_or_none(key=key)).value

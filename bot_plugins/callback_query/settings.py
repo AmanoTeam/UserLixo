@@ -1,8 +1,8 @@
 from config import sudoers
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from pyromod.helpers import ikb
 
-@Client.on_callback_query(Filters.su_regex('^settings$'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^settings$'))
 async def on_settings(client, query):
     lang = query.lang
     keyboard = ikb([

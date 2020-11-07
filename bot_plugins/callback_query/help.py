@@ -1,7 +1,7 @@
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from pyromod.helpers import ikb
 
-@Client.on_callback_query(Filters.su_regex('^help'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^help'))
 async def on_settings(client, query):
     lang = query.lang
     keyboard = ikb([

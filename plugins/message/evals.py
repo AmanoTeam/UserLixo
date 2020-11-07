@@ -5,10 +5,10 @@ import re
 import traceback
 
 from config import sudoers
-from pyrogram import Client, Filters
+from pyrogram import Client, filters
 from meval import meval
 
-@Client.on_message(Filters.su_cmd(r"eval\s+(?P<code>.+)", flags=re.S))
+@Client.on_message(filters.su_cmd(r"eval\s+(?P<code>.+)", flags=re.S))
 async def evals(client, message):
     eval_code = message.matches[0]['code']
     
