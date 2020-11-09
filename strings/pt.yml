@@ -102,3 +102,17 @@ upgrade_alert_already_uptodate: |-
 upgrade_failed: |-
     ❌ O upgrade falhou com o código de retorno <code>{code}</code> para a branch <code>{branch}</code>
     <code>{output}</code>
+upgrade: |-
+    ⏬ Atualizar
+
+restart: |-
+    🔄 Reiniciar
+
+help: |-
+    ❔ Ajuda
+
+settings: |-
+    ⚙ Configurações
+
+start_text: |-
+    👾 Hey! Eu sou seu bot assistente pessoal do UserLixo. No que está interessado?

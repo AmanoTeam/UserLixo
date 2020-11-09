@@ -101,3 +101,17 @@ upgrade_alert_already_uptodate: |-
 upgrade_failed: |-
     ❌ The upgrade failed with return code <code>{code}</code> for the branch <code>{branch}</code>.
     <code>{output}</code>
+upgrade: |-
+    ⏬ Upgrade
+
+restart: |-
+    🔄 Restart
+
+help: |-
+    ❔ Help
+
+settings: |-
+    ⚙ Settings
+
+start_text: |-
+    👾 Hey! I am your personal assistant bot for UserLixo. What are you looking for?

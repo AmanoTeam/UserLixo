@@ -26,7 +26,7 @@ async def onupgrade(c, m):
         else:
             msg = await m.edit(lang.restarting_now_alert)
             await Config.filter(key="restarting_alert").delete()
-            await Config.create(**{"key": "restarting_alert", "value": f'{msg.message_id}|{msg.chat.id}|{datetime.now().timestamp()}'})
+            await Config.create(**{"key": "restarting_alert", "value": f'{msg.message_id}|{msg.chat.id}|{datetime.now().timestamp()}|upgrade'})
             os.execl(sys.executable, sys.executable, *sys.argv)
     else:
         await m.edit(lang.upgrade_failed(branch=branch, code=process.returncode, output=stdout))

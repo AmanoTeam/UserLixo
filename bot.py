@@ -2,6 +2,7 @@ from config import load_env, sudoers, langs, client, bot
 from database import connect_database, Config
 from datetime import datetime
 from pyrogram import idle
+from pyromod.helpers import ikb
 from rich import print, box
 from rich.panel import Panel
 from tortoise import run_async
@@ -44,7 +45,7 @@ async def main():
     
     if restarting_alert:
         restarting_alert = restarting_alert[0]
-        message_id, chat_id, cmd_timestamp = restarting_alert.value.split('|')
+        message_id, chat_id, cmd_timestamp, from_cmd = restarting_alert.value.split('|')
         cmd_timestamp = float(cmd_timestamp)
         now_timestamp = datetime.now().timestamp()
         diff = round(now_timestamp-cmd_timestamp, 2)
@@ -52,8 +53,22 @@ async def main():
         title,p = await shell_exec('git log --format="%B" -1')
         rev,p = await shell_exec('git rev-parse --short HEAD')
         date,p = await shell_exec("git log -1 --format=%cd --date=local")
+        
+        kwargs = {}
+        text = langs.restarted_alert(title=title, rev=rev, date=date, seconds=diff)
+        if from_cmd.startswith('upgrade'):
+            text = langs.upgraded_alert(title=title, rev=rev, date=date, seconds=diff)
+        if from_cmd.endswith('_start'):
+            keyb = ikb([
+                [(langs.back, 'start')]    
+            ])
+            kwargs.update(reply_markup=keyb)
+        
         try:
-            await client.edit_message_text(int(chat_id), int(message_id), langs.restarted_alert(title=title, rev=rev, date=date, seconds=diff))
+            editor = client
+            if from_cmd.endswith('_start'):
+                editor = bot
+            await editor.edit_message_text(int(chat_id), int(message_id), text, **kwargs)
         except Exception as e:
             print(f'[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]')
         await Config.get(id=restarting_alert.id).delete()
