@@ -90,7 +90,7 @@ restarted_alert: |-
 
 upgrade_error_not_git: |-
     😕 To upgrade you must be running UserLixo under a git repository.
-    Clone the repo with <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e re-login.
+    Clone the repo with <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> and re-login.
 
 upgrade_alert_already_uptodate: |-
     ☑️ UserLixo is already up-to-date.
