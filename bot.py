@@ -45,7 +45,12 @@ async def main():
     
     if restarting_alert:
         restarting_alert = restarting_alert[0]
-        message_id, chat_id, cmd_timestamp, from_cmd = restarting_alert.value.split('|')
+        
+        parts = restarting_alert.value.split('|')
+        if len(parts) == 3:
+            parts.append('restart')
+        message_id, chat_id, cmd_timestamp, from_cmd = parts
+        
         cmd_timestamp = float(cmd_timestamp)
         now_timestamp = datetime.now().timestamp()
         diff = round(now_timestamp-cmd_timestamp, 2)
