@@ -88,6 +88,11 @@ restarted_alert: |-
     
     🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
     🗓 <b>Data:</b> <code>{date}</code>
+upgraded_alert: |-
+    🆕 UserLixo atualizado! Duração do reinício: <code>{seconds}</code> segundos.
+    
+    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🗓 <b>Data:</b> <code>{date}</code>
 
 upgrade_error_not_git: |-
     😕 Para atualizar o UserLixo é preciso estar o executando em um repositório git local.

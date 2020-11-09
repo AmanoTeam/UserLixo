@@ -87,6 +87,11 @@ restarted_alert: |-
     
     🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
     🗓 <b>Date:</b> <code>{date}</code>
+upgraded_alert: |-
+    🆕 UserLixo has been upgraded! Duration of restart: <code>{seconds}</code> seconds.
+    
+    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🗓 <b>Date:</b> <code>{date}</code>
 
 upgrade_error_not_git: |-
     😕 To upgrade you must be running UserLixo under a git repository.
