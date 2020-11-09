@@ -9,7 +9,7 @@ async def on_setting_language(client, query):
     lang = query.lang
     buttons = []
     for code,obj in lang.strings.items():
-        text, data = (f"✅ {obj['NAME']}", 'noop') if obj['language_code'] == lang.code else (obj['NAME'], f"set_language {obj['language_code']}")
+        text, data = (f"✅ {obj['NAME']}", 'noop') if obj['LANGUAGE_CODE'] == lang.code else (obj['NAME'], f"set_language {obj['LANGUAGE_CODE']}")
         buttons.append((text, data))
     lines = array_chunk(buttons, 2)
     lines.append([(lang.back, 'settings')])
@@ -25,7 +25,7 @@ async def on_set_language(client, query):
     os.environ['LANGUAGE'] = lang.code
     buttons = []
     for code,obj in lang.strings.items():
-        text, data = (f"✅ {obj['NAME']}", 'noop') if obj['language_code'] == lang.code else (obj['NAME'], f"set_language {obj['language_code']}")
+        text, data = (f"✅ {obj['NAME']}", 'noop') if obj['LANGUAGE_CODE'] == lang.code else (obj['NAME'], f"set_language {obj['LANGUAGE_CODE']}")
         buttons.append((text, data))
     lines = array_chunk(buttons, 2)
     lines.append([(lang.back, 'settings')])
