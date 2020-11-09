@@ -13,7 +13,7 @@ from langs import Langs
 
 from pyromod import listen, filters
 from pyrogram import Client, filters
-from utils import tryint, query_edit, remove_keyboard, reply_text
+from utils import tryint, query_edit, remove_keyboard, reply_text, edit_text
 
 # Load variables on config.env to os.environ
 if not os.path.exists('config.env'):
@@ -71,6 +71,7 @@ pyrogram.filters.su_cmd = filter_su_cmd
 pyrogram.types.CallbackQuery.edit = query_edit
 pyrogram.types.Message.remove_keyboard = remove_keyboard
 pyrogram.types.Message.reply = reply_text
+pyrogram.types.Message.edit = edit_text
 
 # I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't exist. I want to use the fallback also when the key exists but it's invalid
 client = Client(os.getenv('PYROGRAM_SESSION') or 'client', plugins={"root":"plugins"}, **pyrogram_config)

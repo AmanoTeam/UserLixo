@@ -1,5 +1,6 @@
 from database import Message
 from pyrogram import filters
+from pyromod.helpers import ikb
 import asyncio
 
 info = {"user": {}, "bot": {}}
@@ -26,6 +27,11 @@ async def query_edit(self, text, reply_markup, answer_kwargs={}, *args, **kwargs
 
 def remove_keyboard(self, message_id = None, *args, **kwargs):
     return self._client.edit_message_reply_markup(self.chat.id, message_id or self.message_id, {})
+
+async def edit_text(self, text: str, reply_markup=None, *args, **kwargs):
+    if type(reply_markup) == list:
+        reply_markup = ikb(reply_markup)
+    return await self._client.edit_message_text(self.chat.id, self.message_id, text, reply_markup=reply_markup, **kwargs)
 
 async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
     if reply_markup and not self._client.bot_token:

@@ -8,10 +8,12 @@ from pyrogram import Client, filters
 from utils import shell_exec
 
 @Client.on_message(filters.su_cmd(r"(?P<command>cmd|sh)\s+(?P<code>.+)", flags=re.S))
-async def cmd(client, message):
-    lang = message.lang
-    code = message.matches[0]['code']
-    command = message.matches[0]['command']
+async def cmd(c, m):
+    lang = m.lang
+    act = m.edit if await filters.me(c,m) else m.reply
+    
+    code = m.matches[0]['code']
+    command = m.matches[0]['command']
     
     result, process = await shell_exec(code)
     output = result or lang.executed_cmd
@@ -22,5 +24,5 @@ async def cmd(client, message):
         text += f"<code>{line}</code>\n"
     
     if command == 'cmd':
-        return await message.edit(text)
-    await message.reply(text)
+        return await act(text)
+    await m.reply(text)
