@@ -84,15 +84,19 @@ restarting_now_alert: |-
 
 restarted_alert: |-
     ✅ UserLixo has been restarted. Duration of restart: <code>{seconds}</code> seconds.
+    
+    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🗓 <b>Date:</b> <code>{date}</code>
+
 upgrade_error_not_git: |-
     😕 To upgrade you must be running UserLixo under a git repository.
     Clone the repo with <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e re-login.
 
-upgrade_starting_alert: |-
-    ❕ Upgrading UserLixo...
-
 upgrade_alert_already_uptodate: |-
     ☑️ UserLixo is already up-to-date.
+    
+    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🗓 <b>Date:</b> <code>{date}</code>
 
 upgrade_failed: |-
     ❌ The upgrade failed with return code <code>{code}</code> for the branch <code>{branch}</code>.

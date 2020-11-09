@@ -1,5 +1,6 @@
 from database import Message
 from pyrogram import filters
+import asyncio
 
 info = {"user": {}, "bot": {}}
 
@@ -8,6 +9,14 @@ def tryint(value):
         return int(value)
     except:
         return value
+
+async def shell_exec(code):
+    process = await asyncio.create_subprocess_shell(code,
+    stdout=asyncio.subprocess.PIPE,
+    stderr=asyncio.subprocess.STDOUT)
+    
+    stdout = (await process.communicate())[0].decode().strip()
+    return stdout, process
 
 # Pyrogram monkeypatch
 async def query_edit(self, text, reply_markup, answer_kwargs={}, *args, **kwargs):

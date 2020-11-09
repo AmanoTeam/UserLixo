@@ -85,15 +85,19 @@ restarting_now_alert: |-
 
 restarted_alert: |-
     ✅ UserLixo reiniciado. Duração do reinício: <code>{seconds}</code> segundos.
+    
+    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🗓 <b>Data:</b> <code>{date}</code>
+
 upgrade_error_not_git: |-
     😕 Para atualizar o UserLixo é preciso estar o executando em um repositório git local.
     Clone o repositório com <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e refaça o login.
 
-upgrade_starting_alert: |-
-    ❕ Atualizando UserLixo...
-
 upgrade_alert_already_uptodate: |-
     ☑️ O UserLixo já está na versão mais recente, não há nada para atualizar.
+    
+    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🗓 <b>Data:</b> <code>{date}</code>
 
 upgrade_failed: |-
     ❌ O upgrade falhou com o código de retorno <code>{code}</code> para a branch <code>{branch}</code>

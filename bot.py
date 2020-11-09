@@ -5,7 +5,7 @@ from pyrogram import idle
 from rich import print, box
 from rich.panel import Panel
 from tortoise import run_async
-from utils import info
+from utils import info, shell_exec
 import asyncio
 import os
 import rich
@@ -49,18 +49,17 @@ async def main():
         now_timestamp = datetime.now().timestamp()
         diff = round(now_timestamp-cmd_timestamp, 2)
         
+        title,p = await shell_exec('git log --format="%B" -1')
+        rev,p = await shell_exec('git rev-parse --short HEAD')
+        date,p = await shell_exec("git log -1 --format=%cd --date=local")
         try:
-            await client.edit_message_text(int(chat_id), int(message_id), langs.restarted_alert(seconds=diff))
+            await client.edit_message_text(int(chat_id), int(message_id), langs.restarted_alert(title=title, rev=rev, date=date, seconds=diff))
         except Exception as e:
-            print(f'[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n{e}[/yellow]')
+            print(f'[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]')
         await Config.get(id=restarting_alert.id).delete()
     
     # Showing alert in cli
-    process = await asyncio.create_subprocess_shell("git log -1 --format=%cd --date=local",
-    stdout=asyncio.subprocess.PIPE,
-    stderr=asyncio.subprocess.STDOUT)
-    commit_date = (await process.communicate())[0].decode().strip()
-    
+    commit_date,p = await shell_exec("git log -1 --format=%cd --date=local")
     account = '@'+info['user']['username'] if info['user']['username'] else info['user']['id']
     text = f":ok: [bold green]UserLixo is running[/bold green] :ok:"
     
