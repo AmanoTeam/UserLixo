@@ -74,7 +74,7 @@ pyrogram.types.Message.reply = reply_text
 pyrogram.types.Message.edit = edit_text
 
 # I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't exist. I want to use the fallback also when the key exists but it's invalid
-client = Client(os.getenv('PYROGRAM_SESSION') or 'client', plugins={"root":"plugins"}, **pyrogram_config)
+client = Client(os.getenv('PYROGRAM_SESSION') or 'client', plugins={"root":"handlers"}, **pyrogram_config)
 client.set_parse_mode('html')
 
 def open_yml(filename):
@@ -89,4 +89,4 @@ for string_file in glob.glob('strings/*.yml'):
 
 langs = Langs(**strings, escape_html=True)
 
-bot = Client('bot', plugins={"root": "bot_plugins"}, bot_token=os.getenv('BOT_TOKEN'))
+bot = Client('bot', plugins={"root": "bot_handlers"}, bot_token=os.getenv('BOT_TOKEN'))
