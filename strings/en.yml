@@ -49,11 +49,6 @@ setting_sudoers_text: |-
 
 add_sudoer: |-
     ➕ Add sudoer
-refresh: |-
-    🔄 Refresh
-
-refreshed: |-
-    🔄 Refreshed!
 
 add_sudoer_ask: |-
     💬 Send me the username or id of the user you want to add as sudoer.
@@ -75,3 +70,30 @@ about_userlixo_text: |-
     🚮 UserLixo is a userbot made for fun by @AmanoTeam u.u
 
     ⚙ This is the branch <code>userlixo-czp</code>, which is still under development. It might contain bugs, so please report them to @usernein.
+edit_env_text_restart: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Value: "<code>{value}</code>"
+    
+    ❗️ <b>This config var requires UserLixo to restart after edited.</b>
+
+restart_now: |-
+    🔄 Restart now
+
+restarting_now_alert: |-
+    🔄 UserLixo is being restarted... It should take 5-20 seconds. If it takes longer, check the terminal output.
+
+restarted_alert: |-
+    ✅ UserLixo has been restarted. Duration of restart: <code>{seconds}</code> seconds.
+upgrade_error_not_git: |-
+    😕 To upgrade you must be running UserLixo under a git repository.
+    Clone the repo with <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e re-login.
+
+upgrade_starting_alert: |-
+    ❕ Upgrading UserLixo...
+
+upgrade_alert_already_uptodate: |-
+    ☑️ UserLixo is already up-to-date.
+
+upgrade_failed: |-
+    ❌ The upgrade failed with return code <code>{code}</code> for the branch <code>{branch}</code>.
+    <code>{output}</code>

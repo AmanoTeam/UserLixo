@@ -51,12 +51,6 @@ setting_sudoers_text: |-
 add_sudoer: |-
     ➕ Adicionar sudoer
 
-refresh: |-
-    🔄 Atualizar
-
-refreshed: |-
-    🔄 Atualizado!
-
 add_sudoer_ask: |-
     💬 Me envie o username ou id do usuário que deseja registrar como sudoer.
 
@@ -77,3 +71,30 @@ about_userlixo_text: |-
     ℹ️ UserLixo é um userbot feito por diversão pela @AmanoTeam u.u
 
     ⚙ Esta é a branch <code>userlixo-czp</code>, que ainda está em desenvolvimento. Ela pode conter bugs, então por gentileza reporte-os para o @usernein.
+edit_env_text_restart: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Valor: "<code>{value}</code>"
+    
+    ❗️ <b>Esta configuração requer o reinício do UserLixo após editada.</b>
+
+restart_now: |-
+    🔄 Reiniciar agora
+
+restarting_now_alert: |-
+    🔄 O UserLixo está sendo reiniciado. Isso deve durar entre 5 a 20 segundos. Caso dure mais, verifique a saída do terminal.
+
+restarted_alert: |-
+    ✅ UserLixo reiniciado. Duração do reinício: <code>{seconds}</code> segundos.
+upgrade_error_not_git: |-
+    😕 Para atualizar o UserLixo é preciso estar o executando em um repositório git local.
+    Clone o repositório com <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e refaça o login.
+
+upgrade_starting_alert: |-
+    ❕ Atualizando UserLixo...
+
+upgrade_alert_already_uptodate: |-
+    ☑️ O UserLixo já está na versão mais recente, não há nada para atualizar.
+
+upgrade_failed: |-
+    ❌ O upgrade falhou com o código de retorno <code>{code}</code> para a branch <code>{branch}</code>
+    <code>{output}</code>

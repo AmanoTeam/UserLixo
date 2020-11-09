@@ -6,5 +6,5 @@ langs
 termcolor
 meval
 python-dotenv
-
+rich
 tortoise-orm
