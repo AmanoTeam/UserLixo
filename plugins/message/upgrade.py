@@ -3,6 +3,7 @@ from datetime import datetime
 from pyrogram import Client, filters
 import asyncio
 import os
+import sys
 
 @Client.on_message(filters.su_cmd('upgrade'))
 async def onupgrade(c, m):
