@@ -30,7 +30,7 @@ async def onstartcb(c, cq):
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^upgrade'))
 async def onupgrade(c, cq):
-    lang = m.lang
+    lang = cq.lang
     m = cq.message
     keyb = ikb([
         [(lang.back, 'start')]
