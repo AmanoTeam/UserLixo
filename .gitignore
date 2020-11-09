@@ -51,6 +51,7 @@ docs/_build/
 
 # Custom
 test.py
+test.txt
 *.session
 *.session-journal
 config.env
