@@ -81,7 +81,7 @@ restart_now: |-
     🔄 Reiniciar agora
 
 restarting_now_alert: |-
-    🔄 O UserLixo está sendo reiniciado. Isso deve durar entre 5 a 20 segundos. Caso dure mais, verifique a saída do terminal.
+    🔄 O UserLixo está sendo reiniciado. Isso deve durar entre 3 a 7 segundos. Caso dure mais, verifique a saída do terminal.
 
 restarted_alert: |-
     ✅ UserLixo reiniciado. Duração do reinício: <code>{seconds}</code> segundos.

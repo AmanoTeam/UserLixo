@@ -80,7 +80,7 @@ restart_now: |-
     🔄 Restart now
 
 restarting_now_alert: |-
-    🔄 UserLixo is being restarted... It should take 5-20 seconds. If it takes longer, check the terminal output.
+    🔄 UserLixo is being restarted... It should take 3-7 seconds. If it takes longer, check the terminal output.
 
 restarted_alert: |-
     ✅ UserLixo has been restarted. Duration of restart: <code>{seconds}</code> seconds.
