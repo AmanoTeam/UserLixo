@@ -23,7 +23,7 @@ async def evals(client, message):
     except:
         traceback_string = traceback.format_exc()
         text = f"Exception while running the code:\n{traceback_string}"
-        if cmd == 'ev':
+        if cmd == 'eval':
             return await message.edit(text)
         return await message.reply(text)
     else:
@@ -32,12 +32,12 @@ async def evals(client, message):
             text = ''
             for line in output.splitlines():
                 text += f"<code>{line}</code>\n"
-            if cmd == 'ev':
+            if cmd == 'eval':
                 return await message.edit(text)
             await message.reply(text)
         except:
             traceback_string = traceback.format_exc()
             text = f"Exception while sending output:\n{traceback_string}"
-            if cmd == 'ev':
+            if cmd == 'eval':
                 return await message.edit(text)
             await message.reply(text)

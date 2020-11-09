@@ -32,7 +32,7 @@ async def execs(client, message):
         except:
             traceback_string = traceback.format_exc()
             text = f'<b>{html.escape(traceback_string)}</b>'
-            if cmd == 'ex':
+            if cmd == 'exec':
                 return await message.edit(text)
             return await message.reply(text)
     
@@ -44,6 +44,6 @@ async def execs(client, message):
         for line in output.splitlines():
             text += f"<code>{line}</code>\n"
         
-        if cmd == 'ex':
+        if cmd == 'exec':
             return await message.edit(text)
         await message.reply(text)
