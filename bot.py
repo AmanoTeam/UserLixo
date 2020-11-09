@@ -37,8 +37,13 @@ async def main():
     info['bot'] = await bot.get_me()
     
     # Editing restaring alert
-    restarting_alert = await Config.get_or_none(key="restarting_alert")
+    restarting_alert = await Config.filter(key="restarting_alert")
+    if len(restarting_alert) > 1:
+        restarting_alert = []
+        await Config.filter(key="restarting_alert").delete()
+    
     if restarting_alert:
+        restarting_alert = restarting_alert[0]
         message_id, chat_id, cmd_timestamp = restarting_alert.value.split('|')
         cmd_timestamp = float(cmd_timestamp)
         now_timestamp = datetime.now().timestamp()
