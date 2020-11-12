@@ -10,6 +10,7 @@ from meval import meval
 
 @Client.on_message(filters.su_cmd(r"(?P<cmd>ev(al)?)\s+(?P<code>.+)", flags=re.S))
 async def evals(c, m):
+    act = m.edit if await filters.me(c,m) else m.reply
     cmd = m.matches[0]['cmd']
     eval_code = m.matches[0]['code']
     
