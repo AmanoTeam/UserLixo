@@ -73,7 +73,10 @@ async def main():
             editor = client
             if from_cmd.endswith('_start'):
                 editor = bot
-            await editor.edit_message_text(int(chat_id), int(message_id), text, **kwargs)
+            if chat_id == 'inline':
+                await bot.edit_inline_text(message_id, text, **kwargs)
+            else:
+                await editor.edit_message_text(int(chat_id), int(message_id), text, **kwargs)
         except Exception as e:
             print(f'[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]')
         await Config.get(id=restarting_alert.id).delete()

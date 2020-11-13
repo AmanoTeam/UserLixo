@@ -31,7 +31,7 @@ about_userlixo: |-
     ℹ️ About UserLixo
 
 commands: |-
-    👾 Commands
+    📒 Commands
 
 plugins: |-
     🖇 Plugins
@@ -82,6 +82,9 @@ restart_now: |-
 restarting_now_alert: |-
     🔄 UserLixo is being restarted... It should take 3-7 seconds. If it takes longer, check the terminal output.
 
+upgrading_now_alert: |-
+    🔄 UserLixo is being upgraded... It should take 3-7 seconds. If it takes longer, check the terminal output.
+
 restarted_alert: |-
     ✅ UserLixo has been restarted. Duration of restart: <code>{seconds}</code> seconds.
     
@@ -120,3 +123,72 @@ settings: |-
 
 start_text: |-
     👾 Hey! I am your personal assistant bot for UserLixo. What are you looking for?
+commands_text: |-
+    📒 Commands list
+
+command_info: |-
+    📒 Command <code>{command}</code>
+    {info}
+
+
+cmd_info_upgrade: |-
+    Upgrade to the lastest commit of userlixo-czp on GitHub and restart.
+
+cmd_info_restart: |-
+    Restart the process, loading all changes.
+
+cmd_info_eval: |-
+    Evaluates a Python expression and edit the message with the result. It has an alias 'ev' that replies instead of editing.
+    
+    Available variables:
+    <code>c</code> - Client object
+    <code>m</code> - Message object
+    <code>reply</code> - the replied Message object or None
+    <code>user</code> - if the message is a reply, the replied User. If not, the sender's User.
+    <code>chat</code> - shortcut to <code>m.chat</code>
+
+cmd_info_exec: |-
+    Executes a Python code and edit the message with the output. It has an alias 'ex' that replies instead of editing.
+    
+    Available variables:
+    <code>c</code> - Client object
+    <code>m</code> - Message object
+    <code>reply</code> - the replied Message object or None
+    <code>user</code> - if the message is a reply, the replied User. If not, the sender's User.
+    <code>chat</code> - shortcut to <code>m.chat</code>
+
+cmd_info_cmd: |-
+    Executes a shell command IN THE SERVER. Things done here are real and cannot be undone by UserLixo.
+
+cmd_info_ping: |-
+    Don't we all know what it does? It sends a "Pong" informing how much time (in ms) a request to the API took.
+
+cmd_info_help: |-
+    Show some buttons with infos that may help you.
+
+cmd_info_settings: |-
+    Show the settings. Some configurations can only be done in the assistant bot's PM.
+
+checking_packages_updates: |-
+    🔍 Looking for upgradable Python packages...
+
+upgrade_pip_continue: |-
+    📦 Upgrade packages and continue
+
+upgrade_not_pip: |-
+    ➡️ Continue without upgrading packages
+
+cancel: |-
+    ✖️ Cancel
+
+ask_upgrade_pip_pkgs: |-
+    📦 Some of the required packages are upgradable:
+    {upgradable}
+    
+    What do you want to do?
+
+upgrading_pip_packages: |-
+    📦 Upgrading requirements...
+
+upgrade_canceled: |-
+    ✖️ Upgrade canceled.

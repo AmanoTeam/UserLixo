@@ -46,6 +46,8 @@ async def load_env():
     for env_key in environment_vars:
         os.environ[env_key] = (await Config.get_or_create({"value": os.getenv(env_key, '')}, key=env_key))[0].value
     
+    langs.code = os.environ['LANGUAGE']
+    
     sudoers.extend(
         [*map(lambda s: s.lstrip('@').lower() if type(s) == str else s, os.getenv('SUDOERS_LIST').split())]
     )
@@ -90,3 +92,6 @@ for string_file in glob.glob('strings/*.yml'):
 langs = Langs(**strings, escape_html=True)
 
 bot = Client('bot', plugins={"root": "bot_handlers"}, bot_token=os.getenv('BOT_TOKEN'))
+
+cmds = ['upgrade', 'restart', 'eval', 'exec', 'cmd', 'ping', 'help', 'settings']
+cmds = {x:1 for x in cmds} # i transform it into a dict to make it compatible with userlixo-rfc plugins

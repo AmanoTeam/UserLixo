@@ -20,7 +20,7 @@ async def shell_exec(code):
     return stdout, process
 
 # Pyrogram monkeypatch
-async def query_edit(self, text, reply_markup, answer_kwargs={}, *args, **kwargs):
+async def query_edit(self, text, reply_markup=None, answer_kwargs={}, *args, **kwargs):
     answer = await self.answer(**answer_kwargs)
     edit = await self.edit_message_text(text=text, reply_markup=reply_markup, *args, **kwargs)
     return edit#, answer

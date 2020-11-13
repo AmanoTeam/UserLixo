@@ -32,7 +32,7 @@ about_userlixo: |-
     ℹ️ Sobre o UserLixo
 
 commands: |-
-    👾 Comandos
+    📒 Comandos
 
 plugins: |-
     🖇 Plugins
@@ -83,6 +83,9 @@ restart_now: |-
 restarting_now_alert: |-
     🔄 O UserLixo está sendo reiniciado. Isso deve durar entre 3 a 7 segundos. Caso dure mais, verifique a saída do terminal.
 
+upgrading_now_alert: |-
+    🔄 O UserLixo está sendo atualizado. Isso deve durar entre 3 a 7 segundos. Caso dure mais, verifique a saída do terminal.
+
 restarted_alert: |-
     ✅ UserLixo reiniciado. Duração do reinício: <code>{seconds}</code> segundos.
     
@@ -121,3 +124,71 @@ settings: |-
 
 start_text: |-
     👾 Hey! Eu sou seu bot assistente pessoal do UserLixo. No que está interessado?
+commands_text: |-
+    📒 Lista de comandos
+
+command_info: |-
+    📒 Comando <code>{command}</code>
+    {info}
+
+
+cmd_info_upgrade: |-
+    Atualiza para o commit mais recente do userlixo-czp no GitHub e reinicia.
+
+cmd_info_restart: |-
+    Renicia o processo, carregando todas as alterações.
+
+cmd_info_eval: |-
+    Edita a mensagem com o resultado de uma expressão em Python. Este comando tem um alias 'ev' que responde à mensagem em vez de editar.
+    
+    Variáveis disponíveis:
+    <code>c</code> - objeto Client
+    <code>m</code> - objeto Message
+    <code>reply</code> - o objeto Message da mensagem respondida ou None
+    <code>user</code> - se a mensagem for uma resposta, <code>user</code> será o objeto User do usuário respondido. Senão, será o objeto User de quem enviou o comando.
+    <code>chat</code> - atalho para <code>m.chat</code>
+
+cmd_info_exec: |-
+    Executa um código Python e edita a mensagem com o retorno. Este comando tem um alias 'ex' que responde à mensagem em vez de editar.
+    
+    Variáveis disponíveis:
+    <code>c</code> - objeto Client
+    <code>m</code> - objeto Message
+    <code>reply</code> - o objeto Message da mensagem respondida ou None
+    <code>user</code> - se a mensagem for uma resposta, <code>user</code> será o objeto User do usuário respondido. Senão, será o objeto User de quem enviou o comando.
+    <code>chat</code> - atalho para <code>m.chat</code>
+
+cmd_info_cmd: |-
+    Executa um comando shell NO SERVIDOR. O que é feito aqui é real e não pode ser desfeito pelo UserLixo.
+
+cmd_info_ping: |-
+    Nós todos não sabemos o que isto faz? Este comando envia um "Pong" informando quanto tempo uma requisição à API levou.
+
+cmd_info_help: |-
+    Mostra alguns botões com algumas informações que podem ser úteis para você.
+
+cmd_info_settings: |-
+    Exibe as configurações. ALgumas configurações só podem ser alteradas no privado do bot assistente.
+checking_packages_updates: |-
+    🔎 Procurando atualizações dos requerimentos...
+
+upgrade_pip_continue: |-
+    📦 Atualizar pacotes e continuar
+
+upgrade_not_pip: |-
+    ➡️ Continuar sem atualizar pacotes
+
+cancel: |-
+    ✖️ Cancelar
+
+ask_upgrade_pip_pkgs: |-
+    📦 Alguns dos pacotes requeridos têm atualizações disponíveis:
+    {upgradable}
+    
+    O que deseja fazer?
+
+upgrading_pip_packages: |-
+    📦 Atualizando requerimentos...
+
+upgrade_canceled: |-
+    ✖️ Upgrade cancelado.
