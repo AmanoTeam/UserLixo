@@ -168,7 +168,7 @@ cmd_info_help: |-
     Mostra alguns botões com algumas informações que podem ser úteis para você.
 
 cmd_info_settings: |-
-    Exibe as configurações. ALgumas configurações só podem ser alteradas no privado do bot assistente.
+    Exibe as configurações. Algumas configurações só podem ser alteradas no privado do bot assistente.
 checking_packages_updates: |-
     🔎 Procurando atualizações dos requerimentos...
 

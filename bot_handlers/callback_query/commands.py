@@ -44,7 +44,7 @@ async def onshowcommand(c,cq):
     
     back_data = f'list_commands {pg}'
     if cq.data.endswith('start'):
-        back_data.append(' start')
+        back_data += ' start'
     
     kb = ikb([
         [(lang.back, back_data)]

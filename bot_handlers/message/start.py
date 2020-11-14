@@ -10,6 +10,7 @@ async def onstart(c, m):
     lang = m.lang
     keyb = ikb([
         [(lang.upgrade, 'upgrade'), [lang.restart, 'restart']],
+        [(lang.commands, 'list_commands 0 start')],
         [(lang.plugins, 'plugins start')],
         [(lang.help, 'help start'), (lang.settings, 'settings start')]
     ])
@@ -22,6 +23,7 @@ async def onstartcb(c, cq):
     m = cq.message
     keyb = ikb([
         [(lang.upgrade, 'upgrade'), [lang.restart, 'restart']],
+        [(lang.commands, 'list_commands 0 start')],
         [(lang.plugins, 'plugins start')],
         [(lang.help, 'help start'), (lang.settings, 'settings start')]
     ])
