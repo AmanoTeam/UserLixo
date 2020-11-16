@@ -61,7 +61,7 @@ async def onupgrade(c, m):
     
     stdout, process = await shell_exec(f'git pull --no-edit origin {branch}')
     if process.returncode != 0:
-        await cq.edit(lang.upgrade_failed(branch=branch, code=process.returncode, output=stdout), keyb)
+        await msg.edit(lang.upgrade_failed(branch=branch, code=process.returncode, output=stdout))
         return await shell_exec("git merge --abort")
     
     await Config.filter(key="restarting_alert").delete()
