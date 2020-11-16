@@ -92,7 +92,7 @@ for string_file in glob.glob('strings/*.yml'):
 
 langs = Langs(**strings, escape_html=True)
 
-bot = Client('bot', plugins={"root": "bot_handlers"}, bot_token=os.getenv('BOT_TOKEN'))
+bot = Client('bot', plugins={"root": "bot_handlers"}, bot_token=os.getenv('BOT_TOKEN'), **pyrogram_config)
 
 cmds = ['upgrade', 'restart', 'eval', 'exec', 'cmd', 'ping', 'help', 'settings']
 cmds = {x:1 for x in cmds} # i transform it into a dict to make it compatible with userlixo-rfc plugins
