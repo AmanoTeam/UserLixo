@@ -28,7 +28,7 @@ Then login with: `python3 login.py keys`
 
 Once the values are generated, access the button below to deploy a new app and paste the values of PYROGRAM_SESSION and PYROGRAM_CONFIG on the desired places.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmanoTeam/UserLixo/tree/beta)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AmanoTeam/UserLixo/tree/userlixo-czp)
 
 Notes
 ====
