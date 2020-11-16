@@ -16,9 +16,10 @@ from pyrogram import Client, filters
 from utils import tryint, query_edit, remove_keyboard, reply_text, edit_text
 
 # Load variables on .env to os.environ
-if not os.path.exists('.env'):
-    raise Exception('File .env is missing')
-load_dotenv('.env')
+if not os.getenv('DYNO'):
+    if not os.path.exists('.env'):
+        raise Exception('File .env is missing')
+    load_dotenv('.env')
 
 def b64encode(value:str):
     return base64.b64encode(value.encode()).decode()
