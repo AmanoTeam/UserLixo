@@ -192,3 +192,15 @@ upgrading_pip_packages: |-
 
 upgrade_canceled: |-
     ✖️ Upgrade canceled.
+plugins_text: |-
+    🖇 <b>List of plugins</b>
+    Plugins are add-ons for UserLixo. A plugin may be a python script or a zip file with some python scripts that includes new functions of alters the usual behavior of UserLixo.
+    <b>Anybody can create a plugin for UserLixo, so please be careful on what you add, all plugins have access to your account, bot and server.</b>
+
+plugin_info: |-
+    🖇 <b>Plugin</b> '<code>{plugin}</code>'
+    🖲 Status: {status}
+    📖 {info}
+
+add_plugin: |-
+    ➕ Add plugin

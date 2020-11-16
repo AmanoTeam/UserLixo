@@ -3,7 +3,7 @@ pyromod
 tgcrypto
 pyyaml
 langs
-termcolor
+rich
 meval
 python-dotenv
 

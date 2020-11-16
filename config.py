@@ -15,10 +15,10 @@ from pyromod import listen, filters
 from pyrogram import Client, filters
 from utils import tryint, query_edit, remove_keyboard, reply_text, edit_text
 
-# Load variables on config.env to os.environ
-if not os.path.exists('config.env'):
-    raise Exception('File config.env is missing')
-load_dotenv('config.env')
+# Load variables on .env to os.environ
+if not os.path.exists('.env'):
+    raise Exception('File .env is missing')
+load_dotenv('.env')
 
 def b64encode(value:str):
     return base64.b64encode(value.encode()).decode()
@@ -95,3 +95,4 @@ bot = Client('bot', plugins={"root": "bot_handlers"}, bot_token=os.getenv('BOT_T
 
 cmds = ['upgrade', 'restart', 'eval', 'exec', 'cmd', 'ping', 'help', 'settings']
 cmds = {x:1 for x in cmds} # i transform it into a dict to make it compatible with userlixo-rfc plugins
+plugins = {}

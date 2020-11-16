@@ -54,9 +54,10 @@ test.py
 test.txt
 *.session
 *.session-journal
-config.env
+.env*
 *.ini
 *.sqlite*
 debug.*
 *errors.txt
 custom/
+plugins/

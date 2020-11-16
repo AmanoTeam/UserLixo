@@ -23,7 +23,7 @@
       "BOT_TOKEN": {
           "required": true,
           "value": "",
-          "description": "The Telegram user of the bot for the commands with inline mode"
+          "description": "The Telegram token of the assistant bot"
       },
       "SUDOERS_LIST": {
           "required": false,

@@ -13,7 +13,7 @@ Requirements
 Setup
 =====
 - Install the requirements by running `pip3 install -Ur requirements-sqlite.txt`
-- Run `python3 login.py` and login
+- Run `python3 login.py`
 
 Running
 =======
@@ -24,7 +24,7 @@ Heroku
 Deploying UserLixo in Heroku is easier but requires an extra step. You firstly need to login locally (can be done in your mobile, using Termux) to generate the values PYROGRAM_SESSION and PYROGRAM_CONFIG, that are required to run on Heroku.
 
 First install the requirements: `pip3 install -Ur requirements-sqlite.txt`
-Then login normally: `python3 login.py`
+Then login with: `python3 login.py keys`
 
 Once the values are generated, access the button below to deploy a new app and paste the values of PYROGRAM_SESSION and PYROGRAM_CONFIG on the desired places.
 

@@ -192,3 +192,15 @@ upgrading_pip_packages: |-
 
 upgrade_canceled: |-
     ✖️ Upgrade cancelado.
+plugins_text: |-
+    🖇 <b>Lista de plugins</b>
+    Plugins são add-ons para o UserLixo. Um plugin pode ser um script python ou um arquivo zip com alguns scripts python que incluem novas funções ou altera o comportamento usual do UserLixo.
+    <b>Qualquer pessoa pode criar um plugin para o UserLixo, então tome cuidado com o que você adiciona, todos os plugins têm acesso à sua conta, bot e servidor.</b>
+
+plugin_info: |-
+    🖇 <b>Plugin</b> '<code>{plugin}</code>'
+    🖲 Status: {status}
+    📖 {info}
+
+add_plugin: |-
+    ➕ Adicionar plugin
