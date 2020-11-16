@@ -54,7 +54,7 @@ test.py
 test.txt
 *.session
 *.session-journal
-.env*
+.env
 *.ini
 *.sqlite*
 debug.*
