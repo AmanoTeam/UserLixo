@@ -30,7 +30,7 @@ async def run_client(client):
         personal_data = dict(
             first_name=info.first_name,
             last_name=info.last_name or '',
-            description=info.description or ''
+            description=info.bio or ''
         )
 
         db['personal_data'] = personal_data
