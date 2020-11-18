@@ -101,6 +101,7 @@ cmds = {x:1 for x in cmds} # i transform it into a dict to make it compatible wi
 plugins = {}
 for file in glob.glob('handlers/plugins/*.py'):
     basename = os.path.basename(file)
+    notation = re.sub('\.py$', '', os.path.relpath(file)).replace('/', '.')
     if basename.startswith('_'):
         continue
     with open(file) as f:
@@ -109,4 +110,5 @@ for file in glob.glob('handlers/plugins/*.py'):
     values = ConfigParser()
     values.read_string('[doc]\n'+match['ini'])
     values = values._sections['doc']
-    plugins[basename] = dict(title=match['title'], description=match['description'], filename=file, **values)
+    
+    plugins[basename] = dict(title=match['title'], description=match['description'], filename=file, notation=notation, **values)

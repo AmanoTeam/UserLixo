@@ -198,7 +198,7 @@ plugins_text: |-
 
 plugin_info: |-
     🖇 <b>Plugin</b> <code>{info[title]}</code>
-    ℹ️ {info[description]}
+    ℹ️ {info[description]}{status_line}
     
     👤 <b>Author:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
@@ -267,3 +267,21 @@ deactivate: |-
 
 activate: |-
     🟢 Activate
+
+active: |-
+    ❇️ Active
+
+inactive: |-
+    💤 Inactive
+
+plugin_not_exists_on_server: |-
+    ❕ This plugin does not exist on the server anymore, it was deleted or renamed.
+
+plugin_has_been_deactivated: |-
+    🔴 The plugin has been deactivated!
+
+plugin_has_been_activated: |-
+    🟢 The plugin has been activated!
+
+plugin_removed: |-
+    🗑 The plugin {name} has been removed!

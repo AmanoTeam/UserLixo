@@ -1,14 +1,16 @@
 from config import plugins, client
 from configparser import ConfigParser
+from database import Config
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
 import importlib
+import json
 import hashlib
 import math
 import os
 import re
 
-@Client.on_message(filters.sudoers & filters.regex('^/start add_plugin$'))
+@Client.on_message(filters.sudoers & filters.regex('^/(start )?add_plugin$'))
 async def onaddplugin_txt(c, m):
     if hasattr(m, 'data'):
         await m.message.delete()
@@ -37,7 +39,6 @@ async def onaddplugin_txt(c, m):
         return await m.reply(lang.plugin_info_block_not_found, quote=True)
     
     os.remove(filename)
-    status = 'Active'
     basename = os.path.basename(filename)
     values = ConfigParser()
     values.read_string('[doc]\n'+match['ini'])
@@ -57,12 +58,12 @@ async def onaddplugin_txt(c, m):
     if 'requirements' in info:
         requirements_line = '\n'+lang.plugin_requirements_line(requirements=info['requirements'])
     
-    status = 'Active'
+    status_line = ''
     text = lang.plugin_info
     text.escape_html = False
     text = text(
         info=info,
-        status=status,
+        status_line=status_line,
         channel_line=channel_line,
         github_line=github_line,
         requirements_line=requirements_line,
@@ -104,9 +105,9 @@ async def on_confirm_plugin(c, cq):
     values.read_string('[doc]\n'+match['ini'])
     values = values._sections['doc']
     
-    namespace = re.sub('\.py$', '', filename).replace('/', '.')
+    notation = re.sub('\.py$', '', filename).replace('/', '.')
     try:
-        module = importlib.import_module(namespace)
+        module = importlib.import_module(notation)
     except Exception as e:
         os.remove(filename)
         return await cq.edit(lang.plugin_could_not_load(e=e))
@@ -120,8 +121,17 @@ async def on_confirm_plugin(c, cq):
     
     for f in functions:
         client.add_handler(*f.handler)
-        
-    plugins[basename] = dict(title=match['title'], description=match['description'], filename=filename, **values)
+    
+    plugins[basename] = dict(title=match['title'], description=match['description'], filename=filename, notation=notation, **values)
+    
+    inactive = (await Config.get_or_create({"value": '[]'}, key='INACTIVE_PLUGINS'))[0].value
+    inactive = json.loads(inactive)
+    plugin_notation = re.search('handlers\.(.+)', notation)[1]
+
+    if plugin_notation in inactive:
+        inactive = [x for x in inactive if x != plugin_notation]
+        await Config.get(key='INACTIVE_PLUGINS').update(value=json.dumps(inactive))
+
     # Discover which page is this plugin listed in
     quant_per_page = 4*2 # lines times columns
     page = math.ceil(len(plugins)/quant_per_page)
