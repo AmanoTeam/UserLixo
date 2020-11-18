@@ -200,8 +200,7 @@ plugin_info: |-
     🖇 <b>Plugin</b> <code>{info[title]}</code>
     ℹ️ {info[description]}
     
-    👤 <b>Author:</b> {info[author]}{channel_line}{github_line}
-    👥 <b>Contributors:</b> {info[contributors]}{requirements_line}
+    👤 <b>Author:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
 plugin_channel_line: |-
     📢 <b>Channel:</b> {channel}
@@ -209,6 +208,8 @@ plugin_github_line: |-
     🔃 <b>GitHub:</b> {github}
 plugin_requirements_line: |-
     📦 <b>Requirements:</b> {requirements}
+plugin_contributors_line: |-
+    👥 <b>Contributors:</b> {contributors}
 
 add_plugin: |-
     ➕ Add plugin
@@ -257,3 +258,12 @@ command_canceled: |-
 
 add: |-
     ➕ Add
+
+remove: |-
+    🗑 Remove
+
+deactivate: |-
+    🔴 Deactivate
+
+activate: |-
+    🟢 Activate

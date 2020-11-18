@@ -69,12 +69,14 @@ async def onshowplugin(c,cq):
         info_text.append(f'<b>{k}</b>: {v}')
     info_text = '\n'.join(info_text)
     
-    channel_line = github_line = requirements_line = ''
+    channel_line = github_line = requirements_line = contributors_line = ''
     lang.escape_html = False
     if 'channel' in info:
         channel_line = '\n'+lang.plugin_channel_line(channel=info['channel'])
     if 'github' in info:
         github_line = '\n'+lang.plugin_github_line(github=info['github'])
+    if 'contributors' in info:
+        contributors_line = '\n'+lang.plugin_contributors_line(contributors=info['contributors'])
     lang.escape_html = True
     if 'requirements' in info:
         requirements_line = '\n'+lang.plugin_requirements_line(requirements=info['requirements'])
@@ -87,6 +89,7 @@ async def onshowplugin(c,cq):
         status=status,
         channel_line=channel_line,
         github_line=github_line,
-        requirements_line=requirements_line
+        requirements_line=requirements_line,
+        contributors_line=contributors_line
     )
     await cq.edit(text, kb, disable_web_page_preview=True)

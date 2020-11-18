@@ -45,16 +45,19 @@ async def onaddplugin_txt(c, m):
     info = dict(title=match['title'], description=match['description'], filename=filename, **values)
     
     # Showing info
-    channel_line = github_line = requirements_line = ''
+    channel_line = github_line = requirements_line = contributors_line = ''
     lang.escape_html = False
     if 'channel' in info:
         channel_line = '\n'+lang.plugin_channel_line(channel=info['channel'])
     if 'github' in info:
         github_line = '\n'+lang.plugin_github_line(github=info['github'])
+    if 'contributors' in info:
+        contributors_line = '\n'+lang.plugin_contributors_line(contributors=info['contributors'])
     lang.escape_html = True
     if 'requirements' in info:
         requirements_line = '\n'+lang.plugin_requirements_line(requirements=info['requirements'])
     
+    status = 'Active'
     text = lang.plugin_info
     text.escape_html = False
     text = text(
@@ -62,7 +65,8 @@ async def onaddplugin_txt(c, m):
         status=status,
         channel_line=channel_line,
         github_line=github_line,
-        requirements_line=requirements_line
+        requirements_line=requirements_line,
+        contributors_line=contributors_line
     )
     file_hash = hashlib.md5(msg.document.file_id.encode()).hexdigest()[:10]
     kb = ikb([
