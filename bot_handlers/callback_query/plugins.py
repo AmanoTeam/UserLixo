@@ -3,7 +3,7 @@ from database import Config
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
-from utils import info
+from utils import info, get_inactive_names
 import importlib
 import json
 import os
@@ -23,10 +23,15 @@ async def onplugins(c,cq):
         item_format = 'info_plugin {} {} start'
         page_format = 'list_plugins {} start'
     
+    inactive_names = await get_inactive_names(plugins)
+    def item_title(i, pg):
+        name = i[0]
+        status = '💤' if name in inactive_names else '❇️'
+        return f'{status} {name}'
     page = Pagination(
         [*plugins.items()],
         item_data=lambda i, pg: item_format.format(i[0], pg),
-        item_title=lambda i, pg: i[0],
+        item_title=item_title,
         page_data=lambda pg: page_format.format(pg)
     )
     

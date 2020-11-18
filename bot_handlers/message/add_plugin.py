@@ -16,7 +16,11 @@ async def onaddplugin_txt(c, m):
         await m.message.delete()
     lang = m.lang
     while True:
-        msg = await m.from_user.ask(lang.plugin_file_ask)
+        if m.reply_to_message and m.reply_to_message.document:
+            msg = m.reply_to_message
+            m.reply_to_message = None # avoid infinite loop
+        else:
+            msg = await m.from_user.ask(lang.plugin_file_ask)
         if await filters.regex('/cancel')(c,msg):
             return await msg.reply(lang.command_canceled)
         if not msg.document:

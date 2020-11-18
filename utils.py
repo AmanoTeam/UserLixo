@@ -1,7 +1,9 @@
-from database import Message
+from database import Message, Config
 from pyrogram import filters
 from pyromod.helpers import ikb
 import asyncio
+import json
+import re
 
 info = {"user": {}, "bot": {}}
 
@@ -42,3 +44,13 @@ async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
         result = inline_results.results[0]
         return await self._client.send_inline_bot_result(self.chat.id, inline_results.query_id, result.id, **kwargs)
     return await self.reply_text(text, reply_markup=reply_markup, *args, **kwargs)
+
+async def get_inactive_names(plugins):
+    inactive = (await Config.get_or_create({"value": '[]'}, key='INACTIVE_PLUGINS'))[0].value
+    inactive = json.loads(inactive)
+    result = []
+    for name,info in plugins.items():
+        plugin_notation = re.search('handlers\.(.+)', info['notation'])[1]
+        if plugin_notation in inactive:
+            result.append(name)
+    return result
