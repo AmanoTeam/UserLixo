@@ -11,6 +11,7 @@ import sys
 async def onupgrade(c, m):
     lang = m.lang
     act = m.edit if await filters.me(c,m) else m.reply
+    msg = None
     try:
         with open(".git/HEAD") as f:
             branch = f.read().split("/")[-1].rstrip()
@@ -57,7 +58,7 @@ async def onupgrade(c, m):
                 await msg.delete()
             return
     
-    msg = await act(lang.upgrading_now_alert)
+    msg = await (act if not msg else msg.edit)(lang.upgrading_now_alert)
     
     stdout, process = await shell_exec(f'git pull --no-edit origin {branch}')
     if process.returncode != 0:
