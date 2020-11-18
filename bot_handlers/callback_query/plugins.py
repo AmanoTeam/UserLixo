@@ -11,12 +11,15 @@ import re
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^list_plugins (?P<page>\d+)'))
 async def onplugins(c,cq):
+    # Determining type of update
+    query = hasattr(cq, 'data') 
+    
     lang = cq.lang
-    this_page = int(cq.matches[0]['page'])
+    this_page = int(cq.matches[0]['page'] or 0)
     
     item_format = 'info_plugin {} {}'
     page_format = 'list_plugins {}'
-    if cq.data.endswith('start'):
+    if query and cq.data.endswith('start'):
         item_format = 'info_plugin {} {} start'
         page_format = 'list_plugins {} start'
     
@@ -29,25 +32,21 @@ async def onplugins(c,cq):
     
     lines = page.create(this_page, lines=4, columns=2)
     total = len(lines)
-    """
-    for n,line in enumerate(lines):
-        if n == 4:
-            break
-        btn = line[0]
-        data = re.match('info_plugin (?P<plugin>.+) (?P<pg>\d+)', btn[1])
-        lines[n].append( ('?', f"switch_plugin {data['plugin']} {data['pg']}") )
-    """
-    if cq.message:
+    
+    if hasattr(cq, 'from_bot_handler') or (hasattr(cq, 'message') and cq.message):
         lines.append([(lang.add_plugin, f'add_plugin {this_page} start')])
     else:
         lines.append([(lang.add_plugin, f"t.me/{info['bot']['username']}?start=add_plugin", 'url')])
     
-    if cq.data.endswith('start'):
+    if query and cq.data.endswith('start'):
         lines.append([(lang.back, 'start')])
-    else:
+    elif query:
         lines.append([(lang.back, 'help')])
-    
-    await cq.edit(lang.plugins_text, ikb(lines))
+    if query:
+        return await cq.edit(lang.plugins_text, ikb(lines))
+    if hasattr(cq, 'from_bot_handler'):
+        lines = ikb(lines)
+    await cq.reply(lang.plugins_text, lines)
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^info_plugin (?P<plugin>.+) (?P<pg>\d+)'))
 async def onshowplugin(c,cq):
