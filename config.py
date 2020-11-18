@@ -7,6 +7,8 @@ import os
 import pyrogram
 import yaml
 
+from configparser import ConfigParser
+
 from database import Config
 from dotenv import load_dotenv
 from langs import Langs
@@ -97,3 +99,14 @@ bot = Client('bot', plugins={"root": "bot_handlers"}, bot_token=os.getenv('BOT_T
 cmds = ['upgrade', 'restart', 'eval', 'exec', 'cmd', 'ping', 'help', 'settings']
 cmds = {x:1 for x in cmds} # i transform it into a dict to make it compatible with userlixo-rfc plugins
 plugins = {}
+for file in glob.glob('handlers/plugins/*.py'):
+    basename = os.path.basename(file)
+    if basename.startswith('_'):
+        continue
+    with open(file) as f:
+        data = f.read();
+    match = re.search(r'"""\s*(?P<title>.+)\n\n(?P<description>.+)\n\n(?P<ini>.+)\s*"""', data, re.DOTALL)
+    values = ConfigParser()
+    values.read_string('[doc]\n'+match['ini'])
+    values = values._sections['doc']
+    plugins[basename] = dict(title=match['title'], description=match['description'], filename=file, **values)

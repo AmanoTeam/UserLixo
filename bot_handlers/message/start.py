@@ -5,11 +5,7 @@ import os, re, sys
 from database import Config
 from datetime import datetime
 
-@Client.on_message(filters.sudoers & filters.regex('^/start add_plugin$'))
-async def onaddplugin(c, m):
-    await m.reply('Plugins support are under development.')
-
-@Client.on_message(filters.sudoers & filters.regex('^/start'))
+@Client.on_message(filters.sudoers & filters.regex('^/start$'))
 async def onstart(c, m):
     lang = m.lang
     keyb = ikb([

@@ -194,13 +194,66 @@ upgrade_canceled: |-
     ✖️ Upgrade canceled.
 plugins_text: |-
     🖇 <b>List of plugins</b>
-    Plugins are add-ons for UserLixo. A plugin may be a python script or a zip file with some python scripts that includes new functions of alters the usual behavior of UserLixo.
-    <b>Anybody can create a plugin for UserLixo, so please be careful on what you add, all plugins have access to your account, bot and server.</b>
+    Plugins are add-ons for UserLixo that add new features and change usual UserLixo's behavior.
 
 plugin_info: |-
-    🖇 <b>Plugin</b> '<code>{plugin}</code>'
-    🖲 Status: {status}
-    📖 {info}
+    🖇 <b>Plugin</b> <code>{info[title]}</code>
+    ℹ️ {info[description]}
+    
+    👤 <b>Author:</b> {info[author]}{channel_line}{github_line}
+    👥 <b>Contributors:</b> {info[contributors]}{requirements_line}
+
+plugin_channel_line: |-
+    📢 <b>Channel:</b> {channel}
+plugin_github_line: |-
+    🔃 <b>GitHub:</b> {github}
+plugin_requirements_line: |-
+    📦 <b>Requirements:</b> {requirements}
 
 add_plugin: |-
     ➕ Add plugin
+
+info_text: |-
+    ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
+    💻 <code>{uname}</code>
+    
+    📈 UserLixo's uptime: <code>{uptime}</code>
+
+info_upgradable_to: |-
+    upgradable to {version}
+
+info_lastest: |-
+    lastest
+
+plugin_file_ask: |-
+    🖇 Send a UserLixo plugin (a python file) to add.
+
+plugin_waiting_file: |-
+    ❕ I'm waiting for a <b>file</b> (an UserLixo plugin) to add. I can't add anything else as plugin. Use /cancel to cancel.
+
+plugin_format_not_accepted: |-
+    ❕ Plugins can be only python scripts, ending with the extension '.py'.
+
+plugin_too_big: |-
+    ❕ This file is too large for a plugin (>5MB), i refuse to download it.
+
+plugin_info_block_not_found: |-
+    ❕ This is a python script that follow all requirements, but i could not find the <b>required comment block</b> with the plugin info, so this may not be an UserLixo plugin or its author made a mistake.
+
+plugin_could_not_load: |-
+    ❕ Everything is ok with the plugin, but for some reason i <b>couldn't import</b> it to load at runtime. The file has been deleted from the server. Error:
+    <code>{e}</code>
+
+plugin_has_no_handlers: |-
+    ⚠️ Hmmm, i recognized the plugin and added it, but it <b>hasn't any handlers</b>! This is suspicious, i deleted the file (but it ran once). Please check this plugin and any other you may want to add in the future.
+
+see_plugin_info: |-
+    ℹ️ See plugin info
+
+plugin_added: |-
+    ✅ Plugin <code>{name}</code> successfully added.
+command_canceled: |-
+    Command canceled.
+
+add: |-
+    ➕ Add

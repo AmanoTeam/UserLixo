@@ -194,13 +194,66 @@ upgrade_canceled: |-
     ✖️ Upgrade cancelado.
 plugins_text: |-
     🖇 <b>Lista de plugins</b>
-    Plugins são add-ons para o UserLixo. Um plugin pode ser um script python ou um arquivo zip com alguns scripts python que incluem novas funções ou altera o comportamento usual do UserLixo.
-    <b>Qualquer pessoa pode criar um plugin para o UserLixo, então tome cuidado com o que você adiciona, todos os plugins têm acesso à sua conta, bot e servidor.</b>
+    Plugins são add-ons para o UserLixo, que adicionam funções novas e alteram o comportamento usual do UserLixo.
 
 plugin_info: |-
-    🖇 <b>Plugin</b> '<code>{plugin}</code>'
-    🖲 Status: {status}
-    📖 {info}
+    🖇 <b>Plugin</b> <code>{info[title]}</code>
+    ℹ️ {info[description]}
+    
+    👤 <b>Author:</b> {info[author]}{channel_line}{github_line}
+    👥 <b>Contributors:</b> {info[contributors]}{requirements_line}
+
+plugin_channel_line: |-
+    📢 <b>Channel:</b> {channel}
+plugin_github_line: |-
+    🔃 <b>GitHub:</b> {github}
+plugin_requirements_line: |-
+    📦 <b>Requerimentos:</b> {requirements}
 
 add_plugin: |-
-    ➕ Adicionar plugin
+    ➕ Add plugin
+
+info_text: |-
+    ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
+    💻 <code>{uname}</code>
+    
+    📈 Tempo de execução: <code>{uptime}</code>
+
+info_upgradable_to: |-
+    atualizável para {version}
+
+info_lastest: |-
+    atualizado
+
+plugin_file_ask: |-
+    🖇 Envie um plugin do UserLixo (um script python) para adicionar.
+
+plugin_waiting_file: |-
+    ❕ Estou esperando por um <b>arquivo</b> para adicionar. Não posso adicionar nada senão scripts python como plugins. Use /cancel para cancelar.
+
+plugin_format_not_accepted: |-
+    ❕ Plugins podem ser apenas scripts python, terminando com a extensão '.py'.
+
+plugin_too_big: |-
+    ❕ Esse arquivo é muito grande para ser um plugin (>5MB). Eu me recuso a baixá-lo.
+
+plugin_info_block_not_found: |-
+    ❕ Esse arquivo segue todos os requerimentos, mas eu não encontrei o <b>bloco de comentário obrigatório</b>, com as informações do plugin. Esse arquivo não é um plugin para o UserLixo ou o seu autor cometeu algum erro.
+
+plugin_could_not_load: |-
+    ❕ Tudo está ok com o arquivo, mas eu não consegui o <b>importar</b> para adicionar os handlers em runtime. O arquivo foi deletado do servidor. Erro:
+    <code>{e}</code>
+
+plugin_has_no_handlers: |-
+    ⚠️ Hmmmm, eu reconheci o plugin e o adicionei, mas ele não tem nenhum handler! Isto é suspeito, então eu deletei o arquivo (mas ele chegou a ser executado). Por favor cheque este plugin e qualquer outro que queira adicionar no futuro.
+
+see_plugin_info: |-
+    ℹ️ Ver info
+
+plugin_added: |-
+    ✅ Plugin <code>{name}</code> adicionado com sucesso.
+command_canceled: |-
+    Comando cancelado.
+
+add: |-
+    ➕ Adicionar

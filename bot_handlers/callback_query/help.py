@@ -7,7 +7,7 @@ async def on_settings(client, query):
     keyboard = [
         [(lang.about_userlixo, 'about_userlixo')],
         [(lang.commands, 'list_commands 0'), (lang.plugins, 'list_plugins 0')],
-        [(lang.chat, 'https://t.me/AmanoChat', 'url'), (lang.channel, 'https://t.me/AmanoTeam', 'url')]
+        [(lang.chat, 'https://t.me/UserLixoChat', 'url'), (lang.channel, 'https://t.me/UserLixo', 'url')]
     ]
     if query.data.endswith('start'):
         keyboard.append([ (lang.back, 'start') ])
