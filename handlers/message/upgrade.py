@@ -28,7 +28,9 @@ async def onupgrade(c, m):
         title,p = await shell_exec('git log --format="%B" -1')
         rev,p = await shell_exec('git rev-parse --short HEAD')
         date,p = await shell_exec("git log -1 --format=%cd --date=local")
-        return await act(lang.upgrade_alert_already_uptodate(title=title, rev=rev, date=date))
+        local_version = int((await shell_exec('git rev-list --count HEAD'))[0])
+        
+        return await act(lang.upgrade_alert_already_uptodate(title=title, rev=rev, date=date, local_version=local_version))
     
     if 'DYNO' not in os.environ:
         msg = await act(lang.checking_packages_updates)

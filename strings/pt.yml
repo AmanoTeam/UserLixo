@@ -87,25 +87,25 @@ upgrading_now_alert: |-
     🔄 O UserLixo está sendo atualizado. Isso deve durar entre 3 a 7 segundos. Caso dure mais, verifique a saída do terminal.
 
 restarted_alert: |-
-    ✅ UserLixo reiniciado. Duração do reinício: <code>{seconds}</code> segundos.
+    ✅ UserLixo reiniciado em <code>{seconds}</code>s.
     
-    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
-    🗓 <b>Data:</b> <code>{date}</code>
+    🏷 <b>Version:</b> <code>{local_version}</code>
+    🔧 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
 upgraded_alert: |-
-    🆕 UserLixo atualizado! Duração do reinício: <code>{seconds}</code> segundos.
+    🆕 O UserLixo foi atualizado em <code>{seconds}</code>s.
     
-    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
-    🗓 <b>Data:</b> <code>{date}</code>
+    🏷 <b>Version:</b> <code>{local_version}</code>
+    🔧 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
 
 upgrade_error_not_git: |-
     😕 Para atualizar o UserLixo é preciso estar o executando em um repositório git local.
     Clone o repositório com <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e refaça o login.
 
 upgrade_alert_already_uptodate: |-
-    ☑️ O UserLixo já está na versão mais recente, não há nada para atualizar.
+    ☑️ O UserLixo já está atualizado.
     
-    🏷 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
-    🗓 <b>Data:</b> <code>{date}</code>
+    🏷 <b>Versão:</b> <code>{local_version}</code>
+    🔧 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
 
 upgrade_failed: |-
     ❌ O upgrade falhou com o código de retorno <code>{code}</code> para a branch <code>{branch}</code>

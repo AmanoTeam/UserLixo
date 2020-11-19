@@ -58,11 +58,14 @@ async def main():
         title,p = await shell_exec('git log --format="%B" -1')
         rev,p = await shell_exec('git rev-parse --short HEAD')
         date,p = await shell_exec("git log -1 --format=%cd --date=local")
+        local_version = int((await shell_exec('git rev-list --count HEAD'))[0])
         
         kwargs = {}
-        text = langs.restarted_alert(title=title, rev=rev, date=date, seconds=diff)
+        text = langs.restarted_alert
         if from_cmd.startswith('upgrade'):
-            text = langs.upgraded_alert(title=title, rev=rev, date=date, seconds=diff)
+            text = langs.upgraded_alert
+        text = text(title=title, rev=rev, date=date, seconds=diff, local_version=local_version)
+        
         if from_cmd.endswith('_start'):
             keyb = ikb([
                 [(langs.back, 'start')]    
