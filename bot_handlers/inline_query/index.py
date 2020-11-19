@@ -18,7 +18,7 @@ async def on_index(client, query):
     text = message.text
     
     results = [
-        InlineQueryResultArticle(title="index", input_message_content=InputTextMessageContent(text), reply_markup=keyboard)
+        InlineQueryResultArticle(title="index", input_message_content=InputTextMessageContent(text, disable_web_page_preview=True), reply_markup=keyboard)
     ]
     
     await query.answer(results, cache_time=0)

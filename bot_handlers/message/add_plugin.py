@@ -10,15 +10,27 @@ import math
 import os
 import re
 
+@Client.on_message(filters.sudoers & filters.document)
+async def on_plugin_file(c, m):
+    if m.document.file_name.endswith('.py'):
+        await onaddplugin_txt(c,m)
+
 @Client.on_message(filters.sudoers & filters.regex('^/(start )?add_plugin$'))
 async def onaddplugin_txt(c, m):
     if hasattr(m, 'data'):
         await m.message.delete()
     lang = m.lang
+    loop_time = 0
     while True:
-        if m.reply_to_message and m.reply_to_message.document:
+        loop_time += 1
+        if m.document:
+            msg = m
+            if loop_time > 1:
+                break # avoid infinite loop
+        elif m.reply_to_message and m.reply_to_message.document:
             msg = m.reply_to_message
-            m.reply_to_message = None # avoid infinite loop
+            if loop_time > 1:
+                break # avoid infinite loop
         else:
             msg = await m.from_user.ask(lang.plugin_file_ask)
         if await filters.regex('/cancel')(c,msg):
@@ -74,9 +86,11 @@ async def onaddplugin_txt(c, m):
         contributors_line=contributors_line
     )
     file_hash = hashlib.md5(msg.document.file_id.encode()).hexdigest()[:10]
-    kb = ikb([
+    kb = [
         [(lang.add, f'confirm_add_plugin {file_hash}'), (lang.cancel, 'cancel_plugin')]
-    ])
+    ]
+    if c.bot_token: # if is bot
+        kb = ikb(kb)
     await msg.reply(text, kb, disable_web_page_preview=True, quote=True)
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^cancel_plugin'))
@@ -87,7 +101,8 @@ async def oncancelplugin(c, cq):
 @Client.on_callback_query(filters.sudoers & filters.regex('^confirm_add_plugin (?P<file_hash>.+)'))
 async def on_confirm_plugin(c, cq):
     lang = cq.lang
-    if not (msg := cq.message.reply_to_message):
+    msg = cq.message.reply_to_message
+    if not msg:
         await cq.message.remove_keyboard()
         return await cq.answer('FILE NOT FOUND', show_alert=True)
         
