@@ -12,7 +12,6 @@ import re
 @Client.on_message(filters.su_cmd('plugins$'))
 async def onplugins_txt(c,m):
     m.matches = [{"page": 0}]
-    await onplugins(c,m)
 
 @Client.on_message(filters.reply & filters.su_cmd('(plugin )?(?P<action>add|rm|\+|-)'))
 async def on_plugin_action(c, m):
@@ -75,4 +74,4 @@ async def on_plugin_action(c, m):
     del plugins[plugin]
     os.remove(info['filename'])
     
-    await act(lang.plugin_removed(name=plugin))
+    await act(lang.plugin_removed_text(name=plugin))

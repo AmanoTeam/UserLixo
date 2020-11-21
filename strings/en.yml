@@ -285,7 +285,11 @@ plugin_has_been_activated: |-
     🟢 The plugin has been activated!
 
 plugin_removed: |-
+    🗑 The plugin {name} has been removed!
+
+plugin_removed_text: |-
     🗑 The plugin <code>{name}</code> has been removed!
+
 plugin_rm_not_document: |-
     ❕ You used <code>plugin rm</code> but didn't reply to a document. Reply to a plugin file (.py) to remove.
 

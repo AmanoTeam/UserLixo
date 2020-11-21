@@ -6,8 +6,7 @@ TIMEZONE: America/Sao_Paulo
 # the back button on many menus
 back: «
 
-executed_cmd: |-
-    Comando executado
+executed_cmd: Comando executado
 
 settings_text: |-
     🛠 <b>Configurações do UserLixo</b>
@@ -284,7 +283,11 @@ plugin_has_been_activated: |-
     🟢 O plugin foi ativado!
 
 plugin_removed: |-
+    🗑 O plugin {name} foi removido!
+
+plugin_removed_text: |-
     🗑 O plugin <code>{name}</code> foi removido!
+
 plugin_rm_not_document: |-
     ❕ Você usou <code>plugin rm</code> mas não respondeu a nenhum documento. Envie o comando respondendo a um arquivo de plugin (.py) para remover.
 

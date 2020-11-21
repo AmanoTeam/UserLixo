@@ -116,7 +116,7 @@ async def onshowplugin(c,cq):
     await cq.edit(text, kb, disable_web_page_preview=True)
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^deactivate_plugin (?P<plugin>.+) (?P<pg>\d+)'))
-async def ondeactivatelugin(c,cq):
+async def ondeactivateplugin(c,cq):
     lang = cq.lang
     plugin = cq.matches[0]['plugin']
     
@@ -151,7 +151,7 @@ async def ondeactivatelugin(c,cq):
     await onshowplugin(c,cq)
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^activate_plugin (?P<plugin>.+) (?P<pg>\d+)'))
-async def onactivatelugin(c,cq):
+async def onactivateplugin(c,cq):
     lang = cq.lang
     plugin = cq.matches[0]['plugin']
     
@@ -223,5 +223,5 @@ async def onremoveplugin(c,cq):
     os.remove(info['filename'])
     
     await cq.answer(lang.plugin_removed(name=plugin))
-    m.matches = [{"page": pg}]
+    cq.matches = [{"page": pg}]
     await onplugins(c,cq)
