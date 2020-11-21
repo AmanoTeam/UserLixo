@@ -11,6 +11,7 @@ import aiocron
 import asyncio
 import glob
 import os
+import re
 import rich
 
 @aiocron.crontab('*/1 * * * *')
@@ -72,8 +73,20 @@ async def main():
         
         title,p = await shell_exec('git log --format="%B" -1')
         rev,p = await shell_exec('git rev-parse --short HEAD')
-        date,p = await shell_exec("git log -1 --format=%cd --date=local")
+        date,p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%I %z"')
         local_version = int((await shell_exec('git rev-list --count HEAD'))[0])
+        
+        date_parts = date.split(' ')
+        timezone = date_parts[-1]
+        if timezone[-2:] == '00':
+            timezone = timezone[:-2]
+        if timezone[1] == '0':
+            timezone = timezone[0]+timezone[2:]
+        if re.match('[\+-]\d+', timezone):
+            timezone = 'GMT'+timezone
+        timezone = f'({timezone})'
+        date_parts[-1] = timezone
+        date = ' '.join(date_parts)
         
         kwargs = {}
         text = langs.restarted_alert

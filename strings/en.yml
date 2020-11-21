@@ -86,16 +86,16 @@ upgrading_now_alert: |-
     🔄 UserLixo is being upgraded... It should take 3-7 seconds. If it takes longer, check the terminal output.
 
 restarted_alert: |-
-    ✅ UserLixo restarted within <code>{seconds}</code>s.
+    ✅ UserLixo restarted within {seconds}s.
     
-    🏷 <b>Version:</b> <code>{local_version}</code>
-    🔧 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🏷 <b>Version:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>Date:</b> <code>{date}</code>
 
 upgraded_alert: |-
-    🆕 UserLixo upgraded within <code>{seconds}</code>s.
+    🆕 UserLixo upgraded within {seconds}s.
     
-    🏷 <b>Version:</b> <code>{local_version}</code>
-    🔧 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🏷 <b>Version:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>Date:</b> <code>{date}</code>
 
 upgrade_error_not_git: |-
     😕 To upgrade you must be running UserLixo under a git repository.
@@ -104,8 +104,8 @@ upgrade_error_not_git: |-
 upgrade_alert_already_uptodate: |-
     ☑️ UserLixo is already up-to-date.
     
-    🏷 <b>Version:</b> <code>{local_version}</code>
-    🔧 <b>Commit</b>: <code>{title}</code> (<code>{rev}</code>)
+    🏷 <b>Version:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>Date:</b> <code>{date}</code>
 
 upgrade_failed: |-
     ❌ The upgrade failed with return code <code>{code}</code> for the branch <code>{branch}</code>.
