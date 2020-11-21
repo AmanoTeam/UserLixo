@@ -98,10 +98,25 @@ async def oncancelplugin(c, cq):
 @Client.on_callback_query(filters.sudoers & filters.regex('^confirm_add_plugin (?P<filename>.+)'))
 async def on_confirm_plugin(c, cq):
     lang = cq.lang
-        
+    module = None
+    
     cache_filename = cq.matches[0]['filename']
     basename = os.path.basename(cache_filename)
     new_filename = 'handlers/plugins/'+basename
+    notation = re.sub('\.py$', '', new_filename).replace('/', '.')
+    
+    # Safely unload the plugin if existent
+    if os.path.exists(new_filename):
+        try:
+            module = importlib.import_module(notation)
+        except Exception as e:
+            return await cq.edit(lang.plugin_could_not_load_existent(e=e))
+        
+        functions = [*filter(callable, module.__dict__.values())]
+        functions = [*filter(lambda f: hasattr(f, 'handler'), functions)]
+        for f in functions:
+            client.remove_handler(*f.handler)
+    
     os.rename(cache_filename, new_filename)
     
     with open(new_filename) as f:
@@ -112,8 +127,9 @@ async def on_confirm_plugin(c, cq):
     values.read_string('[doc]\n'+match['ini'])
     values = values._sections['doc']
     
-    notation = re.sub('\.py$', '', new_filename).replace('/', '.')
     try:
+        if module:
+            importlib.reload(module)
         module = importlib.import_module(notation)
     except Exception as e:
         os.remove(new_filename)
