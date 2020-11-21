@@ -73,7 +73,7 @@ async def main():
         
         title,p = await shell_exec('git log --format="%B" -1')
         rev,p = await shell_exec('git rev-parse --short HEAD')
-        date,p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%I %z"')
+        date,p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M %z"')
         local_version = int((await shell_exec('git rev-list --count HEAD'))[0])
         
         date_parts = date.split(' ')
