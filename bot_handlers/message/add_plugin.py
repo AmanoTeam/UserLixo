@@ -5,7 +5,6 @@ from pyrogram import Client, filters
 from pyromod.helpers import ikb
 import importlib
 import json
-import hashlib
 import math
 import os
 import re
@@ -15,7 +14,7 @@ async def on_plugin_file(c, m):
     if m.document.file_name.endswith('.py'):
         await onaddplugin_txt(c,m)
 
-@Client.on_message(filters.sudoers & filters.regex('^/(start )?add_plugin$'))
+@Client.on_message(filters.sudoers & filters.regex('^/(start )?plugin[_ ]add'))
 async def onaddplugin_txt(c, m):
     if hasattr(m, 'data'):
         await m.message.delete()
@@ -45,7 +44,7 @@ async def onaddplugin_txt(c, m):
             await msg.reply(lang.plugin_too_big, quote=True)
             continue
         break
-    filename = await msg.download('handlers/plugins/')
+    filename = await msg.download(f'cache/')
     filename = os.path.relpath(filename)
     
     with open(filename) as f:
@@ -54,7 +53,6 @@ async def onaddplugin_txt(c, m):
         os.remove(filename)
         return await m.reply(lang.plugin_info_block_not_found, quote=True)
     
-    os.remove(filename)
     basename = os.path.basename(filename)
     values = ConfigParser()
     values.read_string('[doc]\n'+match['ini'])
@@ -85,9 +83,8 @@ async def onaddplugin_txt(c, m):
         requirements_line=requirements_line,
         contributors_line=contributors_line
     )
-    file_hash = hashlib.md5(msg.document.file_id.encode()).hexdigest()[:10]
     kb = [
-        [(lang.add, f'confirm_add_plugin {file_hash}'), (lang.cancel, 'cancel_plugin')]
+        [(lang.add, f'confirm_add_plugin {filename}'), (lang.cancel, 'cancel_plugin')]
     ]
     if c.bot_token: # if is bot
         kb = ikb(kb)
@@ -98,25 +95,16 @@ async def oncancelplugin(c, cq):
     lang = cq.lang
     await cq.edit(lang.command_canceled)
 
-@Client.on_callback_query(filters.sudoers & filters.regex('^confirm_add_plugin (?P<file_hash>.+)'))
+@Client.on_callback_query(filters.sudoers & filters.regex('^confirm_add_plugin (?P<filename>.+)'))
 async def on_confirm_plugin(c, cq):
     lang = cq.lang
-    msg = cq.message.reply_to_message
-    if not msg:
-        await cq.message.remove_keyboard()
-        return await cq.answer('FILE NOT FOUND', show_alert=True)
         
-    expected_hash = cq.matches[0]['file_hash']
-    now_hash = hashlib.md5(msg.document.file_id.encode()).hexdigest()[:10]
-    if now_hash != expected_hash:
-        await cq.message.remove_keyboard()
-        return await cq.answer('FILE HAS CHANGED', show_alert=True)
+    cache_filename = cq.matches[0]['filename']
+    basename = os.path.basename(cache_filename)
+    new_filename = 'handlers/plugins/'+basename
+    os.rename(cache_filename, new_filename)
     
-    filename = await msg.download('handlers/plugins/')
-    filename = os.path.relpath(filename)
-    basename = os.path.basename(filename)
-    
-    with open(filename) as f:
+    with open(new_filename) as f:
         data = f.read()
     match = re.search(r'"""\s*(?P<title>.+)\n\n(?P<description>.+)\n\n(?P<ini>.+)\s*"""', data, re.DOTALL)
     
@@ -124,24 +112,24 @@ async def on_confirm_plugin(c, cq):
     values.read_string('[doc]\n'+match['ini'])
     values = values._sections['doc']
     
-    notation = re.sub('\.py$', '', filename).replace('/', '.')
+    notation = re.sub('\.py$', '', new_filename).replace('/', '.')
     try:
         module = importlib.import_module(notation)
     except Exception as e:
-        os.remove(filename)
+        os.remove(new_filename)
         return await cq.edit(lang.plugin_could_not_load(e=e))
     
     functions = [*filter(callable, module.__dict__.values())]
     functions = [*filter(lambda f: hasattr(f, 'handler'), functions)]
     
     if not len(functions):
-        os.remove(filename)
+        os.remove(new_filename)
         return await cq.edit(lang.plugin_has_no_handlers)
     
     for f in functions:
         client.add_handler(*f.handler)
     
-    plugins[basename] = dict(title=match['title'], description=match['description'], filename=filename, notation=notation, **values)
+    plugins[basename] = dict(title=match['title'], description=match['description'], filename=new_filename, notation=notation, **values)
     
     inactive = (await Config.get_or_create({"value": '[]'}, key='INACTIVE_PLUGINS'))[0].value
     inactive = json.loads(inactive)

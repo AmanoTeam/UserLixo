@@ -6,6 +6,7 @@ langs
 rich
 meval
 python-dotenv
+aiocron
 
 tortoise-orm
 asyncpg

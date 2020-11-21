@@ -284,4 +284,16 @@ plugin_has_been_activated: |-
     🟢 O plugin foi ativado!
 
 plugin_removed: |-
-    🗑 O plugin {name} foi removido!
+    🗑 O plugin <code>{name}</code> foi removido!
+plugin_rm_not_document: |-
+    ❕ Você usou <code>plugin rm</code> mas não respondeu a nenhum documento. Envie o comando respondendo a um arquivo de plugin (.py) para remover.
+
+plugin_rm_not_py: |-
+    ❕ O documento ao qual você respondeu não é um arquivo .py. Os comandos <code>plugin rm/add</code> podem ser usados somente em resposta a plugins do Userlixo.
+
+plugin_rm_not_added: |-
+    ❕ Não achei nenhum plugin com o nome <code>{name}</code>.
+
+plugin_rm_remote_local_are_diff: |-
+    ❕ O arquivo que você respondeu e o plugin <code>{name}</code> salvo no servidor são diferentes. Por favor cheque o arquivo repondido e o plugin.
+    Caso ainda queira remover o plugin, faça-o pelo comando <code>plugins</code>.

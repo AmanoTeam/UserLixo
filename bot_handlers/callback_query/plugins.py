@@ -41,12 +41,13 @@ async def onplugins(c,cq):
     if hasattr(cq, 'from_bot_handler') or (hasattr(cq, 'message') and cq.message):
         lines.append([(lang.add_plugin, f'add_plugin {this_page} start')])
     else:
-        lines.append([(lang.add_plugin, f"t.me/{info['bot']['username']}?start=add_plugin", 'url')])
+        lines.append([(lang.add_plugin, f"t.me/{info['bot']['username']}?start=plugin_add", 'url')])
     
     if query and cq.data.endswith('start'):
         lines.append([(lang.back, 'start')])
     elif query:
         lines.append([(lang.back, 'help')])
+    
     if query:
         return await cq.edit(lang.plugins_text, ikb(lines))
     if hasattr(cq, 'from_bot_handler'):
@@ -221,8 +222,6 @@ async def onremoveplugin(c,cq):
     del plugins[plugin]
     os.remove(info['filename'])
     
-    cq.data = f'list_plugins {pg}'
-    if cq.data.endswith('start'):
-        cq.data += ' start'
     await cq.answer(lang.plugin_removed(name=plugin))
+    m.matches = [{"page": pg}]
     await onplugins(c,cq)

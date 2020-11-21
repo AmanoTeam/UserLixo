@@ -61,3 +61,4 @@ debug.*
 *errors.txt
 custom/
 plugins/
+cache/

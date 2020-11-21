@@ -285,4 +285,15 @@ plugin_has_been_activated: |-
     🟢 The plugin has been activated!
 
 plugin_removed: |-
-    🗑 The plugin {name} has been removed!
+    🗑 The plugin <code>{name}</code> has been removed!
+plugin_rm_not_document: |-
+    ❕ You used <code>plugin rm</code> but didn't reply to a document. Reply to a plugin file (.py) to remove.
+
+plugin_rm_not_py: |-
+    ❕ The document you replied to is not a .py file. <code>plugin rm/add<code> can only be used in reply to UserLixo plugins.
+
+plugin_rm_not_added: |-
+    ❕ I could not find any plugin with named <code>{name}</code>.
+
+plugin_rm_remote_local_are_diff: |-
+    ❕ The file you replied and the plugin <code>{name}</code> saved on the server are NOT the same. Please check the replied file and the plugin. If you still want to remove the plugin, do it through the command <code>plugins</code>

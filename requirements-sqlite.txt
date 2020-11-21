@@ -7,3 +7,4 @@ meval
 python-dotenv
 rich
 tortoise-orm
+aiocron
