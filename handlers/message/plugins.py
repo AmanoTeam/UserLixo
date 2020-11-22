@@ -18,7 +18,8 @@ async def on_plugin_action(c, m):
     lang = m.lang
     action = m.matches[0]['action']
     if action in ['+', 'add']:
-        await m.delete()
+        if await filters.me(c,m):
+            await m.delete()
         return await onaddplugin_txt(c,m)
     
     # remove plugin on .plugin rm
