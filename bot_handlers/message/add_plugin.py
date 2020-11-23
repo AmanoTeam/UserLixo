@@ -16,17 +16,19 @@ async def on_plugin_file(c, m):
 
 @Client.on_message(filters.sudoers & filters.regex('^/(start )?plugin[_ ]add'))
 async def onaddplugin_txt(c, m):
+    is_query = False
     if hasattr(m, 'data'):
         await m.message.delete()
+        is_query = True
     lang = m.lang
     loop_time = 0
     while True:
         loop_time += 1
-        if m.document:
+        if not is_query and m.document:
             msg = m
             if loop_time > 1:
                 break # avoid infinite loop
-        elif m.reply_to_message and m.reply_to_message.document:
+        elif not is_query and m.reply_to_message and m.reply_to_message.document:
             msg = m.reply_to_message
             if loop_time > 1:
                 break # avoid infinite loop
@@ -117,7 +119,7 @@ async def on_confirm_plugin(c, cq):
         for f in functions:
             client.remove_handler(*f.handler)
     
-    os.rename(cache_filename, new_filename)
+    os.renames(cache_filename, new_filename)
     
     with open(new_filename) as f:
         data = f.read()
