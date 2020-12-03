@@ -1,1 +1,0 @@
-from .config import plugins, user, bot, cmds

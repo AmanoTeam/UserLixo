@@ -2,7 +2,7 @@
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
-from userlixo import plugins, user, bot
+from userlixo.config import plugins, user, bot
 from userlixo.utils import get_inactive_plugins
 
 @Client.on_message(filters.sudoers & filters.regex('^/plugins'))

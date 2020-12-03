@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
-from userlixo import cmds
+from userlixo.config import cmds
 import os
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^about_(?P<subject>userlixo|plugins|commands)'))

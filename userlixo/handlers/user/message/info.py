@@ -1,5 +1,5 @@
 from pyrogram import Client, filters
-from userlixo import plugins
+from userlixo.config import plugins
 from userlixo.utils import shell_exec
 import re, os
 import platform

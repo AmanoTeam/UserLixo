@@ -11,7 +11,7 @@ if 'DYNO' not in os.environ:
         os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur requirements-sqlite.txt; {RESET}')
         os.system('clear')
         # Update plugins requirements
-        from userlixo import plugins
+        from userlixo.config import plugins
         from userlixo.utils import reload_plugins_requirements
         requirements, unused_requirements = reload_plugins_requirements(plugins)
         if os.path.exists('plugins-requirements.txt'):

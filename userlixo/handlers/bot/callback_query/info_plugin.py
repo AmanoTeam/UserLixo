@@ -1,4 +1,4 @@
-from userlixo import plugins, user, bot
+from userlixo.config import plugins, user, bot
 from userlixo.database import Config
 from userlixo.handlers.bot.list_plugins import on_list_plugins_type
 from pyrogram import Client, filters
