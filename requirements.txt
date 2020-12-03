@@ -7,6 +7,7 @@ rich
 meval
 python-dotenv
 aiocron
+click
 
 tortoise-orm
 asyncpg

@@ -1,0 +1,359 @@
+# Environment variables that the bot may use
+NAME: Português
+LANGUAGE_CODE: pt
+TIMEZONE: America/Sao_Paulo
+
+# the back button on many menus
+back: «
+
+executed_cmd: Comando executado
+
+settings_text: |-
+    🛠 <b>Configurações do UserLixo</b>
+
+language: |-
+    🌎 Idioma
+choose_language: |-
+    🌎 Escolha seu idioma:
+language_chosen: |-
+    ✅ Idioma configurado!
+
+sudoers: |-
+    🛂 Sudoers
+
+env_vars: |-
+    ⚙ Config vars
+
+help_text: |-
+    ❔ <b>Ajuda</b>
+
+about_userlixo: |-
+    ℹ️ Sobre o UserLixo
+
+commands: |-
+    📒 Comandos
+
+plugins: |-
+    🖇 Plugins
+
+chat: |-
+    👥 Grupo
+
+channel: |-
+    📢 Canal
+
+setting_sudoers_text: |-
+    🛂 <b>Sudoers</b>
+    - Sudoers do userbot podem fazer... tudo (inclusive adicionar e remover outros sudoers).
+    - Abaixo estão listados os atuais sudoers do userbot (incluindo você e o próprio userbot). Pelo teclado inline você pode remover (🗑) e adicionar (➕) novos sudoers.
+
+add_sudoer: |-
+    ➕ Adicionar sudoer
+
+add_sudoer_ask: |-
+    💬 Me envie o username ou id do usuário que deseja registrar como sudoer.
+
+add_sudoer_not_match: |-
+    ❕ A sua mensagem contém caracteres não permitidos para usernames e ids... Verifique se está tudo correto, envie /add_sudoer e tente novamente.
+
+sudoer_added: |-
+    ✅ Sudoer registrado
+settings_env_text: |-
+    ⚙ <b>Config vars</b>
+
+edit_env_text: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Valor: "<code>{value}</code>"
+    
+    Para editar, envie o novo valor neste chat.
+about_userlixo_text: |-
+    ℹ️ UserLixo é um userbot feito por diversão pela @AmanoTeam u.u
+
+    ⚙ Esta é a branch <code>userlixo-czp</code>, que ainda está em desenvolvimento. Ela pode conter bugs, então por gentileza reporte-os para o @usernein.
+edit_env_text_restart: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Valor: "<code>{value}</code>"
+    
+    ❗️ <b>Esta configuração requer o reinício do UserLixo após editada.</b>
+
+restart_now: |-
+    🔄 Reiniciar agora
+
+restarting_now_alert: |-
+    🔄 O UserLixo está sendo reiniciado. Isso deve durar entre 3 a 7 segundos. Caso dure mais, verifique a saída do terminal.
+
+upgrading_now_alert: |-
+    🔄 O UserLixo está sendo atualizado. Isso deve durar entre 3 a 7 segundos. Caso dure mais, verifique a saída do terminal.
+
+restarted_alert: |-
+    ✅ UserLixo reiniciado em {seconds}s.
+    
+    🏷 <b>Versão:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>Data:</b> <code>{date}</code>
+upgraded_alert: |-
+    🆕 O UserLixo foi atualizado em {seconds}s.
+    
+    🏷 <b>Versão:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>Data:</b> <code>{date}</code>
+
+upgrade_error_not_git: |-
+    😕 Para atualizar o UserLixo é preciso estar o executando em um repositório git local.
+    Clone o repositório com <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> e refaça o login.
+
+upgrade_alert_already_uptodate: |-
+    ☑️ O UserLixo já está na versão mais recente.
+    
+    🏷 <b>Versão:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>Data:</b> <code>{date}</code>
+
+upgrade_failed: |-
+    ❌ O upgrade falhou com o código de retorno <code>{code}</code> para a branch <code>{branch}</code>
+    <code>{output}</code>
+upgrade: |-
+    ⏬ Atualizar
+
+restart: |-
+    🔄 Reiniciar
+
+help: |-
+    ❔ Ajuda
+
+settings: |-
+    ⚙ Configurações
+
+start_text: |-
+    👾 Hey! Eu sou seu bot assistente pessoal do UserLixo. No que está interessado?
+commands_text: |-
+    📒 Lista de comandos
+
+command_info: |-
+    📒 Comando <code>{command}</code>
+    {info}
+
+
+cmd_info_upgrade: |-
+    Atualiza para o commit mais recente do userlixo-czp no GitHub e reinicia.
+
+cmd_info_restart: |-
+    Renicia o processo, carregando todas as alterações.
+
+cmd_info_eval: |-
+    Edita a mensagem com o resultado de uma expressão em Python. Este comando tem um alias 'ev' que responde à mensagem em vez de editar.
+    
+    Variáveis disponíveis:
+    <code>c</code> - objeto Client
+    <code>m</code> - objeto Message
+    <code>reply</code> - o objeto Message da mensagem respondida ou None
+    <code>user</code> - se a mensagem for uma resposta, <code>user</code> será o objeto User do usuário respondido. Senão, será o objeto User de quem enviou o comando.
+    <code>chat</code> - atalho para <code>m.chat</code>
+
+cmd_info_exec: |-
+    Executa um código Python e edita a mensagem com o retorno. Este comando tem um alias 'ex' que responde à mensagem em vez de editar.
+    
+    Variáveis disponíveis:
+    <code>c</code> - objeto Client
+    <code>m</code> - objeto Message
+    <code>reply</code> - o objeto Message da mensagem respondida ou None
+    <code>user</code> - se a mensagem for uma resposta, <code>user</code> será o objeto User do usuário respondido. Senão, será o objeto User de quem enviou o comando.
+    <code>chat</code> - atalho para <code>m.chat</code>
+
+cmd_info_cmd: |-
+    Executa um comando shell NO SERVIDOR. O que é feito aqui é real e não pode ser desfeito pelo UserLixo.
+
+cmd_info_ping: |-
+    Nós todos não sabemos o que isto faz? Este comando envia um "Pong" informando quanto tempo uma requisição à API levou.
+
+cmd_info_help: |-
+    Mostra alguns botões com algumas informações que podem ser úteis para você.
+
+cmd_info_settings: |-
+    Exibe as configurações. Algumas configurações só podem ser alteradas no privado do bot assistente.
+
+cmd_info_plugins: |-
+    Exibe a lista de plugins adicionados no userbot e no bot assistente.
+cmd_info_commands: |-
+    Exibe a lista de comandos do UserLixo.
+cmd_info_start: |-
+    Exibe o menu principal.
+cancel: |-
+    ✖️ Cancelar
+
+upgrade_cancelled: |-
+    ✖️ Upgrade cancelado.
+plugins_text: |-
+    🖇 <b>Lista de plugins</b> - <i>{type}</i>
+    Plugins são add-ons para o UserLixo, que adicionam funções novas e alteram o comportamento usual do UserLixo.
+
+plugin_info: |-
+    🖇 <b>Plugin</b> <code>{info[title]}</code>
+    ℹ️ {info[description]}{status_line}{type_line}
+    
+    👤 <b>Autor:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
+
+plugin_channel_line: |-
+    📢 <b>Canal:</b> {channel}
+plugin_github_line: |-
+    🔃 <b>GitHub:</b> {github}
+plugin_requirements_line: |-
+    📦 <b>Requerimentos:</b> {requirements}
+plugin_contributors_line: |-
+    👥 <b>Contribuidores:</b> {contributors}
+plugin_type_line: |-
+    ⚙ <b>Tipo:</b> {type}
+
+add_plugin: |-
+    ➕ Add plugin
+
+info_text: |-
+    ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
+     ├ Python <b>v{python_version}</b>
+     ├ Pyrogram <b>v{pyrogram_version}</b>
+     └ Pyromod <b>v{pyromod_version}</b>
+    
+    🖇 {plugins_total} plugins{append_plugins}
+    
+    💻 <b>{uname}</b>
+     ├ <b>PID:</b> <code>{pid}</code>
+     └ <b>UserLixo's uptime</b>: {uptime}
+
+info_upgradable_to: |-
+    atualizável para {version}
+
+info_lastest: |-
+    atualizado
+
+plugin_file_ask: |-
+    🖇 Envie um plugin do UserLixo (um script python) para adicionar.
+
+plugin_waiting_file: |-
+    ❕ Estou esperando por um <b>arquivo</b> para adicionar. Não posso adicionar nada senão scripts python como plugins. Use /cancel para cancelar.
+
+plugin_format_not_accepted: |-
+    ❕ Plugins podem ser apenas scripts python, terminando com a extensão '.py'.
+
+plugin_too_big: |-
+    ❕ Esse arquivo é muito grande para ser um plugin (>5MB). Eu me recuso a baixá-lo.
+
+plugin_info_block_not_found: |-
+    ❕ Esse arquivo segue todos os requerimentos, mas eu não encontrei o <b>bloco de comentário obrigatório</b>, com as informações do plugin. Esse arquivo não é um plugin para o UserLixo ou o seu autor cometeu algum erro.
+
+plugin_could_not_load: |-
+    ❕ Tudo está ok com o arquivo, mas eu não consegui o <b>importar</b> para adicionar os handlers em runtime. O arquivo foi deletado do servidor. Erro:
+    <code>{e}</code>
+
+plugin_has_no_handlers: |-
+    ⚠️ Hmmmm, eu reconheci o plugin e o adicionei, mas ele não tem nenhum handler! Isto é suspeito, então eu deletei o arquivo (mas ele chegou a ser executado). Por favor cheque este plugin e qualquer outro que queira adicionar no futuro.
+
+see_plugin_info: |-
+    ℹ️ Ver info
+
+plugin_added: |-
+    ✅ Plugin <code>{name}</code> adicionado com sucesso.
+command_cancelled: |-
+    Comando cancelado.
+
+add: |-
+    ➕ Adicionar
+
+remove: |-
+    🗑 Remover
+
+deactivate: |-
+    🔴 Desativar
+
+activate: |-
+    🟢 Ativar
+
+active: |-
+    ❇️ Ativo
+    
+inactive: |-
+    💤 Inativo
+
+plugin_not_exists_on_server: |-
+    ❕ Este plugin não existe mais no servidor, ele foi deletado ou renomeado.
+
+plugin_has_been_deactivated: |-
+    🔴 O plugin foi desativado!
+
+plugin_has_been_activated: |-
+    🟢 O plugin foi ativado!
+
+plugin_removed: |-
+    🗑 O plugin {name} foi removido!
+
+plugin_removed_text: |-
+    🗑 O plugin <code>{name}</code> foi removido!
+
+plugin_rm_not_document: |-
+    ❕ Você usou <code>plugin rm</code> mas não respondeu a nenhum documento. Envie o comando respondendo a um arquivo de plugin (.py) para remover.
+
+plugin_rm_not_py: |-
+    ❕ O documento ao qual você respondeu não é um arquivo .py. Os comandos <code>plugin rm/add</code> podem ser usados somente em resposta a plugins do Userlixo.
+
+plugin_rm_not_added: |-
+    ❕ Não achei nenhum plugin com o nome <code>{name}</code>.
+
+plugin_rm_remote_local_are_diff: |-
+    ❕ O arquivo que você respondeu e o plugin <code>{name}</code> salvo no servidor são diferentes. Por favor cheque o arquivo repondido e o plugin.
+    Caso ainda queira remover o plugin, faça-o pelo comando <code>plugins</code>.
+
+started_alert: |-
+    🛸 UserLixo <b>v{version}</b> iniciado! (PID: <code>{pid}</code>)
+     ├ Python <b>v{python_version}</b>
+     ├ Pyrogram <b>v{pyrogram_version}</b>
+     └ Pyromod <b>v{pyromod_version}</b>
+    
+    🖇 {plugins_total} plugins{append_plugins}
+    
+    💻 <b>{server_uname}</b>
+     └ <b>Uptime do UserLixo</b>: {uptime}
+
+plugin_not_found: |-
+    ❕ Plugin {name} não encontrado
+
+list_plugins_select_type: |-
+    🖇 Selecione o tipo de plugin.
+    
+    <b>User</b> == plugins para a conta ({user})
+    <b>Bot</b>   == plugins para o bot assistente @{bot}
+
+bot_plugins: |-
+    👾 Bot
+
+user_plugins: |-
+    👤 User
+
+plugin_could_not_load_existent: |-
+    ❕ Não consegui carregar o módulo {name} para removê-lo antes de adicionar o que você me enviou. Error:
+    <code>{e}</code>
+
+installing_plugin_requirements: |-
+    🔧 Instalando requerimentos do plugin...
+    {requirements}
+
+about_plugins_text: |-
+    🖇 <b>Sobre plugins</b>
+    Plugins são arquivos (.py) com um ou mais handlers para adicionar ao UserLixo. Eles podem adicionar novos comandos os mesmo alterar o comportamento habitual do UserLixo.
+    
+    Qualquer pessoa pode criar um plugin, então é recomendado sempre checar o que você está adicionando, pois o plugin terá acesso à sua conta e ao seu servidor assim que adicionado.
+     
+    Há plugins do tipo "user", que serão carregados pelo objeto Client do userbot (isto é, plugins que adicionarão comandos ao userbot) e há plugins do tipo "bot", que serão carregados pelo bot assistente.
+    
+    Para ver a lista de plugins, use o comando <code>plugins</code>.
+
+unknown_command: |-
+    Comando desconhecido
+
+about_commands_text: |-
+    📒 <b>Sobre os comandos</b>
+    O UserLixo recém-instalado tem {total} comandos: {commands} e {last_command}.
+    Cada um pode ser chamado usando um dos prefixos que você definiu ({prefixes}), por exemplo: {examples}
+    
+    Quando você adiciona plugins, eles podem adicionar novos comandos para a lista de comandos, mas isso não é obrigatório (um plugin pode adicionar comandos e não listá-los).
+    
+    Para ver a lista de comandos, use o comando <code>commands</code> ou seu alias <code>cmds</code>.
+not_virtualenv_alert: |-
+    ✴️ Me parece que você não está rodando o UserLixo num virtual environment, e isso é perigoso.
+    Para a garantia de estabilidade dos seus projetos, pare o script, ative um virtualenv com o nome 'venv' e inicie o UserLixo novamente.
+    E tenha a certeza de ter lido o <a href='https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md'>README</a> atualizado do UserLixo no GitHub.

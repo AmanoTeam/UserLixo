@@ -62,3 +62,4 @@ debug.*
 custom/
 plugins/
 cache/
+plugins-*
