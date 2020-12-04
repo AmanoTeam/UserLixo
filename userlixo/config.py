@@ -104,10 +104,10 @@ pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
 
 # All monkeypatch stuff must be done before the Client instance is created
-def filter_sudoers(flt, client, update):
-    if not update.from_user:
+def filter_sudoers(flt, c, u):
+    if not u.from_user:
         return
-    user = update.from_user
+    user = u.from_user
     return user.id in sudoers or (user.username and user.username.lower() in sudoers)
 def filter_su_cmd(command, prefixes=None, *args, **kwargs):
     prefixes = ''.join(prefixes) if type(prefixes) == list else prefixes or os.getenv('PREFIXES') or '.'

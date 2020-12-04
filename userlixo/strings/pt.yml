@@ -67,9 +67,11 @@ edit_env_text: |-
     
     Para editar, envie o novo valor neste chat.
 about_userlixo_text: |-
-    ℹ️ UserLixo é um userbot feito por diversão pela @AmanoTeam u.u
-
-    ⚙ Esta é a branch <code>userlixo-czp</code>, que ainda está em desenvolvimento. Ela pode conter bugs, então por gentileza reporte-os para o @usernein.
+    🚮 UserLixo é um bot feito por diversão pela @AmanoTeam. Seu foco é trazer funções legais e um design funcional com tecnologia e criatividade.
+    
+    📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
+    
+    🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Canal</a> | <a href="https://t.me/UserLixoChat">Chat</a>
 edit_env_text_restart: |-
     📝 Config var "<code>{key}</code>"
     👁‍🗨 Valor: "<code>{value}</code>"

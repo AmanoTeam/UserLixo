@@ -4,15 +4,15 @@ from userlixo.utils import tryint
 from pyrogram import Client, filters
 from pyromod.helpers import ikb, array_chunk
 
-async def sudoers_interface(query):
-    lang = query._lang
-    client = query._client
+async def sudoers_interface(cq):
+    lang = cq._lang
+    c = cq._client
     text = lang.setting_sudoers_text+"\n"
     buttons = []
     added = []
     for user_id in sudoers:
         try:
-            user_obj = await client.get_users(user_id)
+            user_obj = await c.get_users(user_id)
         except:
             import traceback; traceback.print_exc()
             user_obj = None
@@ -26,7 +26,7 @@ async def sudoers_interface(query):
             mention = f'@{user_obj.username}' if user_obj.username else user_obj.first_name
         text += f"\n👤 {mention}"
         
-        if id not in ['me', user.me.id, query.from_user.id]:
+        if id not in ['me', user.me.id, cq.from_user.id]:
             buttons.append((f"🗑 {mention}", f'remove_sudoer {user_id}'))
         
     lines = array_chunk(buttons, 2)
@@ -37,15 +37,15 @@ async def sudoers_interface(query):
     return text, keyboard
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^setting_sudoers'))
-async def on_setting_sudoers(client, query):
-    lang = query._lang
-    text, keyboard = await sudoers_interface(query)
-    await query.edit(text, keyboard)
+async def on_setting_sudoers(c, cq):
+    lang = cq._lang
+    text, keyboard = await sudoers_interface(cq)
+    await cq.edit(text, keyboard)
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^remove_sudoer (?P<who>\w+)'))
-async def on_remove_sudoer(client, query):
-    lang = query._lang
-    who = tryint(query.matches[0]['who'])
+async def on_remove_sudoer(c, cq):
+    lang = cq._lang
+    who = tryint(cq.matches[0]['who'])
     
     # Sanitize list
     sudoers[:] = [*map(tryint, sudoers)]
@@ -56,5 +56,5 @@ async def on_remove_sudoer(client, query):
         value=' '.join( [*map(str, sudoers)] )
     )
     
-    text, keyboard = await sudoers_interface(query)
-    await query.edit(text, keyboard)
+    text, keyboard = await sudoers_interface(cq)
+    await cq.edit(text, keyboard)

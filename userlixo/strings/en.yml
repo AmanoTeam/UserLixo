@@ -67,9 +67,11 @@ edit_env_text: |-
     
     To edit it, send the new value in this chat.
 about_userlixo_text: |-
-    🚮 UserLixo is a userbot made for fun by @AmanoTeam u.u
-
-    ⚙ This is the branch <code>userlixo-czp</code>, which is still under development. It might contain bugs, so please report them to @usernein.
+    🚮 UserLixo is a userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
+    
+    📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
+    
+    🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Channel</a> | <a href="https://t.me/UserLixoChat">Chat</a>
 edit_env_text_restart: |-
     📝 Config var "<code>{key}</code>"
     👁‍🗨 Value: "<code>{value}</code>"

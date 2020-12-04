@@ -10,7 +10,7 @@ import math
 import os, sys
 import re
 
-@Client.on_message(filters.sudoers & filters.document)
+@Client.on_message(filters.sudoers & filters.document & filters.private & ~filters.me)
 async def on_plugin_file(c, m):
     if m.document.file_name.endswith('.py'):
         await on_add_plugin_u(c,m)
