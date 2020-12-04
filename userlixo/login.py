@@ -61,7 +61,7 @@ async def main():
     from pyrogram import Client
     login_user = True
     if os.path.exists('user.session'):
-        async with Client('user', plugins={'enabled':False}) as user:
+        async with Client('user', workdir='.', config_file='./config.ini', plugins={'enabled':False}) as user:
             me = await user.get_me()
         mention = '@'+me.username if me.username else me.first_name
         print(f'[bold yellow]I found an existing session from account [/][cyan]{mention}[/][bold yellow]. Do you want to use it?[/] [cyan]\[yn][/]', end='')
@@ -75,7 +75,7 @@ async def main():
             os.remove('user.session')
     else:
         print('\n\n[bold green]- Logging in using existing user.session...')
-    user = Client('user', plugins={'enabled':False})
+    user = Client('user', workdir='.', config_file='./config.ini', plugins={'enabled':False})
     await user.start()
     
     session_config = {k:v for section in config.sections() for k,v in config.items(section)}
@@ -98,7 +98,7 @@ async def main():
     
     login_bot = True
     if os.path.exists('bot.session'):
-        async with Client('bot', plugins={'enabled':False}) as bot:
+        async with Client('bot', workdir='.', config_file='./config.ini', plugins={'enabled':False}) as bot:
             me = await bot.get_me()
         mention = '@'+me.username
         print(f'[bold yellow]I found an existing session from bot [/][cyan]{mention}[/][bold yellow]. Do you want to use it? [/][cyan]\[yn]', end='')
@@ -124,7 +124,7 @@ async def main():
         os.environ['BOT_TOKEN'] = user_value
     
     try:
-        bot = Client('bot', plugins={'enabled': False}, bot_token=os.getenv('BOT_TOKEN'))
+        bot = Client('bot', workdir='.', config_file='./config.ini', plugins={'enabled': False}, bot_token=os.getenv('BOT_TOKEN'))
         await bot.start()
     except pyrogram.errors.AccesTokenInvalid as e:
         print('[red1]The bot access token is invalid')
