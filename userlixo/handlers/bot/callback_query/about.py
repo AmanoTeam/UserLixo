@@ -36,4 +36,4 @@ async def on_about_userlixo(c, cq):
             prefixes=prefixes,
             examples=examples
         )
-    await cq.edit(text, keyboard)
+    await cq.edit(text, keyboard, disable_web_page_preview=True)
