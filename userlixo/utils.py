@@ -97,11 +97,11 @@ def write_plugin_info(plugins, lang, info, **kwargs):
     lang.escape_html = False
     info_lines = {"status_line": '', 'requirements_line': ''}
     for item in ['channel', 'github', 'contributors', 'type']:
-        line = ''
+        text = ''
         if item in info:
             text = getattr(lang, f'plugin_{item}_line')
-            text = text(**{item: info[item]})
-        info_lines[item+'_line'] = '\n'+text
+            text = '\n'+text(**{item: info[item]})
+        info_lines[item+'_line'] = text
     
     lang.escape_html = True
     if 'requirements' in info:

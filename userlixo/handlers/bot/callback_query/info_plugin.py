@@ -31,10 +31,13 @@ async def on_info_plugin(c,cq):
         first_btn = (lang.activate, f'activate_plugin {basename} {plugin_type} {pg}')
     status_line = '\n'+status
     
-    keyb = ikb([
-        [first_btn, (lang.remove, f'remove_plugin {basename} {plugin_type} {pg}')],
-        [(lang.back, f'{plugin_type}_plugins {pg}')]
-    ])
+    lines = [
+        [first_btn, (lang.remove, f'remove_plugin {basename} {plugin_type} {pg}')]
+    ]
+    if 'settings' in plugin and plugin['settings']:
+        lines.append( [(lang.settings, f'plugin_settings {basename} {plugin_type} {pg}')] )
+    lines.append( [(lang.back, f'{plugin_type}_plugins {pg}')] )
+    keyb = ikb(lines)
     
     text = write_plugin_info(plugins, lang, plugin, status_line=status_line)
     await cq.edit(text, keyb, disable_web_page_preview=True)
