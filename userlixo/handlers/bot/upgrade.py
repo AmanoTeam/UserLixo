@@ -40,7 +40,10 @@ async def on_upgrade_u(c, u):
         timezone = timezone_shortener(timezone)
         date += f' ({timezone})'
         
-        return await act(lang.upgrade_alert_already_uptodate(title=title, rev=rev, date=date), keyb)
+        args = []
+        if is_query:
+            args.append(keyb)
+        return await act(lang.upgrade_alert_already_uptodate(title=title, rev=rev, date=date, local_version=local_version), *args)
 
     msg = await act(lang.upgrading_now_alert)
     
