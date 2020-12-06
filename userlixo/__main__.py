@@ -187,7 +187,10 @@ async def main():
     print(Panel.fit(text, border_style='green', box=box.ASCII))
     
     # Sending alert via Telegram
-    await alert_startup()
+    try:
+        await alert_startup()
+    except Exception as e:
+        print(f'[bold yellow]Error while sending startup alert to LOGS_CHAT: {e}')
     
     # Alert about unused requirements
     if unused_requirements:
