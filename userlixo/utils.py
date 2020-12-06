@@ -117,7 +117,7 @@ def write_plugin_info(plugins, lang, info, **kwargs):
 def read_plugin_info(filename):
     with open(filename) as f:
         data = f.read()
-    if not (match := re.search(r'"""\s*(?P<title>.+)\n\n(?P<description>.+)\n\n(?P<ini>.+)\s*"""', data, re.DOTALL)):
+    if not (match := re.search(r'"""\s*(?P<title>.+?)\n\n(?P<description>.+?)\n\n(?P<ini>.+?)\s*"""', data, re.DOTALL)):
         return None
     
     notation = re.sub('\.py$', '', os.path.relpath(filename)).replace('/', '.')
@@ -125,6 +125,10 @@ def read_plugin_info(filename):
     values = ConfigParser()
     values.read_string('[doc]\n'+match['ini'])
     values = values._sections['doc']
+    
+    default = dict(author='?')
+    default.update(values)
+    values = default
     
     plugin_type = values.get('type', 'user')
     if plugin_type not in ('user', 'bot'):
