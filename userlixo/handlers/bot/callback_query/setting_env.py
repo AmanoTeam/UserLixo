@@ -76,7 +76,7 @@ async def onrestart(c, cq):
     await cq.answer(lang.restarting_now_alert, show_alert=True)
     await cq.message.remove_keyboard()
     message_id = cq.message.message_id
-    chat_id = cq.message.chat.id
+    chat_id = cq.message.chat.username if cq.message.chat.username else cq.message.chat.id
     await Config.create(**{"key": "restarting_alert", "value": f'{message_id}|{chat_id}|{datetime.now().timestamp()}|restart_bot'})
     args = [sys.executable, '-m', 'userlixo']
     if '--no-update' in sys.argv:

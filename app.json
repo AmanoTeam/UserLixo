@@ -4,6 +4,7 @@
   "repository": "https://github.com/AmanoTeam/UserLixo",
   "keywords": ["python", "pyrogram", "telegram", "userbot"],
   "logo": "https://piics.ml/i/005.png",
+  "stack": "container",
   "env": {
       "PYROGRAM_SESSION": {
           "required": true,

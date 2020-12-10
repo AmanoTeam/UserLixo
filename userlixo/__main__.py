@@ -8,7 +8,7 @@ unused_requirements = []
 if 'DYNO' not in os.environ:
     if '--no-update' not in sys.argv:
         print('\033[0;32m[1/2] Updating requirements...\033[0m')
-        os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur requirements-sqlite.txt; {RESET}')
+        os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur requirements.txt; {RESET}')
         os.system('clear')
         # Update plugins requirements
         from userlixo.config import plugins
@@ -20,7 +20,6 @@ if 'DYNO' not in os.environ:
 print('\033[0m')
 os.system('clear')
 
-
 from userlixo.config import load_env, sudoers, langs, user, bot, unload_inactive_plugins, plugins
 from userlixo.database import connect_database, Config
 from datetime import datetime
@@ -29,7 +28,7 @@ from pyromod.helpers import ikb
 from rich import print, box
 from rich.panel import Panel
 from tortoise import run_async
-from userlixo.utils import shell_exec, timezone_shortener, get_inactive_plugins
+from userlixo.utils import shell_exec, timezone_shortener, get_inactive_plugins, tryint
 import aiocron
 import glob
 import platform
@@ -44,7 +43,7 @@ async def alert_startup():
     system_uname = (await shell_exec('uname -mons'))[0]
     
     pid = os.getpid()
-    uptime = (await shell_exec("ps -eo pid,etime | grep "+str(pid)+" | awk '{print $2}'"))[0]
+    uptime = (await shell_exec("ps -o pid,etime --no-headers -p "+str(pid)+" | awk '{print $2}' "))[0]
     
     user_plugins = len([x for x in plugins['user']])
     bot_plugins = len([x for x in plugins['bot']])
@@ -94,7 +93,7 @@ async def main():
                 os.remove(file)
     
     
-    if not os.path.exists('user.session'):
+    if 'DYNO' not in os.environ and not os.path.exists('user.session'):
         from userlixo.login import main as login
         await login()
         os.system('clear')
@@ -146,7 +145,6 @@ async def main():
             local_version=local_version
         )
         
-        
         try:
             editor = bot if from_cmd.endswith('_bot') else user
             if editor == bot:
@@ -157,7 +155,7 @@ async def main():
             if chat_id == 'inline':
                 await bot.edit_inline_text(message_id, text, **kwargs)
             else:
-                await editor.edit_message_text(int(chat_id), int(message_id), text, **kwargs)
+                await editor.edit_message_text(tryint(chat_id), tryint(message_id), text, **kwargs)
         except Exception as e:
             print(f'[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]')
         await Config.get(id=restarting_alert.id).delete()

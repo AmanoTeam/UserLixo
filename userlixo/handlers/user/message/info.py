@@ -10,7 +10,7 @@ async def on_info(c, m):
     act = m.edit if await filters.me(c,m) else m.reply
     
     pid = os.getpid()
-    uptime = (await shell_exec("ps -eo pid,etime | grep "+str(pid)+" | awk '{print $2}'"))[0]
+    uptime = (await shell_exec("ps -o pid,etime --no-headers -p "+str(pid)+" | awk '{print $2}' ") )[0]
     
     uname = (await shell_exec('uname -mons'))[0]
     local_version = int((await shell_exec('git rev-list --count HEAD'))[0])

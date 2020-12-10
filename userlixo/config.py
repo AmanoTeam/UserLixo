@@ -34,11 +34,14 @@ async def load_env():
         
         value_on_db = await Config.get_or_none(key=env_key)
         
-        if (not value_on_db and env_key in restricted_vars) or 'DYNO' in os.environ:
-            os.environ[env_key] = value_on_env
-            continue
-        elif not value_on_db:
-            missing_vars.append([env_key, value_on_env, env_info])
+        if not value_on_db:
+            if 'DYNO' in os.environ and env_key not in restricted_vars:
+                os.environ[env_key] = value_on_env
+                await Config.create(key=env_key, value=value_on_env)
+            elif env_key in restricted_vars:
+                os.environ[env_key] = value_on_env
+            else:
+                missing_vars.append([env_key, value_on_env, env_info])
             continue
         os.environ[env_key] = value_on_db.value
     
