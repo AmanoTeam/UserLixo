@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get -qq update && \
-  DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y git python3 python3-pip curl ffmpeg locales tzdata
+  DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y git python3 python3-pip curl ffmpeg locales tzdata neofetch
 
 RUN git clone https://github.com/AmanoTeam/UserLixo /usr/src/app/Userlixo
 WORKDIR /usr/src/app/Userlixo
