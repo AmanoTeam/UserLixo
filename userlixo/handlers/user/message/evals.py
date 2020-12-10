@@ -9,6 +9,9 @@ from pyrogram import Client, filters
 from meval import meval
 
 @Client.on_message(filters.su_cmd(r"(?P<cmd>ev(al)?)\s+(?P<code>.+)", flags=re.S))
+async def on_eval_user(c, m):
+    await evals(c,m)
+
 async def evals(c, m):
     act = m.edit if await filters.me(c,m) else m.reply
     cmd = m.matches[0]['cmd']
@@ -29,7 +32,15 @@ async def evals(c, m):
         return await m.reply(text)
     else:
         try:
+            output = str(output)
+            if len(output) > 4096:
+                with open('output.txt', 'w') as f:
+                    f.write(output)
+                await m.reply_document('output.txt', quote=True)
+                return os.remove('output.txt')
+            
             output = html.escape(str(output)) # escape html special chars
+            
             text = ''
             for line in output.splitlines():
                 text += f"<code>{line}</code>\n"

@@ -10,6 +10,9 @@ from contextlib import redirect_stdout
 from pyrogram import Client, filters
 
 @Client.on_message(filters.su_cmd(r"(?P<cmd>ex(ec)?)\s+(?P<code>.+)", flags=re.S))
+async def on_exec_user(c, m):
+    await execs(c,m)
+
 async def execs(c, m):
     lang = m._lang
     act = m.edit if await filters.me(c,m) else m.reply
@@ -40,6 +43,11 @@ async def execs(c, m):
     text = lang.executed_cmd
     output = strio.getvalue()
     if output:
+        if len(output) > 4096:
+            with open('output.txt', 'w') as f:
+                f.write(output)
+            await m.reply_document('output.txt', quote=True)
+            return os.remove('output.txt')
         output = html.escape(output) # escape html special chars
         text = ''
         for line in output.splitlines():
