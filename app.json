@@ -43,6 +43,11 @@
       "APP_NAME": {
           "required": true,
           "value": ""
+      },
+      "FAKE_HOSTNAME": {
+          "required": true,
+          "value": "userlixo",
+          "description": "A string to use as fake hostname, because the original is too ugly"
       }
   },
   "addons": [
