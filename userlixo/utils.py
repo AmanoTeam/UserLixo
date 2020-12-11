@@ -162,5 +162,5 @@ def heroku_self_deploy(heroku, app):
         git fetch app && \
         git add . && \
         git commit -m "Upgrade UserLixo" && \
-        git push -f app master
+        git push -f app HEAD:master
     ''')
