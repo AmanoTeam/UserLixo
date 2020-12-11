@@ -63,3 +63,5 @@ custom/
 plugins/
 cache/
 plugins-*
+output.txt
+stdout

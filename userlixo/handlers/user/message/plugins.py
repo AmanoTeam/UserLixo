@@ -1,6 +1,6 @@
 from userlixo.config import plugins, user, bot
 from userlixo.database import Config
-from userlixo.handlers.bot.add_plugin import on_add_plugin_u, on_plugin_file # on_plugin_file is a HANDLER, not just a function, i just import it to make it loaded also for user
+from userlixo.handlers.bot.add_plugin import on_add_plugin_u
 from userlixo.handlers.bot.list_plugins import on_list_plugins_u
 from pyrogram import Client, filters
 from userlixo.utils import read_plugin_info
@@ -9,6 +9,11 @@ import importlib
 import json
 import os
 import re
+
+@Client.on_message(filters.sudoers & filters.document & filters.private & ~filters.me)
+async def on_plugin_file(c, m):
+    if m.document.file_name.endswith('.py'):
+        await on_add_plugin_u(c,m)
 
 @Client.on_message(filters.su_cmd('plugins$'))
 async def on_list_plugins_txt(c,m):

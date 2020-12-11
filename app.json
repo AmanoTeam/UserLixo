@@ -35,6 +35,14 @@
           "required": false,
           "value": "en",
           "description": "The default language for UserLixo strings"
+      },
+      "HEROKU_API_KEY": {
+          "required": true,
+          "value": ""
+      },
+      "APP_NAME": {
+          "required": true,
+          "value": ""
       }
   },
   "addons": [

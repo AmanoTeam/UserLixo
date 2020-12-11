@@ -27,3 +27,4 @@ typing-extensions==3.7.4.3
 tzlocal==2.1
 asyncpg==0.21.0
 psycopg2-binary==2.8.6
+heroku3==4.2.3

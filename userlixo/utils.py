@@ -144,3 +144,23 @@ def read_plugin_info(filename):
         **values
     }
     return info
+
+def heroku_self_deploy(heroku, app):
+    api = os.getenv('HEROKU_API_KEY')
+    git_url = app.git_url
+    auth_url = git_url.replace('://', f'://api:{api}@')
+    
+    if os.path.exists('.gitignore'):
+        os.remove('.gitignore')
+    
+    os.system(f'''\
+        git config --global user.name "UserLixo"; \
+        git config --global user.email "user@lixo.com"; \
+        git remote add app {auth_url}; \
+        git remote set-url app {auth_url}; \
+        \
+        git fetch app && \
+        git add . && \
+        git commit -m "Upgrade UserLixo" && \
+        git push -f app master
+    ''')

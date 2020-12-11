@@ -144,6 +144,8 @@ async def main():
             seconds=diff,
             local_version=local_version
         )
+        if 'DYNO' in os.environ and from_cmd.startswith('upgrade'):
+            text += '\n\n'+langs.alert_need_deploy
         
         try:
             editor = bot if from_cmd.endswith('_bot') else user

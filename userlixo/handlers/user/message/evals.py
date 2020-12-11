@@ -4,7 +4,7 @@ import os
 import re
 import traceback
 
-from userlixo.config import sudoers
+from userlixo.config import sudoers, heroku_client, heroku_app
 from pyrogram import Client, filters
 from meval import meval
 
@@ -21,6 +21,8 @@ async def evals(c, m):
     reply = m.reply_to_message
     user = (reply or m).from_user
     chat = m.chat
+    heroku = heroku_client
+    app = heroku_app
     
     try:
         output = await meval(eval_code, globals(), **locals())

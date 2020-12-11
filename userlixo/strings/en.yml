@@ -67,7 +67,7 @@ edit_env_text: |-
     
     To edit it, send the new value in this chat.
 about_userlixo_text: |-
-    🚮 UserLixo is a userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
+    🚮 UserLixo is an userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
     
     📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
     
@@ -359,3 +359,13 @@ not_virtualenv_alert: |-
     ✴️ It seems you are not running UserLixo in a virtual environment, and it's dangerous.
     For the guarantee of stability of your projects, stop the script, activate an virtualenv named 'venv' and start UserLixo again.
     Also make sure you read the lastest UserLixo's <a href='https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md'>README</a> at GitHub.
+deploying_on_heroku: |-
+    📤 UserLixo is deploying the source to Heroku and re-building the container... It should take ~4 minutes. You can see its progress on your Heroku dashboard.
+    
+    This is done to avoid losing files after an app restart or cleanup (made periodically by Heroku).
+
+not_running_in_heroku: |-
+    ❕ You are not running in Heroku.
+
+alert_need_deploy: |-
+    ❕ Use .<code>deploy</code> to self-deploy the changes to the Heroku app.

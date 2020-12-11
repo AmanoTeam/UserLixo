@@ -151,4 +151,7 @@ async def on_confirm_plugin(c, cq):
     keyb = ikb([
         [(lang.see_plugin_info, f'info_plugin {basename} {plugin_type} {page}')]
     ])
-    await cq.edit(lang.plugin_added(name=basename), keyb)
+    text = lang.plugin_added(name=basename)
+    if 'DYNO' in os.environ:
+        text += '\n\n'+lang.alert_need_deploy
+    await cq.edit(text, keyb)
