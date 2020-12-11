@@ -5,18 +5,18 @@ DGRAY = 'echo -e "\033[1;30m"'
 YELLOW = 'echo -e "\033[0;33m"'
 RESET = 'echo -e "\033[0m"'
 unused_requirements = []
-if 'DYNO' not in os.environ:
-    if '--no-update' not in sys.argv:
-        print('\033[0;32m[1/2] Updating requirements...\033[0m')
-        os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur requirements.txt; {RESET}')
-        os.system('clear')
-        # Update plugins requirements
-        from userlixo.config import plugins
-        from userlixo.utils import reload_plugins_requirements
-        requirements, unused_requirements = reload_plugins_requirements(plugins)
-        if os.path.exists('plugins-requirements.txt'):
-            print('\033[0;32m[2/2] Updating plugins requirements...\033[0m')
-            os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur plugins-requirements.txt; {RESET}')
+
+if '--no-update' not in sys.argv:
+    print('\033[0;32m[1/2] Updating requirements...\033[0m')
+    os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur requirements.txt; {RESET}')
+    os.system('clear')
+    # Update plugins requirements
+    from userlixo.config import plugins
+    from userlixo.utils import reload_plugins_requirements
+    requirements, unused_requirements = reload_plugins_requirements(plugins)
+    if os.path.exists('plugins-requirements.txt'):
+        print('\033[0;32m[2/2] Updating plugins requirements...\033[0m')
+        os.system(f'{DGRAY}; {sys.executable} -m pip install -Ur plugins-requirements.txt; {RESET}')
 print('\033[0m')
 os.system('clear')
 

@@ -87,7 +87,7 @@ async def on_confirm_plugin(c, cq):
     new_notation = re.sub('\.py$', '', os.path.relpath(new_filename)).replace('/', '.')
     
     requirements = plugin.get('requirements')
-    if requirements and 'DYNO' not in os.environ:
+    if requirements:
         DGRAY = 'echo -e "\033[1;30m"'
         RESET = 'echo -e "\033[0m"'
         req_list = requirements.split()
