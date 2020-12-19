@@ -7,7 +7,7 @@ from tortoise.models import Model
 
 class Message(Model):
     key = fields.IntField(pk=True)
-    text = fields.CharField(max_length=255)
+    text = fields.CharField(max_length=4096)
     keyboard = fields.JSONField(default=[])
 
 class Config(Model):
