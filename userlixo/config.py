@@ -163,6 +163,7 @@ bot = Client(
     config_file='./config.ini',
     **pyrogram_config
 )
+bot.set_parse_mode('html')
 
 cmds = ['help', 'ping', 'upgrade', 'restart', 'eval', 'exec', 'cmd', 'settings', 'plugins', 'commands', 'start']
 cmds = {x:1 for x in cmds}
