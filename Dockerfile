@@ -11,6 +11,7 @@ RUN apt-get install -y build-essential && \
   make && make install
 
 RUN git clone https://github.com/AmanoTeam/UserLixo /usr/src/app/Userlixo
+COPY . /usr/src/app/Userlixo
 WORKDIR /usr/src/app/Userlixo
 
 RUN pip3 install -U pip setuptools wheel
