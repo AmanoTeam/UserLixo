@@ -11,7 +11,7 @@ meval==2.5
 natsort==7.1.0
 pyaes==1.6.1
 Pygments==2.7.4
-PyPika==0.44.0
+PyPika==0.47.4
 Pyrogram==1.1.13
 pyromod==1.5
 PySocks==1.7.1
