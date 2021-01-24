@@ -10,7 +10,7 @@ langs==0.1.1
 meval==2.5
 natsort==7.1.0
 pyaes==1.6.1
-Pygments==2.7.2
+Pygments==2.7.4
 PyPika==0.44.0
 Pyrogram==1.0.7
 pyromod==1.5
