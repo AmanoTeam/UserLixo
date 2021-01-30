@@ -49,7 +49,7 @@ async def fake(client, message):
                 description=description
             )
             try:
-                a = await client.download_media(a.file_id, a.file_ref)
+                a = await client.download_media(a.file_id)
                 await client.set_profile_photo(photo=a)
                 os.remove(a)
             except:

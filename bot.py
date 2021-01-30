@@ -25,7 +25,7 @@ async def run_client(client):
     # Saving the account data on startup
     photo = (await client.get_profile_photos("me", limit=1))[0]
     try:
-        await client.download_media(photo.file_id, photo.file_ref, file_name='./avatar.jpg')
+        await client.download_media(photo.file_id, file_name='./avatar.jpg')
         info = await client.get_chat("me")
         personal_data = dict(
             first_name=info.first_name,

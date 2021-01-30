@@ -28,10 +28,10 @@ async def kibe(client, message):
     rmessage = message.reply_to_message
     if rmessage and rmessage.media:
         if rmessage.photo:
-            photo = await client.download_media(rmessage.photo.file_id, rmessage.photo.file_ref, file_name=f'./{ctime}.png')
+            photo = await client.download_media(rmessage.photo.file_id, file_name=f'./{ctime}.png')
             rsize = True
         elif rmessage.document:
-            photo = await client.download_media(rmessage.document.file_id, rmessage.document.file_ref,
+            photo = await client.download_media(rmessage.document.file_id,
                                           file_name=f'./{ctime}.png')
             rsize = True
         elif rmessage.sticker:
@@ -39,13 +39,13 @@ async def kibe(client, message):
                 emoji = rmessage.sticker.emoji
             if rmessage.sticker.is_animated:
                 anim = True
-                photo = await client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
+                photo = await client.download_media(rmessage.sticker.file_id,
                                               file_name=f'./{ctime}.tgs')
                 packname += '_animated'
                 packnick += ' animated'
             else:
                 anim = False
-                photo = await client.download_media(rmessage.sticker.file_id, rmessage.sticker.file_ref,
+                photo = await client.download_media(rmessage.sticker.file_id,
                                               file_name=f'./{ctime}.webp')
                 rsize = True
         if not emoji:

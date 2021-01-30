@@ -1,6 +1,6 @@
 pillow
 aiohttp
-pyrogram==1.0.*
+pyrogram
 tgcrypto
 youtube-dl
 chromeprinter
