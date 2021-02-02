@@ -4,9 +4,12 @@ from userlixo.database import Config
 from pyrogram import Client, filters
 
 # Getting the language to use
+
+
 @Client.on_message(group=-2)
 async def deflang(c, m):
     m._lang = langs.get_language(os.getenv('LANGUAGE'))
+
 
 @Client.on_message(filters.edited)
 async def to_reject(c, m):

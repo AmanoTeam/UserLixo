@@ -6,6 +6,7 @@ from userlixo.database import Config
 from pyrogram import errors, Client, filters
 from pyromod.helpers import ikb, array_chunk
 
+
 @Client.on_callback_query(filters.sudoers & filters.regex('^setting_env'))
 async def on_setting_env(c, cq):
     if cq.message:
@@ -22,12 +23,14 @@ async def on_setting_env(c, cq):
     keyboard = ikb(lines)
     await cq.edit(lang.settings_env_text, keyboard)
 
-@Client.on_callback_query(filters.sudoers & filters.regex('^edit_env (?P<key>.+)'))
+
+@Client.on_callback_query(filters.sudoers &
+                          filters.regex('^edit_env (?P<key>.+)'))
 async def on_edit(c, cq):
     lang = cq._lang
     key = cq.matches[0]['key']
     value = (await Config.get_or_none(key=key)).value
-    
+
     text = lang.edit_env_text(
         key=key,
         value=value
@@ -36,7 +39,7 @@ async def on_edit(c, cq):
         [(lang.back, 'setting_env')]
     ])
     last_msg = await cq.edit(text, keyboard)
-    
+
     env_requires_restart = ['PREFIXES', 'DATABASE_URL', 'BOT_TOKEN']
     try:
         while True:
@@ -64,11 +67,14 @@ async def on_edit(c, cq):
     except errors.ListenerCanceled:
         pass
 
-@Client.on_callback_query(filters.sudoers & filters.regex('^view_env (?P<key>.+)'))
+
+@Client.on_callback_query(filters.sudoers &
+                          filters.regex('^view_env (?P<key>.+)'))
 async def on_view(c, cq):
     key = cq.matches[0]['key']
     value = (await Config.get_or_none(key=key)).value
     await cq.answer(value, show_alert=True)
+
 
 @Client.on_callback_query(filters.sudoers & filters.regex('^restart_now'))
 async def onrestart(c, cq):
