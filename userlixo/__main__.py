@@ -1,18 +1,3 @@
-import pyrogram
-import pyromod
-import re
-import platform
-import glob
-import aiocron
-from userlixo.utils import shell_exec, timezone_shortener, get_inactive_plugins, tryint
-from tortoise import run_async
-from rich.panel import Panel
-from rich import print, box
-from pyromod.helpers import ikb
-from pyrogram import idle
-from datetime import datetime
-from userlixo.database import connect_database, Config
-from userlixo.config import load_env, sudoers, langs, user, bot, unload_inactive_plugins, plugins
 import os
 import sys
 os.system('clear')
@@ -37,6 +22,23 @@ if '--no-update' not in sys.argv:
             f'{DGRAY}; {sys.executable} -m pip install -Ur plugins-requirements.txt; {RESET}')
 print('\033[0m')
 os.system('clear')
+
+
+import pyrogram
+import pyromod
+import re
+import platform
+import glob
+import aiocron
+from userlixo.utils import shell_exec, timezone_shortener, get_inactive_plugins, tryint
+from tortoise import run_async
+from rich.panel import Panel
+from rich import print, box
+from pyromod.helpers import ikb
+from pyrogram import idle
+from datetime import datetime
+from userlixo.database import connect_database, Config
+from userlixo.config import load_env, sudoers, langs, user, bot, unload_inactive_plugins, plugins
 
 
 async def alert_startup():
