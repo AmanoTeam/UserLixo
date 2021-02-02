@@ -6,7 +6,8 @@ from pyrogram import Client, filters
 # Getting the language to use
 @Client.on_message(group=-2)
 async def deflang(c, m):
-    m._lang = langs.get_language(os.getenv('LANGUAGE'))
+    m._lang = langs.get_language(os.getenv("LANGUAGE"))
+
 
 # Define what updates to reject
 @Client.on_message(filters.edited)
