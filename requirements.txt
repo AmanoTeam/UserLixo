@@ -22,6 +22,6 @@ PyYAML==5.4.1
 rich==9.10.0
 six==1.15.0
 TgCrypto==1.2.2
-tortoise-orm==0.16.20
+tortoise-orm==0.16.21
 typing-extensions==3.7.4.3
 tzlocal==2.1
