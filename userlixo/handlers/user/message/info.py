@@ -34,7 +34,7 @@ async def on_info(c, m):
     ul_status = (
         lang.info_upgradable_to(version=remote_version)
         if local_version < remote_version
-        else lang.info_lastest
+        else lang.info_latest
     )
 
     user_plugins = len([x for x in plugins["user"]])

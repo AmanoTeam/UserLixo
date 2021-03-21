@@ -135,7 +135,7 @@ command_info: |-
 
 
 cmd_info_upgrade: |-
-    Upgrade to the lastest commit of userlixo-czp on GitHub and restart.
+    Upgrade to the latest commit of userlixo-czp on GitHub and restart.
 
 cmd_info_restart: |-
     Restart the process, loading all changes.
@@ -222,8 +222,8 @@ info_text: |-
 info_upgradable_to: |-
     upgradable to {version}
 
-info_lastest: |-
-    lastest
+info_latest: |-
+    latest
 
 plugin_file_ask: |-
     🖇 Send a UserLixo plugin (a python file) to add.
@@ -358,7 +358,7 @@ about_commands_text: |-
 not_virtualenv_alert: |-
     ✴️ It seems you are not running UserLixo in a virtual environment, and it's dangerous.
     For the guarantee of stability of your projects, stop the script, activate an virtualenv named 'venv' and start UserLixo again.
-    Also make sure you read the lastest UserLixo's <a href='https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md'>README</a> at GitHub.
+    Also make sure you read the latest UserLixo's <a href='https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md'>README</a> at GitHub.
 deploying_on_heroku: |-
     📤 UserLixo is deploying the source to Heroku and re-building the container... It should take ~4 minutes. You can see its progress on your Heroku dashboard.
     

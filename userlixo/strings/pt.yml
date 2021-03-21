@@ -221,7 +221,7 @@ info_text: |-
 info_upgradable_to: |-
     atualizável para {version}
 
-info_lastest: |-
+info_latest: |-
     atualizado
 
 plugin_file_ask: |-
