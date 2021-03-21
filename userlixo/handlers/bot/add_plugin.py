@@ -127,10 +127,11 @@ async def on_confirm_plugin(c, cq):
             )
 
         functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
+        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
         for f in functions:
-            client.remove_handler(*f.handler)
+            for handler in f.handlers:
+                client.remove_handler(*handler)
 
     os.renames(cache_filename, new_filename)
     plugin = read_plugin_info(new_filename)
@@ -145,14 +146,15 @@ async def on_confirm_plugin(c, cq):
         raise e
 
     functions = [*filter(callable, module.__dict__.values())]
-    functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
+    functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
     if not len(functions):
         os.remove(new_filename)
         return await cq.edit(lang.plugin_has_no_handlers)
 
     for f in functions:
-        client.add_handler(*f.handler)
+        for handler in f.handlers:
+            client.add_handler(*handler)
 
     plugins[plugin_type][basename] = plugin
     reload_plugins_requirements(plugins)

@@ -126,10 +126,11 @@ async def unload_inactive_plugins():
                     print(f"The plugin {plugin_type}/{name} thrown an error: {e}")
                     continue
                 functions = [*filter(callable, module.__dict__.values())]
-                functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
+                functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
                 for f in functions:
-                    client.remove_handler(*f.handler)
+                    for handler in f.handlers:
+                        client.remove_handler(*handler)
 
 
 # Extra **kwargs for creating pyrogram.Client (contains api_hash and api_id)
