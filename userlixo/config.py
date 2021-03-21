@@ -146,13 +146,16 @@ def filter_sudoers(flt, c, u):
 
 
 def filter_su_cmd(command, prefixes=None, *args, **kwargs):
-    prefixes = (
-        "".join(prefixes)
-        if type(prefixes) == list
-        else prefixes or os.getenv("PREFIXES") or "."
-    )
-    prefix = f"^[{re.escape(prefixes)}]"
-    return filters.sudoers & filters.regex(prefix + command, *args, **kwargs)
+    prefixes = prefixes or os.getenv("PREFIXES") or "."
+    prefix = ""
+    if " " in prefixes:
+        prefixes = "|".join([re.escape(prefix) for prefix in prefixes.split()])
+        prefix = f"({prefixes})"
+    elif isinstance(prefixes, (list, str)):
+        if isinstance(prefixes, list):
+            prefixes = "".join(prefixes)
+        prefix = f"[{re.escape(prefixes)}]"
+    return filters.sudoers & filters.regex(r"^" + prefix + command, *args, **kwargs)
 
 
 def message_ikb(self):
