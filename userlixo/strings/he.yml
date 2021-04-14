@@ -1,0 +1,371 @@
+# Environment variables that the bot may use
+NAME: עברית
+LANGUAGE_CODE: he
+TIMEZONE: UTC
+
+# the back button on many menus
+back: «
+
+executed_cmd: הפקודה בוצעה
+
+settings_text: |-
+    🛠 <b>הגדרות UserLixo</b>
+
+language: |-
+    🌎 שפה
+choose_language: |-
+    🌎 בחר את השפה שלך:
+language_chosen: |-
+    ✅ השפה הוגדרה!
+
+sudoers: |-
+    🛂 משתמשי sudo
+
+env_vars: |-
+    ⚙ Config vars
+
+help_text: |-
+    ❔ <b>עזרה</b>
+
+about_userlixo: |-
+    ℹ️ אודות UserLixo
+
+commands: |-
+    📒 פקודות
+
+plugins: |-
+    🖇 תוספים
+
+chat: |-
+    👥 צ'אט
+
+channel: |-
+    📢 ערוץ
+
+setting_sudoers_text: |-
+    🛂 <b>משתמשי sudo</b>
+    - משתמשי sudo יכול לעשות הכל אפילו להוסיף ולהסיר משתמשי sudo אחרים.
+    - כאן מוצגים משתמשי הsudo. דרך המקלדת למטה אפשר להוסיף (➕) ולהסיר (🗑) אותם.
+
+add_sudoer: |-
+    ➕ הוסף משתמש sudo
+
+add_sudoer_ask: |-
+    💬 שלח לי את שם המשתמש או את הid של המשתמש שתרצה להוסיף כsudo.
+
+add_sudoer_not_match: |-
+    ❕ השם משתמש או הid לא חוקיים, תשלח /add_sudoer בשביל לנסות שוב.
+
+sudoer_added: |-
+    ✅ משתמש הsudo נוסף
+settings_env_text: |-
+    ⚙ <b>Config vars</b>
+
+edit_env_text: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Value: "<code>{value}</code>"
+    
+    To edit it, send the new value in this chat.
+about_userlixo_text: |-
+    🚮 UserLixo is an userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
+    
+    📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
+    
+    🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Channel</a> | <a href="https://t.me/UserLixoChat">Chat</a>
+edit_env_text_restart: |-
+    📝 Config var "<code>{key}</code>"
+    👁‍🗨 Value: "<code>{value}</code>"
+    
+    ❗️ <b>This config var requires UserLixo to restart after edited.</b>
+
+restart_now: |-
+    🔄 הפעל מחדש עכשיו
+
+restarting_now_alert: |-
+    🔄 UserLixo is being restarted... It should take 3-7 seconds. If it takes longer, check the terminal output.
+
+upgrading_now_alert: |-
+    🔄 UserLixo is being upgraded... It should take 3-7 seconds. If it takes longer, check the terminal output.
+
+restarted_alert: |-
+    ✅ UserLixo restarted within {seconds}s.
+    
+    🏷 <b>גרסה:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>תאריך:</b> <code>{date}</code>
+
+upgraded_alert: |-
+    🆕 UserLixo upgraded within {seconds}s.
+    
+    🏷 <b>גרסה:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>תאריך:</b> <code>{date}</code>
+
+upgrade_error_not_git: |-
+    😕 To upgrade you must be running UserLixo under a git repository.
+    Clone the repo with <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> and re-login.
+
+upgrade_alert_already_uptodate: |-
+    ☑️ UserLixo is already up-to-date.
+    
+    🏷 <b>גרסה:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
+    📆 <b>תאריך:</b> <code>{date}</code>
+
+upgrade_failed: |-
+    ❌ The upgrade failed with return code <code>{code}</code> for the branch <code>{branch}</code>.
+    <code>{output}</code>
+upgrade: |-
+    ⏬ עדכן
+
+restart: |-
+    🔄 התחל מחדש
+
+help: |-
+    ❔ עזרה
+
+settings: |-
+    ⚙ הגדרות
+
+start_text: |-
+    👾 שלום, אני הבוט עזר של UserLixo מה תרצה לעשות?
+commands_text: |-
+    📒 רשימת פקודות
+
+command_info: |-
+    📒 פקודה <code>{command}</code>
+    {info}
+
+
+cmd_info_upgrade: |-
+    Upgrade to the latest commit of userlixo-czp on GitHub and restart.
+
+cmd_info_restart: |-
+    Restart the process, loading all changes.
+
+cmd_info_eval: |-
+    Evaluates a Python expression and edit the message with the result. It has an alias 'ev' that replies instead of editing.
+    
+    Available variables:
+    <code>c</code> - Client object
+    <code>m</code> - Message object
+    <code>reply</code> - the replied Message object or None
+    <code>user</code> - if the message is a reply, the replied User. If not, the sender's User.
+    <code>chat</code> - shortcut to <code>m.chat</code>
+
+cmd_info_exec: |-
+    Executes a Python code and edit the message with the output. It has an alias 'ex' that replies instead of editing.
+    
+    Available variables:
+    <code>c</code> - Client object
+    <code>m</code> - Message object
+    <code>reply</code> - the replied Message object or None
+    <code>user</code> - if the message is a reply, the replied User. If not, the sender's User.
+    <code>chat</code> - shortcut to <code>m.chat</code>
+
+cmd_info_cmd: |-
+    Executes a shell command IN THE SERVER. Things done here are real and cannot be undone by UserLixo.
+
+cmd_info_ping: |-
+    Don't we all know what it does? It sends a "Pong" informing how much time (in ms) a request to the API took.
+
+cmd_info_help: |-
+    Show some buttons with infos that may help you.
+
+cmd_info_settings: |-
+    Show the settings. Some configurations can only be done in the assistant bot's PM.
+cmd_info_plugins: |-
+    Show the list of UserLixo plugins.
+cmd_info_commands: |-
+    הצג את רשימת הפקודות.
+cmd_info_start: |-
+    הצג את התפריט הראשי.
+cancel: |-
+    ✖️ ביטול
+
+
+upgrade_cancelled: |-
+    ✖️ Upgrade cancelled.
+plugins_text: |-
+    🖇 <b>List of plugins</b> - <i>{type}</i>
+    Plugins are add-ons for UserLixo that add new features and change usual UserLixo's behavior.
+
+plugin_info: |-
+    🖇 <b>תוסף</b> <code>{info[title]}</code>
+    ℹ️ {info[description]}{status_line}{type_line}
+    
+    👤 <b>מחבר:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
+
+plugin_channel_line: |-
+    📢 <b>ערוץ:</b> {channel}
+plugin_github_line: |-
+    🔃 <b>GitHub:</b> {github}
+plugin_requirements_line: |-
+    📦 <b>דרישות:</b> {requirements}
+plugin_contributors_line: |-
+    👥 <b>Contributors:</b> {contributors}
+plugin_type_line: |-
+    ⚙ <b>סוג:</b> {type}
+
+add_plugin: |-
+    ➕ הוסף תוסף
+
+info_text: |-
+    ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
+     ├ פייתון <b>v{python_version}</b>
+     ├ Pyrogram <b>v{pyrogram_version}</b>
+     └ Pyromod <b>v{pyromod_version}</b>
+    
+    🖇 {plugins_total} תוספים{append_plugins}
+    
+    💻 <b>{uname}</b>
+     ├ <b>מספר התהליך:</b> <code>{pid}</code>
+     └ <b>זמן האוויר של UserLixo</b>: {uptime}
+
+info_upgradable_to: |-
+    upgradable to {version}
+
+info_latest: |-
+    latest
+
+plugin_file_ask: |-
+    🖇 Send a UserLixo plugin (a python file) to add.
+
+plugin_waiting_file: |-
+    ❕ I'm waiting for a <b>file</b> (an UserLixo plugin) to add. I can't add anything else as plugin. Use /cancel to cancel.
+
+plugin_format_not_accepted: |-
+    ❕ Plugins can be only python scripts, ending with the extension '.py'.
+
+plugin_too_big: |-
+    ❕ This file is too large for a plugin (>5MB), i refuse to download it.
+
+plugin_info_block_not_found: |-
+    ❕ This is a python script that follow all requirements, but i could not find the <b>required comment block</b> with the plugin info, so this may not be an UserLixo plugin or its author made a mistake.
+
+plugin_could_not_load: |-
+    ❕ Everything is ok with the plugin, but for some reason i <b>couldn't import</b> it to load at runtime. The file has been deleted from the server. Error:
+    <code>{e}</code>
+
+plugin_has_no_handlers: |-
+    ⚠️ Hmmm, i recognized the plugin and added it, but it <b>hasn't any handlers</b>! This is suspicious, i deleted the file (but it ran once). Please check this plugin and any other you may want to add in the future.
+
+see_plugin_info: |-
+    ℹ️ ראה את פרטי התוסף
+
+plugin_added: |-
+    ✅ התוסף <code>{name}</code> נוסף בהצלחה.
+command_cancelled: |-
+    הפקודה בוטלה.
+
+add: |-
+    ➕ הוסף
+
+remove: |-
+    🗑 מחק
+
+deactivate: |-
+    🔴 השבת
+
+activate: |-
+    🟢 הפעל
+
+active: |-
+    ❇️ מופעל
+
+inactive: |-
+    💤 מושבת
+
+plugin_not_exists_on_server: |-
+    ❕ This plugin does not exist on the server anymore, it was deleted or renamed.
+
+plugin_has_been_deactivated: |-
+    🔴 התוסף הזה הושבת!
+
+plugin_has_been_activated: |-
+    🟢 התוסף הזה הופעל!
+
+plugin_removed: |-
+    🗑 התוסף {name} נמחק!
+
+plugin_removed_text: |-
+    🗑 התוסף <code>{name}</code> נמחק!
+
+plugin_rm_not_document: |-
+    ❕ You used <code>plugin rm</code> but didn't reply to a document. Reply to a plugin file (.py) to remove.
+
+plugin_rm_not_py: |-
+    ❕ The document you replied to is not a .py file. <code>plugin rm/add<code> can only be used in reply to UserLixo plugins.
+
+plugin_rm_not_added: |-
+    ❕ I could not find any plugin with named <code>{name}</code>.
+
+plugin_rm_remote_local_are_diff: |-
+    ❕ The file you replied and the plugin <code>{name}</code> saved on the server are NOT the same. Please check the replied file and the plugin. If you still want to remove the plugin, do it through the command <code>plugins</code>
+
+started_alert: |-
+    🛸 UserLixo <b>v{version}</b> הופעל! (מספר התהליך: <code>{pid}</code>)
+     ├ פייתון <b>v{python_version}</b>
+     ├ Pyrogram <b>v{pyrogram_version}</b>
+     └ Pyromod <b>v{pyromod_version}</b>
+    
+    🖇 {plugins_total} תוספים{append_plugins}
+    
+    💻 <b>{server_uname}</b>
+     └ <b>זמן האוויר של UserLixo</b>: {uptime}
+
+plugin_not_found: |-
+    ❕ התוסף {name} לא נמצא
+
+list_plugins_select_type: |-
+    🖇 Select the type of the plugins.
+    
+    <b>משתמש</b> == plugins for the user account ({user})
+    <b>בוט</b>   == plugins for the assistant bot @{bot}
+
+bot_plugins: |-
+    👾 בוט
+
+user_plugins: |-
+    👤 משתמש
+
+plugin_could_not_load_existent: |-
+    ❕ I could not load the existent module {name} to unload it before adding the one you sent me. Error:
+    <code>{e}</code>
+
+installing_plugin_requirements: |-
+    🔧 Installing plugin requirements...
+    {requirements}
+
+about_plugins_text: |-
+    🖇 <b>About plugins</b>
+    UserLixo plugins are files (.py) with one or more Pyrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
+    
+     Anyone can create a plugin, so it's recommended to always check what you are adding, because it will have access to your account and server once added.
+     
+    There are plugins of type==user, which will be loaded by the userbot's Client (i.e. will add new commands to the userbot) and plugins where type==bot, which will be loaded by the assistant bot.
+    
+    To see the list of plugins, use the command <code>plugins</code>
+
+unknown_command: |-
+    פקודה לא ידועה
+
+about_commands_text: |-
+    📒 <b>About commands</b>
+    A clean UserLixo install has {total} commands: {commands} and {last_command}.
+    Each one can be called using one of the prefixes you defined ({prefixes}), e.g.: {examples}
+    
+    When you add plugins, they may add their new commands to the plugins list, but it's not mandatory (a plugin may add commands and not explicitely list them).
+    
+    To see the plugins list, use the command <code>commands</code> or its alias <code>cmds</code>.
+not_virtualenv_alert: |-
+    ✴️ It seems you are not running UserLixo in a virtual environment, and it's dangerous.
+    For the guarantee of stability of your projects, stop the script, activate an virtualenv named 'venv' and start UserLixo again.
+    Also make sure you read the latest UserLixo's <a href='https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md'>README</a> at GitHub.
+deploying_on_heroku: |-
+    📤 UserLixo is deploying the source to Heroku and re-building the container... It should take ~4 minutes. You can see its progress on your Heroku dashboard.
+    
+    This is done to avoid losing files after an app restart or cleanup (made periodically by Heroku).
+
+not_running_in_heroku: |-
+    ❕ אתה לא מריץ את זה ב Heroku.
+
+alert_need_deploy: |-
+    ❕ Use .<code>deploy</code> to self-deploy the changes to the Heroku app.
