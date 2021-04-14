@@ -63,18 +63,18 @@ settings_env_text: |-
 
 edit_env_text: |-
     📝 Config var "<code>{key}</code>"
-    👁‍🗨 Value: "<code>{value}</code>"
+    👁‍🗨 ערך: "<code>{value}</code>"
     
-    To edit it, send the new value in this chat.
+    בשביל לערוך את זה תשלח את הערך החדש.
 about_userlixo_text: |-
     🚮 UserLixo is an userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
     
     📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
     
-    🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Channel</a> | <a href="https://t.me/UserLixoChat">Chat</a>
+    🗂 <b>קישור</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">ערוץ</a> | <a href="https://t.me/UserLixoChat">צ'אט</a>
 edit_env_text_restart: |-
     📝 Config var "<code>{key}</code>"
-    👁‍🗨 Value: "<code>{value}</code>"
+    👁‍🗨 ערך: "<code>{value}</code>"
     
     ❗️ <b>This config var requires UserLixo to restart after edited.</b>
 
@@ -143,7 +143,7 @@ cmd_info_restart: |-
 cmd_info_eval: |-
     Evaluates a Python expression and edit the message with the result. It has an alias 'ev' that replies instead of editing.
     
-    Available variables:
+     משתנים זמינים:
     <code>c</code> - אובייקט של הלקוח (Client)
     <code>m</code> - אובייקט של הודעה (Message)
     <code>reply</code> - אובייקט של ההודעה בהשב על ההודעה או כלום
@@ -153,12 +153,12 @@ cmd_info_eval: |-
 cmd_info_exec: |-
     Executes a Python code and edit the message with the output. It has an alias 'ex' that replies instead of editing.
     
-    Available variables:
-    <code>c</code> - Client object
-    <code>m</code> - Message object
-    <code>reply</code> - the replied Message object or None
-    <code>user</code> - if the message is a reply, the replied User. If not, the sender's User.
-    <code>chat</code> - shortcut to <code>m.chat</code>
+    משתנים זמינים:
+    <code>c</code> - אובייקט של הלקוח (Client)
+    <code>m</code> - אובייקט של הודעה (Message)
+    <code>reply</code> - אובייקט של ההודעה בהשב על ההודעה או כלום
+    <code>user</code> - אם זה בהשב על ההודעה אז זה המשתמש בהודעה בהשב על ההודעה אם לא אז זה המשתמש ששלח את ההודעה.
+    <code>chat</code> - קיצור ל <code>m.chat</code>
 
 cmd_info_cmd: |-
     Executes a shell command IN THE SERVER. Things done here are real and cannot be undone by UserLixo.
@@ -167,12 +167,12 @@ cmd_info_ping: |-
     Don't we all know what it does? It sends a "Pong" informing how much time (in ms) a request to the API took.
 
 cmd_info_help: |-
-    Show some buttons with infos that may help you.
+    הצג כפתורים שיכולים לעזור לך.
 
 cmd_info_settings: |-
     Show the settings. Some configurations can only be done in the assistant bot's PM.
 cmd_info_plugins: |-
-    Show the list of UserLixo plugins.
+    הצג את רשימת התוספים.
 cmd_info_commands: |-
     הצג את רשימת הפקודות.
 cmd_info_start: |-
