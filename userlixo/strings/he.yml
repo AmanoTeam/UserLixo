@@ -144,11 +144,11 @@ cmd_info_eval: |-
     Evaluates a Python expression and edit the message with the result. It has an alias 'ev' that replies instead of editing.
     
     Available variables:
-    <code>c</code> - Client object
-    <code>m</code> - Message object
-    <code>reply</code> - the replied Message object or None
-    <code>user</code> - if the message is a reply, the replied User. If not, the sender's User.
-    <code>chat</code> - shortcut to <code>m.chat</code>
+    <code>c</code> - אובייקט של הלקוח (Client)
+    <code>m</code> - אובייקט של הודעה (Message)
+    <code>reply</code> - אובייקט של ההודעה בהשב על ההודעה או כלום
+    <code>user</code> - אם זה בהשב על ההודעה אז זה המשתמש בהודעה בהשב על ההודעה אם לא אז זה המשתמש ששלח את ההודעה.
+    <code>chat</code> - קיצור ל <code>m.chat</code>
 
 cmd_info_exec: |-
     Executes a Python code and edit the message with the output. It has an alias 'ex' that replies instead of editing.
@@ -220,7 +220,7 @@ info_text: |-
      └ <b>זמן האוויר של UserLixo</b>: {uptime}
 
 info_upgradable_to: |-
-    upgradable to {version}
+    אפשר לעדכן ל {version}
 
 info_latest: |-
     latest
