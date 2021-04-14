@@ -82,19 +82,19 @@ restart_now: |-
     🔄 הפעל מחדש עכשיו
 
 restarting_now_alert: |-
-    🔄 UserLixo is being restarted... It should take 3-7 seconds. If it takes longer, check the terminal output.
+    🔄 UserLixo מפעיל מחדש מחדש זה יכול לקחת 3 עד 7 שניות אתה יכול לבדוק את הטרמינל.
 
 upgrading_now_alert: |-
-    🔄 UserLixo is being upgraded... It should take 3-7 seconds. If it takes longer, check the terminal output.
+    🔄 UserLixo מעדכן זה יכול לקחת 3 עד 7 שניות אתה יכול לבדוק את הטרמינל.
 
 restarted_alert: |-
-    ✅ UserLixo restarted within {seconds}s.
+    ✅ UserLixo הופעל מחדש ב {seconds} שניות.
     
     🏷 <b>גרסה:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>תאריך:</b> <code>{date}</code>
 
 upgraded_alert: |-
-    🆕 UserLixo upgraded within {seconds}s.
+    🆕 UserLixo עודכן ב {seconds} שניות.
     
     🏷 <b>גרסה:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>תאריך:</b> <code>{date}</code>
@@ -104,7 +104,7 @@ upgrade_error_not_git: |-
     Clone the repo with <code>git clone https://github.com/AmanoTeam/UserLixo -b userlixo-czp</code> and re-login.
 
 upgrade_alert_already_uptodate: |-
-    ☑️ UserLixo is already up-to-date.
+    ☑️ UserLixo מעודכן.
     
     🏷 <b>גרסה:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>תאריך:</b> <code>{date}</code>
@@ -182,10 +182,10 @@ cancel: |-
 
 
 upgrade_cancelled: |-
-    ✖️ Upgrade cancelled.
+    ✖️ העדכון בוטל.
 plugins_text: |-
-    🖇 <b>List of plugins</b> - <i>{type}</i>
-    Plugins are add-ons for UserLixo that add new features and change usual UserLixo's behavior.
+    🖇 <b>רשימת התוספים</b> - <i>{type}</i>
+    תוספים הם תוספות עבור UserLixo שמוסיפות תכונות חדשות ומשנות את ההתנהגות הרגילה של UserLixo.
 
 plugin_info: |-
     🖇 <b>תוסף</b> <code>{info[title]}</code>
@@ -295,7 +295,7 @@ plugin_rm_not_py: |-
     ❕ The document you replied to is not a .py file. <code>plugin rm/add<code> can only be used in reply to UserLixo plugins.
 
 plugin_rm_not_added: |-
-    ❕ I could not find any plugin with named <code>{name}</code>.
+    ❕ לא מצאתי תוסף בשם <code>{name}</code>.
 
 plugin_rm_remote_local_are_diff: |-
     ❕ The file you replied and the plugin <code>{name}</code> saved on the server are NOT the same. Please check the replied file and the plugin. If you still want to remove the plugin, do it through the command <code>plugins</code>
@@ -331,7 +331,7 @@ plugin_could_not_load_existent: |-
     <code>{e}</code>
 
 installing_plugin_requirements: |-
-    🔧 Installing plugin requirements...
+    🔧 מתקין את דרישות התוספת...
     {requirements}
 
 about_plugins_text: |-
