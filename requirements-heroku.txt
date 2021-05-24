@@ -1,7 +1,7 @@
 aiocron==1.4
 aiosqlite>=0.16.0
 async-lru==1.0.2
-click==7.1.2
+click==8.0.1
 colorama==0.4.4
 commonmark==0.9.1
 croniter==1.0.11
