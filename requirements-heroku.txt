@@ -1,4 +1,4 @@
-aiocron==1.4
+aiocron==1.6
 aiosqlite>=0.16.0
 async-lru==1.0.2
 click==7.1.2
