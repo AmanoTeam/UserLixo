@@ -151,7 +151,7 @@ async def main():
             bot_token=os.getenv("BOT_TOKEN"),
         )
         await bot.start()
-    except pyrogram.errors.AccesTokenInvalid as e:
+    except pyrogram.errors.AccessTokenInvalid as e:
         print("[red1]The bot access token is invalid")
         exit()
 
