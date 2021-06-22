@@ -20,7 +20,7 @@ python-dotenv==0.18.0
 pytz>=2020.4
 PyYAML==5.4.1
 rich==10.4.0
-six==1.15.0
+six==1.16.0
 TgCrypto==1.2.2
 tortoise-orm==0.17.4
 typing-extensions==3.7.4.3
