@@ -19,7 +19,7 @@ python-dateutil==2.8.1
 python-dotenv==0.18.0
 pytz>=2020.4
 PyYAML==5.4.1
-rich==10.4.0
+rich==10.5.0
 six==1.16.0
 TgCrypto==1.2.2
 tortoise-orm==0.17.4
