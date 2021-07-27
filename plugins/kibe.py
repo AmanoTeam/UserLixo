@@ -70,17 +70,14 @@ async def kibe(client, message):
             await create_pack(anim, message, client, st, packnick, photo, emoji, packname)
         else:
             # Add a new sticker
-            await client.send_message(st, '/addsticker')
-            time.sleep(0.8)
+            await client.ask(st, '/addsticker')
             # Define pack name
-            await client.send_message(st, packname)
-            time.sleep(0.8)
+            await client.ask(st, packname)
             # Send sticker image
             await client.send_document(st, photo)
             time.sleep(0.8)
             # Send sticker emoji
-            await client.send_message(st, emoji)
-            time.sleep(0.8)
+            await client.ask(st, emoji)
             # We are done
             await client.send_message(st, '/done')
             await message.edit(f'[kibed](http://t.me/addstickers/{packname})')
