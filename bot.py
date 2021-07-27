@@ -23,14 +23,14 @@ async def run_client(client):
         save(db)
 
     # Saving the account data on startup
-    photo = (await client.get_profile_photos("me", limit=1))[0]
     try:
-        await client.download_media(photo.file_id, file_name='./avatar.jpg')
         info = await client.get_chat("me")
         personal_data = dict(
             first_name=info.first_name,
             last_name=info.last_name or '',
-            description=info.bio or ''
+            description=info.bio or '',
+            faked=False,
+            user_photo=False
         )
 
         db['personal_data'] = personal_data
