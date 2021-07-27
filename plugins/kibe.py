@@ -71,10 +71,13 @@ async def kibe(client, message):
         else:
             # Add a new sticker
             await client.send_message(st, '/addsticker')
+            time.sleep(0.8)
             # Define pack name
             await client.send_message(st, packname)
+            time.sleep(0.8)
             # Send sticker image
             await client.send_document(st, photo)
+            time.sleep(0.8)
             # Send sticker emoji
             await client.send_message(st, emoji)
             time.sleep(0.8)
