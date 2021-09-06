@@ -23,7 +23,7 @@ rich==10.4.0
 six==1.16.0
 TgCrypto==1.2.2
 tortoise-orm==0.17.4
-typing-extensions==3.10.0.0
+typing-extensions==3.10.0.2
 tzlocal==2.1
 asyncpg==0.23.0
 psycopg2-binary==2.9.1
