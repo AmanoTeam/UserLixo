@@ -195,7 +195,7 @@ async def main():
     timezone = timezone_shortener(timezone)
     date += f" ({timezone})"
     mention = "@" + user.me.username if user.me.username else user.me.id
-    text = f":ok: [bold green]UserLixo is running[/bold green] :ok:"
+    text = ":ok: [bold green]UserLixo is running[/bold green] :ok:"
 
     userlixo_info = {
         "Version": local_version,
