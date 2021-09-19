@@ -1,14 +1,11 @@
 import asyncio
 import base64
-import click
 import configparser
-import dotenv.parser
 import json
 import os
-import pyrogram.errors
-import sys
 
-from dotenv import get_key, set_key
+import click
+import pyrogram.errors
 from rich import print
 
 
@@ -110,7 +107,6 @@ async def main():
         print(f"[blue]{session_string}[/]\n")
         return await user.stop()
 
-    login_bot = True
     if os.path.exists("bot.session"):
         async with Client(
             "bot", workdir=".", config_file="./config.ini", plugins={"enabled": False}
@@ -122,14 +118,13 @@ async def main():
             end="",
         )
         c = click.getchar(True)
-        login_bot = c == "n"
 
     print("\n[bold green]- Logging in the assistant bot...")
     if login_user:
         if os.path.exists("bot.session"):
             os.remove("bot.session")
     if "BOT_TOKEN" not in os.environ:
-        text = f"\n┌ [light_sea_green]BOT_TOKEN[/light_sea_green]"
+        text = "\n┌ [light_sea_green]BOT_TOKEN[/light_sea_green]"
         print(text)
 
         try:
@@ -138,7 +133,7 @@ async def main():
             print("[red1]Operation cancelled by user")
             exit()
         if not user_value:
-            print(f"[red1]BOT_TOKEN is required, cannot be empty.")
+            print("[red1]BOT_TOKEN is required, cannot be empty.")
             exit()
         os.environ["BOT_TOKEN"] = user_value
 
@@ -151,7 +146,7 @@ async def main():
             bot_token=os.getenv("BOT_TOKEN"),
         )
         await bot.start()
-    except pyrogram.errors.AccessTokenInvalid as e:
+    except pyrogram.errors.AccessTokenInvalid:
         print("[red1]The bot access token is invalid")
         exit()
 

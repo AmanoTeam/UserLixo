@@ -1,10 +1,12 @@
 import os
 import sys
 from datetime import datetime
-from userlixo.config import sudoers, user, bot
+
+from pyrogram import Client, errors, filters
+from pyromod.helpers import array_chunk, ikb
+
+from userlixo.config import bot
 from userlixo.database import Config
-from pyrogram import errors, Client, filters
-from pyromod.helpers import ikb, array_chunk
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_env"))

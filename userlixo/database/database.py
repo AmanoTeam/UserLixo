@@ -1,8 +1,6 @@
-import asyncio
 import os
 
-from tortoise import fields
-from tortoise import Tortoise
+from tortoise import Tortoise, fields
 from tortoise.models import Model
 
 

@@ -1,7 +1,10 @@
-from userlixo.database import Config
+import os
+import sys
 from datetime import datetime
+
 from pyrogram import Client, filters
-import os, sys
+
+from userlixo.database import Config
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^restart"))

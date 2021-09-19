@@ -1,5 +1,6 @@
-from userlixo.handlers.bot.settings import on_settings_u
 from pyrogram import Client, filters
+
+from userlixo.handlers.bot.settings import on_settings_u
 
 
 @Client.on_message(filters.su_cmd("settings"))

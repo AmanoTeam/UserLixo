@@ -1,5 +1,6 @@
-from userlixo.handlers.bot.upgrade import on_upgrade_u
 from pyrogram import Client, filters
+
+from userlixo.handlers.bot.upgrade import on_upgrade_u
 
 
 @Client.on_message(filters.su_cmd("upgrade"))

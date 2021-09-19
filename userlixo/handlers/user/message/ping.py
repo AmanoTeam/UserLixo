@@ -1,6 +1,6 @@
 from datetime import datetime
+
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
 
 
 @Client.on_message(filters.su_cmd("ping"))

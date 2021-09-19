@@ -1,13 +1,14 @@
-from configparser import ConfigParser
-from userlixo.database import Message, Config
-from pyrogram import filters, types
-from pyromod.helpers import ikb, bki
 import asyncio
 import base64
-import importlib
 import json
 import os
 import re
+from configparser import ConfigParser
+
+from pyrogram import types
+from pyromod.helpers import bki, ikb
+
+from userlixo.database import Config, Message
 
 
 def tryint(value):
@@ -181,26 +182,3 @@ def read_plugin_info(filename):
         **values,
     }
     return info
-
-
-def heroku_self_deploy(heroku, app):
-    api = os.getenv("HEROKU_API_KEY")
-    git_url = app.git_url
-    auth_url = git_url.replace("://", f"://api:{api}@")
-
-    if os.path.exists(".gitignore"):
-        os.remove(".gitignore")
-
-    os.system(
-        f"""\
-        git config --global user.name "UserLixo"; \
-        git config --global user.email "user@lixo.com"; \
-        git remote add app {auth_url}; \
-        git remote set-url app {auth_url}; \
-        \
-        git fetch app && \
-        git add . && \
-        git commit -m "Upgrade UserLixo" && \
-        git push -f app HEAD:master
-    """
-    )

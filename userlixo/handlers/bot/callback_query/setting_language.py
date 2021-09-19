@@ -1,8 +1,9 @@
 import os
-from userlixo.config import sudoers
-from userlixo.database import Config
+
 from pyrogram import Client, filters
-from pyromod.helpers import ikb, array_chunk
+from pyromod.helpers import array_chunk, ikb
+
+from userlixo.database import Config
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_language"))

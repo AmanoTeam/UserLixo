@@ -1,14 +1,15 @@
-from userlixo.config import plugins, user, bot
-from userlixo.database import Config
-from userlixo.handlers.bot.add_plugin import on_add_plugin_u
-from userlixo.handlers.bot.list_plugins import on_list_plugins_u
-from pyrogram import Client, filters
-from userlixo.utils import read_plugin_info
 import hashlib
 import importlib
 import json
 import os
-import re
+
+from pyrogram import Client, filters
+
+from userlixo.config import bot, plugins, user
+from userlixo.database import Config
+from userlixo.handlers.bot.add_plugin import on_add_plugin_u
+from userlixo.handlers.bot.list_plugins import on_list_plugins_u
+from userlixo.utils import get_inactive_plugins, read_plugin_info
 
 
 @Client.on_message(filters.sudoers & filters.document & filters.private & ~filters.me)

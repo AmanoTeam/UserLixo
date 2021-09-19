@@ -1,9 +1,12 @@
-from userlixo.database import Config
+import os
+import sys
 from datetime import datetime
+
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
+
+from userlixo.database import Config
 from userlixo.utils import shell_exec, timezone_shortener
-import os, re, sys
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^upgrade$"))
@@ -24,7 +27,7 @@ async def on_upgrade_u(c, u):
     except FileNotFoundError:
         return await act(lang.upgrade_error_not_git, keyb)
 
-    stdout, process = await shell_exec(f"git fetch && git status -uno")
+    stdout, process = await shell_exec("git fetch && git status -uno")
 
     if process.returncode != 0:
         await act(

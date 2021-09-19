@@ -1,9 +1,12 @@
+import os
+import platform
+
+import pyrogram
+import pyromod
 from pyrogram import Client, filters
+
 from userlixo.config import plugins
 from userlixo.utils import shell_exec
-import re, os
-import platform
-import pyromod, pyrogram
 
 
 @Client.on_message(filters.su_cmd("info"))
