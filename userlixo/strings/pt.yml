@@ -67,18 +67,18 @@ settings_env_text: |-
 edit_env_text: |-
     📝 Config var "<code>{key}</code>"
     👁‍🗨 Valor: "<code>{value}</code>"
-    
+
     Para editar, envie o novo valor neste chat.
 about_userlixo_text: |-
     🚮 UserLixo é um bot feito por diversão pela @AmanoTeam. Seu foco é trazer funções legais e um design funcional com tecnologia e criatividade.
-    
+
     📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
-    
+
     🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Canal</a> | <a href="https://t.me/UserLixoChat">Chat</a>
 edit_env_text_restart: |-
     📝 Config var "<code>{key}</code>"
     👁‍🗨 Valor: "<code>{value}</code>"
-    
+
     ❗️ <b>Esta configuração requer o reinício do UserLixo após editada.</b>
 
 restart_now: |-
@@ -92,12 +92,12 @@ upgrading_now_alert: |-
 
 restarted_alert: |-
     ✅ UserLixo reiniciado em {seconds}s.
-    
+
     🏷 <b>Versão:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>Data:</b> <code>{date}</code>
 upgraded_alert: |-
     🆕 O UserLixo foi atualizado em {seconds}s.
-    
+
     🏷 <b>Versão:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>Data:</b> <code>{date}</code>
 
@@ -107,7 +107,7 @@ upgrade_error_not_git: |-
 
 upgrade_alert_already_uptodate: |-
     ☑️ O UserLixo já está na versão mais recente.
-    
+
     🏷 <b>Versão:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>Data:</b> <code>{date}</code>
 
@@ -135,7 +135,6 @@ command_info: |-
     📒 Comando <code>{command}</code>
     {info}
 
-
 cmd_info_upgrade: |-
     Atualiza para o commit mais recente do userlixo-czp no GitHub e reinicia.
 
@@ -144,7 +143,7 @@ cmd_info_restart: |-
 
 cmd_info_eval: |-
     Edita a mensagem com o resultado de uma expressão em Python. Este comando tem um alias 'ev' que responde à mensagem em vez de editar.
-    
+
     Variáveis disponíveis:
     <code>c</code> - objeto Client
     <code>m</code> - objeto Message
@@ -154,7 +153,7 @@ cmd_info_eval: |-
 
 cmd_info_exec: |-
     Executa um código Python e edita a mensagem com o retorno. Este comando tem um alias 'ex' que responde à mensagem em vez de editar.
-    
+
     Variáveis disponíveis:
     <code>c</code> - objeto Client
     <code>m</code> - objeto Message
@@ -192,7 +191,7 @@ plugins_text: |-
 plugin_info: |-
     🖇 <b>Plugin</b> <code>{info[title]}</code>
     ℹ️ {info[description]}{status_line}{type_line}
-    
+
     👤 <b>Autor:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
 plugin_channel_line: |-
@@ -214,9 +213,9 @@ info_text: |-
      ├ Python <b>v{python_version}</b>
      ├ Pyrogram <b>v{pyrogram_version}</b>
      └ Pyromod <b>v{pyromod_version}</b>
-    
+
     🖇 {plugins_total} plugins{append_plugins}
-    
+
     💻 <b>{uname}</b>
      ├ <b>PID:</b> <code>{pid}</code>
      └ <b>UserLixo's uptime</b>: {uptime}
@@ -271,7 +270,7 @@ activate: |-
 
 active: |-
     ❇️ Ativo
-    
+
 inactive: |-
     💤 Inativo
 
@@ -308,9 +307,9 @@ started_alert: |-
      ├ Python <b>v{python_version}</b>
      ├ Pyrogram <b>v{pyrogram_version}</b>
      └ Pyromod <b>v{pyromod_version}</b>
-    
+
     🖇 {plugins_total} plugins{append_plugins}
-    
+
     💻 <b>{server_uname}</b>
      └ <b>Uptime do UserLixo</b>: {uptime}
 
@@ -319,7 +318,7 @@ plugin_not_found: |-
 
 list_plugins_select_type: |-
     🖇 Selecione o tipo de plugin.
-    
+
     <b>User</b> == plugins para a conta ({user})
     <b>Bot</b>   == plugins para o bot assistente @{bot}
 
@@ -340,11 +339,11 @@ installing_plugin_requirements: |-
 about_plugins_text: |-
     🖇 <b>Sobre plugins</b>
     Plugins são arquivos (.py) com um ou mais handlers para adicionar ao UserLixo. Eles podem adicionar novos comandos os mesmo alterar o comportamento habitual do UserLixo.
-    
+
     Qualquer pessoa pode criar um plugin, então é recomendado sempre checar o que você está adicionando, pois o plugin terá acesso à sua conta e ao seu servidor assim que adicionado.
      
     Há plugins do tipo "user", que serão carregados pelo objeto Client do userbot (isto é, plugins que adicionarão comandos ao userbot) e há plugins do tipo "bot", que serão carregados pelo bot assistente.
-    
+
     Para ver a lista de plugins, use o comando <code>plugins</code>.
 
 unknown_command: |-
@@ -354,9 +353,9 @@ about_commands_text: |-
     📒 <b>Sobre os comandos</b>
     O UserLixo recém-instalado tem {total} comandos: {commands} e {last_command}.
     Cada um pode ser chamado usando um dos prefixos que você definiu ({prefixes}), por exemplo: {examples}
-    
+
     Quando você adiciona plugins, eles podem adicionar novos comandos para a lista de comandos, mas isso não é obrigatório (um plugin pode adicionar comandos e não listá-los).
-    
+
     Para ver a lista de comandos, use o comando <code>commands</code> ou seu alias <code>cmds</code>.
 not_virtualenv_alert: |-
     ✴️ Me parece que você não está rodando o UserLixo num virtual environment, e isso é perigoso.

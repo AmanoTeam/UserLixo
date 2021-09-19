@@ -67,18 +67,18 @@ settings_env_text: |-
 edit_env_text: |-
     📝 Config var "<code>{key}</code>"
     👁‍🗨 Value: "<code>{value}</code>"
-    
+
     To edit it, send the new value in this chat.
 about_userlixo_text: |-
     🚮 UserLixo is an userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
-    
+
     📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
-    
+
     🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Channel</a> | <a href="https://t.me/UserLixoChat">Chat</a>
 edit_env_text_restart: |-
     📝 Config var "<code>{key}</code>"
     👁‍🗨 Value: "<code>{value}</code>"
-    
+
     ❗️ <b>This config var requires UserLixo to restart after edited.</b>
 
 restart_now: |-
@@ -92,13 +92,13 @@ upgrading_now_alert: |-
 
 restarted_alert: |-
     ✅ UserLixo restarted within {seconds}s.
-    
+
     🏷 <b>Version:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>Date:</b> <code>{date}</code>
 
 upgraded_alert: |-
     🆕 UserLixo upgraded within {seconds}s.
-    
+
     🏷 <b>Version:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>Date:</b> <code>{date}</code>
 
@@ -108,7 +108,7 @@ upgrade_error_not_git: |-
 
 upgrade_alert_already_uptodate: |-
     ☑️ UserLixo is already up-to-date.
-    
+
     🏷 <b>Version:</b> <code>{local_version}</code> | <b>Commit</b>: <code>{rev}</code>
     📆 <b>Date:</b> <code>{date}</code>
 
@@ -136,7 +136,6 @@ command_info: |-
     📒 Command <code>{command}</code>
     {info}
 
-
 cmd_info_upgrade: |-
     Upgrade to the latest commit of userlixo-czp on GitHub and restart.
 
@@ -145,7 +144,7 @@ cmd_info_restart: |-
 
 cmd_info_eval: |-
     Evaluates a Python expression and edit the message with the result. It has an alias 'ev' that replies instead of editing.
-    
+
     Available variables:
     <code>c</code> - Client object
     <code>m</code> - Message object
@@ -155,7 +154,7 @@ cmd_info_eval: |-
 
 cmd_info_exec: |-
     Executes a Python code and edit the message with the output. It has an alias 'ex' that replies instead of editing.
-    
+
     Available variables:
     <code>c</code> - Client object
     <code>m</code> - Message object
@@ -183,7 +182,6 @@ cmd_info_start: |-
 cancel: |-
     ✖️ Cancel
 
-
 upgrade_cancelled: |-
     ✖️ Upgrade cancelled.
 plugins_text: |-
@@ -193,7 +191,7 @@ plugins_text: |-
 plugin_info: |-
     🖇 <b>Plugin</b> <code>{info[title]}</code>
     ℹ️ {info[description]}{status_line}{type_line}
-    
+
     👤 <b>Author:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
 plugin_channel_line: |-
@@ -215,9 +213,9 @@ info_text: |-
      ├ Python <b>v{python_version}</b>
      ├ Pyrogram <b>v{pyrogram_version}</b>
      └ Pyromod <b>v{pyromod_version}</b>
-    
+
     🖇 {plugins_total} plugins{append_plugins}
-    
+
     💻 <b>{uname}</b>
      ├ <b>PID:</b> <code>{pid}</code>
      └ <b>UserLixo's uptime</b>: {uptime}
@@ -308,9 +306,9 @@ started_alert: |-
      ├ Python <b>v{python_version}</b>
      ├ Pyrogram <b>v{pyrogram_version}</b>
      └ Pyromod <b>v{pyromod_version}</b>
-    
+
     🖇 {plugins_total} plugins{append_plugins}
-    
+
     💻 <b>{server_uname}</b>
      └ <b>UserLixo's uptime</b>: {uptime}
 
@@ -319,7 +317,7 @@ plugin_not_found: |-
 
 list_plugins_select_type: |-
     🖇 Select the type of the plugins.
-    
+
     <b>User</b> == plugins for the user account ({user})
     <b>Bot</b>   == plugins for the assistant bot @{bot}
 
@@ -340,11 +338,11 @@ installing_plugin_requirements: |-
 about_plugins_text: |-
     🖇 <b>About plugins</b>
     UserLixo plugins are files (.py) with one or more Pyrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
-    
+
      Anyone can create a plugin, so it's recommended to always check what you are adding, because it will have access to your account and server once added.
      
     There are plugins of type==user, which will be loaded by the userbot's Client (i.e. will add new commands to the userbot) and plugins where type==bot, which will be loaded by the assistant bot.
-    
+
     To see the list of plugins, use the command <code>plugins</code>
 
 unknown_command: |-
@@ -354,9 +352,9 @@ about_commands_text: |-
     📒 <b>About commands</b>
     A clean UserLixo install has {total} commands: {commands} and {last_command}.
     Each one can be called using one of the prefixes you defined ({prefixes}), e.g.: {examples}
-    
+
     When you add plugins, they may add their new commands to the plugins list, but it's not mandatory (a plugin may add commands and not explicitely list them).
-    
+
     To see the plugins list, use the command <code>commands</code> or its alias <code>cmds</code>.
 not_virtualenv_alert: |-
     ✴️ It seems you are not running UserLixo in a virtual environment, and it's dangerous.

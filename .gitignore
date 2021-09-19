@@ -49,6 +49,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# VSCode
+.vscode
+
 # Custom
 test.py
 test.txt

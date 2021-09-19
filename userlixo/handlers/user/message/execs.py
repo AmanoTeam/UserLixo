@@ -36,7 +36,7 @@ async def execs(c, m):
     with redirect_stdout(strio):
         try:
             await locals()["__ex"](c, m, reply, user, chat)
-        except:
+        except BaseException:
             traceback_string = traceback.format_exc()
             text = f"<b>{html.escape(traceback_string)}</b>"
             if cmd == "exec":

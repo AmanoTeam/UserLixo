@@ -17,7 +17,7 @@ from userlixo.database import Config, Message
 def tryint(value):
     try:
         return int(value)
-    except:
+    except BaseException:
         return value
 
 
@@ -43,13 +43,13 @@ async def shell_exec(code, treat=True):
 # Pyrogram monkeypatch
 async def query_edit(self, text, reply_markup=None, answer_kwargs={}, *args, **kwargs):
     try:
-        answer = await self.answer(**answer_kwargs)
-    except:
+        await self.answer(**answer_kwargs)
+    except BaseException:
         pass
     edit = await self.edit_message_text(
         text=text, reply_markup=reply_markup, *args, **kwargs
     )
-    return edit  # , answer
+    return edit
 
 
 def remove_keyboard(self, message_id=None, *args, **kwargs):
