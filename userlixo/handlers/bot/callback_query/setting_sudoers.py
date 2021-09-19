@@ -18,7 +18,7 @@ async def sudoers_interface(cq):
     for user_id in sudoers:
         try:
             user_obj = await c.get_users(user_id)
-        except:
+        except BaseException:
             import traceback
 
             traceback.print_exc()

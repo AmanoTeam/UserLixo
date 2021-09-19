@@ -36,10 +36,12 @@ import aiocron
 import pyrogram
 import pyromod
 from pyrogram import idle
+from pyrogram.errors import BadRequest
 from pyromod.helpers import ikb
 from rich import box, print
 from rich.panel import Panel
 from tortoise import run_async
+from tortoise.exceptions import OperationalError
 
 from userlixo.config import (
     bot,
@@ -92,7 +94,7 @@ async def alert_startup():
 
     try:
         await bot.send_message(user.me.username, text)
-    except:
+    except BadRequest:
         await user.send_message(logs_chat, text)
 
 
@@ -178,13 +180,13 @@ async def main():
                 await editor.edit_message_text(
                     tryint(chat_id), tryint(message_id), text, **kwargs
                 )
-        except Exception as e:
+        except BaseException as e:
             print(
                 f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]"
             )
         try:
             await Config.get(id=restarting_alert.id).delete()
-        except:
+        except OperationalError:
             pass
 
     # Showing alert in cli

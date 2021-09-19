@@ -27,7 +27,7 @@ async def evals(c, m):
 
     try:
         output = await meval(eval_code, globals(), **locals())
-    except:
+    except BaseException:
         traceback_string = traceback.format_exc()
         text = f"Exception while running the code:\n{traceback_string}"
         if cmd == "eval":
@@ -44,13 +44,11 @@ async def evals(c, m):
 
             output = html.escape(str(output))  # escape html special chars
 
-            text = ""
-            for line in output.splitlines():
-                text += f"<code>{line}</code>\n"
+            text = "".join(f"<code>{line}</code>\n" for line in output.splitlines())
             if cmd == "eval":
                 return await act(text)
             await m.reply(text)
-        except:
+        except BaseException:
             traceback_string = traceback.format_exc()
             text = f"Exception while sending output:\n{traceback_string}"
             if cmd == "eval":

@@ -81,7 +81,7 @@ async def on_plugin_action(c, m):
 
     try:
         module = importlib.import_module(plugin["notation"])
-    except Exception as e:
+    except BaseException as e:
         os.remove(plugin["filename"])
         return await act(lang.plugin_could_not_load(e=e))
 

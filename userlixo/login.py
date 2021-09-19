@@ -120,7 +120,7 @@ async def main():
             f"[bold yellow]I found an existing session from bot [/][cyan]{mention}[/][bold yellow]. Do you want to use it? [/][cyan]\[yn]",
             end="",
         )
-        c = click.getchar(True)
+        click.getchar(True)
 
     print("\n[bold green]- Logging in the assistant bot...")
     if login_user and os.path.exists("bot.session"):
