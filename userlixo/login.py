@@ -123,9 +123,8 @@ async def main():
         c = click.getchar(True)
 
     print("\n[bold green]- Logging in the assistant bot...")
-    if login_user:
-        if os.path.exists("bot.session"):
-            os.remove("bot.session")
+    if login_user and os.path.exists("bot.session"):
+        os.remove("bot.session")
     if "BOT_TOKEN" not in os.environ:
         text = "\n┌ [light_sea_green]BOT_TOKEN[/light_sea_green]"
         print(text)

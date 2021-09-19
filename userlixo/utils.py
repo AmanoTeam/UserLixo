@@ -67,28 +67,28 @@ async def edit_text(self, text: str, reply_markup=None, *args, **kwargs):
 
 
 async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
-    if reply_markup and self._client.session_name != "bot":
-        if type(reply_markup) == types.InlineKeyboardMarkup:
-            reply_markup = bki(reply_markup)
-        message = await Message.create(text=text, keyboard=reply_markup)
+    if not reply_markup or self._client.session_name == "bot":
+        return await self.reply_text(text, reply_markup=reply_markup, *args, **kwargs)
+    if type(reply_markup) == types.InlineKeyboardMarkup:
+        reply_markup = bki(reply_markup)
+    message = await Message.create(text=text, keyboard=reply_markup)
 
-        bot = self._client.assistant
-        inline_results = await self._client.get_inline_bot_results(
-            bot.me.username or bot.me.id, str(message.key)
-        )
-        result = inline_results.results[0]
+    bot = self._client.assistant
+    inline_results = await self._client.get_inline_bot_results(
+        bot.me.username or bot.me.id, str(message.key)
+    )
+    result = inline_results.results[0]
 
-        reply_to = None
-        if kwargs.get("quote"):
-            reply_to = self.message_id
+    reply_to = None
+    if kwargs.get("quote"):
+        reply_to = self.message_id
 
-        return await self._client.send_inline_bot_result(
-            self.chat.id,
-            inline_results.query_id,
-            result.id,
-            reply_to_message_id=reply_to,
-        )
-    return await self.reply_text(text, reply_markup=reply_markup, *args, **kwargs)
+    return await self._client.send_inline_bot_result(
+        self.chat.id,
+        inline_results.query_id,
+        result.id,
+        reply_to_message_id=reply_to,
+    )
 
 
 async def get_inactive_plugins(plugins):

@@ -58,7 +58,7 @@ async def load_env():
 
         value_on_db = await Config.get_or_none(key=env_key)
 
-        if (not value_on_db and env_key in restricted_vars) or 'DYNO' in os.environ:
+        if not value_on_db and env_key in restricted_vars:
             os.environ[env_key] = value_on_env
             continue
         elif not value_on_db:
@@ -144,7 +144,7 @@ def filter_su_cmd(command, prefixes=None, *args, **kwargs):
     prefixes = prefixes or os.getenv("PREFIXES") or "."
     prefix = ""
     if " " in prefixes:
-        prefixes = "|".join([re.escape(prefix) for prefix in prefixes.split()])
+        prefixes = "|".join(re.escape(prefix) for prefix in prefixes.split())
         prefix = f"({prefixes})"
     elif isinstance(prefixes, (list, str)):
         if isinstance(prefixes, list):

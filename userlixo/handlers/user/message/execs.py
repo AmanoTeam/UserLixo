@@ -52,10 +52,7 @@ async def execs(c, m):
             await m.reply_document("output.txt", quote=True)
             return os.remove("output.txt")
         output = html.escape(output)  # escape html special chars
-        text = ""
-        for line in output.splitlines():
-            text += f"<code>{line}</code>\n"
-
+        text = "".join(f"<code>{line}</code>\n" for line in output.splitlines())
         if cmd == "exec":
             return await act(text)
         await m.reply(text)

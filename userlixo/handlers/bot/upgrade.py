@@ -73,13 +73,7 @@ async def on_upgrade_u(c, u):
 
     await Config.filter(key="restarting_alert").delete()
     message_id = u.inline_message_id if is_inline else msg.message_id
-    chat_id = (
-        "inline"
-        if is_inline
-        else msg.chat.username
-        if msg.chat.username
-        else msg.chat.id
-    )
+    chat_id = "inline" if is_inline else msg.chat.username or msg.chat.id
     await Config.create(
         **{
             "key": "restarting_alert",
