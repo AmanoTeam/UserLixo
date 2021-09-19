@@ -149,11 +149,10 @@ async def on_confirm_plugin(c, cq):
 
     functions = [*filter(callable, module.__dict__.values())]
     functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-    print(functions)
 
-    if not len(functions):
-        os.remove(new_filename)
-        return await cq.edit(lang.plugin_has_no_handlers)
+    # if not len(functions):
+    #     os.remove(new_filename)
+    #     return await cq.edit(lang.plugin_has_no_handlers)
 
     for f in functions:
         for handler in f.handlers:
