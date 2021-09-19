@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2021 Amano Team
+
 from pyrogram import Client, filters
 
 from userlixo.handlers.bot.list_commands import on_list_commands_u

@@ -1,4 +1,8 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2018-2021 Amano Team
+
 # For bot command /plugins, userbot .plugins and bot button 'plugins'
+
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
