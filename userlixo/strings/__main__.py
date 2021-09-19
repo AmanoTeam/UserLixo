@@ -2,9 +2,9 @@
 
 import os
 import re
-import yaml
-
 from glob import glob
+
+import yaml
 from langs import Langs
 from rich import print
 

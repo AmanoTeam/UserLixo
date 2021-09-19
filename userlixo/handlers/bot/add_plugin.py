@@ -1,21 +1,23 @@
-from userlixo.config import plugins, user, bot
-from configparser import ConfigParser
-from userlixo.database import Config
-from pyrogram import Client, filters
-from pyromod.helpers import ikb
-from userlixo.utils import (
-    write_plugin_info,
-    read_plugin_info,
-    get_inactive_plugins,
-    reload_plugins_requirements,
-)
-import asyncio
 import importlib
 import inspect
+import asyncio
 import json
 import math
-import os, sys
+import os
 import re
+import sys
+
+from pyrogram import Client, filters
+from pyromod.helpers import ikb
+
+from userlixo.config import bot, plugins, user
+from userlixo.database import Config
+from userlixo.utils import (
+    get_inactive_plugins,
+    read_plugin_info,
+    reload_plugins_requirements,
+    write_plugin_info,
+)
 
 
 @Client.on_message(filters.sudoers & filters.document & filters.private & ~filters.me)
@@ -65,7 +67,7 @@ async def on_add_plugin_u(c, u):
             await msg.reply(lang.plugin_too_big, quote=True)
             continue
         break
-    filename = await msg.download(f"cache/")
+    filename = await msg.download("cache/")
     filename = os.path.relpath(filename)
     plugin = read_plugin_info(filename)
 
@@ -110,9 +112,7 @@ async def on_confirm_plugin(c, cq):
         DGRAY = 'echo -e "\033[1;30m"'
         RESET = 'echo -e "\033[0m"'
         req_list = requirements.split()
-        req_text = ""
-        for r in req_list[:-1]:
-            req_text += f" ├ <code>{r}</code>\n"
+        req_text = "".join(f" ├ <code>{r}</code>\n" for r in req_list[:-1])
         req_text += f" └ <code>{req_list[-1]}</code>"
         text = lang.installing_plugin_requirements
         text.escape_html = False
@@ -127,7 +127,6 @@ async def on_confirm_plugin(c, cq):
             return await cq.edit(
                 lang.plugin_could_not_load_existent(name=basename, e=e)
             )
-        
 
         functions = [*filter(callable, module.__dict__.values())]
         functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
@@ -150,6 +149,7 @@ async def on_confirm_plugin(c, cq):
 
     functions = [*filter(callable, module.__dict__.values())]
     functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
+    print(functions)
 
     if not len(functions):
         os.remove(new_filename)
@@ -158,7 +158,7 @@ async def on_confirm_plugin(c, cq):
     for f in functions:
         for handler in f.handlers:
             client.add_handler(*handler)
-    
+
     if module:
         r = None
         functions = [*filter(callable, module.__dict__.values())]
@@ -181,14 +181,14 @@ async def on_confirm_plugin(c, cq):
                 else:
                     await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be like this: (0, 'nodejs not found')"))
                     unload = True
-    
+
             else:
                 await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be a list or tuple"))
                 unload = True
-    
+
             if unload:
                 functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-    
+
                 for f in functions:
                     for handler in f.handlers:
                         client.remove_handler(*handler)
@@ -212,6 +212,5 @@ async def on_confirm_plugin(c, cq):
         [[(lang.see_plugin_info, f"info_plugin {basename} {plugin_type} {page}")]]
     )
     text = lang.plugin_added(name=basename)
-    if "DYNO" in os.environ:
-        text += "\n\n" + lang.alert_need_deploy
+
     await cq.edit(text, keyb)

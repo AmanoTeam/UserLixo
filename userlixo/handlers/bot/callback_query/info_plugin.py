@@ -1,13 +1,14 @@
-from userlixo.config import plugins, user, bot
-from userlixo.database import Config
-from userlixo.handlers.bot.list_plugins import on_list_plugins_type
-from pyrogram import Client, filters
-from pyromod.helpers import ikb
-from userlixo.utils import get_inactive_plugins, write_plugin_info
 import importlib
 import json
 import os
-import re
+
+from pyrogram import Client, filters
+from pyromod.helpers import ikb
+
+from userlixo.config import bot, plugins, user
+from userlixo.database import Config
+from userlixo.handlers.bot.list_plugins import on_list_plugins_type
+from userlixo.utils import get_inactive_plugins, write_plugin_info
 
 
 @Client.on_callback_query(
@@ -60,10 +61,9 @@ async def on_switch_plugin(c, cq):
     basename = cq.matches[0]["basename"]
     plugin_type = cq.matches[0]["plugin_type"]
     deactivate = cq.matches[0]["deactivate"]
+    plugin = plugins[plugin_type][basename]
     if basename not in plugins[plugin_type]:
         return await cq.answer(lang.plugin_not_found(name=plugin))
-
-    plugin = plugins[plugin_type][basename]
 
     if not os.path.exists(plugin["filename"]):
         return await cq.edit(lang.plugin_not_exists_on_server)

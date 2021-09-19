@@ -1,37 +1,31 @@
-from configparser import ConfigParser
-from langs import Langs
-from pyromod import listen, filters
-from pyrogram import Client, filters
-from pyromod.helpers import bki
-from rich import print
-from userlixo.database import Config
-from userlixo.utils import (
-    tryint,
-    query_edit,
-    remove_keyboard,
-    reply_text,
-    edit_text,
-    get_inactive_plugins,
-    read_plugin_info,
-    b64encode,
-    b64decode,
-)
 import glob
 import importlib
 import json
 import os
-import pyrogram
 import re
+
+import pyrogram
 import yaml
+from langs import Langs
+from pyrogram import Client, filters
+from pyromod import listen
+from pyromod.helpers import bki
+from rich import print
+
+from userlixo.database import Config
+from userlixo.utils import (
+    b64decode,
+    b64encode,
+    edit_text,
+    get_inactive_plugins,
+    query_edit,
+    read_plugin_info,
+    remove_keyboard,
+    reply_text,
+    tryint,
+)
 
 sudoers = []
-heroku_client = None
-heroku_app = None
-if "DYNO" in os.environ:
-    import heroku3
-
-    heroku_client = heroku3.from_key(os.environ["HEROKU_API_KEY"])
-    heroku_app = heroku_client.apps()[os.environ["APP_NAME"]]
 
 
 async def load_env():
@@ -61,15 +55,11 @@ async def load_env():
 
         value_on_db = await Config.get_or_none(key=env_key)
 
-        if not value_on_db:
-            if "DYNO" in os.environ and env_key not in restricted_vars:
-                os.environ[env_key] = value_on_env
-                await Config.create(key=env_key, value=value_on_env)
-            elif env_key in restricted_vars:
-                os.environ[env_key] = value_on_env
-            else:
-                missing_vars.append([env_key, value_on_env, env_info])
+        if (not value_on_db and env_key in restricted_vars) or 'DYNO' in os.environ:
+            os.environ[env_key] = value_on_env
             continue
+        elif not value_on_db:
+            missing_vars.append([env_key, value_on_env, env_info])
         os.environ[env_key] = value_on_db.value
 
     if missing_vars:
@@ -85,7 +75,7 @@ async def load_env():
         if value_on_env != "":
             text += f" [deep_sky_blue4](default: {value_on_env})[/]"
         elif env_key in required_vars:
-            text += f" [yellow](required)[/]"
+            text += " [yellow](required)[/]"
         text += f"\n├ [medium_purple4 italic]{env_info}[/]"
         print(text)
 
@@ -137,6 +127,7 @@ async def unload_inactive_plugins():
 pyrogram_config = os.getenv("PYROGRAM_CONFIG") or b64encode("{}")
 pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
+
 
 # All monkeypatch stuff must be done before the Client instance is created
 def filter_sudoers(flt, c, u):

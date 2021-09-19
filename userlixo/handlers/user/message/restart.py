@@ -1,5 +1,6 @@
-from userlixo.handlers.bot.restart import on_restart_u
 from pyrogram import Client, filters
+
+from userlixo.handlers.bot.restart import on_restart_u
 
 
 @Client.on_message(filters.sudoers & filters.su_cmd("restart"))

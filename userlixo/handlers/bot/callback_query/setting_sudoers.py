@@ -1,8 +1,9 @@
-from userlixo.config import sudoers, user, bot
+from pyrogram import Client, filters
+from pyromod.helpers import array_chunk, ikb
+
+from userlixo.config import bot, sudoers, user
 from userlixo.database import Config
 from userlixo.utils import tryint
-from pyrogram import Client, filters
-from pyromod.helpers import ikb, array_chunk
 
 
 async def sudoers_interface(cq):
@@ -52,7 +53,6 @@ async def sudoers_interface(cq):
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_sudoers"))
 async def on_setting_sudoers(c, cq):
-    lang = cq._lang
     text, keyboard = await sudoers_interface(cq)
     await cq.edit(text, keyboard)
 
@@ -61,7 +61,6 @@ async def on_setting_sudoers(c, cq):
     filters.sudoers & filters.regex("^remove_sudoer (?P<who>\w+)")
 )
 async def on_remove_sudoer(c, cq):
-    lang = cq._lang
     who = tryint(cq.matches[0]["who"])
 
     # Sanitize list

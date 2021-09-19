@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 
 os.system("clear")
 # Update requirements
@@ -24,28 +25,30 @@ if "--no-update" not in sys.argv:
 print("\033[0m")
 os.system("clear")
 
-from userlixo.config import (
-    load_env,
-    sudoers,
-    langs,
-    user,
-    bot,
-    unload_inactive_plugins,
-    plugins,
-)
-from userlixo.database import connect_database, Config
-from datetime import datetime
-from pyrogram import idle
-from pyromod.helpers import ikb
-from rich import print, box
-from rich.panel import Panel
-from tortoise import run_async
-from userlixo.utils import shell_exec, timezone_shortener, get_inactive_plugins, tryint
-import aiocron
 import glob
 import platform
-import pyromod, pyrogram
-import re
+from datetime import datetime
+
+import aiocron
+import pyrogram
+import pyromod
+from pyrogram import idle
+from pyromod.helpers import ikb
+from rich import box, print
+from rich.panel import Panel
+from tortoise import run_async
+
+from userlixo.config import (
+    bot,
+    langs,
+    load_env,
+    plugins,
+    sudoers,
+    unload_inactive_plugins,
+    user,
+)
+from userlixo.database import Config, connect_database
+from userlixo.utils import shell_exec, timezone_shortener, tryint
 
 
 async def alert_startup():
@@ -78,7 +81,7 @@ async def alert_startup():
         plugins_total=plugins_total,
         append_plugins=append_plugins,
     )
-    if "DYNO" not in os.environ and "VIRTUAL_ENV" not in os.environ:
+    if "VIRTUAL_ENV" not in os.environ:
         text += "\n\n" + langs.not_virtualenv_alert
     logs_chat = os.getenv("LOGS_CHAT")
     if logs_chat and logs_chat != "me":
@@ -108,7 +111,7 @@ async def main():
             if minutes_passed >= 10:
                 os.remove(file)
 
-    if "DYNO" not in os.environ and not os.path.exists("user.session"):
+    if not os.path.exists("user.session"):
         from userlixo.login import main as login
 
         await login()
@@ -160,8 +163,6 @@ async def main():
         )
 
         text = text(rev=rev, date=date, seconds=diff, local_version=local_version)
-        if "DYNO" in os.environ and from_cmd.startswith("upgrade"):
-            text += "\n\n" + langs.alert_need_deploy
 
         try:
             editor = bot if from_cmd.endswith("_bot") else user
@@ -178,7 +179,10 @@ async def main():
             print(
                 f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]"
             )
-        await Config.get(id=restarting_alert.id).delete()
+        try:
+            await Config.get(id=restarting_alert.id).delete()
+        except:
+            pass
 
     # Showing alert in cli
     date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')

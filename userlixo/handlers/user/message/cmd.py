@@ -1,10 +1,9 @@
-import asyncio
 import html
 import os
 import re
 
-from userlixo.config import sudoers
 from pyrogram import Client, filters
+
 from userlixo.utils import shell_exec
 
 

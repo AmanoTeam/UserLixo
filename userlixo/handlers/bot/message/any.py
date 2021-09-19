@@ -1,7 +1,9 @@
 import os
-from userlixo.config import langs
-from userlixo.database import Config
+
 from pyrogram import Client, filters
+
+from userlixo.config import langs
+
 
 # Getting the language to use
 @Client.on_message(group=-2)

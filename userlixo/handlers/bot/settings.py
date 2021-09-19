@@ -1,6 +1,5 @@
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
-import inspect
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^settings"))

@@ -2,7 +2,8 @@
 from pyrogram import Client, filters
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
-from userlixo.config import plugins, user, bot
+
+from userlixo.config import bot, plugins, user
 from userlixo.utils import get_inactive_plugins
 
 

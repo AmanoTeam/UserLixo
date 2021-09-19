@@ -1,8 +1,8 @@
-from userlixo.config import sudoers
-from userlixo.database import Message
 from pyrogram import Client, filters
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent
 from pyromod.helpers import ikb
+
+from userlixo.database import Message
 
 
 @Client.on_inline_query(filters.sudoers & filters.regex("^(?P<index>\d+)"))

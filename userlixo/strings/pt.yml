@@ -359,16 +359,6 @@ not_virtualenv_alert: |-
     ✴️ Me parece que você não está rodando o UserLixo num virtual environment, e isso é perigoso.
     Para a garantia de estabilidade dos seus projetos, pare o script, ative um virtualenv com o nome 'venv' e inicie o UserLixo novamente.
     E tenha a certeza de ter lido o <a href='https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md'>README</a> atualizado do UserLixo no GitHub.
-deploying_on_heroku: |-
-    📤 O UserLixo está enviando o código para o app na Heroku e fazendo rebuild do container... Isso deve demorar ~4 minutos. Você pode acompanhar o progresso no dashboard da Heroku.
-    
-    Isto é feito para evitar perda de arquivos após um reinício ou limpeza do app (feito periodicamente pela Heroku).
-
-not_running_in_heroku: |-
-    ❕ Você não está executando na Heroku.
-
-alert_need_deploy: |-
-    ❕ Use .<code>deploy</code> para enviar as mudanças para o app da Heroku.
 
 running_post_install_script: |-
     ⭕ Executando o script pós-instalação.
