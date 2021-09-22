@@ -64,10 +64,10 @@ async def on_switch_plugin(c, cq):
     basename = cq.matches[0]["basename"]
     plugin_type = cq.matches[0]["plugin_type"]
     deactivate = cq.matches[0]["deactivate"]
-    plugin = plugins[plugin_type][basename]
     if basename not in plugins[plugin_type]:
-        return await cq.answer(lang.plugin_not_found(name=plugin))
+        return await cq.answer(lang.plugin_not_found(name=basename))
 
+    plugin = plugins[plugin_type][basename]
     if not os.path.exists(plugin["filename"]):
         return await cq.edit(lang.plugin_not_exists_on_server)
 
