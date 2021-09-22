@@ -58,11 +58,12 @@ async def load_env():
 
         value_on_db = await Config.get_or_none(key=env_key)
 
-        if not value_on_db and env_key in restricted_vars:
-            os.environ[env_key] = value_on_env
+        if not value_on_db:
+            if env_key in restricted_vars:
+                os.environ[env_key] = value_on_env
+            else:
+                missing_vars.append([env_key, value_on_env, env_info])
             continue
-        elif not value_on_db:
-            missing_vars.append([env_key, value_on_env, env_info])
         os.environ[env_key] = value_on_db.value
 
     if missing_vars:

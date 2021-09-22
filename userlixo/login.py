@@ -110,6 +110,7 @@ async def main():
         print(f"[blue]{session_string}[/]\n")
         return await user.stop()
 
+    login_bot = True
     if os.path.exists("bot.session"):
         async with Client(
             "bot", workdir=".", config_file="./config.ini", plugins={"enabled": False}
@@ -120,10 +121,11 @@ async def main():
             f"[bold yellow]I found an existing session from bot [/][cyan]{mention}[/][bold yellow]. Do you want to use it? [/][cyan]\[yn]",
             end="",
         )
-        click.getchar(True)
+        c = click.getchar(True)
+        login_bot = c == "n"
 
     print("\n[bold green]- Logging in the assistant bot...")
-    if login_user and os.path.exists("bot.session"):
+    if login_bot and os.path.exists("bot.session"):
         os.remove("bot.session")
     if "BOT_TOKEN" not in os.environ:
         text = "\n┌ [light_sea_green]BOT_TOKEN[/light_sea_green]"
