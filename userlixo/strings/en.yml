@@ -369,3 +369,6 @@ not_running_in_heroku: |-
 
 alert_need_deploy: |-
     ❕ Use .<code>deploy</code> to self-deploy the changes to the Heroku app.
+
+running_post_install_script: |-
+    ⭕ Running the post-install script.
