@@ -11,6 +11,7 @@ from userlixo.utils import (
 )
 import asyncio
 import importlib
+import inspect
 import json
 import math
 import os, sys
@@ -159,7 +160,7 @@ async def on_confirm_plugin(c, cq):
             client.add_handler(*handler)
     
     if module:
-        import inspect
+        r = None
         functions = [*filter(callable, module.__dict__.values())]
         for f in functions:
             if hasattr(f, "__name__") and f.__name__ == "post_install_script":
@@ -169,29 +170,30 @@ async def on_confirm_plugin(c, cq):
                 else:
                     r = await asyncio.get_event_loop().run_in_executor(None, f)
                 break
-                
-        unload = False
-        if isinstance(r, (tuple, list)):
-            if len(r) == 2:
-                if r[0] != 1:
-                    await cq.edit(lang.plugin_could_not_load(e=r[1]))
+
+        if r is not None:
+            unload = False
+            if isinstance(r, (tuple, list)):
+                if len(r) == 2:
+                    if r[0] != 1:
+                        await cq.edit(lang.plugin_could_not_load(e=r[1]))
+                        unload = True
+                else:
+                    await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be like this: (0, 'nodejs not found')"))
                     unload = True
+    
             else:
-                await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be like this: (0, 'nodejs not found')"))
+                await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be a list or tuple"))
                 unload = True
-
-        else:
-            await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be a list or tuple"))
-            unload = True
-
-        if unload:
-            functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-
-            for f in functions:
-                for handler in f.handlers:
-                    client.remove_handler(*handler)
-            os.remove(new_filename)
-            return
+    
+            if unload:
+                functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
+    
+                for f in functions:
+                    for handler in f.handlers:
+                        client.remove_handler(*handler)
+                os.remove(new_filename)
+                return
 
     plugins[plugin_type][basename] = plugin
     reload_plugins_requirements(plugins)
