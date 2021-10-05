@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2021 Amano Team
 
+import asyncio
 import importlib
 import inspect
-import asyncio
 import json
 import math
 import os
@@ -181,11 +181,19 @@ async def on_confirm_plugin(c, cq):
                         await cq.edit(lang.plugin_could_not_load(e=r[1]))
                         unload = True
                 else:
-                    await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be like this: (0, 'nodejs not found')"))
+                    await cq.edit(
+                        lang.plugin_could_not_load(
+                            e="The return of post_install_script should be like this: (0, 'nodejs not found')"
+                        )
+                    )
                     unload = True
 
             else:
-                await cq.edit(lang.plugin_could_not_load(e="The return of post_install_script should be a list or tuple"))
+                await cq.edit(
+                    lang.plugin_could_not_load(
+                        e="The return of post_install_script should be a list or tuple"
+                    )
+                )
                 unload = True
 
             if unload:
