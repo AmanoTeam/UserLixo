@@ -8,7 +8,7 @@ croniter==1.0.15
 iso8601==0.1.16
 langs==0.1.1
 meval==2.5
-natsort==7.1.1
+natsort==8.0.0
 pyaes==1.6.1
 Pygments==2.10.0
 PyPika>=0.44.0
