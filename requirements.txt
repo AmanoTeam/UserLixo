@@ -23,5 +23,5 @@ rich==10.12.0
 six==1.16.0
 TgCrypto==1.2.2
 tortoise-orm==0.16.21
-typing-extensions==3.10.0.0
+typing-extensions==4.0.0
 tzlocal==4.1
