@@ -21,7 +21,7 @@ pytz>=2020.4
 PyYAML==6.0
 rich==11.0.0
 six==1.16.0
-TgCrypto==1.2.2
+TgCrypto==1.2.3
 tortoise-orm==0.16.21
 typing-extensions==4.0.1
 tzlocal==4.1
