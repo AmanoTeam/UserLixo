@@ -5,7 +5,6 @@ click==8.0.3
 colorama==0.4.4
 commonmark==0.9.1
 croniter==1.2.0
-iso8601==1.0.2
 langs==0.1.1
 meval==2.5
 natsort==8.1.0
