@@ -108,9 +108,10 @@ async def resize_photo(photo, ctime):
 
     os.remove(photo)
 
-    image.save(f'./{ctime}.png')
+    image.with_suffix(".webp")
+    image.save(f'./{ctime}.webp')
 
-    return f'./{ctime}.png'
+    return f'./{ctime}.webp'
 
 
 async def create_pack(anim, message, client, st, packnick, photo, emoji, packname):
