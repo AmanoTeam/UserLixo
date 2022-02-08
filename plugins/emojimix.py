@@ -12,7 +12,7 @@ async def emojimix(client, message):
     text = message.text.split(" ",1)[1]
     emoji1, emoji2 = emoji(text[0]), emoji(text[1])
     ctime = time.time()
-    async with httpx.AsynClient() as session:
+    async with httpx.AsyncClient() as session:
         im1 = "https://www.gstatic.com/android/keyboard/emojikitchen/20201001/{emoji1}/{emoji1}_{emoji2}.png"
         im2 = "https://www.gstatic.com/android/keyboard/emojikitchen/20201001/{emoji2}/{emoji2}_{emoji1}.png"
         if (await session.head(im1)).headers.get("content-type") == "image/png":
