@@ -24,7 +24,7 @@ async def emojimix(client, message):
             return
         r = await session.get(im)
         with open(f'{ctime}.png', 'wb') as f:
-            f.write(await r.read())
+            f.write(r.read())
     photo = await resize_photo(f'{ctime}.png', ctime)
     await message.delete()
     await client.send_document(message.chat.id, photo)
