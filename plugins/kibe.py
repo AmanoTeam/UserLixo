@@ -54,7 +54,7 @@ async def kibe(client, message):
             photo = await resize_photo(photo, ctime)
         try:
             stickerpack = await client.send(
-                functions.messages.GetStickerSet(stickerset=types.InputStickerSetShortName(short_name=packname)))
+                functions.messages.GetStickerSet(stickerset=types.InputStickerSetShortName(short_name=packname), hash=0))
         except StickersetInvalid:
             pack_exists = False
         else:
