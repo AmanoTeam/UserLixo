@@ -10,3 +10,4 @@ wikipedia
 desciclopedia
 telegraph
 pySmartDL
+httpx
