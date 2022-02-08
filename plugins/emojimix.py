@@ -2,6 +2,7 @@ from config import cmds
 from plugins.kibe import resize_photo
 import httpx
 import time
+import os
 
 from pyrogram import Client, filters
 
@@ -28,3 +29,4 @@ async def emojimix(client, message):
     photo = await resize_photo(f'{ctime}.png', ctime)
     await message.delete()
     await client.send_document(message.chat.id, photo)
+    os.remove(photo)
