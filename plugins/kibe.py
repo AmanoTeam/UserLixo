@@ -108,8 +108,8 @@ async def resize_photo(photo, ctime):
 
     os.remove(photo)
 
-    image.with_suffix(".webp")
-    image.save(f'./{ctime}.webp')
+    image.convert('RGB')
+    image.save(f'./{ctime}.webp', 'webp')
 
     return f'./{ctime}.webp'
 
