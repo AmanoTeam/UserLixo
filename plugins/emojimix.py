@@ -6,7 +6,14 @@ import os
 
 from pyrogram import Client, filters
 
-emoji = lambda x: "u"+x.encode("unicode-escape").decode()[5:]
+def emoji(x):
+    txt = x.encode("unicode-escape").decode()
+    res = ""
+    for i in txt.locate("\\"):
+        if "U" in i:
+            i = 'u'+i[5:]
+        res += i+"-"
+    return res[:-1]
 
 @Client.on_message(filters.command("emojimix", prefixes='.') & filters.me)
 async def emojimix(client, message):
