@@ -10,4 +10,4 @@ wikipedia
 desciclopedia
 telegraph
 pySmartDL
-httpx
+httpx[http2]

@@ -9,7 +9,12 @@ from asyncio.futures import Future
 from functools import partial, wraps
 from typing import Callable, Coroutine
 
+import httpx
+
 loop = asyncio.get_event_loop()
+
+
+http = httpx.AsyncClient(http2=True)
 
 
 def aiowrap(fn: Callable) -> Coroutine:
