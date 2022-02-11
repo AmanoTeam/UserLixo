@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2021 Amano Team
+# Copyright (c) 2018-2022 Amano Team
 
 import os
 import re
