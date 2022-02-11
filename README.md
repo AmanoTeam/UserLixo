@@ -36,4 +36,4 @@ If you find any bugs/issues you can report them by:
 *   Sending the issue details to [the chat on Telegram](https://t.me/AmanoChat)
 *   If you know how to fix the issue, fork this repo and open up a pull request
 
-©2020 - [AmanoTeam™](https://amanoteam.com)
+©2022 - [AmanoTeam™](https://amanoteam.com)
