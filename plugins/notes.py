@@ -3,13 +3,14 @@ import json
 import os
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 from db import db, save
 
 
 @Client.on_message(filters.command("note", prefixes=".") & filters.me)
-async def onnote(client, message):
+async def onnote(client: Client, message: Message):
     parts = message.text.split(" ", 2)
     if len(parts) == 1:
         return
@@ -79,7 +80,7 @@ async def onnote(client, message):
 
 
 @Client.on_message(filters.command("notes", prefixes=".") & filters.me)
-async def onnotes(client, message):
+async def onnotes(client: Client, message: Message):
     notes = db["notes"]
 
     parts = message.text.split(" ", 2)
@@ -159,7 +160,7 @@ async def onnotes(client, message):
 
 
 @Client.on_message(filters.regex("^#") & filters.me)
-async def onsharp(client, message):
+async def onsharp(client: Client, message: Message):
     note_key = message.text[1:]
     exists = note_key in db["notes"]
 

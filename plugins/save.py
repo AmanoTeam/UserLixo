@@ -1,10 +1,11 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
 
 @Client.on_message(filters.command("save", prefixes=".") & filters.me)
-async def save(client, message):
+async def save(client: Client, message: Message):
     if message.reply_to_message:
         a = await message.reply_to_message.forward("me")
         if message.text.split(" ", 1)[1]:

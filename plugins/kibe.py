@@ -6,13 +6,14 @@ from PIL import Image
 from pyrogram import Client, filters
 from pyrogram.errors import StickersetInvalid
 from pyrogram.raw import functions, types
+from pyrogram.types import Message
 
 from config import cmds
 from db import db, save
 
 
 @Client.on_message(filters.command("kibe", prefixes=".") & filters.me)
-async def kibe(client, message):
+async def kibe(client: Client, message: Message):
     emoji = message.text[6:]
     rsize = False
     ctime = time.time()

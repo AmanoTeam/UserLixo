@@ -1,6 +1,7 @@
 import re
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from utils import switch_case
 
@@ -9,7 +10,7 @@ from utils import switch_case
     filters.regex(r"\.?s/(?P<search>.+)/(?P<replace>.+)(?:/(?P<flags>.+))?")
     & filters.me
 )
-async def onsed(client, message):
+async def onsed(client: Client, message: Message):
     if (
         not message.reply_to_message
         or not message.reply_to_message.from_user

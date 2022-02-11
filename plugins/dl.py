@@ -3,6 +3,7 @@ import time
 
 from pyrogram import Client, filters
 from pyrogram.errors import MessageNotModified
+from pyrogram.types import Message
 from pySmartDL import SmartDL
 
 from config import cmds
@@ -21,7 +22,7 @@ def grogress(message, downloader):
 
 
 @Client.on_message(filters.command("dl", prefixes=".") & filters.me)
-async def download(client, message):
+async def download(client: Client, message: Message):
     await message.edit("Processing ...")
     if not message.reply_to_message:
         try:

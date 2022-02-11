@@ -3,12 +3,13 @@ import time
 from datetime import datetime
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
 
 @Client.on_message(filters.command(["on", "off"], prefixes=".") & filters.me)
-async def on(client, message):
+async def on(client: Client, message: Message):
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     elif message.entities and "text_mention" in message.entities[0]["type"]:

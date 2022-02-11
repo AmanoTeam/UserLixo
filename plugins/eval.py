@@ -2,13 +2,14 @@ import html
 import traceback
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 from utils import meval
 
 
 @Client.on_message(filters.command("eval", prefixes=".") & filters.me)
-async def evals(client, message):
+async def evals(client: Client, message: Message):
     text = message.text[6:]
     try:
         res = await meval(text, locals())

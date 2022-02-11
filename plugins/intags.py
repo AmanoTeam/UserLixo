@@ -6,6 +6,7 @@ import traceback
 from contextlib import redirect_stdout
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 from db import db
@@ -13,12 +14,12 @@ from utils import meval
 
 
 @Client.on_message(filters.regex(r".*<py>.+</py>", re.S) & filters.me)
-async def pytag(client, message):
+async def pytag(client: Client, message: Message):
     for match in re.finditer(r"<py>(.+?)</py>", message.text):
         strio = io.StringIO()
         code = match[1].strip()
         exec(
-            "async def __ex(client, message): "
+            "async def __ex(client: Client, message: Message): "
             + " ".join("\n " + l for l in code.split("\n"))
         )
         with redirect_stdout(strio):
@@ -38,7 +39,7 @@ async def pytag(client, message):
 
 
 @Client.on_message(filters.regex(r".*<sh>.+</sh>") & filters.me)
-async def shtag(client, message):
+async def shtag(client: Client, message: Message):
     for match in re.finditer(r"<sh>(.+?)</sh>", message.text):
         out = subprocess.getstatusoutput(match[1])[1] or "<sh></sh>"
         message.text = message.text.replace(match[0], html.escape(out))
@@ -46,7 +47,7 @@ async def shtag(client, message):
 
 
 @Client.on_message(filters.regex(r".*<#.+?>") & filters.me)
-async def sharptag(client, message):
+async def sharptag(client: Client, message: Message):
     changed = False
     for match in re.finditer(r"<#(.+?)>", message.text):
         note_key = match[1]
@@ -63,7 +64,7 @@ async def sharptag(client, message):
 
 
 @Client.on_message(filters.regex(r".*<ev>.+</ev>") & filters.me)
-async def evtag(client, message):
+async def evtag(client: Client, message: Message):
     for match in re.finditer(r"<ev>(.+?)</ev>", message.text):
         try:
             res = (await meval(match[1], locals())) or "<ev></ev>"

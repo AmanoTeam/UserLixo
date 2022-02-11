@@ -4,6 +4,7 @@ from io import BytesIO
 
 from gtts import gTTS, lang
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
@@ -17,7 +18,7 @@ except RuntimeError:
 
 
 @Client.on_message(filters.command("tts", prefixes=".") & filters.me)
-async def tts(client, message):
+async def tts(client: Client, message: Message):
     global langs
     if not langs:
         langs = lang.tts_langs()

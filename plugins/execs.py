@@ -5,16 +5,17 @@ import traceback
 from contextlib import redirect_stdout
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
 
 @Client.on_message(filters.command("exec", prefixes=".") & filters.me)
-async def execs(client, message):
+async def execs(client: Client, message: Message):
     strio = io.StringIO()
     code = re.split(r"[\n ]+", message.text, 1)[1]
     exec(
-        "async def __ex(client, message): "
+        "async def __ex(client: Client, message: Message): "
         + " ".join("\n " + l for l in code.split("\n"))
     )
     with redirect_stdout(strio):

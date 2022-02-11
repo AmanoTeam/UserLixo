@@ -2,13 +2,14 @@ import os
 import sys
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 from db import db, save
 
 
 @Client.on_message(filters.command("restart", prefixes=".") & filters.me)
-async def restart(client, message):
+async def restart(client: Client, message: Message):
     await message.edit("Reiniciando...")
     db["restart"] = {"cid": message.chat.id, "mid": message.message_id}
     save(db)

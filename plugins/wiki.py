@@ -1,6 +1,7 @@
 import desciclopedia
 import wikipedia
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telegraph import Telegraph
 
 from config import cmds
@@ -10,7 +11,7 @@ telegraph.create_account(short_name="UserLixo", author_name="amn")
 
 
 @Client.on_message(filters.command("dwiki", prefixes=".") & filters.me)
-async def dwiki(client, message):
+async def dwiki(client: Client, message: Message):
     txt = message.text[7:]
     a = desciclopedia.search(txt)
     if a:
@@ -27,7 +28,7 @@ async def dwiki(client, message):
 
 
 @Client.on_message(filters.command("wiki", prefixes=".") & filters.me)
-async def wiki(client, message):
+async def wiki(client: Client, message: Message):
     txt = message.text[6:]
     a = wikipedia.search(txt)
     wikipedia.set_lang("pt")

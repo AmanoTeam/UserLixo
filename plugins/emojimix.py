@@ -3,11 +3,12 @@ import time
 
 import httpx
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from plugins.kibe import resize_photo
 
 
-def emoji(x):
+def emoji(x: str):
     txt = x.encode("unicode-escape").decode()
     res = ""
     print(txt.split("\\"))
@@ -19,7 +20,7 @@ def emoji(x):
 
 
 @Client.on_message(filters.command("emojimix", prefixes=".") & filters.me)
-async def emojimix(client, message):
+async def emojimix(client: Client, message: Message):
     text = message.text.split(" ", 1)[1].split("+")
     emoji1, emoji2 = emoji(text[0]), emoji(text[1])
     ctime = time.time()

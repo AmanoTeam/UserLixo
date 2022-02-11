@@ -6,6 +6,7 @@ import aiohttp
 import youtube_dl
 from pyrogram import Client, filters
 from pyrogram.errors import MessageNotModified
+from pyrogram.types import Message
 
 from config import cmds
 from utils import aiowrap
@@ -19,7 +20,7 @@ def extract_info(instance, url, download=True):
 
 
 @Client.on_message(filters.command("ytdl", prefixes=".") & filters.me)
-async def ytdl(client, message):
+async def ytdl(client: Client, message: Message):
     url = message.text.split(maxsplit=1)[1]
     if "-m4a" in url:
         url = url.replace(" -m4a", "")

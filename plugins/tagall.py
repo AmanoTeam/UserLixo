@@ -1,6 +1,7 @@
 import html
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
@@ -8,7 +9,7 @@ char = html.unescape("&#8204;")
 
 
 @Client.on_message(filters.command("tagall", prefixes=".") & filters.me)
-async def tagall(client, message):
+async def tagall(client: Client, message: Message):
     await message.delete()
 
     splitted = message.text.split(" ", 1)
@@ -27,7 +28,7 @@ async def tagall(client, message):
 
 
 @Client.on_message(filters.command("ftagall", prefixes=".") & filters.me)
-async def ftagall(client, message):
+async def ftagall(client: Client, message: Message):
     await message.delete()
 
     splitted = message.text.split(" ", 1)
@@ -46,7 +47,7 @@ async def ftagall(client, message):
 
 
 @Client.on_message(filters.command("admin", prefixes=".") & filters.me)
-async def admin(client, message):
+async def admin(client: Client, message: Message):
     await message.delete()
 
     splitted = message.text.split(" ", 1)
@@ -65,7 +66,7 @@ async def admin(client, message):
 
 
 @Client.on_message(filters.command("fadmin", prefixes=".") & filters.me)
-async def fadmin(client, message):
+async def fadmin(client: Client, message: Message):
     await message.delete()
 
     splitted = message.text.split(" ", 1)

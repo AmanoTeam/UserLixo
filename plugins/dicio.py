@@ -1,11 +1,12 @@
 import dicioinformal
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
 
 @Client.on_message(filters.command("dicio", prefixes=".") & filters.me)
-async def dicio(client, message):
+async def dicio(client: Client, message: Message):
     txt = message.text.split(" ", 1)[1]
     a = dicioinformal.definicao(txt)["results"]
     if a:

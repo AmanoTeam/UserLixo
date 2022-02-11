@@ -1,12 +1,13 @@
 import asyncio
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 
 
 @Client.on_message(filters.command("text", prefixes=".") & filters.me)
-async def text(client, message):
+async def text(client: Client, message: Message):
     ch = ""
     txt = message.text.split(" ", 1)[1]
     ms = await message.edit("`|`")

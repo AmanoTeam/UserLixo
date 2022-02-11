@@ -3,13 +3,14 @@ import os
 import sys
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from config import cmds
 from db import db, save
 
 
 @Client.on_message(filters.command("upgrade", prefixes=".") & filters.me)
-async def upgrade(client, message):
+async def upgrade(client: Client, message: Message):
     try:
         with open(os.path.join(".git", "HEAD")) as f:
             branch = f.read().split("/")[-1].rstrip()
