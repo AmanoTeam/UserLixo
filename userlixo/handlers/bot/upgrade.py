@@ -40,7 +40,7 @@ async def on_upgrade_u(c, u):
         return await shell_exec("git merge --abort")
 
     if "Your branch is up to date" in stdout:
-        title, p = await shell_exec('git log --format="%B" -1')
+        # title, p = await shell_exec('git log --format="%B" -1')
         rev, p = await shell_exec("git rev-parse --short HEAD")
         date, p = await shell_exec(
             'git log -1 --format=%cd --date=format:"%d/%m %H:%M"'
@@ -56,7 +56,7 @@ async def on_upgrade_u(c, u):
             args.append(keyb)
         return await act(
             lang.upgrade_alert_already_uptodate(
-                title=title, rev=rev, date=date, local_version=local_version
+                rev=rev, date=date, local_version=local_version
             ),
             *args,
         )
