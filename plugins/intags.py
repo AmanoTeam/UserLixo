@@ -1,25 +1,33 @@
-from pyrogram import Client, filters
-import re
-import io
 import html
-import traceback
+import io
+import re
 import subprocess
+import traceback
 from contextlib import redirect_stdout
+
+from pyrogram import Client, filters
+
 from config import cmds
 from db import db
 from utils import meval
 
-@Client.on_message(filters.regex(r'.*<py>.+</py>', re.S) & filters.me)
+
+@Client.on_message(filters.regex(r".*<py>.+</py>", re.S) & filters.me)
 async def pytag(client, message):
-    for match in re.finditer(r'<py>(.+?)</py>', message.text):
+    for match in re.finditer(r"<py>(.+?)</py>", message.text):
         strio = io.StringIO()
         code = match[1].strip()
-        exec('async def __ex(client, message): ' + ' '.join('\n ' + l for l in code.split('\n')))
+        exec(
+            "async def __ex(client, message): "
+            + " ".join("\n " + l for l in code.split("\n"))
+        )
         with redirect_stdout(strio):
             try:
                 await locals()["__ex"](client, message)
             except:
-                return await message.reply_text(html.escape(traceback.format_exc()), parse_mode="HTML")
+                return await message.reply_text(
+                    html.escape(traceback.format_exc()), parse_mode="HTML"
+                )
 
         if strio.getvalue():
             out = f"{html.escape(strio.getvalue())}"
@@ -28,43 +36,49 @@ async def pytag(client, message):
         message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
 
-@Client.on_message(filters.regex(r'.*<sh>.+</sh>') & filters.me)
+
+@Client.on_message(filters.regex(r".*<sh>.+</sh>") & filters.me)
 async def shtag(client, message):
-    for match in re.finditer(r'<sh>(.+?)</sh>', message.text):
-        out = subprocess.getstatusoutput(match[1])[1] or '<sh></sh>'
+    for match in re.finditer(r"<sh>(.+?)</sh>", message.text):
+        out = subprocess.getstatusoutput(match[1])[1] or "<sh></sh>"
         message.text = message.text.replace(match[0], html.escape(out))
     await message.edit(message.text)
 
-@Client.on_message(filters.regex(r'.*<#.+?>') & filters.me)
+
+@Client.on_message(filters.regex(r".*<#.+?>") & filters.me)
 async def sharptag(client, message):
     changed = False
-    for match in re.finditer(r'<#(.+?)>', message.text):
+    for match in re.finditer(r"<#(.+?)>", message.text):
         note_key = match[1]
-        exists = note_key in db['notes']
+        exists = note_key in db["notes"]
 
         if exists:
             changed = True
-            note_obj = db['notes'][note_key]
-            if note_obj['type'] == 'text':
-                text = note_obj['value']
+            note_obj = db["notes"][note_key]
+            if note_obj["type"] == "text":
+                text = note_obj["value"]
                 message.text = message.text.replace(match[0], html.escape(text))
     if changed:
         await message.edit(message.text)
 
-@Client.on_message(filters.regex(r'.*<ev>.+</ev>') & filters.me)
+
+@Client.on_message(filters.regex(r".*<ev>.+</ev>") & filters.me)
 async def evtag(client, message):
-    for match in re.finditer(r'<ev>(.+?)</ev>', message.text):
+    for match in re.finditer(r"<ev>(.+?)</ev>", message.text):
         try:
-            res = (await meval(match[1], locals())) or '<ev></ev>'
+            res = (await meval(match[1], locals())) or "<ev></ev>"
         except:
             return await message.reply_text(traceback.format_exc())
         else:
             message.text = message.text.replace(match[0], html.escape(str(res)))
     await message.edit(message.text)
 
-cmds.update({
-    '<py>':'Run the python code inside the tag and replace it with the result',
-    '<sh>':'Run the shell command inside the tag and replace it with the result',
-    '<ev>': 'Evaluate the inner content with Python and replace the tag with the result',
-    '<#%note>': "Search for a note named %note (replace with the name of the wanted note) and replace the tag with it",
-})
+
+cmds.update(
+    {
+        "<py>": "Run the python code inside the tag and replace it with the result",
+        "<sh>": "Run the shell command inside the tag and replace it with the result",
+        "<ev>": "Evaluate the inner content with Python and replace the tag with the result",
+        "<#%note>": "Search for a note named %note (replace with the name of the wanted note) and replace the tag with it",
+    }
+)

@@ -1,10 +1,11 @@
-from config import cmds
-from plugins.kibe import resize_photo
-import httpx
-import time
 import os
+import time
 
+import httpx
 from pyrogram import Client, filters
+
+from plugins.kibe import resize_photo
+
 
 def emoji(x):
     txt = x.encode("unicode-escape").decode()
@@ -12,13 +13,14 @@ def emoji(x):
     print(txt.split("\\"))
     for i in txt.split("\\")[1:]:
         if "U" in i:
-            i = 'u'+i[4:]
-        res += i+"-"
+            i = "u" + i[4:]
+        res += i + "-"
     return res[:-1]
 
-@Client.on_message(filters.command("emojimix", prefixes='.') & filters.me)
+
+@Client.on_message(filters.command("emojimix", prefixes=".") & filters.me)
 async def emojimix(client, message):
-    text = message.text.split(" ",1)[1].split("+")
+    text = message.text.split(" ", 1)[1].split("+")
     emoji1, emoji2 = emoji(text[0]), emoji(text[1])
     ctime = time.time()
     cod = 20210218 if "-" in emoji1 or "-" in emoji2 else 20201001
@@ -33,9 +35,15 @@ async def emojimix(client, message):
             await message.edit("These emojis cannot be combined.")
             return
         r = await session.get(im)
-        with open(f'{ctime}.png', 'wb') as f:
+        with open(f"{ctime}.png", "wb") as f:
             f.write(r.read())
-    photo = await resize_photo(f'{ctime}.png', ctime)
+    photo = await resize_photo(f"{ctime}.png", ctime)
     await message.delete()
-    await client.send_document(message.chat.id, photo, reply_to_message_id=None if not message.reply_to_message else message.reply_to_message.message_id)
+    await client.send_document(
+        message.chat.id,
+        photo,
+        reply_to_message_id=None
+        if not message.reply_to_message
+        else message.reply_to_message.message_id,
+    )
     os.remove(photo)

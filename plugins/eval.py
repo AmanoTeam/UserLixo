@@ -1,9 +1,11 @@
+import html
+import traceback
+
 from pyrogram import Client, filters
 
 from config import cmds
 from utils import meval
-import traceback
-import html
+
 
 @Client.on_message(filters.command("eval", prefixes=".") & filters.me)
 async def evals(client, message):
@@ -20,4 +22,5 @@ async def evals(client, message):
         except Exception as e:
             await message.edit(e)
 
-cmds.update({'.eval':'Run commands on eval'})
+
+cmds.update({".eval": "Run commands on eval"})

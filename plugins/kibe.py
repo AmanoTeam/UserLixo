@@ -4,14 +4,14 @@ import time
 
 from PIL import Image
 from pyrogram import Client, filters
-from pyrogram.raw import functions, types
 from pyrogram.errors import StickersetInvalid
+from pyrogram.raw import functions, types
 
-from db import db, save
 from config import cmds
+from db import db, save
 
 
-@Client.on_message(filters.command("kibe", prefixes='.') & filters.me)
+@Client.on_message(filters.command("kibe", prefixes=".") & filters.me)
 async def kibe(client, message):
     emoji = message.text[6:]
     rsize = False
@@ -19,8 +19,8 @@ async def kibe(client, message):
     user = await client.get_me()
     if not user.username:
         user.username = user.first_name
-    if 'sticker' in db:
-        pack = db['sticker']
+    if "sticker" in db:
+        pack = db["sticker"]
     else:
         pack = 1
     packname = f"a{user.id}_by_{user.username}_{pack}"
@@ -28,25 +28,30 @@ async def kibe(client, message):
     rmessage = message.reply_to_message
     if rmessage and rmessage.media:
         if rmessage.photo:
-            photo = await client.download_media(rmessage.photo.file_id, file_name=f'./{ctime}.png')
+            photo = await client.download_media(
+                rmessage.photo.file_id, file_name=f"./{ctime}.png"
+            )
             rsize = True
         elif rmessage.document:
-            photo = await client.download_media(rmessage.document.file_id,
-                                          file_name=f'./{ctime}.png')
+            photo = await client.download_media(
+                rmessage.document.file_id, file_name=f"./{ctime}.png"
+            )
             rsize = True
         elif rmessage.sticker:
             if len(emoji) == 0:
                 emoji = rmessage.sticker.emoji
             if rmessage.sticker.is_animated:
                 anim = True
-                photo = await client.download_media(rmessage.sticker.file_id,
-                                              file_name=f'./{ctime}.tgs')
-                packname += '_animated'
-                packnick += ' animated'
+                photo = await client.download_media(
+                    rmessage.sticker.file_id, file_name=f"./{ctime}.tgs"
+                )
+                packname += "_animated"
+                packnick += " animated"
             else:
                 anim = False
-                photo = await client.download_media(rmessage.sticker.file_id,
-                                              file_name=f'./{ctime}.webp')
+                photo = await client.download_media(
+                    rmessage.sticker.file_id, file_name=f"./{ctime}.webp"
+                )
                 rsize = True
         if not emoji:
             emoji = "👍"
@@ -54,23 +59,31 @@ async def kibe(client, message):
             photo = await resize_photo(photo, ctime)
         try:
             stickerpack = await client.send(
-                functions.messages.GetStickerSet(stickerset=types.InputStickerSetShortName(short_name=packname), hash=0))
+                functions.messages.GetStickerSet(
+                    stickerset=types.InputStickerSetShortName(short_name=packname),
+                    hash=0,
+                )
+            )
         except StickersetInvalid:
             pack_exists = False
         else:
             pack_exists = True
-        st = 'Stickers'
+        st = "Stickers"
         if not pack_exists:
-            await create_pack(anim, message, client, st, packnick, photo, emoji, packname)
+            await create_pack(
+                anim, message, client, st, packnick, photo, emoji, packname
+            )
         elif stickerpack.set.count > 119:
             pack += 1
-            db['sticker'] = pack
+            db["sticker"] = pack
             save(db)
             packname = f"a{user.id}_by_{user.username}_{pack}"
-            await create_pack(anim, message, client, st, packnick, photo, emoji, packname)
+            await create_pack(
+                anim, message, client, st, packnick, photo, emoji, packname
+            )
         else:
             # Add a new sticker
-            await client.ask(st, '/addsticker')
+            await client.ask(st, "/addsticker")
             # Define pack name
             await client.ask(st, packname)
             # Send sticker image
@@ -79,13 +92,13 @@ async def kibe(client, message):
             # Send sticker emoji
             await client.ask(st, emoji)
             # We are done
-            await client.send_message(st, '/done')
-            await message.edit(f'[kibed](http://t.me/addstickers/{packname})')
+            await client.send_message(st, "/done")
+            await message.edit(f"[kibed](http://t.me/addstickers/{packname})")
             os.remove(photo)
 
 
 async def resize_photo(photo, ctime):
-    """ Resize the given photo to 512x512 """
+    """Resize the given photo to 512x512"""
     image = Image.open(photo)
     maxsize = (512, 512)
     if (image.width and image.height) < 512:
@@ -108,19 +121,19 @@ async def resize_photo(photo, ctime):
 
     os.remove(photo)
 
-    image.convert('RGB')
-    image.save(f'./{ctime}.webp', 'webp')
+    image.convert("RGB")
+    image.save(f"./{ctime}.webp", "webp")
 
-    return f'./{ctime}.webp'
+    return f"./{ctime}.webp"
 
 
 async def create_pack(anim, message, client, st, packnick, photo, emoji, packname):
-    await message.edit('criando novo pack')
+    await message.edit("criando novo pack")
     # Create pack
     if not anim:
-        await client.send_message(st, '/newpack')
+        await client.send_message(st, "/newpack")
     else:
-        await client.send_message(st, '/newanimated')
+        await client.send_message(st, "/newanimated")
     # Set a name for it
     await client.send_message(st, packnick)
     # Send the first sticker of the pack
@@ -129,14 +142,15 @@ async def create_pack(anim, message, client, st, packnick, photo, emoji, packnam
     await client.send_message(st, emoji)
     time.sleep(0.8)
     # Publish the sticker pack
-    await client.send_message(st, '/publish')
+    await client.send_message(st, "/publish")
     if anim:
-        await client.send_message(st, '<'+packnick+'>')
+        await client.send_message(st, "<" + packnick + ">")
     # Skip setting sticker pack icon
-    await client.send_message(st, '/skip')
+    await client.send_message(st, "/skip")
     # Set sticker pack url
     await client.send_message(st, packname)
-    await message.edit(f'[kibed](http://t.me/addstickers/{packname})')
+    await message.edit(f"[kibed](http://t.me/addstickers/{packname})")
     os.remove(photo)
 
-cmds.update({'.kibe':'Kibe a image or sticker'})
+
+cmds.update({".kibe": "Kibe a image or sticker"})
