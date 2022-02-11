@@ -8,7 +8,7 @@ from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
 
 from userlixo.config import bot, plugins, user
-from userlixo.utils import get_inactive_plugins
+from userlixo.utils.plugins import get_inactive_plugins
 
 
 @Client.on_message(filters.sudoers & filters.regex("^/plugins"))

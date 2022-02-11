@@ -15,7 +15,7 @@ from pyrogram.helpers import ikb
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
-from userlixo.utils import (
+from userlixo.utils.plugins import (
     get_inactive_plugins,
     read_plugin_info,
     reload_plugins_requirements,

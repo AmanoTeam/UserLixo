@@ -7,7 +7,7 @@ import re
 
 from pyrogram import Client, filters
 
-from userlixo.utils import shell_exec
+from userlixo.utils.misc import shell_exec
 
 
 @Client.on_message(filters.su_cmd(r"(?P<command>cmd|sh)\s+(?P<code>.+)", flags=re.S))

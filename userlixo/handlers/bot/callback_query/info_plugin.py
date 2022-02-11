@@ -11,7 +11,7 @@ from pyrogram.helpers import ikb
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
 from userlixo.handlers.bot.list_plugins import on_list_plugins_type
-from userlixo.utils import get_inactive_plugins, write_plugin_info
+from userlixo.utils.plugins import get_inactive_plugins, write_plugin_info
 
 
 @Client.on_callback_query(

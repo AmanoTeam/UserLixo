@@ -52,7 +52,7 @@ from userlixo.config import (
     user,
 )
 from userlixo.database import Config, connect_database
-from userlixo.utils import shell_exec, timezone_shortener, tryint
+from userlixo.utils.misc import shell_exec, timezone_shortener, tryint
 
 
 async def alert_startup():

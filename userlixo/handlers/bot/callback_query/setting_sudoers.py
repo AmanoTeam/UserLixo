@@ -6,7 +6,7 @@ from pyrogram.helpers import array_chunk, ikb
 
 from userlixo.config import bot, sudoers, user
 from userlixo.database import Config
-from userlixo.utils import tryint
+from userlixo.utils.misc import tryint
 
 
 async def sudoers_interface(cq):

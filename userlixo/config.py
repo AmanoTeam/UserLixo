@@ -15,17 +15,9 @@ from pyrogram.helpers import bki
 from rich import print
 
 from userlixo.database import Config
-from userlixo.utils import (
-    b64decode,
-    b64encode,
-    edit_text,
-    get_inactive_plugins,
-    query_edit,
-    read_plugin_info,
-    remove_keyboard,
-    reply_text,
-    tryint,
-)
+from userlixo.utils.misc import b64decode, b64encode, tryint
+from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
+from userlixo.utils.plugins import get_inactive_plugins, read_plugin_info
 
 sudoers = []
 

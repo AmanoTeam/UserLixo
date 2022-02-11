@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.helpers import ikb
 
 from userlixo.database import Config
-from userlixo.utils import shell_exec, timezone_shortener
+from userlixo.utils.misc import shell_exec, timezone_shortener
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^upgrade$"))
