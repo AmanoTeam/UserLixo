@@ -20,7 +20,7 @@ async def on_restart_u(c, u):
     is_query = hasattr(u, "data")
     is_inline = is_query and not u.message
     from_where = "_bot" if is_query else ""
-    act = u.edit if await filters.me(c, u) or is_query else u.reply
+    act = u.edit if is_query or await filters.me(c, u) else u.reply
 
     msg = await act(lang.restarting_now_alert)
     await Config.filter(key="restarting_alert").delete()
