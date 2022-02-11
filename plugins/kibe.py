@@ -80,7 +80,7 @@ async def kibe(client: Client, message: Message):
         stickers_chat = 429000
         if not pack_exists:
             await create_pack(
-                anim, message, client, stickers_chat, packnick, photo, emoji, packname
+                message, client, stickers_chat, packnick, photo, emoji, packname
             )
         elif stickerpack.set.count > 119:
             pack += 1
@@ -88,7 +88,7 @@ async def kibe(client: Client, message: Message):
             save(db)
             packname = f"a{user.id}_by_{user.username}_{pack}"
             await create_pack(
-                anim, message, client, stickers_chat, packnick, photo, emoji, packname
+                message, client, stickers_chat, packnick, photo, emoji, packname
             )
         else:
             # Add a new sticker
@@ -148,7 +148,13 @@ async def resize_photo(photo, ctime):
 
 
 async def create_pack(
-    anim, message, client, stickers_chat, packnick, photo, emoji, packname
+    message: Message,
+    client: Client,
+    stickers_chat: int,
+    packnick: str,
+    photo: str,
+    emoji: str,
+    packname: str,
 ):
     await message.edit("criando novo pack")
     # Create pack
@@ -182,11 +188,12 @@ async def create_pack(
         client.wait_for_message(stickers_chat, timeout=30),
         client.send_message(stickers_chat, "/publish"),
     )
-    # Send the sticker pack name
-    await asyncio.gather(
-        client.wait_for_message(stickers_chat, timeout=30),
-        client.send_message(stickers_chat, "<" + packnick + ">"),
-    )
+    if res[0].text == "Choose the sticker set you want to publish.":
+        # Send the sticker pack name
+        await asyncio.gather(
+            client.wait_for_message(stickers_chat, timeout=30),
+            client.send_message(stickers_chat, "<" + packnick + ">"),
+        )
     # Skip setting sticker pack icon
     await asyncio.gather(
         client.wait_for_message(stickers_chat, timeout=30),
