@@ -49,6 +49,13 @@ async def kibe(client: Client, message: Message):
                 )
                 packname += "_animated"
                 packnick += " animated"
+            elif rmessage.sticker.is_video:
+                anim = True
+                photo = await client.download_media(
+                    rmessage.sticker.file_id, file_name=f"./{ctime}.webm"
+                )
+                packname += "_video"
+                packnick += " video"
             else:
                 anim = False
                 photo = await client.download_media(
@@ -70,7 +77,7 @@ async def kibe(client: Client, message: Message):
             pack_exists = False
         else:
             pack_exists = True
-        stickers_chat = "Stickers"
+        stickers_chat = 429000
         if not pack_exists:
             await create_pack(
                 anim, message, client, stickers_chat, packnick, photo, emoji, packname
@@ -140,28 +147,56 @@ async def resize_photo(photo, ctime):
     return f"./{ctime}.webp"
 
 
-async def create_pack(anim, message, client, st, packnick, photo, emoji, packname):
+async def create_pack(
+    anim, message, client, stickers_chat, packnick, photo, emoji, packname
+):
     await message.edit("criando novo pack")
     # Create pack
-    if not anim:
-        await client.send_message(st, "/newpack")
+    rmessage = message.reply_to_message
+    if rmessage.sticker.is_video:
+        await client.send_message(stickers_chat, "/newvideo")
+    elif rmessage.sticker.is_animated:
+        await client.send_message(stickers_chat, "/newanimated")
     else:
-        await client.send_message(st, "/newanimated")
+        await client.send_message(stickers_chat, "/newpack")
+
     # Set a name for it
-    await client.send_message(st, packnick)
+    await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_message(stickers_chat, packnick),
+    )
     # Send the first sticker of the pack
-    await client.send_document(st, photo)
+    await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_document(stickers_chat, photo),
+    )
+    # Sleep for a bit
+    await asyncio.sleep(1.5)
     # Send the emoji for the first sticker
-    await client.send_message(st, emoji)
-    time.sleep(0.8)
+    await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_message(stickers_chat, emoji),
+    )
     # Publish the sticker pack
-    await client.send_message(st, "/publish")
-    if anim:
-        await client.send_message(st, "<" + packnick + ">")
+    res = await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_message(stickers_chat, "/publish"),
+    )
+    # Send the sticker pack name
+    await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_message(stickers_chat, "<" + packnick + ">"),
+    )
     # Skip setting sticker pack icon
-    await client.send_message(st, "/skip")
+    await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_message(stickers_chat, "/skip"),
+    )
     # Set sticker pack url
-    await client.send_message(st, packname)
+    await asyncio.gather(
+        client.wait_for_message(stickers_chat, timeout=30),
+        client.send_message(stickers_chat, packname),
+    )
     await message.edit(f"[kibed](http://t.me/addstickers/{packname})")
     os.remove(photo)
 
