@@ -86,21 +86,23 @@ async def kibe(client: Client, message: Message):
         else:
             # Add a new sticker
             await asyncio.gather(
-                client.send_message(stickers_chat, "/addsticker"),
                 client.wait_for_message(stickers_chat, timeout=30),
+                client.send_message(stickers_chat, "/addsticker"),
             )
             # Define pack name
             await asyncio.gather(
-                client.send_message(stickers_chat, packname),
                 client.wait_for_message(stickers_chat, timeout=30),
+                client.send_message(stickers_chat, packname),
             )
             # Send sticker image
-            await client.send_document(stickers_chat, photo)
-            time.sleep(0.8)
+            await asyncio.gather(
+                client.wait_for_message(stickers_chat, timeout=30),
+                client.send_document(stickers_chat, photo),
+            )
             # Send sticker emoji
             await asyncio.gather(
-                client.send_message(stickers_chat, emoji),
                 client.wait_for_message(stickers_chat, timeout=30),
+                client.send_message(stickers_chat, emoji),
             )
             # We are done
             await client.send_message(stickers_chat, "/done")
