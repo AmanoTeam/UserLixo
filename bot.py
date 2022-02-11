@@ -16,7 +16,6 @@ async def run_client(client):
             str(e).split(". ")[0]
             + f". Run '{os.path.basename(sys.executable)} setup.py' first."
         )
-    client.set_parse_mode("combined")
 
     if "restart" in db:
         text = "Restarted"
@@ -46,6 +45,7 @@ async def run_client(client):
         print(f"Could not save the personal account data on startup. Cause: {e}")
 
     await idle()
+    await client.stop()
 
 
 loop = asyncio.get_event_loop()

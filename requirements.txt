@@ -1,6 +1,6 @@
 pillow
 aiohttp
-pyrogram
+git+https://github.com/AmanoTeam/pyrogram.git#egg=Pyrogram
 tgcrypto
 youtube-dl
 chromeprinter
