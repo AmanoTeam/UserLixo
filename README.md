@@ -43,4 +43,4 @@ If you find any bugs/issues you can report them by:
 
 ## License
 
-[MIT](https://github.com/HitaloSama/UserLixo/blob/userlixo-czp/LICENSE) © 2021 [AmanoTeam™](https://amanoteam.com)
+[MIT](https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/LICENSE) © 2021 [AmanoTeam™](https://amanoteam.com)
