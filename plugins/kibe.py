@@ -1,3 +1,4 @@
+import asyncio
 import math
 import os
 import time
@@ -69,10 +70,10 @@ async def kibe(client: Client, message: Message):
             pack_exists = False
         else:
             pack_exists = True
-        st = "Stickers"
+        stickers_chat = "Stickers"
         if not pack_exists:
             await create_pack(
-                anim, message, client, st, packnick, photo, emoji, packname
+                anim, message, client, stickers_chat, packnick, photo, emoji, packname
             )
         elif stickerpack.set.count > 119:
             pack += 1
@@ -80,20 +81,29 @@ async def kibe(client: Client, message: Message):
             save(db)
             packname = f"a{user.id}_by_{user.username}_{pack}"
             await create_pack(
-                anim, message, client, st, packnick, photo, emoji, packname
+                anim, message, client, stickers_chat, packnick, photo, emoji, packname
             )
         else:
             # Add a new sticker
-            await client.wait_for_message(st, "/addsticker")
+            await asyncio.gather(
+                client.send_message(stickers_chat, "/addsticker"),
+                client.wait_for_message(stickers_chat, timeout=30),
+            )
             # Define pack name
-            await client.wait_for_message(st, packname)
+            await asyncio.gather(
+                client.send_message(stickers_chat, packname),
+                client.wait_for_message(stickers_chat, timeout=30),
+            )
             # Send sticker image
-            await client.send_document(st, photo)
+            await client.send_document(stickers_chat, photo)
             time.sleep(0.8)
             # Send sticker emoji
-            await client.wait_for_message(st, emoji)
+            await asyncio.gather(
+                client.send_message(stickers_chat, emoji),
+                client.wait_for_message(stickers_chat, timeout=30),
+            )
             # We are done
-            await client.send_message(st, "/done")
+            await client.send_message(stickers_chat, "/done")
             await message.edit(f"[kibed](http://t.me/addstickers/{packname})")
             os.remove(photo)
 
