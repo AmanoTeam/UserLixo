@@ -2,8 +2,8 @@
 # Copyright (c) 2018-2022 Amano Team
 
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
-from pyromod.nav import Pagination
+from pyrogram.helpers import ikb
+from pyrogram.nav import Pagination
 
 from userlixo.config import cmds
 

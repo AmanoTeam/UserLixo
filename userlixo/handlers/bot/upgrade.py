@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
+from pyrogram.helpers import ikb
 
 from userlixo.database import Config
 from userlixo.utils import shell_exec, timezone_shortener

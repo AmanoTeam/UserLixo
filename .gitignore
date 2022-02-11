@@ -57,6 +57,8 @@ test.py
 test.txt
 *.session
 *.session-journal
+*.session-shm
+*.session-wal
 .env
 *.ini
 *.sqlite*

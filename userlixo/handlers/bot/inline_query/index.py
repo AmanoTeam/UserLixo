@@ -2,8 +2,8 @@
 # Copyright (c) 2018-2022 Amano Team
 
 from pyrogram import Client, filters
+from pyrogram.helpers import ikb
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent
-from pyromod.helpers import ikb
 
 from userlixo.database import Message
 

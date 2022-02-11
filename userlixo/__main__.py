@@ -34,10 +34,9 @@ from datetime import datetime
 
 import aiocron
 import pyrogram
-import pyromod
 from pyrogram import idle
 from pyrogram.errors import BadRequest
-from pyromod.helpers import ikb
+from pyrogram.helpers import ikb
 from rich import box, print
 from rich.panel import Panel
 from tortoise import run_async
@@ -60,7 +59,6 @@ async def alert_startup():
     local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
     python_version = platform.python_version()
     pyrogram_version = pyrogram.__version__
-    pyromod_version = pyromod.__version__
     system_uname = (await shell_exec("uname -mons"))[0]
 
     pid = os.getpid()
@@ -80,7 +78,6 @@ async def alert_startup():
         pid=pid,
         python_version=python_version,
         pyrogram_version=pyrogram_version,
-        pyromod_version=pyromod_version,
         server_uname=system_uname,
         uptime=uptime,
         plugins_total=plugins_total,
@@ -235,7 +232,14 @@ async def main():
         except Exception as e:
             print("Error while sending alert about unused_requirements:\n  > ", e)
     await idle()
+    await user.stop()
+    await bot.stop()
 
 
 if __name__ == "__main__":
-    run_async(main())
+    try:
+        run_async(main())
+    except KeyboardInterrupt:
+        print("[red]Forced stop... Bye!")
+    finally:
+        print("[red]UserLixo stopped... Bye!")

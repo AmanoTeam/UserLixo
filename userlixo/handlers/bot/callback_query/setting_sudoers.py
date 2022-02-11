@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 Amano Team
 
 from pyrogram import Client, filters
-from pyromod.helpers import array_chunk, ikb
+from pyrogram.helpers import array_chunk, ikb
 
 from userlixo.config import bot, sudoers, user
 from userlixo.database import Config

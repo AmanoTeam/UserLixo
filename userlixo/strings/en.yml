@@ -211,8 +211,7 @@ add_plugin: |-
 info_text: |-
     ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
      ├ Python <b>v{python_version}</b>
-     ├ Pyrogram <b>v{pyrogram_version}</b>
-     └ Pyromod <b>v{pyromod_version}</b>
+     └ Pyrogram <b>v{pyrogram_version}</b>
 
     🖇 {plugins_total} plugins{append_plugins}
 
@@ -304,8 +303,7 @@ plugin_rm_remote_local_are_diff: |-
 started_alert: |-
     🛸 UserLixo <b>v{version}</b> started! (PID: <code>{pid}</code>)
      ├ Python <b>v{python_version}</b>
-     ├ Pyrogram <b>v{pyrogram_version}</b>
-     └ Pyromod <b>v{pyromod_version}</b>
+     └ Pyrogram <b>v{pyrogram_version}</b>
 
     🖇 {plugins_total} plugins{append_plugins}
 

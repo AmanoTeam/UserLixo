@@ -9,7 +9,7 @@ import re
 from configparser import ConfigParser
 
 from pyrogram import types
-from pyromod.helpers import bki, ikb
+from pyrogram.helpers import bki, ikb
 
 from userlixo.database import Config, Message
 

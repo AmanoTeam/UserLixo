@@ -11,8 +11,7 @@ import pyrogram
 import yaml
 from langs import Langs
 from pyrogram import Client, filters
-from pyromod import listen
-from pyromod.helpers import bki
+from pyrogram.helpers import bki
 from rich import print
 
 from userlixo.database import Config
@@ -172,9 +171,9 @@ user = Client(
     plugins={"root": "userlixo/handlers/user"},
     workdir=".",
     config_file="./config.ini",
+    parse_mode="html",
     **pyrogram_config,
 )
-user.set_parse_mode("html")
 
 
 def open_yml(filename):
@@ -196,9 +195,9 @@ bot = Client(
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
     config_file="./config.ini",
+    parse_mode="html",
     **pyrogram_config,
 )
-bot.set_parse_mode("html")
 
 cmds = [
     "help",

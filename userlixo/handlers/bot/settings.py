@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 Amano Team
 
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
+from pyrogram.helpers import ikb
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^settings"))

@@ -4,8 +4,8 @@
 # For bot command /plugins, userbot .plugins and bot button 'plugins'
 
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
-from pyromod.nav import Pagination
+from pyrogram.helpers import ikb
+from pyrogram.nav import Pagination
 
 from userlixo.config import bot, plugins, user
 from userlixo.utils import get_inactive_plugins

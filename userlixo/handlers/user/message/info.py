@@ -5,7 +5,6 @@ import os
 import platform
 
 import pyrogram
-import pyromod
 from pyrogram import Client, filters
 
 from userlixo.config import plugins
@@ -35,7 +34,6 @@ async def on_info(c, m):
     )
     python_version = platform.python_version()
     pyrogram_version = pyrogram.__version__
-    pyromod_version = pyromod.__version__
 
     ul_status = (
         lang.info_upgradable_to(version=remote_version)
@@ -55,7 +53,6 @@ async def on_info(c, m):
         local_version=local_version,
         ul_status=ul_status,
         python_version=python_version,
-        pyromod_version=pyromod_version,
         pyrogram_version=pyrogram_version,
         plugins_total=plugins_total,
         append_plugins=append_plugins,

@@ -4,7 +4,7 @@
 import re
 
 from pyrogram import Client, filters
-from pyromod.helpers import force_reply, ikb
+from pyrogram.helpers import force_reply, ikb
 
 from userlixo.config import sudoers
 from userlixo.database import Config
