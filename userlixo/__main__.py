@@ -17,7 +17,7 @@ if "--no-update" not in sys.argv:
     os.system("clear")
     # Update plugins requirements
     from userlixo.config import plugins
-    from userlixo.utils import reload_plugins_requirements
+    from userlixo.utils.plugins import reload_plugins_requirements
 
     if os.path.exists("plugins-requirements.txt"):
         requirements, unused_requirements = reload_plugins_requirements(plugins)
