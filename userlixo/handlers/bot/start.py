@@ -1,16 +1,19 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
 
+from typing import Union
+
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
+from pyrogram.types import CallbackQuery, Message
 
 
 @Client.on_message(filters.sudoers & filters.regex("^/start$"))
-async def on_start_m(c, m):
+async def on_start_m(c: Client, m: Message):
     await on_start_u(c, m)
 
 
-async def on_start_u(c, u):
+async def on_start_u(c: Client, u: Union[Message, CallbackQuery]):
     is_query = hasattr(u, "data")
     lang = u._lang
     keyb = ikb(
@@ -28,5 +31,5 @@ async def on_start_u(c, u):
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^start"))
-async def on_start_cb(c, cq):
+async def on_start_cb(c: Client, cq: CallbackQuery):
     await on_start_u(c, cq)

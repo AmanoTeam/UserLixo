@@ -7,6 +7,7 @@ import os
 
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
+from pyrogram.types import CallbackQuery
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
@@ -20,7 +21,7 @@ from userlixo.utils.plugins import get_inactive_plugins, write_plugin_info
         "^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)"
     )
 )
-async def on_info_plugin(c, cq):
+async def on_info_plugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
     basename = cq.matches[0]["basename"]
     plugin_type = cq.matches[0]["plugin_type"]
@@ -59,7 +60,7 @@ async def on_info_plugin(c, cq):
         "^(?P<deactivate>de)?activate_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)"
     )
 )
-async def on_switch_plugin(c, cq):
+async def on_switch_plugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
     basename = cq.matches[0]["basename"]
     plugin_type = cq.matches[0]["plugin_type"]
@@ -109,7 +110,7 @@ async def on_switch_plugin(c, cq):
         "^remove_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)"
     )
 )
-async def on_remove_plugin(c, cq):
+async def on_remove_plugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
     basename = cq.matches[0]["basename"]
     plugin_type = cq.matches[0]["plugin_type"]

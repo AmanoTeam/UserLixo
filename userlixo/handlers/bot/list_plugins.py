@@ -3,26 +3,29 @@
 
 # For bot command /plugins, userbot .plugins and bot button 'plugins'
 
+from typing import Union
+
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
+from pyrogram.types import CallbackQuery, Message
 
 from userlixo.config import bot, plugins, user
 from userlixo.utils.plugins import get_inactive_plugins
 
 
 @Client.on_message(filters.sudoers & filters.regex("^/plugins"))
-async def on_list_plugins_m(c, m):
+async def on_list_plugins_m(c: Client, m: Message):
     m.from_bot_handler = True
     await on_list_plugins_u(c, m)
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^list_plugins"))
-async def on_list_plugins_cq(c, cq):
+async def on_list_plugins_cq(c: Client, cq: CallbackQuery):
     await on_list_plugins_u(c, cq)
 
 
-async def on_list_plugins_u(c, u):
+async def on_list_plugins_u(c: Client, u: Union[Message, CallbackQuery]):
     # Determining type of update
     is_query = hasattr(u, "data")
     lang = u._lang
@@ -46,7 +49,7 @@ async def on_list_plugins_u(c, u):
 @Client.on_callback_query(
     filters.sudoers & filters.regex("^(?P<type>user|bot)_plugins (?P<page>\d+)")
 )
-async def on_list_plugins_type(c, u):
+async def on_list_plugins_type(c: Client, u: Union[Message, CallbackQuery]):
     # Determining type of update
     is_query = hasattr(u, "data")
 

@@ -8,14 +8,15 @@ import traceback
 
 from meval import meval
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 
 @Client.on_message(filters.su_cmd(r"(?P<cmd>ev(al)?)\s+(?P<code>.+)", flags=re.S))
-async def on_eval_user(c, m):
+async def on_eval_user(c: Client, m: Message):
     await evals(c, m)
 
 
-async def evals(c, m):
+async def evals(c: Client, m: Message):
     act = m.edit if await filters.me(c, m) else m.reply
     cmd = m.matches[0]["cmd"]
     eval_code = m.matches[0]["code"]

@@ -4,10 +4,11 @@
 from datetime import datetime
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 
 @Client.on_message(filters.su_cmd("ping"))
-async def onping(c, m):
+async def onping(c: Client, m: Message):
     before = datetime.now()
     await m.reply_chat_action("typing")
     after = datetime.now()

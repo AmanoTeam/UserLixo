@@ -3,13 +3,17 @@
 
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
-from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent
+from pyrogram.types import (
+    InlineQuery,
+    InlineQueryResultArticle,
+    InputTextMessageContent,
+)
 
 from userlixo.database import Message
 
 
 @Client.on_inline_query(filters.sudoers & filters.regex("^(?P<index>\d+)"))
-async def on_index(c, iq):
+async def on_index(c: Client, iq: InlineQuery):
     index = int(iq.matches[0]["index"])
     message = await Message.get_or_none(key=index)
     if not message:

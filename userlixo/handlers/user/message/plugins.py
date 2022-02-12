@@ -7,6 +7,7 @@ import json
 import os
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
@@ -16,18 +17,18 @@ from userlixo.utils.plugins import get_inactive_plugins, read_plugin_info
 
 
 @Client.on_message(filters.sudoers & filters.document & filters.private & ~filters.me)
-async def on_plugin_file(c, m):
+async def on_plugin_file(c: Client, m: Message):
     if m.document.file_name.endswith(".py"):
         await on_add_plugin_u(c, m)
 
 
 @Client.on_message(filters.su_cmd("plugins$"))
-async def on_list_plugins_txt(c, m):
+async def on_list_plugins_txt(c: Client, m: Message):
     await on_list_plugins_u(c, m)
 
 
 @Client.on_message(filters.reply & filters.su_cmd("(plugin )?(?P<action>add|rm|\+|-)"))
-async def on_plugin_action(c, m):
+async def on_plugin_action(c: Client, m: Message):
     lang = m._lang
     action = m.matches[0]["action"]
     if action in ["+", "add"]:

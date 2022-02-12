@@ -4,20 +4,22 @@
 import os
 import sys
 from datetime import datetime
+from typing import Union
 
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
+from pyrogram.types import CallbackQuery, Message
 
 from userlixo.database import Config
 from userlixo.utils.misc import shell_exec, timezone_shortener
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^upgrade$"))
-async def on_upgrade_cq(c, cq):
+async def on_upgrade_cq(c: Client, cq: CallbackQuery):
     await on_upgrade_u(c, cq)
 
 
-async def on_upgrade_u(c, u):
+async def on_upgrade_u(c: Client, u: Union[Message, CallbackQuery]):
     lang = u._lang
     is_query = hasattr(u, "data")
     is_inline = is_query and not u.message

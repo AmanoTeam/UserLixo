@@ -6,6 +6,7 @@ import importlib
 import json
 import os
 import re
+from typing import Dict, List
 
 import pyrogram
 import yaml
@@ -23,7 +24,7 @@ sudoers = []
 
 
 async def load_env():
-    environment_vars = {
+    environment_vars: Dict = {
         "DATABASE_URL": [
             "sqlite://userlixo/database/database.sqlite",
             "Address of the database (sqlite or postgres).",
@@ -107,7 +108,7 @@ async def unload_inactive_plugins():
             if info["notation"] in inactive:
                 try:
                     module = importlib.import_module(info["notation"])
-                except Exception as e:
+                except BaseException as e:
                     print(f"The plugin {plugin_type}/{name} thrown an error: {e}")
                     continue
                 functions = [*filter(callable, module.__dict__.values())]
@@ -191,7 +192,7 @@ bot = Client(
     **pyrogram_config,
 )
 
-cmds = [
+cmds: List[str] = [
     "help",
     "ping",
     "upgrade",

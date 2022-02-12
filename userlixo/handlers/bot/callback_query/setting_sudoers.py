@@ -3,13 +3,14 @@
 
 from pyrogram import Client, filters
 from pyrogram.helpers import array_chunk, ikb
+from pyrogram.types import CallbackQuery
 
 from userlixo.config import bot, sudoers, user
 from userlixo.database import Config
 from userlixo.utils.misc import tryint
 
 
-async def sudoers_interface(cq):
+async def sudoers_interface(cq: CallbackQuery):
     lang = cq._lang
     c = cq._client
     text = lang.setting_sudoers_text + "\n"
@@ -55,7 +56,7 @@ async def sudoers_interface(cq):
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_sudoers"))
-async def on_setting_sudoers(c, cq):
+async def on_setting_sudoers(c: Client, cq: CallbackQuery):
     text, keyboard = await sudoers_interface(cq)
     await cq.edit(text, keyboard)
 
@@ -63,7 +64,7 @@ async def on_setting_sudoers(c, cq):
 @Client.on_callback_query(
     filters.sudoers & filters.regex("^remove_sudoer (?P<who>\w+)")
 )
-async def on_remove_sudoer(c, cq):
+async def on_remove_sudoer(c: Client, cq: CallbackQuery):
     who = tryint(cq.matches[0]["who"])
 
     # Sanitize list

@@ -7,7 +7,9 @@ from pyrogram.helpers import bki, ikb
 from userlixo.database import Message
 
 
-async def query_edit(self, text, reply_markup=None, answer_kwargs={}, *args, **kwargs):
+async def query_edit(
+    self, text: str, reply_markup=None, answer_kwargs={}, *args, **kwargs
+):
     try:
         await self.answer(**answer_kwargs)
     except BaseException:

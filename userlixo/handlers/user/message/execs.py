@@ -9,14 +9,15 @@ import traceback
 from contextlib import redirect_stdout
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 
 @Client.on_message(filters.su_cmd(r"(?P<cmd>ex(ec)?)\s+(?P<code>.+)", flags=re.S))
-async def on_exec_user(c, m):
+async def on_exec_user(c: Client, m: Message):
     await execs(c, m)
 
 
-async def execs(c, m):
+async def execs(c: Client, m: Message):
     lang = m._lang
     act = m.edit if await filters.me(c, m) else m.reply
     strio = io.StringIO()

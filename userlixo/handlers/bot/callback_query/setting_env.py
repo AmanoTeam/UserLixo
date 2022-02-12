@@ -7,13 +7,14 @@ from datetime import datetime
 
 from pyrogram import Client, errors, filters
 from pyrogram.helpers import array_chunk, ikb
+from pyrogram.types import CallbackQuery
 
 from userlixo.config import bot
 from userlixo.database import Config
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_env"))
-async def on_setting_env(c, cq):
+async def on_setting_env(c: Client, cq: CallbackQuery):
     if cq.message:
         cq.message.chat.cancel_listener()
     lang = cq._lang
@@ -30,7 +31,7 @@ async def on_setting_env(c, cq):
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^edit_env (?P<key>.+)"))
-async def on_edit(c, cq):
+async def on_edit(c: Client, cq: CallbackQuery):
     lang = cq._lang
     key = cq.matches[0]["key"]
     value = (await Config.get_or_none(key=key)).value
@@ -59,14 +60,14 @@ async def on_edit(c, cq):
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^view_env (?P<key>.+)"))
-async def on_view(c, cq):
+async def on_view(c: Client, cq: CallbackQuery):
     key = cq.matches[0]["key"]
     value = (await Config.get_or_none(key=key)).value
     await cq.answer(value, show_alert=True)
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^restart_now"))
-async def onrestart(c, cq):
+async def onrestart(c: Client, cq: CallbackQuery):
     lang = cq._lang
     await cq.answer(lang.restarting_now_alert, show_alert=True)
     await cq.message.remove_keyboard()

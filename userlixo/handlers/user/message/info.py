@@ -6,13 +6,14 @@ import platform
 
 import pyrogram
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from userlixo.config import plugins
 from userlixo.utils.misc import shell_exec
 
 
 @Client.on_message(filters.su_cmd("info"))
-async def on_info(c, m):
+async def on_info(c: Client, m: Message):
     lang = m._lang
     act = m.edit if await filters.me(c, m) else m.reply
 

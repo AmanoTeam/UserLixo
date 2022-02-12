@@ -9,9 +9,11 @@ import math
 import os
 import re
 import sys
+from typing import Union
 
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
+from pyrogram.types import CallbackQuery, Message
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
@@ -24,22 +26,22 @@ from userlixo.utils.plugins import (
 
 
 @Client.on_message(filters.sudoers & filters.document & filters.private & ~filters.me)
-async def on_plugin_file(c, m):
+async def on_plugin_file(c: Client, m: Message):
     if m.document.file_name.endswith(".py"):
         await on_add_plugin_u(c, m)
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^add_plugin"))
-async def on_add_plugin_cq(c, cq):
+async def on_add_plugin_cq(c: Client, cq: CallbackQuery):
     await on_add_plugin_u(c, cq)
 
 
 @Client.on_message(filters.sudoers & filters.regex("^/(start )?plugin[_ ]add"))
-async def on_add_plugin_txt(c, m):
+async def on_add_plugin_txt(c: Client, m: Message):
     await on_add_plugin_u(c, m)
 
 
-async def on_add_plugin_u(c, u):
+async def on_add_plugin_u(c: Client, u: Union[Message, CallbackQuery]):
     is_query = hasattr(u, "data")
     if is_query:
         await u.message.delete()
@@ -87,7 +89,7 @@ async def on_add_plugin_u(c, u):
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^cancel_plugin"))
-async def oncancelplugin(c, cq):
+async def oncancelplugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
     await cq.edit(lang.command_cancelled)
 
@@ -96,7 +98,7 @@ async def oncancelplugin(c, cq):
     filters.sudoers
     & filters.regex("^confirm_add_plugin (?P<plugin_type>user|bot) (?P<filename>.+)")
 )
-async def on_confirm_plugin(c, cq):
+async def on_confirm_plugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
     module = None
 

@@ -5,6 +5,7 @@ import os
 
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
+from pyrogram.types import CallbackQuery
 
 from userlixo.config import cmds
 
@@ -12,7 +13,7 @@ from userlixo.config import cmds
 @Client.on_callback_query(
     filters.sudoers & filters.regex("^about_(?P<subject>userlixo|plugins|commands)")
 )
-async def on_about_userlixo(c, cq):
+async def on_about_userlixo(c: Client, cq: CallbackQuery):
     lang = cq._lang
     subject = cq.matches[0]["subject"]
     keyboard = ikb([[(lang.back, "help")]])

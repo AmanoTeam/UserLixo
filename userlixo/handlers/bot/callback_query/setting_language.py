@@ -5,12 +5,13 @@ import os
 
 from pyrogram import Client, filters
 from pyrogram.helpers import array_chunk, ikb
+from pyrogram.types import CallbackQuery
 
 from userlixo.database import Config
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_language"))
-async def on_setting_language(c, cq):
+async def on_setting_language(c: Client, cq: CallbackQuery):
     lang = cq._lang
     buttons = []
     for code, obj in lang.strings.items():
@@ -29,7 +30,7 @@ async def on_setting_language(c, cq):
 @Client.on_callback_query(
     filters.sudoers & filters.regex(r"^set_language (?P<code>\w+)")
 )
-async def on_set_language(c, cq):
+async def on_set_language(c: Client, cq: CallbackQuery):
     lang = cq._lang
     match = cq.matches[0]
     lang = lang.get_language(match["code"])

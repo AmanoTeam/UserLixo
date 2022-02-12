@@ -4,10 +4,11 @@
 from datetime import datetime
 
 from pyrogram import Client, filters
+from pyrogram.types import CallbackQuery
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("ping"))
-async def onping(c, cq):
+async def onping(c: Client, cq: CallbackQuery):
     before = datetime.now()
     await c.get_me()
     after = datetime.now()

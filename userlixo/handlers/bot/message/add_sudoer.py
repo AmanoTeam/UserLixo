@@ -5,13 +5,14 @@ import re
 
 from pyrogram import Client, filters
 from pyrogram.helpers import force_reply, ikb
+from pyrogram.types import Message
 
 from userlixo.config import sudoers
 from userlixo.database import Config
 
 
 @Client.on_message(filters.sudoers & filters.regex("^/(start )?add_sudoer"))
-async def on_add_sudoer(c, m):
+async def on_add_sudoer(c: Client, m: Message):
     lang = m._lang
     text = lang.add_sudoer_ask
     response = await m.chat.ask(text, filters.text, 600, reply_markup=force_reply())

@@ -4,18 +4,20 @@
 import os
 import sys
 from datetime import datetime
+from typing import Union
 
 from pyrogram import Client, filters
+from pyrogram.types import CallbackQuery, Message
 
 from userlixo.database import Config
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^restart"))
-async def on_restart_txt(c, m):
+async def on_restart_txt(c: Client, m: Message):
     await on_restart_u(c, m)
 
 
-async def on_restart_u(c, u):
+async def on_restart_u(c: Client, u: Union[Message, CallbackQuery]):
     lang = u._lang
     is_query = hasattr(u, "data")
     is_inline = is_query and not u.message

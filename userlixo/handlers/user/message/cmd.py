@@ -6,16 +6,17 @@ import os
 import re
 
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 from userlixo.utils.misc import shell_exec
 
 
 @Client.on_message(filters.su_cmd(r"(?P<command>cmd|sh)\s+(?P<code>.+)", flags=re.S))
-async def on_cmd_user(c, m):
+async def on_cmd_user(c: Client, m: Message):
     await cmd(c, m)
 
 
-async def cmd(c, m):
+async def cmd(c: Client, m: Message):
     lang = m._lang
     act = m.edit if await filters.me(c, m) else m.reply
 

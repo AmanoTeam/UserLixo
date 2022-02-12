@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
 
+from typing import Union
+
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
+from pyrogram.types import CallbackQuery, Message
 
 from userlixo.config import cmds
 
@@ -11,11 +14,11 @@ from userlixo.config import cmds
 @Client.on_callback_query(
     filters.sudoers & filters.regex("^list_commands (?P<page>\d+)")
 )
-async def on_list_commands_cq(c, cq):
+async def on_list_commands_cq(c: Client, cq: CallbackQuery):
     await on_list_commands_u(c, cq)
 
 
-async def on_list_commands_u(c, u):
+async def on_list_commands_u(c: Client, u: Union[Message, CallbackQuery]):
     lang = u._lang
     is_query = hasattr(u, "data")
     page = int(u.matches[0]["page"])
@@ -41,7 +44,7 @@ async def on_list_commands_u(c, u):
 @Client.on_callback_query(
     filters.sudoers & filters.regex("^info_command (?P<cmd>.+) (?P<pg>\d+)")
 )
-async def on_info_command(c, cq):
+async def on_info_command(c: Client, cq: CallbackQuery):
     lang = cq._lang
     cmd = cq.matches[0]["cmd"]
     pg = int(cq.matches[0]["pg"])
