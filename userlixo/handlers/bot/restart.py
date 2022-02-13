@@ -35,4 +35,7 @@ async def on_restart_u(c: Client, u: Union[Message, CallbackQuery]):
             "value": f"{message_id}|{chat_id}|{datetime.now().timestamp()}|restart{from_where}",
         }
     )
-    os.execv(sys.executable, [sys.executable, "-m", "userlixo", "--no-update"])
+    args = [sys.executable, "-m", "userlixo"]
+    if "--no-update" in sys.argv:
+        args.append("--no-update")
+    os.execv(sys.executable, args)
