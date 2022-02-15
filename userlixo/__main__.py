@@ -182,7 +182,7 @@ async def main():
                 f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]"
             )
         try:
-            await Config.get(id=restarting_alert.id).delete()
+            await (await Config.get(id=restarting_alert.id)).delete()
         except OperationalError:
             pass
 

@@ -41,4 +41,4 @@ async def on_index(c: Client, iq: InlineQuery):
     ]
 
     await iq.answer(results, cache_time=0)
-    await Message.get(key=message.key).delete()
+    await (await Message.get(key=message.key)).delete()
