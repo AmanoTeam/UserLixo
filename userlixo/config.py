@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
 
+import configparser
 import glob
 import importlib
 import json
@@ -12,6 +13,7 @@ import pyrogram
 import yaml
 from langs import Langs
 from pyrogram import Client, filters
+from pyrogram.enums import ParseMode
 from pyrogram.helpers import bki
 from rich import print
 
@@ -125,6 +127,13 @@ pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
 
 
+# parse config.ini values
+config = configparser.ConfigParser()
+api_id = config.get("pyrogram", "api_id", fallback=None)
+api_hash = config.get("pyrogram", "api_hash", fallback=None)
+bot_token = config.get("pyrogram", "bot_token", fallback=None)
+
+
 # All monkeypatch stuff must be done before the Client instance is created
 def filter_sudoers(flt, c, u):
     if not u.from_user:
@@ -163,8 +172,9 @@ user = Client(
     os.getenv("PYROGRAM_SESSION") or "user",
     plugins={"root": "userlixo/handlers/user"},
     workdir=".",
-    config_file="./config.ini",
-    parse_mode="html",
+    api_id=api_id,
+    api_hash=api_hash,
+    parse_mode=ParseMode.HTML,
     **pyrogram_config,
 )
 
@@ -177,18 +187,19 @@ def open_yml(filename):
 
 strings = {}
 for string_file in glob.glob("userlixo/strings/*.yml"):
-    language_code = re.match("userlixo/strings/(.+)\.yml$", string_file)[1]
+    language_code = re.match(r"userlixo/strings/(.+)\.yml$", string_file)[1]
     strings[language_code] = open_yml(string_file)
 
 langs = Langs(**strings, escape_html=True)
 
 bot = Client(
     "bot",
-    plugins={"root": "userlixo/handlers/bot"},
+    api_id=api_id,
+    api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
-    config_file="./config.ini",
-    parse_mode="html",
+    plugins={"root": "userlixo/handlers/bot"},
+    parse_mode=ParseMode.HTML,
     **pyrogram_config,
 )
 

@@ -15,6 +15,6 @@ async def deflang(c: Client, m: Message):
     m._lang = langs.get_language(os.getenv("LANGUAGE"))
 
 
-@Client.on_message(filters.edited)
+@Client.on_edited_message()
 async def to_reject(c: Client, m: Message):
     m.stop_propagation()

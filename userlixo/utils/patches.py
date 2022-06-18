@@ -22,7 +22,7 @@ async def query_edit(
 
 def remove_keyboard(self, message_id=None, *args, **kwargs):
     return self._client.edit_message_reply_markup(
-        self.chat.id, message_id or self.message_id, {}
+        self.chat.id, message_id or self.id, {}
     )
 
 
@@ -30,12 +30,12 @@ async def edit_text(self, text: str, reply_markup=None, *args, **kwargs):
     if type(reply_markup) == list:
         reply_markup = ikb(reply_markup)
     return await self._client.edit_message_text(
-        self.chat.id, self.message_id, text, reply_markup=reply_markup, **kwargs
+        self.chat.id, self.id, text, reply_markup=reply_markup, **kwargs
     )
 
 
 async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
-    if not reply_markup or self._client.session_name == "bot":
+    if not reply_markup or self._client.name == "bot":
         return await self.reply_text(text, reply_markup=reply_markup, *args, **kwargs)
     if type(reply_markup) == types.InlineKeyboardMarkup:
         reply_markup = bki(reply_markup)
@@ -49,7 +49,7 @@ async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
 
     reply_to = None
     if kwargs.get("quote"):
-        reply_to = self.message_id
+        reply_to = self.id
 
     return await self._client.send_inline_bot_result(
         self.chat.id,

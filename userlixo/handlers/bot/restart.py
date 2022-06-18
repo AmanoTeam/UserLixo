@@ -27,7 +27,7 @@ async def on_restart_u(c: Client, u: Union[Message, CallbackQuery]):
     msg = await act(lang.restarting_now_alert)
     await Config.filter(key="restarting_alert").delete()
 
-    message_id = u.inline_message_id if is_inline else msg.message_id
+    message_id = u.inline_message_id if is_inline else msg.id
     chat_id = "inline" if is_inline else msg.chat.username or msg.chat.id
     await Config.create(
         **{

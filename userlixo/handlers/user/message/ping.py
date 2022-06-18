@@ -4,13 +4,14 @@
 from datetime import datetime
 
 from pyrogram import Client, filters
+from pyrogram.enums import ChatAction
 from pyrogram.types import Message
 
 
 @Client.on_message(filters.su_cmd("ping"))
 async def onping(c: Client, m: Message):
     before = datetime.now()
-    await m.reply_chat_action("typing")
+    await c.send_chat_action(chat_id=m.chat.id, action=ChatAction.TYPING)
     after = datetime.now()
     diff_ms = (after - before).microseconds / 1000
 

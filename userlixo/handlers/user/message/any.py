@@ -16,6 +16,6 @@ async def deflang(c: Client, m: Message):
 
 
 # Define what updates to reject
-@Client.on_message(filters.edited)
+@Client.on_edited_message()
 async def reject(c: Client, m: Message):
     m.stop_propagation()

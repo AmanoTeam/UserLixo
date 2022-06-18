@@ -43,7 +43,7 @@ async def on_edit(c: Client, cq: CallbackQuery):
     env_requires_restart = ["PREFIXES", "DATABASE_URL", "BOT_TOKEN"]
     try:
         while True:
-            msg = await cq.from_user.listen(filters.text & ~filters.edited, None)
+            msg = await cq.from_user.listen(filters.text, None)
             await last_msg.remove_keyboard()
             await Config.get(key=key).update(value=msg.text)
             if key in env_requires_restart:
@@ -71,7 +71,7 @@ async def onrestart(c: Client, cq: CallbackQuery):
     lang = cq._lang
     await cq.answer(lang.restarting_now_alert, show_alert=True)
     await cq.message.remove_keyboard()
-    message_id = cq.message.message_id
+    message_id = cq.message.id
     chat_id = cq.message.chat.username or cq.message.chat.id
     await Config.create(
         **{

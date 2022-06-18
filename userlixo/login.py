@@ -72,7 +72,7 @@ async def main():
             me = await user.get_me()
         mention = "@" + me.username if me.username else me.first_name
         print(
-            f"[bold yellow]I found an existing session from account [/][cyan]{mention}[/][bold yellow]. Do you want to use it?[/] [cyan]\[yn][/]",
+            rf"[bold yellow]I found an existing session from account [/][cyan]{mention}[/][bold yellow]. Do you want to use it?[/] [cyan]\[yn][/]",
             end="",
         )
         c = click.getchar(True)
@@ -85,8 +85,18 @@ async def main():
             os.remove("user.session")
     else:
         print("\n\n[bold green]- Logging in using existing user.session...")
+
+    # parse config.ini values
+    api_id = config.get("pyrogram", "api_id", fallback=None)
+    api_hash = config.get("pyrogram", "api_hash", fallback=None)
+    bot_token = config.get("pyrogram", "bot_token", fallback=None)
+
     user = Client(
-        "user", workdir=".", config_file="./config.ini", plugins={"enabled": False}
+        "user",
+        workdir=".",
+        api_id=api_id,
+        api_hash=api_hash,
+        plugins={"enabled": False},
     )
     await user.start()
 
@@ -113,12 +123,17 @@ async def main():
     login_bot = True
     if os.path.exists("bot.session"):
         async with Client(
-            "bot", workdir=".", config_file="./config.ini", plugins={"enabled": False}
+            "bot",
+            workdir=".",
+            api_id=api_id,
+            api_hash=api_hash,
+            bot_token=bot_token,
+            plugins={"enabled": False},
         ) as bot:
             me = await bot.get_me()
         mention = "@" + me.username
         print(
-            f"[bold yellow]I found an existing session from bot [/][cyan]{mention}[/][bold yellow]. Do you want to use it? [/][cyan]\[yn]",
+            rf"[bold yellow]I found an existing session from bot [/][cyan]{mention}[/][bold yellow]. Do you want to use it? [/][cyan]\[yn]",
             end="",
         )
         c = click.getchar(True)
@@ -145,7 +160,8 @@ async def main():
         bot = Client(
             "bot",
             workdir=".",
-            config_file="./config.ini",
+            api_id=api_id,
+            api_hash=api_hash,
             plugins={"enabled": False},
             bot_token=os.getenv("BOT_TOKEN"),
         )
