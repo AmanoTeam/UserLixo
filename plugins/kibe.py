@@ -19,14 +19,16 @@ async def kibe(client: Client, message: Message):
     rsize = False
     ctime = time.time()
     user = await client.get_me()
+    packnames, packnicks = '', ''
     if not user.username:
         user.username = user.first_name
-    if "sticker" in db:
-        pack = db["sticker"]
-    else:
-        pack = 1
-    packname = f"a{user.id}_by_{user.username}_{pack}"
-    packnick = f"@{user.username}'s kibe pack V{pack}.0"
+    if not "sticker" in db:
+        db["sticker"] = {"photo":1, "animated":1, "video":1}
+        save(db)
+    elif isinstance(db["sticker"], int):
+        db["sticker"] = {"photo":db["sticker"], "animated":db["sticker"], "video":db["sticker"]}
+        save(db)
+    pack = db["sticker"]
     rmessage = message.reply_to_message
     if rmessage and rmessage.media:
         if rmessage.photo:
@@ -34,11 +36,13 @@ async def kibe(client: Client, message: Message):
                 rmessage.photo.file_id, file_name=f"./{ctime}.png"
             )
             rsize = True
+            packn = pack["photo"]
         elif rmessage.document:
             photo = await client.download_media(
                 rmessage.document.file_id, file_name=f"./{ctime}.png"
             )
             rsize = True
+            packn = pack["photo"]
         elif rmessage.sticker:
             if len(emoji) == 0:
                 emoji = rmessage.sticker.emoji
@@ -47,21 +51,26 @@ async def kibe(client: Client, message: Message):
                 photo = await client.download_media(
                     rmessage.sticker.file_id, file_name=f"./{ctime}.tgs"
                 )
-                packname += "_animated"
-                packnick += " animated"
+                packnames = "_animated"
+                packnicks = " animated"
+                packn = pack["animated"]
             elif rmessage.sticker.is_video:
                 anim = True
                 photo = await client.download_media(
                     rmessage.sticker.file_id, file_name=f"./{ctime}.webm"
                 )
-                packname += "_video"
-                packnick += " video"
+                packnames = "_video"
+                packnicks = " video"
+                packn = pack["video"]
             else:
                 anim = False
                 photo = await client.download_media(
                     rmessage.sticker.file_id, file_name=f"./{ctime}.webp"
                 )
                 rsize = True
+            
+        packname = f"a{user.id}_by_{user.username}_{packn}{packnames}"
+        packnick = f"@{user.username}'s kibe pack V{packn}.0{packnicks}"
         if not emoji:
             emoji = "👍"
         if rsize:
@@ -83,10 +92,25 @@ async def kibe(client: Client, message: Message):
                 message, client, stickers_chat, packnick, photo, emoji, packname
             )
         elif stickerpack.set.count > 119:
-            pack += 1
-            db["sticker"] = pack
+            if rmessage.photo or rmessage.document:
+                db["sticker"]["photo"] += 1
+                packn = db["sticker"]["photo"]
+            elif rmessage.sticker.is_animated:
+                db["sticker"]["animated"] += 1
+                packnames = "_animated"
+                packnicks = " animated"
+                packn = db["sticker"]["animated"]
+            elif rmessage.sticker.is_video:
+                db["sticker"]["video"] += 1
+                packnames = "_video"
+                packnicks = " video"
+                packn = db["sticker"]["video"]
+            else:
+                db["sticker"]["photo"] += 1
+                packn = db["sticker"]["photo"]
             save(db)
-            packname = f"a{user.id}_by_{user.username}_{pack}"
+            packname = f"a{user.id}_by_{user.username}_{packn}{packnames}"
+            packnick = f"@{user.username}'s kibe pack V{packn}.0{packnicks}"
             await create_pack(
                 message, client, stickers_chat, packnick, photo, emoji, packname
             )
@@ -158,10 +182,13 @@ async def create_pack(
     await message.edit("criando novo pack")
     # Create pack
     rmessage = message.reply_to_message
-    if rmessage.sticker.is_video:
-        await client.send_message(stickers_chat, "/newvideo")
-    elif rmessage.sticker.is_animated:
-        await client.send_message(stickers_chat, "/newanimated")
+    if rmessage.sticker:
+        if rmessage.sticker.is_video:
+            await client.send_message(stickers_chat, "/newvideo")
+        elif rmessage.sticker.is_animated:
+            await client.send_message(stickers_chat, "/newanimated")
+        else:
+            await client.send_message(stickers_chat, "/newpack")
     else:
         await client.send_message(stickers_chat, "/newpack")
 
