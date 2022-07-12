@@ -52,20 +52,20 @@ async def fake(client: Client, message: Message):
             await client.delete_profile_photos(photos[0].file_id)
             db["personal_data"]["user_photo"] = False
             save(db)
-        if cha.user.is_self:
+        if cha.users[0].is_self:
             dat = db["personal_data"]
             db["personal_data"]["faked"] = False
             save(db)
             text = "No fake"
         else:
             text = "new fake"
-            if cha.about:
-                description = cha.about[:70]
+            if cha.full_user.about:
+                description = cha.full_user.about[:70]
             else:
                 description = ""
             db["personal_data"]["faked"] = True
             save(db)
-            if cha.user.photo:
+            if cha.users[0].photo:
                 a = (await client.get_profile_photos(user_id, limit=1))[0]
                 a = await client.download_media(a.file_id)
                 await client.set_profile_photo(photo=a)
@@ -73,8 +73,8 @@ async def fake(client: Client, message: Message):
                 db["personal_data"]["user_photo"] = True
                 save(db)
             dat = dict(
-                first_name=cha.user.first_name,
-                last_name=cha.user.last_name or "",
+                first_name=cha.users[0].first_name,
+                last_name=cha.users[0].last_name or "",
                 description=description,
             )
         await client.update_profile(
