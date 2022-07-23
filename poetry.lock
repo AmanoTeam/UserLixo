@@ -246,7 +246,7 @@ python-versions = ">=3.7,<4.0"
 
 [[package]]
 name = "Pyrogram"
-version = "2.0.27+amn"
+version = "2.0.32+amn"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots - Amano's experimental fork"
 category = "main"
 optional = false
@@ -262,7 +262,7 @@ pysocks = "1.7.1"
 type = "git"
 url = "https://github.com/AmanoTeam/Pyrogram.git"
 reference = "master"
-resolved_reference = "7b43910492a6cf206507c42e44db2d49193d637c"
+resolved_reference = "ba5a008aaac100e75a17c94b1b7099025e313516"
 
 [[package]]
 name = "pysocks"
@@ -313,7 +313,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "rich"
-version = "12.4.4"
+version = "12.5.1"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 category = "main"
 optional = false
@@ -427,7 +427,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "d796fa2a5cda58a3cb598d04710cb7980ca3358b57b306c4e1b4725b84d74aa1"
+content-hash = "78ef1bebf941654754cab3f42a2940b4d8a47e6230a2bfbc477c6307587deb7b"
 
 [metadata.files]
 aiocron = [
@@ -609,8 +609,8 @@ pyyaml = [
     {file = "PyYAML-6.0.tar.gz", hash = "sha256:68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"},
 ]
 rich = [
-    {file = "rich-12.4.4-py3-none-any.whl", hash = "sha256:d2bbd99c320a2532ac71ff6a3164867884357da3e3301f0240090c5d2fdac7ec"},
-    {file = "rich-12.4.4.tar.gz", hash = "sha256:4c586de507202505346f3e32d1363eb9ed6932f0c2f63184dea88983ff4971e2"},
+    {file = "rich-12.5.1-py3-none-any.whl", hash = "sha256:2eb4e6894cde1e017976d2975ac210ef515d7548bc595ba20e195fb9628acdeb"},
+    {file = "rich-12.5.1.tar.gz", hash = "sha256:63a5c5ce3673d3d5fbbf23cd87e11ab84b6b451436f1b7f19ec54b6bc36ed7ca"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
