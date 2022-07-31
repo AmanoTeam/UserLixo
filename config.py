@@ -1,5 +1,5 @@
 from pyrogram import Client
 
-app = Client("my_account", parse_mode="combined")
+app = Client("my_account", plugins=dict(root="plugins"))
 
 cmds = {}

@@ -36,7 +36,7 @@ async def upgrade(client: Client, message: Message):
             await message.edit(("Restarting..."))
             db["restart"] = {
                 "cid": message.chat.id,
-                "mid": message.message_id,
+                "mid": message.id,
                 "branch": branch,
             }
             save(db)

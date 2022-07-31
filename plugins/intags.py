@@ -6,6 +6,7 @@ import traceback
 from contextlib import redirect_stdout
 
 from pyrogram import Client, filters
+from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
 from config import cmds
@@ -27,7 +28,7 @@ async def pytag(client: Client, message: Message):
                 await locals()["__ex"](client, message)
             except:
                 return await message.reply_text(
-                    html.escape(traceback.format_exc()), parse_mode="HTML"
+                    html.escape(traceback.format_exc()), parse_mode=ParseMode.HTML
                 )
 
         if strio.getvalue():

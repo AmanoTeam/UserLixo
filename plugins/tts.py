@@ -37,7 +37,7 @@ async def tts(client: Client, message: Message):
             text = message.reply_to_message.text
         elif message.reply_to_message.document:
             path = await message.reply_to_message.download(
-                f"{message.message_id}_{message.reply_to_message.message_id}_tts"
+                f"{message.id}_{message.reply_to_message.id}_tts"
             )
             with open(path) as fp:
                 text = fp.read()
@@ -53,9 +53,7 @@ async def tts(client: Client, message: Message):
         await message.edit_text(f"Error: {e}", disable_web_page_preview=True)
     else:
         await message.delete()
-        reply_to = (
-            message.reply_to_message.message_id if message.reply_to_message else None
-        )
+        reply_to = message.reply_to_message.id if message.reply_to_message else None
         await client.send_voice(message.chat.id, bio, reply_to_message_id=reply_to)
 
 

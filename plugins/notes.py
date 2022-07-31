@@ -57,7 +57,7 @@ async def onnote(client: Client, message: Message):
                         message.chat.id,
                         note_obj["value"]["file_id"],
                         reply_to_message_id=(
-                            message.reply_to_message.message_id
+                            message.reply_to_message.id
                             if message.reply_to_message
                             else None
                         ),
@@ -184,9 +184,7 @@ async def onsharp(client: Client, message: Message):
                 message.chat.id,
                 note_obj["value"]["file_id"],
                 reply_to_message_id=(
-                    message.reply_to_message.message_id
-                    if message.reply_to_message
-                    else None
+                    message.reply_to_message.id if message.reply_to_message else None
                 ),
             )
 

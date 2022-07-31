@@ -18,12 +18,12 @@ async def tagall(client: Client, message: Message):
     else:
         a = splitted[1]
 
-    async for x in client.iter_chat_members(message.chat.id):
+    async for x in client.get_chat_members(message.chat.id):
         if x.user.status == "online":
             a += f"[{char}](tg://user?id={x.user.id})"
     kwargs = {}
     if message.reply_to_message:
-        kwargs["reply_to_message_id"] = message.reply_to_message.message_id
+        kwargs["reply_to_message_id"] = message.reply_to_message.id
     await client.send_message(message.chat.id, a, **kwargs)
 
 
@@ -37,12 +37,12 @@ async def ftagall(client: Client, message: Message):
     else:
         a = splitted[1]
 
-    async for x in client.iter_chat_members(message.chat.id):
+    async for x in client.get_chat_members(message.chat.id):
         if x.user.is_bot == False and x.user.is_deleted == False:
             a += f"[{char}](tg://user?id={x.user.id})"
     kwargs = {}
     if message.reply_to_message:
-        kwargs["reply_to_message_id"] = message.reply_to_message.message_id
+        kwargs["reply_to_message_id"] = message.reply_to_message.id
     await client.send_message(message.chat.id, a, **kwargs)
 
 
@@ -61,7 +61,7 @@ async def admin(client: Client, message: Message):
             a += f"[{char}](tg://user?id={x.user.id})"
     kwargs = {}
     if message.reply_to_message:
-        kwargs["reply_to_message_id"] = message.reply_to_message.message_id
+        kwargs["reply_to_message_id"] = message.reply_to_message.id
     await client.send_message(message.chat.id, a, **kwargs)
 
 
@@ -81,7 +81,7 @@ async def fadmin(client: Client, message: Message):
 
     kwargs = {}
     if message.reply_to_message:
-        kwargs["reply_to_message_id"] = message.reply_to_message.message_id
+        kwargs["reply_to_message_id"] = message.reply_to_message.id
     await client.send_message(message.chat.id, a, **kwargs)
 
 

@@ -11,7 +11,7 @@ from db import db, save
 @Client.on_message(filters.command("restart", prefixes=".") & filters.me)
 async def restart(client: Client, message: Message):
     await message.edit("Reiniciando...")
-    db["restart"] = {"cid": message.chat.id, "mid": message.message_id}
+    db["restart"] = {"cid": message.chat.id, "mid": message.id}
     save(db)
     os.execl(sys.executable, sys.executable, *sys.argv)
 

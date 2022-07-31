@@ -61,6 +61,6 @@ async def emojimix(client: Client, message: Message):
         photo,
         reply_to_message_id=None
         if not message.reply_to_message
-        else message.reply_to_message.message_id,
+        else message.reply_to_message.id,
     )
     os.remove(photo)

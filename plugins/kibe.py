@@ -19,14 +19,18 @@ async def kibe(client: Client, message: Message):
     rsize = False
     ctime = time.time()
     user = await client.get_me()
-    packnames, packnicks = '', ''
+    packnames, packnicks = "", ""
     if not user.username:
         user.username = user.first_name
     if not "sticker" in db:
-        db["sticker"] = {"photo":1, "animated":1, "video":1}
+        db["sticker"] = {"photo": 1, "animated": 1, "video": 1}
         save(db)
     elif isinstance(db["sticker"], int):
-        db["sticker"] = {"photo":db["sticker"], "animated":db["sticker"], "video":db["sticker"]}
+        db["sticker"] = {
+            "photo": db["sticker"],
+            "animated": db["sticker"],
+            "video": db["sticker"],
+        }
         save(db)
     pack = db["sticker"]
     rmessage = message.reply_to_message
@@ -68,7 +72,8 @@ async def kibe(client: Client, message: Message):
                     rmessage.sticker.file_id, file_name=f"./{ctime}.webp"
                 )
                 rsize = True
-            
+                packn = pack["photo"]
+
         packname = f"a{user.id}_by_{user.username}_{packn}{packnames}"
         packnick = f"@{user.username}'s kibe pack V{packn}.0{packnicks}"
         if not emoji:
@@ -76,7 +81,7 @@ async def kibe(client: Client, message: Message):
         if rsize:
             photo = await resize_photo(photo, ctime)
         try:
-            stickerpack = await client.send(
+            stickerpack = await client.invoke(
                 functions.messages.GetStickerSet(
                     stickerset=types.InputStickerSetShortName(short_name=packname),
                     hash=0,
@@ -86,7 +91,8 @@ async def kibe(client: Client, message: Message):
             pack_exists = False
         else:
             pack_exists = True
-        stickers_chat = 429000
+        # Get stickers chat id from username once
+        stickers_chat = (await client.get_chat("stickers")).id
         if not pack_exists:
             await create_pack(
                 message, client, stickers_chat, packnick, photo, emoji, packname

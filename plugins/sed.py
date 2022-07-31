@@ -1,6 +1,7 @@
 import re
 
 from pyrogram import Client, filters
+from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
 from utils import switch_case
@@ -36,4 +37,4 @@ async def onsed(client: Client, message: Message):
                 flags |= flag
     text = message.reply_to_message.text.html
     text = re.sub(match["search"], match["replace"], text, 0, flags)
-    await message.reply_to_message.edit(text, parse_mode="HTML")
+    await message.reply_to_message.edit(text, parse_mode=ParseMode.HTML)
