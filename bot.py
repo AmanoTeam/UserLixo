@@ -1,21 +1,18 @@
 import asyncio
-import os
-import sys
 
-from pyrogram import idle
+from pyrogram import idle, Client
+try:
+    from config import API_ID, API_HASH
+except ImportError as e:
+    raise ImportError("Could not import the config file. Run 'python setup.py' first.") from e
 
-import config
 from db import db, save
 
 
-async def run_client(client):
-    try:
-        await client.start()
-    except AttributeError as e:
-        return print(
-            str(e).split(". ")[0]
-            + f". Run '{os.path.basename(sys.executable)} setup.py' first."
-        )
+async def main():
+    client = Client("my_account", api_id=API_ID, api_hash=API_HASH, plugins=dict(root="plugins"))
+
+    await client.start()
 
     if "restart" in db:
         text = "Restarted"
@@ -48,5 +45,8 @@ async def run_client(client):
     await client.stop()
 
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(run_client(config.app))
+event_policy = asyncio.get_event_loop_policy()
+loop = event_policy.new_event_loop()
+asyncio.set_event_loop(loop)
+
+loop.run_until_complete(main())

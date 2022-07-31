@@ -10,4 +10,4 @@ db.json
 *.session
 *.png
 *.jpg
-config.ini
+config.py
