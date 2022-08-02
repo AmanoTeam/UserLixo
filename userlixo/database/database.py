@@ -3,7 +3,8 @@
 
 import os
 
-from tortoise import Tortoise, fields
+from tortoise.backends.base.client import Capabilities
+from tortoise import Tortoise, fields, connections
 from tortoise.models import Model
 
 
@@ -30,5 +31,16 @@ async def connect_database():
             "apps": {"bot": {"models": [__name__], "default_connection": "bot_db"}},
         }
     )
+
+    conn = connections.get("bot_db")
+    conn.capabilities = Capabilities(
+        "sqlite",
+        daemon=False,
+        requires_limit=True,
+        inline_comment=True,
+        support_for_update=False,
+        support_update_limit_order_by=False,
+    )
+
     # Generate the schema
     await Tortoise.generate_schemas()
