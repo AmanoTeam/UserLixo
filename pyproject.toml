@@ -39,7 +39,7 @@ meval = "2.5"
 pyrogram = {git = "https://github.com/AmanoTeam/Pyrogram.git"}
 
 [tool.poetry.dev-dependencies]
-black = "^22.6"
+black = "^22.10"
 isort = "^5.10.1"
 flake8 = "^5.0.3"
 
