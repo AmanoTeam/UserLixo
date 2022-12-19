@@ -140,11 +140,11 @@ python-versions = ">=3.6.2,<4.0"
 
 [[package]]
 name = "isort"
-version = "5.10.1"
+version = "5.11.3"
 description = "A Python utility / library to sort Python imports."
 category = "dev"
 optional = false
-python-versions = ">=3.6.1,<4.0"
+python-versions = ">=3.7.0"
 
 [package.extras]
 colors = ["colorama (>=0.4.3,<0.5.0)"]
@@ -246,7 +246,7 @@ python-versions = ">=3.7,<4.0"
 
 [[package]]
 name = "Pyrogram"
-version = "2.0.59+amn"
+version = "2.0.70+amn"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots - Amano's experimental fork"
 category = "main"
 optional = false
@@ -262,7 +262,7 @@ pysocks = "1.7.1"
 type = "git"
 url = "https://github.com/AmanoTeam/Pyrogram.git"
 reference = "HEAD"
-resolved_reference = "0f0daa83b92a8811f2d350e3e4b4e0befda24dda"
+resolved_reference = "5da58d6917fea011be221031be6fe4411a788ba9"
 
 [[package]]
 name = "pysocks"
@@ -428,7 +428,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "0d30308f1e31923e3adb59a6251fb9feb5bb55493b6d11a54f1c5ef4a5c1255c"
+content-hash = "2f372d45468784289d69fb495ef8327df0ebabe84f7a70c18e6b8ffae11a0ec1"
 
 [metadata.files]
 aiocron = [
@@ -511,8 +511,8 @@ iso8601 = [
     {file = "iso8601-1.0.2.tar.gz", hash = "sha256:27f503220e6845d9db954fb212b95b0362d8b7e6c1b2326a87061c3de93594b1"},
 ]
 isort = [
-    {file = "isort-5.10.1-py3-none-any.whl", hash = "sha256:6f62d78e2f89b4500b080fe3a81690850cd254227f27f75c3a0c491a1f351ba7"},
-    {file = "isort-5.10.1.tar.gz", hash = "sha256:e8443a5e7a020e9d7f97f1d7d9cd17c88bcb3bc7e218bf9cf5095fe550be2951"},
+    {file = "isort-5.11.3-py3-none-any.whl", hash = "sha256:83155ffa936239d986b0f190347a3f2285f42a9b9e1725c89d865b27dd0627e5"},
+    {file = "isort-5.11.3.tar.gz", hash = "sha256:a8ca25fbfad0f7d5d8447a4314837298d9f6b23aed8618584c894574f626b64b"},
 ]
 langs = [
     {file = "langs-0.1.1-py3-none-any.whl", hash = "sha256:a73d12cb0c38fd536cf8e3519e5d10664757f9655a7df3462f5964919cc02653"},
