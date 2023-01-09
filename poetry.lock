@@ -246,7 +246,7 @@ python-versions = ">=3.7,<4.0"
 
 [[package]]
 name = "Pyrogram"
-version = "2.0.59+amn"
+version = "2.0.95+amn"
 description = "Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots - Amano's experimental fork"
 category = "main"
 optional = false
@@ -254,7 +254,7 @@ python-versions = "~=3.7"
 develop = false
 
 [package.dependencies]
-aiosqlite = ">=0.16.0,<0.18.0"
+aiosqlite = ">=0.17.0,<0.19.0"
 pyaes = "1.6.1"
 pysocks = "1.7.1"
 
@@ -262,7 +262,7 @@ pysocks = "1.7.1"
 type = "git"
 url = "https://github.com/AmanoTeam/Pyrogram.git"
 reference = "HEAD"
-resolved_reference = "0f0daa83b92a8811f2d350e3e4b4e0befda24dda"
+resolved_reference = "e21426e6fbeea68af72ece1746e96ab8ab11503c"
 
 [[package]]
 name = "pysocks"
@@ -313,11 +313,11 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "rich"
-version = "12.5.1"
+version = "13.0.1"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 category = "main"
 optional = false
-python-versions = ">=3.6.3,<4.0.0"
+python-versions = ">=3.7.0"
 
 [package.dependencies]
 commonmark = ">=0.9.0,<0.10.0"
@@ -428,7 +428,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "0d30308f1e31923e3adb59a6251fb9feb5bb55493b6d11a54f1c5ef4a5c1255c"
+content-hash = "c95ae205d9fe503842922906c7a415d14cb41ffc1b496af13cb104a4ef7e7a17"
 
 [metadata.files]
 aiocron = [
@@ -617,8 +617,8 @@ pyyaml = [
     {file = "PyYAML-6.0.tar.gz", hash = "sha256:68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"},
 ]
 rich = [
-    {file = "rich-12.5.1-py3-none-any.whl", hash = "sha256:2eb4e6894cde1e017976d2975ac210ef515d7548bc595ba20e195fb9628acdeb"},
-    {file = "rich-12.5.1.tar.gz", hash = "sha256:63a5c5ce3673d3d5fbbf23cd87e11ab84b6b451436f1b7f19ec54b6bc36ed7ca"},
+    {file = "rich-13.0.1-py3-none-any.whl", hash = "sha256:41fe1d05f433b0f4724cda8345219213d2bfa472ef56b2f64f415b5b94d51b04"},
+    {file = "rich-13.0.1.tar.gz", hash = "sha256:25f83363f636995627a99f6e4abc52ed0970ebbd544960cc63cbb43aaac3d6f0"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
