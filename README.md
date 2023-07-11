@@ -1,4 +1,4 @@
-<img src="https://piics.ml/i/005.png" width="150" align="right">
+<img src="https://files.catbox.moe/lgndjy.png" width="150" align="right">
 
 # UserLixo
 
@@ -6,33 +6,36 @@ Multipurpose Python userbot for Telegram
 
 ## Requirements
 
-- Python 3.7+
+- Python 3.8+
+- [Poetry](https://python-poetry.org/)
 - An Unix-like OS
-- The api_id and api_hash [from your own Telegram app](https://my.telegram.org/apps) (don't worry, it's easy to get them)
+- The `api_id` and `api_hash` [from your own Telegram app](https://my.telegram.org/apps) (don't worry, it's easy to get them)
+
+## Getting started
+
+### With docker
+
+- Run `docker compose up -d && docker attach userlixo`
+
+### Manually
+
+- It's recommended to start a new tmux or screen session_
+- Install the project with `poetry install`
+- Run the project with `poetry run python -m userlixo`
+
+> If you are a developer making some modifications, you may want to use the option `--no-updates` to skip the pip updates at every startup.
 
 ## Setup
 
-- Start a new tmux or screen session (recommended but not required)
-- Install `virtualenv` via pip:
+At the first run, all requirements will be installed and you'll be asked for some configuration to login.
 
-```bash
-pip install virtualenv
-```
+::PHOTO_PLACEHOLDER::
 
-- Create a virtualenv named 'venv' and activate it:
+> You'll be asked for a `BOT_TOKEN`. That's the bot that will be UserLixo's assistant and its inline mode **MUST** be enabled. You can enable it by sending /setinline to [@BotFather](https://t.me/BotFather).
 
-```bash
-virtualenv venv && . venv/bin/activate
-```
+When you're done, you should be seeing the following message:
 
-## Running
-
-- Just run `python -m userlixo`
-At the first run, all requirements will be automatically installed you'll be asked for some configuration and login.
-If you are a developer making some modifications, you may want to use the option '--no-updates' to skip the "pip install" part at every startup.
-
-Note: you'll be asked for a BOT_TOKEN. That's the bot that will be the UserLixo assistant and its inline mode must be activated. You do it by sending /setinline to @BotFather.
-
+::PHOTO_PLACEHOLDER::
 ## Notes
 
 If you find any bugs/issues you can report them by:
@@ -43,4 +46,4 @@ If you find any bugs/issues you can report them by:
 
 ## License
 
-[MIT](https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/LICENSE) © 2022 [AmanoTeam™](https://amanoteam.com)
+[MIT](https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/LICENSE) © 2023 [AmanoTeam™](https://amanoteam.com)
