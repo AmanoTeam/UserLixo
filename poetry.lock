@@ -358,7 +358,7 @@ pysocks = "1.7.1"
 [package.source]
 type = "git"
 url = "https://github.com/AmanoTeam/Pyrogram.git"
-reference = "HEAD"
+reference = "v2.0.106+amn4"
 resolved_reference = "fb7689589d50ef4868b778ff7f34b92c41abc209"
 
 [[package]]
@@ -632,4 +632,4 @@ devenv = ["black", "check-manifest", "flake8", "pyroma", "pytest (>=4.3)", "pyte
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "90025a1f8019925e2e071bff385afc759f3c5f2aed45ca8f8349c63a175a1506"
+content-hash = "1f9a5636d204045d706599a3a9397bbd9d7141f941f7c50b33bd3612dfa929a9"
