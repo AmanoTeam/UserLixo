@@ -2,6 +2,8 @@ version: '3.9'
 services:
   userlixo:
     build: .
-    command: poetry install && poetry run python -m userlixo
+    stdin_open: true # docker run -i
+    tty: true
+    command: sh -c "cd /usr/src/userlixo && poetry install && poetry run python -m userlixo"
     volumes:
       - .:/usr/src/userlixo
