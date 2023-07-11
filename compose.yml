@@ -1,0 +1,7 @@
+version: '3.9'
+services:
+  userlixo:
+    build: .
+    command: poetry install && poetry run python -m userlixo
+    volumes:
+      - .:/usr/src/userlixo
