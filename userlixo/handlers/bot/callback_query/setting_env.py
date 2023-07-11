@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 
 from pyrogram import Client, errors, filters
-from pyrogram.helpers import array_chunk, ikb
+from pyromod.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery
 
 from userlixo.config import bot

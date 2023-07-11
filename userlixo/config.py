@@ -12,9 +12,10 @@ from typing import Dict, List
 import pyrogram
 import yaml
 from langs import Langs
-from pyrogram import Client, filters
+from pyrogram.client import Client
+from pyrogram import filters
 from pyrogram.enums import ParseMode
-from pyrogram.helpers import bki
+from pyromod.helpers import bki
 from rich import print
 
 from userlixo.database import Config
@@ -95,7 +96,7 @@ async def load_env():
     langs.code = os.environ["LANGUAGE"]
 
     # Sanitize sudoers list
-    parts = os.getenv("SUDOERS_LIST").split()
+    parts = (os.getenv("SUDOERS_LIST") or "").split()
     parts = [*map(lambda x: tryint(x.lstrip("@").lower()), parts)]
     parts = [*set(parts)]
     parts = [x for x in parts if x != "me"]

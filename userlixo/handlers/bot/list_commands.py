@@ -4,8 +4,8 @@
 from typing import Union
 
 from pyrogram import Client, filters
-from pyrogram.helpers import ikb
-from pyrogram.nav import Pagination
+from pyromod.helpers import ikb
+from pyromod.nav import Pagination
 from pyrogram.types import CallbackQuery, Message
 
 from userlixo.config import cmds

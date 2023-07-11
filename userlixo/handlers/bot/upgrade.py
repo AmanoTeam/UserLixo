@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Union
 
 from pyrogram import Client, filters
-from pyrogram.helpers import ikb
+from pyromod.helpers import ikb
 from pyrogram.types import CallbackQuery, Message
 
 from userlixo.database import Config

@@ -2,7 +2,7 @@
 # Copyright (c) 2018-2022 Amano Team
 
 from pyrogram import types
-from pyrogram.helpers import bki, ikb
+from pyromod.helpers import bki, ikb
 
 from userlixo.database import Message
 
