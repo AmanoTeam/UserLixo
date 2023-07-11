@@ -27,7 +27,7 @@ exclude = ["config.ini", "user.session*", "bot.session*", "userlixo/database/*.s
 "Community" = "https://t.me/UserLixoChat"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 tgcrypto = "1.2.5"
 rich = "12.5.1"
 langs = "0.1.1"
