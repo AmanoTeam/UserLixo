@@ -4,6 +4,7 @@ services:
     build: .
     stdin_open: true # docker run -i
     tty: true
-    command: sh -c "cd /usr/src/userlixo && poetry install && poetry run python -m userlixo"
+    container_name: userlixo
+    command: runuser -u vscode -- sh -c "cd /usr/src/userlixo && poetry install && poetry run python -m userlixo"
     volumes:
       - .:/usr/src/userlixo
