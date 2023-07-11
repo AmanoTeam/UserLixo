@@ -6,7 +6,7 @@ import json
 import os
 
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
+from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
 from userlixo.config import bot, plugins, user

@@ -27,17 +27,16 @@ exclude = ["config.ini", "user.session*", "bot.session*", "userlixo/database/*.s
 "Community" = "https://t.me/UserLixoChat"
 
 [tool.poetry.dependencies]
-python = "^3.8"
-tgcrypto = "^1.2.5"
-rich = "^12.5.1"
-langs = "^0.1.1"
-aiocron = "^1.8"
-click = "^8.1.3"
-PyYAML = "^6.0"
-tortoise-orm = "^0.19"
-meval = "^2.5"
-pyrogram = "^2.0.106"
-pyromod = "^2.0.0"
+python = "^3.7"
+tgcrypto = "1.2.5"
+rich = "12.5.1"
+langs = "0.1.1"
+aiocron = "1.8"
+click = "8.1.3"
+PyYAML = "6.0"
+tortoise-orm = "0.19"
+meval = "2.5"
+pyrogram = {git = "https://github.com/AmanoTeam/Pyrogram.git"}
 
 [tool.poetry.dev-dependencies]
 black = "^22.6"

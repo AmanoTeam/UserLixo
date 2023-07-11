@@ -4,7 +4,7 @@
 from typing import Union
 
 from pyrogram import Client, filters
-from pyromod.helpers import ikb
+from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery, Message
 
 

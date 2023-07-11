@@ -4,7 +4,7 @@
 import os
 
 from pyrogram import Client, filters
-from pyromod.helpers import array_chunk, ikb
+from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery
 
 from userlixo.database import Config

@@ -34,9 +34,9 @@ from datetime import datetime
 
 import aiocron
 import pyrogram
-from pyrogram.sync import idle
+from pyrogram import idle
 from pyrogram.errors import BadRequest
-from pyromod.helpers import ikb
+from pyrogram.helpers import ikb
 from rich import box, print
 from rich.panel import Panel
 from tortoise import run_async
