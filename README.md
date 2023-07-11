@@ -29,13 +29,15 @@ Multipurpose Python userbot for Telegram
 
 At the first run, all requirements will be installed and you'll be asked for some configuration to login.
 
-::PHOTO_PLACEHOLDER::
+![Screenshot from 2023-07-11 13-16-23](https://github.com/AmanoTeam/UserLixo/assets/29507335/97dc4ef0-1af0-41bb-acc6-1d7e6f01c9ce)
+
 
 > You'll be asked for a `BOT_TOKEN`. That's the bot that will be UserLixo's assistant and its inline mode **MUST** be enabled. You can enable it by sending /setinline to [@BotFather](https://t.me/BotFather).
 
 When you're done, you should be seeing the following message:
 
-::PHOTO_PLACEHOLDER::
+![Screenshot from 2023-07-11 13-18-06](https://github.com/AmanoTeam/UserLixo/assets/29507335/e3f4b713-b060-4a8a-9fcb-4f38225a225a)
+
 ## Notes
 
 If you find any bugs/issues you can report them by:
