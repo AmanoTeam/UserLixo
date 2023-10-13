@@ -6,8 +6,8 @@ venv/
 dls/
 downloads/
 db.json
-*.session-journal
-*.session
+*.session*
 *.png
 *.jpg
 config.py
+cookies.json

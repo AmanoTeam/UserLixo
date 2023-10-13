@@ -6,6 +6,7 @@ from pyrogram.types import Message
 
 from config import cmds
 from utils import meval
+import os
 
 
 @Client.on_message(filters.command("eval", prefixes=".") & filters.me)
@@ -19,7 +20,13 @@ async def evals(client: Client, message: Message):
         return
     else:
         try:
-            await message.edit(f"<code>{html.escape(str(res))}</code>")
+            if len(str(res)) > 4000:
+                with open("output.txt", "w") as f:
+                    f.write(str(res))
+                await client.send_document(message.chat.id, "output.txt")
+                os.remove("output.txt")
+            else:
+                await message.edit(f"<code>{html.escape(str(res))}</code>")
         except Exception as e:
             await message.edit(e)
 

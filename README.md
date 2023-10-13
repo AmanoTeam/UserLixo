@@ -28,6 +28,10 @@ Running on Heroku isn't stable and it’s not guaranteed to work
 
 *   Follow the steps of the section "Setup"
 
+## Bing
+
+To utilize Bing, you either need to have Selenium installed or create a ‘cookies.json’ file. Learn more [here](https://github.com/acheong08/EdgeGPT/tree/main#collect-cookies)
+
 ## Notes
 
 If you find any bugs/issues you can report them by:
