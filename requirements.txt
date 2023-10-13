@@ -11,3 +11,4 @@ desciclopedia
 telegraph
 pySmartDL
 httpx[http2]
+EdgeGPT
