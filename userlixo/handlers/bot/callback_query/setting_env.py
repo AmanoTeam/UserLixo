@@ -5,7 +5,7 @@ import os
 import sys
 from datetime import datetime
 
-from pyrogram import Client, errors, filters
+from pyrogram import Client, filters
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery
 
@@ -55,7 +55,8 @@ async def on_edit(c: Client, cq: CallbackQuery):
                 text = lang.edit_env_text(key=key, value=msg.text)
                 keyboard = ikb([[(lang.back, "setting_env")]])
             last_msg = await msg.reply_text(text, reply_markup=keyboard)
-    except errors.ListenerStopped:
+    except Exception as e:
+        print(e)
         pass
 
 

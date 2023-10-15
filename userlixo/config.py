@@ -42,10 +42,11 @@ async def load_env():
             "List of users (usernames and ids separated by space) that will have permission to use your userbot/assistant.",
         ],
         "BOT_TOKEN": ["", "Token of the assistant inline bot"],
+        "WEB_APP_URL": ["https://webapp.pauxis.dev/userlixo/", "URL of the webapp."],
     }
 
     restricted_vars = ["DATABASE_URL"]
-    required_vars = ["BOT_TOKEN"]
+    required_vars = ["BOT_TOKEN", "WEB_APP_URL"]
     missing_vars = []
     for env_key, (default_value, env_info) in environment_vars.items():
         value_on_env = os.getenv(env_key, default_value)
@@ -155,12 +156,25 @@ def filter_su_cmd(command, prefixes=None, *args, **kwargs):
     return filters.sudoers & filters.regex(r"^" + prefix + command, *args, **kwargs)
 
 
+def filter_web_app_data(flt, c, u):
+    return u.web_app_data
+
+
+def filter_web_data_command(command, *args, **kwargs):
+    async def func(flt, c, u):
+        return u.web_app_data and u.web_app_data.data.startswith(command)
+
+    return filters.create(func, "FilterWebDataCommand")
+
+
 def message_ikb(self):
     return bki(self.reply_markup)
 
 
 pyrogram.filters.sudoers = filters.create(filter_sudoers, "FilterSudoers")
 pyrogram.filters.su_cmd = filter_su_cmd
+pyrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
+pyrogram.filters.web_data_cmd = filter_web_data_command
 pyrogram.types.CallbackQuery.edit = query_edit
 pyrogram.types.Message.remove_keyboard = remove_keyboard
 pyrogram.types.Message.reply = reply_text

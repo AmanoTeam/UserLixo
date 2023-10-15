@@ -52,6 +52,9 @@ docs/_build/
 # VSCode
 .vscode
 
+# Jetbrains
+.idea
+
 # Custom
 test.py
 test.txt

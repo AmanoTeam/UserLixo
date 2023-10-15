@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
+import os
 
 from pyrogram import Client, filters
 from pyrogram.helpers import array_chunk, ikb
@@ -73,6 +74,7 @@ async def on_remove_sudoer(c: Client, cq: CallbackQuery):
     sudoers[:] = removed
 
     await Config.get(key="SUDOERS_LIST").update(value=" ".join([*map(str, sudoers)]))
+    os.environ["SUDOERS_LIST"] = " ".join([*map(str, sudoers)])
 
     text, keyboard = await sudoers_interface(cq)
     await cq.edit(text, keyboard)
