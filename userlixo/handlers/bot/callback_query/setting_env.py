@@ -16,7 +16,7 @@ from userlixo.database import Config
 @Client.on_callback_query(filters.sudoers & filters.regex("^setting_env"))
 async def on_setting_env(c: Client, cq: CallbackQuery):
     if cq.message:
-        cq.message.chat.cancel_listener()
+        cq.message.chat.stop_listening()
     lang = cq._lang
     buttons = []
     async for row in Config.all():
@@ -55,7 +55,7 @@ async def on_edit(c: Client, cq: CallbackQuery):
                 text = lang.edit_env_text(key=key, value=msg.text)
                 keyboard = ikb([[(lang.back, "setting_env")]])
             last_msg = await msg.reply_text(text, reply_markup=keyboard)
-    except errors.ListenerCanceled:
+    except errors.ListenerStopped:
         pass
 
 
