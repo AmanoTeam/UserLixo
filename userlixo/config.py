@@ -7,7 +7,7 @@ import importlib
 import json
 import os
 import re
-from typing import Dict, List
+from typing import Dict
 
 import pyrogram
 import yaml
@@ -217,7 +217,7 @@ bot = Client(
     **pyrogram_config,
 )
 
-cmds: List[str] = [
+cmds_list = [
     "help",
     "ping",
     "upgrade",
@@ -230,7 +230,7 @@ cmds: List[str] = [
     "commands",
     "start",
 ]
-cmds = {x: 1 for x in cmds}
+cmds = {x: 1 for x in cmds_list}
 
 plugins = {"user": {}, "bot": {}}
 for file in glob.glob("userlixo/handlers/*/plugins/*.py"):
