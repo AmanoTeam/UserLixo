@@ -8,8 +8,7 @@ from pyrogram.client import Client
 from pyrogram.helpers import kb
 from pyrogram.types import Message, WebAppInfo
 
-from userlixo.config import user
-from userlixo.database import Config
+from userlixo.config import user, cmds, plugins
 from userlixo.utils import shell_exec
 
 
@@ -27,7 +26,7 @@ async def on_webapp_message(c: Client, m: Message):
             "start_time": start_time,
             "name": info.full_name,
             "id": info.id,
-            "picture": "https://picsum.photos/200",
+            "picture": f"https://t.me/i/userpic/160/{info.username}.jpg",
         }
     )
     settings_json = json.dumps(
@@ -39,19 +38,21 @@ async def on_webapp_message(c: Client, m: Message):
             "web_app_url": os.getenv("WEB_APP_URL"),
         }
     )
-    environment_json = json.dumps(await Config.all().values())
+
+    cmds_json = json.dumps([k for k, v in cmds.items()])
+    plugins_json = json.dumps(plugins)
 
     params = {
         "settings": settings_json,
-        "environment": environment_json,
         "info": info_json,
+        "commands": cmds_json,
+        "plugins": plugins_json,
     }
-
     query = urllib.parse.urlencode(params)
 
     web_app_url = os.getenv("WEB_APP_URL")
-
     web_app_info = WebAppInfo(url=f"{web_app_url}?{query}")
+
     keyboard = kb(
         [
             [
