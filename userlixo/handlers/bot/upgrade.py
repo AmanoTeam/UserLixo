@@ -4,6 +4,7 @@
 import os
 import sys
 from datetime import datetime
+from pathlib import Path
 from typing import Union
 
 from pyrogram import Client, filters
@@ -27,7 +28,7 @@ async def on_upgrade_u(c: Client, u: Union[Message, CallbackQuery]):
     act = u.edit if is_query else u.reply
     keyb = ikb([[(lang.back, "start")]])
     try:
-        with open(".git/HEAD") as f:
+        with Path(".git/HEAD").open() as f:
             branch = f.read().split("/")[-1].rstrip()
     except FileNotFoundError:
         return await act(lang.upgrade_error_not_git, keyb)
@@ -44,9 +45,7 @@ async def on_upgrade_u(c: Client, u: Union[Message, CallbackQuery]):
     if "Your branch is up to date" in stdout:
         # title, p = await shell_exec('git log --format="%B" -1')
         rev, p = await shell_exec("git rev-parse --short HEAD")
-        date, p = await shell_exec(
-            'git log -1 --format=%cd --date=format:"%d/%m %H:%M"'
-        )
+        date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
         timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
         local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
 
@@ -57,9 +56,7 @@ async def on_upgrade_u(c: Client, u: Union[Message, CallbackQuery]):
         if is_query:
             args.append(keyb)
         return await act(
-            lang.upgrade_alert_already_uptodate(
-                rev=rev, date=date, local_version=local_version
-            ),
+            lang.upgrade_alert_already_uptodate(rev=rev, date=date, local_version=local_version),
             *args,
         )
 
@@ -87,3 +84,4 @@ async def on_upgrade_u(c: Client, u: Union[Message, CallbackQuery]):
     if "--no-update" in sys.argv:
         args.append("--no-update")
     os.execv(sys.executable, args)
+    return None

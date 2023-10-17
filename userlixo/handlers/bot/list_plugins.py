@@ -34,9 +34,7 @@ async def on_list_plugins_u(c: Client, u: Union[Message, CallbackQuery]):
         user=("@" + user.me.username if user.me.username else user.me.first_name),
         bot=bot.me.username,
     )
-    lines = [
-        [(lang.user_plugins, "user_plugins 0"), (lang.bot_plugins, "bot_plugins 0")]
-    ]
+    lines = [[(lang.user_plugins, "user_plugins 0"), (lang.bot_plugins, "bot_plugins 0")]]
 
     kwargs = {"quote": True}
     if is_query:
@@ -47,7 +45,7 @@ async def on_list_plugins_u(c: Client, u: Union[Message, CallbackQuery]):
 
 
 @Client.on_callback_query(
-    filters.sudoers & filters.regex("^(?P<type>user|bot)_plugins (?P<page>\d+)")
+    filters.sudoers & filters.regex(r"^(?P<type>user|bot)_plugins (?P<page>\d+)")
 )
 async def on_list_plugins_type(c: Client, u: Union[Message, CallbackQuery]):
     # Determining type of update
@@ -67,9 +65,9 @@ async def on_list_plugins_type(c: Client, u: Union[Message, CallbackQuery]):
 
     layout = Pagination(
         [*plugins[plugin_type].items()],
-        item_data=lambda i, pg: "info_plugin {} {} {}".format(i[0], plugin_type, pg),
+        item_data=lambda i, pg: f"info_plugin {i[0]} {plugin_type} {pg}",
         item_title=item_title,
-        page_data=lambda pg: "{}_plugins {}".format(plugin_type, pg),
+        page_data=lambda pg: f"{plugin_type}_plugins {pg}",
     )
 
     lines = layout.create(page, lines=4, columns=2)
@@ -78,9 +76,7 @@ async def on_list_plugins_type(c: Client, u: Union[Message, CallbackQuery]):
     if hasattr(u, "from_bot_handler") or (hasattr(u, "message") and u.message):
         lines.append([(lang.add_plugin, f"add_plugin {page}")])
     else:  # is command to user
-        lines.append(
-            [(lang.add_plugin, f"t.me/{bot.me.username}?start=plugin_add", "url")]
-        )
+        lines.append([(lang.add_plugin, f"t.me/{bot.me.username}?start=plugin_add", "url")])
 
     if is_query:
         lines.append([(lang.back, "list_plugins")])

@@ -8,7 +8,7 @@ from pyrogram.client import Client
 from pyrogram.helpers import kb
 from pyrogram.types import Message, WebAppInfo
 
-from userlixo.config import user, cmds, plugins
+from userlixo.config import cmds, plugins, user
 from userlixo.utils import shell_exec
 
 

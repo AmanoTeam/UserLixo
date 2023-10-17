@@ -48,9 +48,7 @@ async def on_edit(c: Client, cq: CallbackQuery):
             await Config.get(key=key).update(value=msg.text)
             if key in env_requires_restart:
                 text = lang.edit_env_text_restart(key=key, value=msg.text)
-                keyboard = ikb(
-                    [[(lang.restart_now, "restart_now")], [(lang.back, "setting_env")]]
-                )
+                keyboard = ikb([[(lang.restart_now, "restart_now")], [(lang.back, "setting_env")]])
             else:
                 text = lang.edit_env_text(key=key, value=msg.text)
                 keyboard = ikb([[(lang.back, "setting_env")]])

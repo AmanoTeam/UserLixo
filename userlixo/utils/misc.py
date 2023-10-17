@@ -37,6 +37,6 @@ def timezone_shortener(timezone):
         timezone = timezone[:-2]
     if timezone[1] == "0":  # e.g. -03 to -3
         timezone = timezone[0] + timezone[2:]
-    if re.match("[\+-]\d+", timezone):  # if timezone is not "UTC" nor ""
+    if re.match(r"[\+-]\d+", timezone):  # if timezone is not "UTC" nor ""
         timezone = "GMT" + timezone
     return timezone

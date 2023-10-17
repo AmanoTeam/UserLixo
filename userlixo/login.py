@@ -6,6 +6,7 @@ import base64
 import configparser
 import json
 import os
+from pathlib import Path
 
 import click
 import pyrogram.errors
@@ -26,16 +27,19 @@ def b64decode(value: str):
 
 async def main():
     config = configparser.ConfigParser()
-    text = "[bold dodger_blue1]Almost there![/]\n[deep_sky_blue1]Now we are going to login into the user and bot accounts."
+    text = "[bold dodger_blue1]Almost there![/]\n[deep_sky_blue1]Now we are going to login into \
+the user and bot accounts."
     if __name__ == "__main__":
-        text = "[bold dodger_blue1 underline]Welcome to UserLixo![/]\n[deep_sky_blue1]We are going to login into the user account to get PYROGRAM_CONFIG and PYROGRAM_SESSION values."
-    text += "\n\nYou will be asked for a value for each var, but you can just press enter to use the default value (if there be any). Let's get started![/]"
+        text = "[bold dodger_blue1 underline]Welcome to UserLixo![/]\n[deep_sky_blue1]We are \
+going to login into the user account to get PYROGRAM_CONFIG and PYROGRAM_SESSION values."
+    text += "\n\nYou will be asked for a value for each var, but you can just press enter to use \
+the default value (if there be any). Let's get started![/]"
     print(text)
 
-    if os.path.exists("config.ini"):
+    if Path("config.ini").exists():
         config.read("config.ini")
-    elif os.path.exists(os.path.expanduser("~/.pyrogramrc")):
-        config.read(os.path.expanduser("~/.pyrogramrc"))
+    elif Path(Path("~/.pyrogramrc").expanduser()).exists():
+        config.read(Path("~/.pyrogramrc").expanduser())
 
     config.setdefault("pyrogram", {})
 
@@ -59,20 +63,19 @@ async def main():
             exit()
         config["pyrogram"][key] = user_value
 
-    with open("config.ini", "w") as fp:
+    with Path("config.ini").open("w") as fp:
         config.write(fp)
 
     from pyrogram import Client
 
     login_user = True
-    if os.path.exists("user.session"):
-        async with Client(
-            "user", workdir=".", config_file="./config.ini", plugins={"enabled": False}
-        ) as user:
+    if Path("user.session").exists():
+        async with Client("user", workdir=".", plugins={"enabled": False}) as user:
             me = await user.get_me()
         mention = "@" + me.username if me.username else me.first_name
         print(
-            rf"[bold yellow]I found an existing session from account [/][cyan]{mention}[/][bold yellow]. Do you want to use it?[/] [cyan]\[yn][/]",
+            rf"[bold yellow]I found an existing session from account [/][cyan]{mention}[/]"
+            rf"[bold yellow]. Do you want to use it?[/] [cyan]\[yn][/]",
             end="",
         )
         c = click.getchar(True)
@@ -81,8 +84,8 @@ async def main():
     if login_user:
         print("\n\n[bold green]- Logging in and creating new user.session...")
 
-        if os.path.exists("user.session"):
-            os.remove("user.session")
+        if Path("user.session").exists():
+            Path("user.session").unlink()
     else:
         print("\n\n[bold green]- Logging in using existing user.session...")
 
@@ -100,9 +103,7 @@ async def main():
     )
     await user.start()
 
-    session_config = {
-        k: v for section in config.sections() for k, v in config.items(section)
-    }
+    session_config = {k: v for section in config.sections() for k, v in config.items(section)}
     session_config = json.dumps(session_config)
     session_config = b64encode(session_config)
 
@@ -121,7 +122,7 @@ async def main():
         return await user.stop()
 
     login_bot = True
-    if os.path.exists("bot.session"):
+    if Path("bot.session").exists():
         async with Client(
             "bot",
             workdir=".",
@@ -133,15 +134,16 @@ async def main():
             me = await bot.get_me()
         mention = "@" + me.username
         print(
-            rf"[bold yellow]I found an existing session from bot [/][cyan]{mention}[/][bold yellow]. Do you want to use it? [/][cyan]\[yn]",
+            rf"[bold yellow]I found an existing session from bot [/][cyan]{mention}[/]"
+            rf"[bold yellow]. Do you want to use it? [/][cyan]\[yn]",
             end="",
         )
         c = click.getchar(True)
         login_bot = c == "n"
 
     print("\n[bold green]- Logging in the assistant bot...")
-    if login_bot and os.path.exists("bot.session"):
-        os.remove("bot.session")
+    if login_bot and Path("bot.session").exists():
+        Path("bot.session").unlink()
     if "BOT_TOKEN" not in os.environ:
         text = "\n┌ [light_sea_green]BOT_TOKEN[/light_sea_green]"
         print(text)
@@ -175,6 +177,7 @@ async def main():
 
     await user.stop()
     await bot.stop()
+    return None
 
 
 if __name__ == "__main__":

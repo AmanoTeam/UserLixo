@@ -25,3 +25,4 @@ async def on_add_sudoer(c: Client, m: Message):
 
     keyb = ikb([[(lang.back, "setting_sudoers")]])
     await m.reply(lang.sudoer_added, keyb)
+    return None

@@ -12,7 +12,7 @@ from pyrogram.types import (
 from userlixo.database import Message
 
 
-@Client.on_inline_query(filters.sudoers & filters.regex("^(?P<index>\d+)"))
+@Client.on_inline_query(filters.sudoers & filters.regex(r"^(?P<index>\d+)"))
 async def on_index(c: Client, iq: InlineQuery):
     index = int(iq.matches[0]["index"])
     message = await Message.get_or_none(key=index)
@@ -20,9 +20,7 @@ async def on_index(c: Client, iq: InlineQuery):
         results = [
             InlineQueryResultArticle(
                 title="undefined index",
-                input_message_content=InputTextMessageContent(
-                    f"Undefined index {index}"
-                ),
+                input_message_content=InputTextMessageContent(f"Undefined index {index}"),
             )
         ]
         return await iq.answer(results, cache_time=0)
@@ -33,12 +31,11 @@ async def on_index(c: Client, iq: InlineQuery):
     results = [
         InlineQueryResultArticle(
             title="index",
-            input_message_content=InputTextMessageContent(
-                text, disable_web_page_preview=True
-            ),
+            input_message_content=InputTextMessageContent(text, disable_web_page_preview=True),
             reply_markup=keyboard,
         )
     ]
 
     await iq.answer(results, cache_time=0)
     await (await Message.get(key=message.key)).delete()
+    return None

@@ -3,7 +3,7 @@
 
 import os
 
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import Message
 
 from userlixo.config import langs

@@ -1,0 +1,22 @@
+ci:
+  autofix_commit_msg: "CI: Automatic fixes from pre-commit hooks"
+  autofix_prs: true
+  autoupdate_commit_msg: "CI: Updates pre-commit hooks"
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: check-toml
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.0
+    hooks:
+      - id: ruff
+        files: userlixo
+        args: [--fix, --exit-non-zero-on-fix]

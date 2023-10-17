@@ -19,9 +19,7 @@ async def on_info(c: Client, m: Message):
 
     pid = os.getpid()
     uptime = (
-        await shell_exec(
-            "ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' "
-        )
+        await shell_exec("ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' ")
     )[0]
 
     uname = (await shell_exec("uname -mons"))[0]
@@ -29,7 +27,7 @@ async def on_info(c: Client, m: Message):
     remote_version = int(
         (
             await shell_exec(
-                """curl -s -I -k 'https://api.github.com/repos/AmanoTeam/UserLixo/commits?per_page=1' | grep -oE '&page=[0-9]+>; rel="last"' | grep -oE '[0-9]+' """
+                """curl -s -I -k 'https://api.github.com/repos/AmanoTeam/UserLixo/commits?per_page=1' | grep -oE '&page=[0-9]+>; rel="last"' | grep -oE '[0-9]+' """  # noqa: E501
             )
         )[0]
     )
@@ -42,8 +40,8 @@ async def on_info(c: Client, m: Message):
         else lang.info_latest
     )
 
-    user_plugins = len([x for x in plugins["user"]])
-    bot_plugins = len([x for x in plugins["bot"]])
+    user_plugins = len(list(plugins["user"]))
+    bot_plugins = len(list(plugins["bot"]))
     plugins_total = user_plugins + bot_plugins
     append_plugins = f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
 

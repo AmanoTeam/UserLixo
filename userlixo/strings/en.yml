@@ -338,7 +338,7 @@ about_plugins_text: |-
     UserLixo plugins are files (.py) with one or more Pyrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
 
      Anyone can create a plugin, so it's recommended to always check what you are adding, because it will have access to your account and server once added.
-     
+
     There are plugins of type==user, which will be loaded by the userbot's Client (i.e. will add new commands to the userbot) and plugins where type==bot, which will be loaded by the assistant bot.
 
     To see the list of plugins, use the command <code>plugins</code>

@@ -2,11 +2,11 @@
 # Copyright (c) 2018-2022 Amano Team
 
 import configparser
-import glob
 import importlib
 import json
 import os
 import re
+from pathlib import Path
 from typing import Dict
 
 import pyrogram
@@ -39,7 +39,8 @@ async def load_env():
         "PREFIXES": [".", "Prefixes for the userbot commands"],
         "SUDOERS_LIST": [
             "",
-            "List of users (usernames and ids separated by space) that will have permission to use your userbot/assistant.",
+            "List of users (usernames and ids separated by space) that will have permission to \
+use your userbot/assistant.",
         ],
         "BOT_TOKEN": ["", "Token of the assistant inline bot"],
         "WEB_APP_URL": ["https://webapp.pauxis.dev/userlixo/", "URL of the webapp."],
@@ -63,11 +64,11 @@ async def load_env():
 
     if missing_vars:
         if len(missing_vars) == len(environment_vars.keys()) - len(restricted_vars):
-            text = "[dodger_blue1 bold underline]Welcome to UserLixo![/][deep_sky_blue1]\nAs the first step we need to setup some config vars.\n\nYou will be asked for a value for each var, but you can just press enter to leave it empty or use the default value. Let's get started![/]"
+            text = "[dodger_blue1 bold underline]Welcome to UserLixo![/][deep_sky_blue1]\nAs the \
+first step we need to setup some config vars.\n\nYou will be asked for a value for each var, but \
+you can just press enter to leave it empty or use the default value. Let's get started![/]"
         else:
-            text = (
-                "[bold yellow]Some required config vars are missing. Let's add them.[/]"
-            )
+            text = "[bold yellow]Some required config vars are missing. Let's add them.[/]"
         print(text)
     for env_key, value_on_env, env_info in missing_vars:
         text = f"\n┌ [light_sea_green]{env_key}[/light_sea_green]"
@@ -97,7 +98,7 @@ async def load_env():
 
     # Sanitize sudoers list
     parts = os.getenv("SUDOERS_LIST").split()
-    parts = [*map(lambda x: tryint(x.lstrip("@").lower()), parts)]
+    parts = [*(tryint(x.lstrip("@").lower()) for x in parts)]
     parts = [*set(parts)]
     parts = [x for x in parts if x != "me"]
     sudoers.extend(parts)
@@ -138,7 +139,7 @@ bot_token = config.get("pyrogram", "bot_token", fallback=None)
 # All monkeypatch stuff must be done before the Client instance is created
 def filter_sudoers(flt, c, u):
     if not u.from_user:
-        return
+        return None
     user = u.from_user
     return user.id in sudoers or (user.username and user.username.lower() in sudoers)
 
@@ -181,7 +182,8 @@ pyrogram.types.Message.reply = reply_text
 pyrogram.types.Message.edit = edit_text
 pyrogram.types.Message.ikb = message_ikb
 
-# I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't exist. I want to use the fallback also when the key exists but it's invalid
+# I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't
+# exist. I want to use the fallback also when the key exists but it's invalid
 user = Client(
     os.getenv("PYROGRAM_SESSION") or "user",
     plugins={"root": "userlixo/handlers/user"},
@@ -194,14 +196,13 @@ user = Client(
 
 
 def open_yml(filename):
-    with open(filename) as fp:
-        data = yaml.safe_load(fp)
-    return data
+    with Path(filename).open() as fp:
+        return yaml.safe_load(fp)
 
 
 strings = {}
-for string_file in glob.glob("userlixo/strings/*.yml"):
-    language_code = re.match(r"userlixo/strings/(.+)\.yml$", string_file)[1]
+for string_file in Path("userlixo/strings").rglob("*.yml"):
+    language_code = re.match(r"userlixo/strings/(.+)\.yml$", str(string_file))[1]
     strings[language_code] = open_yml(string_file)
 
 langs = Langs(**strings, escape_html=True)
@@ -233,9 +234,9 @@ cmds_list = [
 cmds = {x: 1 for x in cmds_list}
 
 plugins = {"user": {}, "bot": {}}
-for file in glob.glob("userlixo/handlers/*/plugins/*.py"):
-    basename = os.path.basename(file)
-    plugin_type = ("user", "bot")["handlers/bot/" in file]
+for file in Path("userlixo/handlers").glob("**/plugins/*.py"):
+    basename = Path(file).name
+    plugin_type = ("user", "bot")["handlers/bot/" in str(file)]
     if basename.startswith("__"):
         continue
 

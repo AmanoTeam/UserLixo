@@ -9,6 +9,7 @@ import math
 import os
 import re
 import sys
+from pathlib import Path
 from typing import Union
 
 from pyrogram import Client, filters
@@ -86,6 +87,7 @@ async def on_add_plugin_u(c: Client, u: Union[Message, CallbackQuery]):
     ]
     keyb = ikb(lines)
     await msg.reply(text, keyb, disable_web_page_preview=True, quote=True)
+    return None
 
 
 @Client.on_callback_query(filters.sudoers & filters.regex("^cancel_plugin"))
@@ -106,32 +108,30 @@ async def on_confirm_plugin(c: Client, cq: CallbackQuery):
     client = (user, bot)[plugin_type == "bot"]
 
     cache_filename = cq.matches[0]["filename"]
-    basename = os.path.basename(cache_filename)
+    basename = Path(cache_filename).name
     new_filename = "userlixo/handlers/" + plugin_type + "/plugins/" + basename
 
     plugin = read_plugin_info(cache_filename)
-    new_notation = re.sub("\.py$", "", os.path.relpath(new_filename)).replace("/", ".")
+    new_notation = re.sub(r"\.py$", "", os.path.relpath(new_filename)).replace("/", ".")
 
     requirements = plugin.get("requirements")
     if requirements:
-        DGRAY = 'echo -e "\033[1;30m"'
-        RESET = 'echo -e "\033[0m"'
+        dgray = 'echo -e "\033[1;30m"'
+        reset = 'echo -e "\033[0m"'
         req_list = requirements.split()
         req_text = "".join(f" ├ <code>{r}</code>\n" for r in req_list[:-1])
         req_text += f" └ <code>{req_list[-1]}</code>"
         text = lang.installing_plugin_requirements
         text.escape_html = False
         await cq.edit(text(requirements=req_text))
-        os.system(f"{DGRAY}; {sys.executable} -m pip install {requirements}; {RESET}")
+        os.system(f"{dgray}; {sys.executable} -m pip install {requirements}; {reset}")
 
     # Safely unload the plugin if existent
-    if os.path.exists(new_filename):
+    if Path(new_filename).exists():
         try:
             module = importlib.import_module(new_notation)
         except Exception as e:
-            return await cq.edit(
-                lang.plugin_could_not_load_existent(name=basename, e=e)
-            )
+            return await cq.edit(lang.plugin_could_not_load_existent(name=basename, e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
         functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
@@ -148,7 +148,7 @@ async def on_confirm_plugin(c: Client, cq: CallbackQuery):
             importlib.reload(module)
         module = importlib.import_module(plugin["notation"])
     except Exception as e:
-        os.remove(new_filename)
+        Path(new_filename).unlink()
         await cq.edit(lang.plugin_could_not_load(e=e))
         raise e
 
@@ -185,7 +185,8 @@ async def on_confirm_plugin(c: Client, cq: CallbackQuery):
                 else:
                     await cq.edit(
                         lang.plugin_could_not_load(
-                            e="The return of post_install_script should be like this: (0, 'nodejs not found')"
+                            e="The return of post_install_script should be like this: \
+(0, 'nodejs not found')"
                         )
                     )
                     unload = True
@@ -204,8 +205,8 @@ async def on_confirm_plugin(c: Client, cq: CallbackQuery):
                 for f in functions:
                     for handler in f.handlers:
                         client.remove_handler(*handler)
-                os.remove(new_filename)
-                return
+                Path(new_filename).unlink()
+                return None
 
     plugins[plugin_type][basename] = plugin
     reload_plugins_requirements(plugins)
@@ -220,9 +221,8 @@ async def on_confirm_plugin(c: Client, cq: CallbackQuery):
     quant_per_page = 4 * 2  # lines times columns
     page = math.ceil(len(plugins) / quant_per_page)
 
-    keyb = ikb(
-        [[(lang.see_plugin_info, f"info_plugin {basename} {plugin_type} {page}")]]
-    )
+    keyb = ikb([[(lang.see_plugin_info, f"info_plugin {basename} {plugin_type} {page}")]])
     text = lang.plugin_added(name=basename)
 
     await cq.edit(text, keyb)
+    return None

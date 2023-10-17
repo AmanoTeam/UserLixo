@@ -3,6 +3,7 @@
 
 import os
 import sys
+from pathlib import Path
 
 os.system("clear")
 # Update requirements
@@ -19,7 +20,7 @@ if "--no-update" not in sys.argv:
     from userlixo.config import plugins
     from userlixo.utils.plugins import reload_plugins_requirements
 
-    if os.path.exists("plugins-requirements.txt"):
+    if Path("plugins-requirements.txt").exists():
         requirements, unused_requirements = reload_plugins_requirements(plugins)
         print("\033[0;32m[2/2] Updating plugins requirements...\033[0m")
         os.system(
@@ -28,7 +29,8 @@ if "--no-update" not in sys.argv:
 print("\033[0m")
 os.system("clear")
 
-import glob
+# ruff: noqa: E402
+import contextlib
 import platform
 from datetime import datetime
 
@@ -63,13 +65,11 @@ async def alert_startup():
 
     pid = os.getpid()
     uptime = (
-        await shell_exec(
-            "ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' "
-        )
+        await shell_exec("ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' ")
     )[0]
 
-    user_plugins = len([x for x in plugins["user"]])
-    bot_plugins = len([x for x in plugins["bot"]])
+    user_plugins = len(list(plugins["user"]))
+    bot_plugins = len(list(plugins["bot"]))
     plugins_total = user_plugins + bot_plugins
     append_plugins = f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
 
@@ -102,18 +102,18 @@ async def main():
 
     @aiocron.crontab("*/1 * * * *")
     async def clean_cache():
-        for file in glob.glob("cache/*"):
-            if not os.path.isfile(file):
+        for file in Path("cache/").glob("*"):
+            if not Path(file).is_file():
                 continue
-            creation_time = datetime.fromtimestamp(os.path.getctime(file))
+            creation_time = datetime.fromtimestamp(Path(file).stat().st_ctime)
             now_time = datetime.now()
             diff = now_time - creation_time
             minutes_passed = diff.total_seconds() / 60
 
             if minutes_passed >= 10:
-                os.remove(file)
+                Path(file).unlink()
 
-    if not os.path.exists("user.session"):
+    if not Path("user.session").exists():
         from userlixo.login import main as login
 
         await login()
@@ -148,9 +148,7 @@ async def main():
 
         title, p = await shell_exec('git log --format="%B" -1')
         rev, p = await shell_exec("git rev-parse --short HEAD")
-        date, p = await shell_exec(
-            'git log -1 --format=%cd --date=format:"%d/%m %H:%M"'
-        )
+        date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
         timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
         local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
 
@@ -158,11 +156,7 @@ async def main():
         date += f" ({timezone})"
 
         kwargs = {}
-        text = (
-            langs.upgraded_alert
-            if from_cmd.startswith("upgrade")
-            else langs.restarted_alert
-        )
+        text = langs.upgraded_alert if from_cmd.startswith("upgrade") else langs.restarted_alert
 
         text = text(rev=rev, date=date, seconds=diff, local_version=local_version)
 
@@ -174,17 +168,14 @@ async def main():
             if chat_id == "inline":
                 await bot.edit_inline_text(message_id, text, **kwargs)
             else:
-                await editor.edit_message_text(
-                    tryint(chat_id), tryint(message_id), text, **kwargs
-                )
+                await editor.edit_message_text(tryint(chat_id), tryint(message_id), text, **kwargs)
         except BaseException as e:
             print(
-                f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted or somehow it became inacessible.\n>> {e}[/yellow]"
+                f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted \
+or somehow it became inacessible.\n>> {e}[/yellow]"
             )
-        try:
+        with contextlib.suppress(OperationalError):
             await (await Config.get(id=restarting_alert.id)).delete()
-        except OperationalError:
-            pass
 
     # Showing alert in cli
     date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
@@ -202,9 +193,7 @@ async def main():
         "Bot": "@" + bot.me.username,
         "Prefixes": os.getenv("PREFIXES"),
         "Logs_chat": os.getenv("LOGS_CHAT"),
-        "Sudoers": ", ".join(
-            [*set(map(str, sudoers))]
-        ),  # using set() to make the values unique
+        "Sudoers": ", ".join([*set(map(str, sudoers))]),  # using set() to make the values unique
         "Commit_date": date,
     }
     for k, v in userlixo_info.items():
@@ -222,7 +211,7 @@ async def main():
     if unused_requirements:
         unused = ", ".join(unused_requirements)
         print(
-            f"[yellow]The following packages are not required by plugins anymore: [/][cyan]{unused}"
+            f"[yellow]The following packages are not required by plugins anymore: [/][cyan]{unused}"  # noqa: E501
         )
         try:
             await user.send_message(

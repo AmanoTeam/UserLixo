@@ -2,9 +2,9 @@
 # Copyright (c) 2018-2022 Amano Team
 
 import html
-import os
 import re
 import traceback
+from pathlib import Path
 
 from meval import meval
 from pyrogram import Client, filters
@@ -38,10 +38,10 @@ async def evals(c: Client, m: Message):
         try:
             output = str(output)
             if len(output) > 4096:
-                with open("output.txt", "w") as f:
+                with Path("output.txt").open("w") as f:
                     f.write(output)
                 await m.reply_document("output.txt", quote=True)
-                return os.remove("output.txt")
+                return Path("output.txt").unlink()
 
             output = html.escape(str(output))  # escape html special chars
 

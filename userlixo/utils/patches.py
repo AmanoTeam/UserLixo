@@ -1,33 +1,26 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
 
+import contextlib
+
 from pyrogram import types
 from pyrogram.helpers import bki, ikb
 
 from userlixo.database import Message
 
 
-async def query_edit(
-    self, text: str, reply_markup=None, answer_kwargs={}, *args, **kwargs
-):
-    try:
+async def query_edit(self, text: str, reply_markup=None, answer_kwargs={}, *args, **kwargs):
+    with contextlib.suppress(BaseException):
         await self.answer(**answer_kwargs)
-    except BaseException:
-        pass
-    edit = await self.edit_message_text(
-        text=text, reply_markup=reply_markup, *args, **kwargs
-    )
-    return edit
+    return await self.edit_message_text(text=text, reply_markup=reply_markup, *args, **kwargs)
 
 
 def remove_keyboard(self, message_id=None, *args, **kwargs):
-    return self._client.edit_message_reply_markup(
-        self.chat.id, message_id or self.id, {}
-    )
+    return self._client.edit_message_reply_markup(self.chat.id, message_id or self.id, {})
 
 
 async def edit_text(self, text: str, reply_markup=None, *args, **kwargs):
-    if type(reply_markup) == list:
+    if isinstance(reply_markup, list):
         reply_markup = ikb(reply_markup)
     return await self._client.edit_message_text(
         self.chat.id, self.id, text, reply_markup=reply_markup, **kwargs

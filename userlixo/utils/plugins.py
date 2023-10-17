@@ -5,30 +5,28 @@ import json
 import os
 import re
 from configparser import ConfigParser
+from pathlib import Path
 
 from userlixo.database import Config
 
 
 async def get_inactive_plugins(plugins):
-    inactive = (await Config.get_or_create({"value": "[]"}, key="INACTIVE_PLUGINS"))[
-        0
-    ].value
-    inactive = json.loads(inactive)
-    return inactive
+    inactive = (await Config.get_or_create({"value": "[]"}, key="INACTIVE_PLUGINS"))[0].value
+    return json.loads(inactive)
 
 
 def reload_plugins_requirements(plugins):
     old_requirements = []
-    if os.path.exists("plugins-requirements.txt"):
-        with open("plugins-requirements.txt") as f:
+    if Path("plugins-requirements.txt").exists():
+        with Path("plugins-requirements.txt").open() as f:
             old_requirements = [x for x in f.read().split("\n") if len(x)]
     requirements = []
-    for plugin_type, items in plugins.items():
-        for name, p in items.items():
+    for items in plugins.values():
+        for p in items.values():
             p_requires = p.get("requirements", "")
             p_requires = re.split("[, ]{1,}", p_requires)
             requirements.extend(p_requires)
-    with open("plugins-requirements.txt", "w") as f:
+    with Path("plugins-requirements.txt").open("w") as f:
         f.write("\n".join(requirements))
     unused = list(set(old_requirements) - set(requirements))
     return requirements, unused
@@ -53,12 +51,13 @@ def write_plugin_info(plugins, lang, info, **kwargs):
     text = lang.plugin_info
     text.escape_html = False
     return text(
-        info=info, **{**info_lines, **kwargs}  # make kwargs override info_lines
+        info=info,
+        **{**info_lines, **kwargs},  # make kwargs override info_lines
     )
 
 
 def read_plugin_info(filename):
-    with open(filename) as f:
+    with Path.open(filename) as f:
         data = f.read()
     if not (
         match := re.search(
@@ -69,13 +68,13 @@ def read_plugin_info(filename):
     ):
         return None
 
-    notation = re.sub("\.py$", "", os.path.relpath(filename)).replace("/", ".")
-    basename = os.path.basename(filename)
+    notation = re.sub(r"\.py$", "", os.path.relpath(filename)).replace("/", ".")
+    basename = Path(filename)
     values = ConfigParser()
     values.read_string("[doc]\n" + match["ini"])
     values = values._sections["doc"]
 
-    default = dict(author="?")
+    default = {"author": "?"}
     default.update(values)
     values = default
 
@@ -83,7 +82,7 @@ def read_plugin_info(filename):
     if plugin_type not in ("user", "bot"):
         plugin_type = "user"
 
-    info = {
+    return {
         "basename": basename,
         "type": plugin_type,
         "title": match["title"],
@@ -92,4 +91,3 @@ def read_plugin_info(filename):
         "notation": notation,
         **values,
     }
-    return info

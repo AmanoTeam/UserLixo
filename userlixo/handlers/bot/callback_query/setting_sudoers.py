@@ -32,9 +32,7 @@ async def sudoers_interface(cq: CallbackQuery):
 
         mention = user_id
         if user_obj:
-            mention = (
-                f"@{user_obj.username}" if user_obj.username else user_obj.first_name
-            )
+            mention = f"@{user_obj.username}" if user_obj.username else user_obj.first_name
         text += f"\n👤 {mention}"
 
         if id not in ["me", user.me.id, cq.from_user.id]:
@@ -62,9 +60,7 @@ async def on_setting_sudoers(c: Client, cq: CallbackQuery):
     await cq.edit(text, keyboard)
 
 
-@Client.on_callback_query(
-    filters.sudoers & filters.regex("^remove_sudoer (?P<who>\w+)")
-)
+@Client.on_callback_query(filters.sudoers & filters.regex(r"^remove_sudoer (?P<who>\w+)"))
 async def on_remove_sudoer(c: Client, cq: CallbackQuery):
     who = tryint(cq.matches[0]["who"])
 

@@ -3,10 +3,10 @@
 
 import html
 import io
-import os
 import re
 import traceback
 from contextlib import redirect_stdout
+from pathlib import Path
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -48,12 +48,13 @@ async def execs(c: Client, m: Message):
     output = strio.getvalue()
     if output:
         if len(output) > 4096:
-            with open("output.txt", "w") as f:
+            with Path("output.txt").open("w") as f:
                 f.write(output)
             await m.reply_document("output.txt", quote=True)
-            return os.remove("output.txt")
+            return Path("output.txt").unlink()
         output = html.escape(output)  # escape html special chars
         text = "".join(f"<code>{line}</code>\n" for line in output.splitlines())
         if cmd == "exec":
             return await act(text)
         await m.reply(text)
+    return None

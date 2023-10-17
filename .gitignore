@@ -55,6 +55,15 @@ docs/_build/
 # Jetbrains
 .idea
 
+# Rye
+requirements-dev.lock
+requirements.lock
+.python-version
+.venv/
+
+# Ruff
+.ruff_cache
+
 # Custom
 test.py
 test.txt

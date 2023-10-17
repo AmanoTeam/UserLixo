@@ -339,7 +339,7 @@ about_plugins_text: |-
     Plugins são arquivos (.py) com um ou mais handlers para adicionar ao UserLixo. Eles podem adicionar novos comandos os mesmo alterar o comportamento habitual do UserLixo.
 
     Qualquer pessoa pode criar um plugin, então é recomendado sempre checar o que você está adicionando, pois o plugin terá acesso à sua conta e ao seu servidor assim que adicionado.
-     
+
     Há plugins do tipo "user", que serão carregados pelo objeto Client do userbot (isto é, plugins que adicionarão comandos ao userbot) e há plugins do tipo "bot", que serão carregados pelo bot assistente.
 
     Para ver a lista de plugins, use o comando <code>plugins</code>.

@@ -14,7 +14,7 @@ from userlixo.database import Config
 async def on_setting_language(c: Client, cq: CallbackQuery):
     lang = cq._lang
     buttons = []
-    for code, obj in lang.strings.items():
+    for obj in lang.strings.values():
         text, data = (
             (f"✅ {obj['NAME']}", "noop")
             if obj["LANGUAGE_CODE"] == lang.code
@@ -27,9 +27,7 @@ async def on_setting_language(c: Client, cq: CallbackQuery):
     await cq.edit(lang.choose_language, keyboard)
 
 
-@Client.on_callback_query(
-    filters.sudoers & filters.regex(r"^set_language (?P<code>\w+)")
-)
+@Client.on_callback_query(filters.sudoers & filters.regex(r"^set_language (?P<code>\w+)"))
 async def on_set_language(c: Client, cq: CallbackQuery):
     lang = cq._lang
     match = cq.matches[0]
@@ -37,7 +35,7 @@ async def on_set_language(c: Client, cq: CallbackQuery):
     await Config.get(key="LANGUAGE").update(value=lang.code)
     os.environ["LANGUAGE"] = lang.code
     buttons = []
-    for code, obj in lang.strings.items():
+    for obj in lang.strings.values():
         text, data = (
             (f"✅ {obj['NAME']}", "noop")
             if obj["LANGUAGE_CODE"] == lang.code

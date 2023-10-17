@@ -1,68 +1,67 @@
-[tool.poetry]
+[project]
 name = "userlixo"
 version = "1.0.0"
 description = "An Telegram userbot with many functions."
-authors = ["AmanoTeam <contact@amanoteam.com>"]
-license = "MIT"
 readme = "README.md"
-repository = "https://github.com/AmanoTeam/UserLixo"
-documentation = "https://github.com/AmanoTeam/UserLixo/blob/userlixo-czp/README.md"
-
-keywords = ["chat", "telegram", "pyrogram", "telegram-bot", "selfbot"]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Console",
-    "Framework :: AsyncIO",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: Unix",
-    "Topic :: Internet",
-    "Topic :: Communications",
-    "Topic :: Communications :: Chat"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+authors = [{ name = "AmanoTeam", email = "contact@amanoteam.com" }]
+dependencies = [
+    "tgcrypto>=1.2.5",
+    "rich>=13.6.0",
+    "langs>=0.1.1",
+    "aiocron>=1.8",
+    "click>=8.1.7",
+    "PyYAML>=6.0.1",
+    "tortoise-orm>=0.20.0",
+    "meval>=2.5",
+    "psutil>=5.9.6",
+    "pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn7",
 ]
 
-exclude = ["config.ini", "user.session*", "bot.session*", "userlixo/database/*.sqlite", "plugins-requirements.txt"]
+[tool.hatch.build]
+exclude = [
+    "config.ini",
+    "user.session*",
+    "bot.session*",
+    "userlixo/database/*.sqlite",
+    "plugins-requirements.txt",
+]
 
-[tool.poetry.urls]
-"Bug Tracker" = "https://github.com/AmanoTeam/UserLixo/issues"
-"Community" = "https://t.me/UserLixoChat"
-
-[tool.poetry.dependencies]
-python = "^3.8"
-tgcrypto = "^1.2.5"
-rich = "^12.5.1"
-langs = "^0.1.1"
-aiocron = "^1.8"
-click = "^8.1.3"
-PyYAML = "^6.0"
-tortoise-orm = "^0.19"
-meval = "^2.5"
-pyrogram = { git = "https://github.com/AmanoTeam/Pyrogram.git", tag = "v2.0.106+amn4" }
-psutil = "^5.9.6"
-
-[tool.poetry.dev-dependencies]
-isort = "^5.10.1"
-flake8 = "^5.0.3"
-
-[tool.black]
-exclude = '''
-/(
-    \.git
-  | \.pytest_cache
-  | \.vscode
-  | \.mypy_cache
-  | \.tox
-  | venv
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
-
-[tool.isort]
-profile = "black"
+[project.urls]
+Repository = "https://github.com/AmanoTeam/UserLixo/"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = ["ruff>=0.1.0", "pre-commit>=3.5.0"]
+
+[tool.ruff]
+line-length = 99
+src = ["userlixo"]
+target-version = "py38"
+select = [
+    "I",    # isort
+    "E",    # pycodestyle
+    "W",    # pycodestyle
+    "UP",   # pyupgrade
+    "F",    # pyflakes
+    "SIM",  # flake8-simplify
+    "RET",  # flake8-return
+    "C4",   # flake8-comprehensions
+    "PTH",  # flake8-use-pathlib
+    "PERF", # perflint
+    "N",    # pep8-naming
+    "RUF",  # ruff
+]
+ignore = ["RUF001", "RUF002", "RUF003"]
+preview = true
+
+[tool.ruff.isort]
+known-first-party = ["userlixo"]
+
+[tool.hatch.metadata]
+allow-direct-references = true

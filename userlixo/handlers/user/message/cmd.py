@@ -2,8 +2,8 @@
 # Copyright (c) 2018-2022 Amano Team
 
 import html
-import os
 import re
+from pathlib import Path
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -27,14 +27,15 @@ async def cmd(c: Client, m: Message):
     output = result or lang.executed_cmd
 
     if len(output) > 4096:
-        with open("output.txt", "w") as f:
-            f.write(output)
+        with Path("output.txt").open("w") as f:
+            f.write(str(output))
         await m.reply_document("output.txt", quote=True)
-        return os.remove("output.txt")
+        return Path("output.txt").unlink()
 
-    output = html.escape(output)  # escape html special chars
+    output = html.escape(str(output))  # escape html special chars
 
     text = "".join(f"<code>{line}</code>\n" for line in output.splitlines())
     if command == "cmd":
         return await act(text)
     await m.reply(text)
+    return None

@@ -3,7 +3,7 @@
 
 import importlib
 import json
-import os
+from pathlib import Path
 
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
@@ -17,9 +17,7 @@ from userlixo.utils.plugins import get_inactive_plugins, write_plugin_info
 
 @Client.on_callback_query(
     filters.sudoers
-    & filters.regex(
-        "^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)"
-    )
+    & filters.regex(r"^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)")
 )
 async def on_info_plugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
@@ -43,21 +41,20 @@ async def on_info_plugin(c: Client, cq: CallbackQuery):
     status_line = "\n" + status
 
     lines = [[first_btn, (lang.remove, f"remove_plugin {basename} {plugin_type} {pg}")]]
-    if "settings" in plugin and plugin["settings"]:
-        lines.append(
-            [(lang.settings, f"plugin_settings {basename} {plugin_type} {pg}")]
-        )
+    if plugin.get("settings"):
+        lines.append([(lang.settings, f"plugin_settings {basename} {plugin_type} {pg}")])
     lines.append([(lang.back, f"{plugin_type}_plugins {pg}")])
     keyb = ikb(lines)
 
     text = write_plugin_info(plugins, lang, plugin, status_line=status_line)
     await cq.edit(text, keyb, disable_web_page_preview=True)
+    return None
 
 
 @Client.on_callback_query(
     filters.sudoers
     & filters.regex(
-        "^(?P<deactivate>de)?activate_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)"
+        r"^(?P<deactivate>de)?activate_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)"  # noqa: E501
     )
 )
 async def on_switch_plugin(c: Client, cq: CallbackQuery):
@@ -69,7 +66,7 @@ async def on_switch_plugin(c: Client, cq: CallbackQuery):
         return await cq.answer(lang.plugin_not_found(name=basename))
 
     plugin = plugins[plugin_type][basename]
-    if not os.path.exists(plugin["filename"]):
+    if not Path(plugin["filename"]).exists():
         return await cq.edit(lang.plugin_not_exists_on_server)
 
     inactive = await get_inactive_plugins(plugins)
@@ -85,7 +82,7 @@ async def on_switch_plugin(c: Client, cq: CallbackQuery):
     try:
         module = importlib.import_module(plugin["notation"])
     except Exception as e:
-        os.remove(plugin["filename"])
+        Path(plugin["filename"]).unlink()
         return await cq.edit(lang.plugin_could_not_load(e=e))
 
     functions = [*filter(callable, module.__dict__.values())]
@@ -95,20 +92,15 @@ async def on_switch_plugin(c: Client, cq: CallbackQuery):
     for f in functions:
         (client.remove_handler if deactivate else client.add_handler)(*f.handler)
 
-    text = (
-        lang.plugin_has_been_deactivated
-        if deactivate
-        else lang.plugin_has_been_activated
-    )
+    text = lang.plugin_has_been_deactivated if deactivate else lang.plugin_has_been_activated
     await cq.answer(text)
     await on_info_plugin(c, cq)
+    return None
 
 
 @Client.on_callback_query(
     filters.sudoers
-    & filters.regex(
-        "^remove_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)"
-    )
+    & filters.regex(r"^remove_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)")
 )
 async def on_remove_plugin(c: Client, cq: CallbackQuery):
     lang = cq._lang
@@ -123,7 +115,7 @@ async def on_remove_plugin(c: Client, cq: CallbackQuery):
 
     inactive = await get_inactive_plugins(plugins)
 
-    if not os.path.exists(plugin["filename"]):
+    if not Path(plugin["filename"]).exists():
         return await cq.edit(lang.plugin_not_exists_on_server)
 
     if plugin["notation"] in inactive:
@@ -133,7 +125,7 @@ async def on_remove_plugin(c: Client, cq: CallbackQuery):
     try:
         module = importlib.import_module(plugin["notation"])
     except Exception as e:
-        os.remove(plugin["filename"])
+        Path(plugin["filename"]).unlink()
         return await cq.edit(lang.plugin_could_not_load(e=e))
 
     functions = [*filter(callable, module.__dict__.values())]
@@ -143,8 +135,9 @@ async def on_remove_plugin(c: Client, cq: CallbackQuery):
     for f in functions:
         client.remove_handler(*f.handler)
     del plugins[plugin_type][basename]
-    os.remove(plugin["filename"])
+    Path(plugin["filename"]).unlink()
 
     await cq.answer(lang.plugin_removed(name=basename))
     cq.matches = [{"page": pg, "type": plugin_type}]
     await on_list_plugins_type(c, cq)
+    return None

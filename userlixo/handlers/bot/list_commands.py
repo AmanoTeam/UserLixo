@@ -11,9 +11,7 @@ from pyrogram.types import CallbackQuery, Message
 from userlixo.config import cmds
 
 
-@Client.on_callback_query(
-    filters.sudoers & filters.regex("^list_commands (?P<page>\d+)")
-)
+@Client.on_callback_query(filters.sudoers & filters.regex(r"^list_commands (?P<page>\d+)"))
 async def on_list_commands_cq(c: Client, cq: CallbackQuery):
     await on_list_commands_u(c, cq)
 
@@ -42,7 +40,7 @@ async def on_list_commands_u(c: Client, u: Union[Message, CallbackQuery]):
 
 
 @Client.on_callback_query(
-    filters.sudoers & filters.regex("^info_command (?P<cmd>.+) (?P<pg>\d+)")
+    filters.sudoers & filters.regex(r"^info_command (?P<cmd>.+) (?P<pg>\d+)")
 )
 async def on_info_command(c: Client, cq: CallbackQuery):
     lang = cq._lang
@@ -60,3 +58,4 @@ async def on_info_command(c: Client, cq: CallbackQuery):
     text = lang.command_info
     text.escape_html = False
     await cq.edit(text(command=cmd, info=info), kb)
+    return None

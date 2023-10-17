@@ -3,8 +3,8 @@
 
 import os
 
+from tortoise import Tortoise, connections, fields
 from tortoise.backends.base.client import Capabilities
-from tortoise import Tortoise, fields, connections
 from tortoise.models import Model
 
 
@@ -24,9 +24,7 @@ async def connect_database():
     await Tortoise.init(
         {
             "connections": {
-                "bot_db": os.getenv(
-                    "DATABASE_URL", "sqlite://userlixo/database/database.sqlite"
-                )
+                "bot_db": os.getenv("DATABASE_URL", "sqlite://userlixo/database/database.sqlite")
             },
             "apps": {"bot": {"models": [__name__], "default_connection": "bot_db"}},
         }

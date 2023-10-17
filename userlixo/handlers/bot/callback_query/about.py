@@ -33,7 +33,7 @@ async def on_about_userlixo(c: Client, cq: CallbackQuery):
                 break
             examples.append("<code>" + p + commands[n] + "</code>")
         examples = ", ".join(examples)
-        commands_list = [*map(lambda x: f"<code>{x}</code>", commands)]
+        commands_list = [*(f"<code>{x}</code>" for x in commands)]
 
         text.escape_html = False
         text = text(
