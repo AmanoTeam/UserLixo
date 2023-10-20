@@ -3,6 +3,7 @@ import math
 import os
 import time
 
+import cv2
 from PIL import Image
 from pyrogram import Client, filters
 from pyrogram.errors import StickersetInvalid
@@ -16,7 +17,7 @@ from db import db, save
 @Client.on_message(filters.command("kibe", prefixes=".") & filters.me)
 async def kibe(client: Client, message: Message):
     emoji = message.text[6:]
-    rsize = False
+    rsize, anim = False, False
     ctime = time.time()
     user = await client.get_me()
     packnames, packnicks = "", ""
@@ -41,6 +42,15 @@ async def kibe(client: Client, message: Message):
             )
             rsize = True
             packn = pack["photo"]
+        elif rmessage.video:
+            photo = await client.download_media(
+                rmessage.video.file_id, file_name=f"./{ctime}.mp4"
+            )
+            rsize = True
+            anim = True
+            packnames = "_video"
+            packnicks = " video"
+            packn = pack["video"]
         elif rmessage.document:
             photo = await client.download_media(
                 rmessage.document.file_id, file_name=f"./{ctime}.png"
@@ -78,8 +88,10 @@ async def kibe(client: Client, message: Message):
         packnick = f"@{user.username}'s kibe pack V{packn}.0{packnicks}"
         if not emoji:
             emoji = "👍"
-        if rsize:
+        if rsize and not anim:
             photo = await resize_photo(photo, ctime)
+        if rsize and anim:
+            photo = await resize_video(photo, ctime)
         try:
             stickerpack = await client.invoke(
                 functions.messages.GetStickerSet(
@@ -106,7 +118,7 @@ async def kibe(client: Client, message: Message):
                 packnames = "_animated"
                 packnicks = " animated"
                 packn = db["sticker"]["animated"]
-            elif rmessage.sticker.is_video:
+            elif rmessage.sticker.is_video or rmessage.video:
                 db["sticker"]["video"] += 1
                 packnames = "_video"
                 packnicks = " video"
@@ -175,6 +187,25 @@ async def resize_photo(photo, ctime):
 
     return f"./{ctime}.webp"
 
+async def resize_video(video, ctime):
+    cap = cv2.VideoCapture(video)
+    if cap.get(cv2.CAP_PROP_FRAME_WIDTH) >= cap.get(cv2.CAP_PROP_FRAME_HEIGHT):
+        scale = -1
+    else:
+        scale = 512
+
+    command = [
+        "ffmpeg", "-i", video, "-vf", f"scale=512:{scale}",
+        "-c:v", "libvpx-vp9", "-r", "30", "-t", "3", "-an", f"{ctime}.webm"
+    ]
+
+    process = await asyncio.create_subprocess_exec(
+        *command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+
+    await process.communicate()
+    os.remove(video)
+    return f"./{ctime}.webm"
 
 async def create_pack(
     message: Message,
@@ -240,4 +271,4 @@ async def create_pack(
     os.remove(photo)
 
 
-cmds.update({".kibe": "Kibe a image or sticker"})
+cmds.update({".kibe": "Kibe a image, video or sticker"})

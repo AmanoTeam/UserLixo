@@ -12,3 +12,4 @@ telegraph
 pySmartDL
 httpx[http2]
 EdgeGPT
+opencv-python
