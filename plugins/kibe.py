@@ -196,7 +196,7 @@ async def resize_video(video, ctime):
 
     command = [
         "ffmpeg", "-i", video, "-vf", f"scale=512:{scale}",
-        "-c:v", "libvpx-vp9", "-r", "30", "-t", "3", "-an", f"{ctime}.webm"
+        "-c:v", "libvpx-vp9", "-b:v", "0.5M", "-r", "30", "-t", "3", "-an", f"{ctime}.webm"
     ]
 
     process = await asyncio.create_subprocess_exec(
