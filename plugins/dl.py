@@ -1,6 +1,7 @@
 import os
 import time
 
+from pyrogram.enums import ChatAction
 from pyrogram import Client, filters
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import Message
@@ -71,7 +72,7 @@ async def progress(current, total, c, m, a):
     global last_edit
     temp = current * 100 / total
     if last_edit + 3 < time.time():
-        await c.send_chat_action(m.chat.id, "UPLOAD_VIDEO")
+        await c.send_chat_action(m.chat.id,ChatAction.UPLOAD_DOCUMENT)
         try:
             await m.edit(a + "\n" + "{:.1f}%".format(temp))
         except MessageNotModified:
