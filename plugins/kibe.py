@@ -42,9 +42,10 @@ async def kibe(client: Client, message: Message):
             )
             rsize = True
             packn = pack["photo"]
-        elif rmessage.video:
+        elif rmessage.video or rmessage.animation:
             photo = await client.download_media(
-                rmessage.video.file_id, file_name=f"./{ctime}.mp4"
+                rmessage.video.file_id if rmessage.video else rmessage.animation,
+                file_name=f"./{ctime}.mp4"
             )
             rsize = True
             anim = True
@@ -118,7 +119,7 @@ async def kibe(client: Client, message: Message):
                 packnames = "_animated"
                 packnicks = " animated"
                 packn = db["sticker"]["animated"]
-            elif rmessage.sticker.is_video or rmessage.video:
+            elif rmessage.sticker.is_video or rmessage.video or rmessage.animation:
                 db["sticker"]["video"] += 1
                 packnames = "_video"
                 packnicks = " video"
