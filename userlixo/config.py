@@ -13,6 +13,7 @@ import pyrogram
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.helpers import bki
+from pyrogram.utils import PyromodConfig
 from rich import print
 
 from userlixo.assistant.controllers import (
@@ -130,7 +131,6 @@ pyrogram_config = os.getenv("PYROGRAM_CONFIG") or b64encode("{}")
 pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
 
-
 # parse config.ini values
 config = configparser.ConfigParser()
 api_id = config.get("pyrogram", "api_id", fallback=None)
@@ -197,7 +197,6 @@ user = Client(
     **pyrogram_config,
 )
 
-
 bot = Client(
     "bot",
     api_id=api_id,
@@ -209,11 +208,12 @@ bot = Client(
     **pyrogram_config,
 )
 
-MessageController.register_handlers(bot)
-WebAppDataController.register_handlers(bot)
-InlineQueryController.register_handlers(bot)
-CallbackQueryController.register_handlers(bot)
+MessageController.__controller__.register(bot)
+WebAppDataController.__controller__.register(bot)
+InlineQueryController.__controller__.register(bot)
+CallbackQueryController.__controller__.register(bot)
 
+PyromodConfig.unallowed_click_alert = False
 
 cmds_list = [
     "help",
