@@ -1,16 +1,22 @@
-from pyrogram import Client
+from userlixo.decorators import Controller
 
-from . import add_sudoer, execs, plugin, restart, settings, start, upgrade, web_app
+from .add_sudoer_controller import AddSudoerController
+from .execs_controller import ExecsController
+from .plugin_controller import PluginController
+from .restart_controller import RestartController
+from .settings_controller import SettingsController
+from .start_controller import StartController
+from .upgrade_controller import UpgradeController
 
 
+@Controller(imports=[
+    AddSudoerController,
+    ExecsController,
+    PluginController,
+    RestartController,
+    SettingsController,
+    StartController,
+    UpgradeController,
+])
 class MessageController:
-    @staticmethod
-    def register_handlers(client: Client):
-        add_sudoer.register_handlers(client)
-        execs.register_handlers(client)
-        plugin.register_handlers(client)
-        restart.register_handlers(client)
-        settings.register_handlers(client)
-        start.register_handlers(client)
-        upgrade.register_handlers(client)
-        web_app.register_handlers(client)
+    pass
