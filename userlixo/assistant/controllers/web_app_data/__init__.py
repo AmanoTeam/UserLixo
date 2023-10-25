@@ -1,11 +1,13 @@
-from .restart import *
-from .save_settings import *
-from .upgrade import *
+from userlixo.decorators import Controller
+from .restart_controller import RestartController
+from .save_settings_controller import SaveSettingsController
+from .upgrade_controller import UpgradeController
 
 
+@Controller(imports=[
+    RestartController,
+    SaveSettingsController,
+    UpgradeController,
+])
 class WebAppDataController:
-    @staticmethod
-    def register_handlers(client: Client):
-        restart.register_handlers(client)
-        save_settings.register_handlers(client)
-        upgrade.register_handlers(client)
+    pass
