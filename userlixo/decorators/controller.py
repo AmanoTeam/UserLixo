@@ -14,4 +14,6 @@ class Controller:
         for c in self.imports:
             controller.import_controller(c)
 
-        return controller
+        cls.__controller__ = controller
+
+        return cls
