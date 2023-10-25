@@ -1,17 +1,25 @@
-from pyrogram import Client
+from userlixo.decorators import Controller
+from .about_controller import AboutController
+from .command_controller import CommandController
+from .env_vars_controller import EnvVarsController
+from .help_controller import HelpController
+from .language_controller import LanguageController
+from .ping_controller import PingController
+from .plugin_controller import PluginController
+from .start_controller import StartController
+from .sudoer_controller import SudoerController
 
-from . import about, command, env_vars, help, language, ping, plugin, start, sudoer
 
-
+@Controller(imports=[
+    AboutController,
+    CommandController,
+    EnvVarsController,
+    HelpController,
+    LanguageController,
+    PingController,
+    PluginController,
+    StartController,
+    SudoerController,
+])
 class CallbackQueryController:
-    @staticmethod
-    def register_handlers(client: Client):
-        about.register_handlers(client)
-        command.register_handlers(client)
-        env_vars.register_handlers(client)
-        help.register_handlers(client)
-        language.register_handlers(client)
-        ping.register_handlers(client)
-        plugin.register_handlers(client)
-        start.register_handlers(client)
-        sudoer.register_handlers(client)
+    pass

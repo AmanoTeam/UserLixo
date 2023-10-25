@@ -1,9 +1,9 @@
-from pyrogram import Client
+from userlixo.decorators import Controller
+from .index_controller import IndexController
 
-from . import index
 
-
+@Controller(imports=[
+    IndexController,
+])
 class InlineQueryController:
-    @staticmethod
-    def register_handlers(client: Client):
-        index.register_handlers(client)
+    pass
