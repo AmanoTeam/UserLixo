@@ -1,4 +1,5 @@
 from pyrogram import filters
+from pyrogram.helpers import ikb
 
 from userlixo.decorators import on_callback_query, Controller
 
@@ -12,7 +13,7 @@ class HelpController:
 
         await callback_query.edit_message_text(
             "Help",
-            reply_markup=c.inline_keyboard(
+            reply_markup=ikb(
                 [
                     [
                         ("🔙 Back", "start"),
