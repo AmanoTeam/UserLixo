@@ -2,7 +2,9 @@ from kink import di
 from pyrogram import filters, Client
 
 from userlixo.assistant.controllers.utils import on_callback_query
-from userlixo.assistant.handlers.callback_query.start import StartCallbackQueryHandler
+from userlixo.assistant.handlers.callback_query.start_callback_query_handler import (
+    StartCallbackQueryHandler,
+)
 
 
 def register_handlers(client: Client):

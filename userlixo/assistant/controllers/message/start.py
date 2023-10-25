@@ -2,7 +2,9 @@ from kink import di
 from pyrogram import filters, Client
 
 from userlixo.assistant.controllers.utils import on_message
-from userlixo.assistant.handlers.message.start import StartMessageHandler
+from userlixo.assistant.handlers.message.start_message_handler import (
+    StartMessageHandler,
+)
 
 
 def register_handlers(client: Client):
