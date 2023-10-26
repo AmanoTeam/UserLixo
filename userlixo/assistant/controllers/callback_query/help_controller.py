@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from kink import inject
 from pyrogram import filters
 
 from userlixo.assistant.handlers.callback_query.help_callback_query_handler import (
@@ -10,7 +9,6 @@ from userlixo.decorators import on_callback_query, Controller
 
 
 @Controller()
-@inject
 @dataclass
 class HelpController:
     handler: HelpCallbackQueryHandler

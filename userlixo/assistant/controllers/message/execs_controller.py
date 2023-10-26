@@ -1,7 +1,6 @@
 import re
 from dataclasses import dataclass
 
-from kink import inject
 from pyrogram import filters, Client
 
 from userlixo.assistant.handlers.message.cmd_message_handler import CmdMessageHandler
@@ -11,7 +10,6 @@ from userlixo.decorators import Controller, on_message
 
 
 @Controller()
-@inject
 @dataclass
 class ExecsController:
     cmd_handler: CmdMessageHandler

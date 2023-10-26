@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from kink import inject
 from pyrogram import filters
 
 from userlixo.assistant.handlers.message.help_message_handler import HelpMessageHandler
@@ -8,7 +7,6 @@ from userlixo.decorators import Controller, on_message
 
 
 @Controller()
-@inject
 @dataclass
 class HelpController:
     handler: HelpMessageHandler

@@ -1,3 +1,5 @@
+from kink import inject
+
 from userlixo.types import UpdateController
 
 
@@ -9,6 +11,7 @@ class Controller:
         self.imports = imports
 
     def __call__(self, cls) -> UpdateController:
+        cls = inject(cls)
         controller = UpdateController(cls)
 
         for c in self.imports:

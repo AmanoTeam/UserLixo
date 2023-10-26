@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from kink import inject
 from pyrogram import filters
 
 from userlixo.assistant.handlers.inline_query.index_inline_query_handler import (
@@ -10,7 +9,6 @@ from userlixo.decorators import Controller, on_inline_query
 
 
 @Controller()
-@inject
 @dataclass
 class IndexController:
     handler: IndexInlineQueryHandler
