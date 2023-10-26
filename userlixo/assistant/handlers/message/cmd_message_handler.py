@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import BinaryIO
 
 from kink import inject
@@ -14,7 +15,7 @@ class CmdMessageHandler(MessageHandler):
     language_selector: LanguageSelector
 
     async def handle_message(self, client, message: Message):
-        lang = self.get_lang()
+        lang = self.language_selector.get_lang()
         code = message.matches[0].group("code")
 
         async def on_result(text: str):
