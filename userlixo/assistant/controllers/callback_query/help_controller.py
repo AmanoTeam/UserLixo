@@ -1,15 +1,19 @@
+from dataclasses import dataclass
+
 from kink import inject
 from pyrogram import filters
 
-from userlixo.assistant.handlers.callback_query.help_callback_query_handler import HelpCallbackQueryHandler
+from userlixo.assistant.handlers.callback_query.help_callback_query_handler import (
+    HelpCallbackQueryHandler,
+)
 from userlixo.decorators import on_callback_query, Controller
 
 
 @Controller()
 @inject
+@dataclass
 class HelpController:
-    def __init__(self, handler: HelpCallbackQueryHandler):
-        self.handler = handler
+    handler: HelpCallbackQueryHandler
 
     @on_callback_query(filters.regex("^help"))
     async def help(self, c, callback_query):

@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from kink import inject
 from pyrogram import filters
 
@@ -9,9 +11,9 @@ from userlixo.decorators import Controller, on_callback_query
 
 @Controller()
 @inject
+@dataclass
 class StartController:
-    def __init__(self, handler: StartCallbackQueryHandler):
-        self.handler = handler
+    handler: StartCallbackQueryHandler
 
     @on_callback_query(filters.regex("^start"))
     async def start(self, *args):
