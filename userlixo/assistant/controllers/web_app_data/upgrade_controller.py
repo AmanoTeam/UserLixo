@@ -7,5 +7,5 @@ from userlixo.decorators import Controller, on_message
 class UpgradeController:
     @staticmethod
     @on_message(filters.web_data_cmd("upgrade"))
-    def upgrade(client: Client, message):
+    def upgrade(self, client: Client, message):
         pass

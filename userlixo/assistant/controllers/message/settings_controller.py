@@ -5,7 +5,6 @@ from userlixo.decorators import Controller, on_message
 
 @Controller()
 class SettingsController:
-    @staticmethod
     @on_message(filters.regex("^/(start )?settings"))
-    def settings(client: Client, message):
+    def settings(self, client: Client, message):
         pass
