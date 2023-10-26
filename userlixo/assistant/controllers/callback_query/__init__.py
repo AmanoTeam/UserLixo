@@ -6,6 +6,7 @@ from .help_controller import HelpController
 from .language_controller import LanguageController
 from .ping_controller import PingController
 from .plugin_controller import PluginController
+from .restart_controller import RestartController
 from .start_controller import StartController
 from .sudoer_controller import SudoerController
 
@@ -20,6 +21,7 @@ from .sudoer_controller import SudoerController
     PluginController,
     StartController,
     SudoerController,
+    RestartController
 ])
 class CallbackQueryController:
     pass

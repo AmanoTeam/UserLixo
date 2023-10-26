@@ -172,7 +172,7 @@ async def main():
         text = text(rev=rev, date=date, seconds=diff, local_version=local_version)
 
         try:
-            editor = bot if from_cmd.endswith("_bot") else user
+            editor = bot if from_cmd.endswith("bot") else user
             if editor == bot:
                 keyb = ikb([[(langs.back, "start")]])
                 kwargs.update(reply_markup=keyb)

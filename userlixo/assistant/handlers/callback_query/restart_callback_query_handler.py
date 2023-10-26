@@ -4,11 +4,12 @@ from pyrogram.types import Message
 from userlixo.assistant.handlers.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.restart import compose_before_restart_message, save_before_restart_message_info, \
     self_restart_process
+from userlixo.services.language_selector import LanguageSelector
 
 
 @inject
 class RestartCallbackQueryHandler(CallbackQueryHandler):
-    def __init__(self, language_selector):
+    def __init__(self, language_selector: LanguageSelector):
         self.get_lang = language_selector.get_lang
 
     async def handle_callback_query(self, _c, m: Message):
