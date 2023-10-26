@@ -11,7 +11,6 @@ from typing import Dict
 
 import pyrogram
 from pyrogram import Client, filters
-from pyrogram.enums import ParseMode
 from pyrogram.helpers import bki
 from pyrogram.utils import PyromodConfig
 from rich import print
@@ -193,7 +192,6 @@ user = Client(
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
-    parse_mode=ParseMode.HTML,
     **pyrogram_config,
 )
 
@@ -204,7 +202,6 @@ bot = Client(
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
     plugins=None,
-    parse_mode=ParseMode.HTML,
     **pyrogram_config,
 )
 
