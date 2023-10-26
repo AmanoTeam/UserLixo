@@ -1,4 +1,5 @@
 import re
+from dataclasses import dataclass
 
 from kink import inject
 from pyrogram import filters, Client
@@ -11,12 +12,11 @@ from userlixo.decorators import Controller, on_message
 
 @Controller()
 @inject
+@dataclass
 class ExecsController:
-    def __init__(self, cmd_handler: CmdMessageHandler, eval_handler: EvalMessageHandler,
-                 exec_handler: ExecMessageHandler):
-        self.cmd_handler = cmd_handler
-        self.eval_handler = eval_handler
-        self.exec_handler = exec_handler
+    cmd_handler: CmdMessageHandler
+    eval_handler: EvalMessageHandler
+    exec_handler: ExecMessageHandler
 
     @on_message(filters.regex(r"^/(?P<command>cmd|sh)\s+(?P<code>.+)", flags=re.S))
     async def cmd_sh(self, client: Client, message):
