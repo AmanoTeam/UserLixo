@@ -1,3 +1,4 @@
+from kink import inject
 from pyrogram import filters
 
 from userlixo.assistant.handlers.message.start_message_handler import (
@@ -7,6 +8,7 @@ from userlixo.decorators import Controller, on_message
 
 
 @Controller()
+@inject
 class StartController:
     def __init__(self, handler: StartMessageHandler):
         self.handler = handler
