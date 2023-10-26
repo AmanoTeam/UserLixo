@@ -65,7 +65,7 @@ class UpgradeLogicBuilder:
             text = compose_already_uptodate_message(lang, revision, date, commits_count)
             return await cls._on_exception(text) if cls._on_exception else None
 
-        stdout, process = git_pull_from_branch(current_branch)
+        stdout, process = await git_pull_from_branch(current_branch)
 
         if process.returncode != 0:
             await git_merge_abort()
