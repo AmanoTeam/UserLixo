@@ -9,7 +9,8 @@ from kink import di
 
 from userlixo.services.language_selector import LanguageSelector
 
-os.system("clear")
+if "--no-clear" not in sys.argv:
+    os.system("clear")
 # Update requirements
 DGRAY = 'echo -e "\033[1;30m"'
 YELLOW = 'echo -e "\033[0;33m"'
@@ -19,7 +20,8 @@ unused_requirements = []
 if "--no-update" not in sys.argv:
     print("\033[0;32m[1/2] Updating requirements...\033[0m")
     os.system(f"{DGRAY}; {sys.executable} -m pip install . -U; {RESET}")
-    os.system("clear")
+    if "--no-clear" not in sys.argv:
+        os.system("clear")
     # Update plugins requirements
     from userlixo.config import plugins
     from userlixo.utils.plugins import reload_plugins_requirements
@@ -31,7 +33,8 @@ if "--no-update" not in sys.argv:
             f"{DGRAY}; {sys.executable} -m pip install -Ur plugins-requirements.txt; {RESET}"
         )
 print("\033[0m")
-os.system("clear")
+if "--no-clear" not in sys.argv:
+    os.system("clear")
 
 # ruff: noqa: E402
 import contextlib
@@ -104,7 +107,8 @@ async def alert_startup():
 async def main():
     await connect_database()
     await load_env()
-    os.system("clear")
+    if "--no-clear" not in sys.argv:
+        os.system("clear")
 
     @aiocron.crontab("*/1 * * * *")
     async def clean_cache():
@@ -123,7 +127,8 @@ async def main():
         from userlixo.login import main as login
 
         await login()
-        os.system("clear")
+        if "--no-clear" not in sys.argv:
+            os.system("clear")
 
     await user.start()
     await bot.start()
