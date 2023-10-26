@@ -1,2 +1,3 @@
 from .callback_query_handler import CallbackQueryHandler
+from .inline_query_handler import InlineQueryHandler
 from .message_handler import MessageHandler
