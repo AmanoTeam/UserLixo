@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from kink import inject
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
@@ -10,12 +12,12 @@ from userlixo.services.language_selector import LanguageSelector
 
 
 @inject
+@dataclass
 class UpgradeCallbackQueryHandler(CallbackQueryHandler):
-    def __init__(self, language_selector: LanguageSelector):
-        self.get_lang = language_selector.get_lang
+    language_selector: LanguageSelector
 
     async def handle_callback_query(self, _c, cq: CallbackQuery):
-        lang = self.get_lang()
+        lang = self.language_selector.get_lang()
 
         back_keyboard = ikb([[(lang.back, "start")]])
 

@@ -9,9 +9,9 @@ from userlixo.services.language_selector import LanguageSelector
 
 
 @inject
+@dataclass
 class CmdMessageHandler(MessageHandler):
-    def __init__(self, language_selector: LanguageSelector):
-        self.get_lang = language_selector.get_lang
+    language_selector: LanguageSelector
 
     async def handle_message(self, client, message: Message):
         lang = self.get_lang()

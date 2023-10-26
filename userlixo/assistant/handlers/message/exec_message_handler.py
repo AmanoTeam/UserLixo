@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import BinaryIO
 
 from kink import inject
@@ -9,12 +10,12 @@ from userlixo.services.language_selector import LanguageSelector
 
 
 @inject
+@dataclass
 class ExecMessageHandler(MessageHandler):
-    def __init__(self, language_selector: LanguageSelector):
-        self.get_lang = language_selector.get_lang
+    language_selector: LanguageSelector
 
     async def handle_message(self, client, message: Message):
-        lang = self.get_lang()
+        lang = self.language_selector.get_lang()
         code = message.matches[0].group("code")
 
         async def on_result(text: str):
@@ -29,4 +30,6 @@ class ExecMessageHandler(MessageHandler):
         async def on_no_result():
             await message.reply(lang.no_result, quote=True)
 
-        await execs(code, client, message, on_result, on_error, on_huge_result, on_no_result)
+        await execs(
+            code, client, message, on_result, on_error, on_huge_result, on_no_result
+        )

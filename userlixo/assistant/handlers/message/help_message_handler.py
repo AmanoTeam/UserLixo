@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from kink import inject
 
 from userlixo.assistant.handlers.abstract import MessageHandler
@@ -6,12 +8,12 @@ from userlixo.services.language_selector import LanguageSelector
 
 
 @inject
+@dataclass
 class HelpMessageHandler(MessageHandler):
-    def __init__(self, language_selector: LanguageSelector):
-        self.get_lang = language_selector.get_lang
+    language_selector: LanguageSelector
 
     async def handle_message(self, _c, m):
-        lang = self.get_lang()
+        lang = self.language_selector.get_lang()
 
         text, keyboard = compose_help_message(lang)
         await m.reply(text, reply_markup=keyboard, quote=True)
