@@ -9,6 +9,7 @@ from .plugin_controller import PluginController
 from .restart_controller import RestartController
 from .start_controller import StartController
 from .sudoer_controller import SudoerController
+from .upgrade_controller import UpgradeController
 
 
 @Controller(imports=[
@@ -21,7 +22,8 @@ from .sudoer_controller import SudoerController
     PluginController,
     StartController,
     SudoerController,
-    RestartController
+    RestartController,
+    UpgradeController
 ])
 class CallbackQueryController:
     pass

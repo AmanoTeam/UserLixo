@@ -8,12 +8,13 @@ from userlixo.assistant.handlers.common.upgrade import get_branch_if_is_git, com
     get_git_status, compose_upgrade_failed_message, get_current_commit_short_revision, get_current_commit_date, \
     get_current_commit_timezone, get_current_commits_count, git_merge_abort, compose_already_uptodate_message, \
     compose_before_upgrade_message, git_pull_from_branch, save_before_upgrade_message_info
+from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils import timezone_shortener
 
 
 @inject
 class UpgradeCallbackQueryHandler(CallbackQueryHandler):
-    def __init__(self, language_selector):
+    def __init__(self, language_selector: LanguageSelector):
         self.get_lang = language_selector.get_lang
 
     async def handle_callback_query(self, _c, m: Message):
@@ -28,9 +29,9 @@ class UpgradeCallbackQueryHandler(CallbackQueryHandler):
             text = compose_not_git_error_message(lang)
             return await m.edit(text, reply_markup=back_keyboard)
 
-        stdout, process = get_git_status()
+        stdout, process = await get_git_status()
         if process.returncode != 0:
-            git_merge_abort()
+            await git_merge_abort()
 
             text = compose_upgrade_failed_message(lang, current_branch, process.returncode, stdout)
             return await m.edit(text, reply_markup=back_keyboard)
@@ -54,7 +55,7 @@ class UpgradeCallbackQueryHandler(CallbackQueryHandler):
         stdout, process = git_pull_from_branch(current_branch)
 
         if process.returncode != 0:
-            git_merge_abort()
+            await git_merge_abort()
 
             text = compose_upgrade_failed_message(lang, current_branch, process.returncode, stdout)
             return await m.edit(text, reply_markup=back_keyboard)

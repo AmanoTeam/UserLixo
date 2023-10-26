@@ -42,24 +42,24 @@ def get_branch_if_is_git():
     return branch
 
 
-def get_git_status():
-    stdout, process = shell_exec("git fetch && git status -uno")
+async def get_git_status():
+    stdout, process = await shell_exec("git fetch && git status -uno")
 
     return stdout, process
 
 
-def git_merge_abort():
-    shell_exec("git merge --abort")
+async def git_merge_abort():
+    await shell_exec("git merge --abort")
 
 
 async def get_current_commit_short_revision():
-    rev, = await shell_exec("git rev-parse --short HEAD")
+    rev, p = await shell_exec("git rev-parse --short HEAD")
 
     return rev
 
 
 async def get_current_commit_date():
-    date, = await shell_exec(
+    date, p = await shell_exec(
         'git log -1 --format=%cd --date=format:"%d/%m %H:%M"'
     )
 
@@ -67,13 +67,13 @@ async def get_current_commit_date():
 
 
 async def get_current_commit_timezone():
-    timezone, = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
+    timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
 
     return timezone
 
 
 async def get_current_commits_count():
-    commits_count, = await shell_exec("git rev-list --count HEAD")
+    commits_count, p = await shell_exec("git rev-list --count HEAD")
 
     return int(commits_count)
 
