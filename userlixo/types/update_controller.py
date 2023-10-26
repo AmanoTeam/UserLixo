@@ -58,7 +58,7 @@ class UpdateController:
                 continue
 
             if hasattr(method, "on"):
-                self.registers.append(lambda client: self.register_handler(client, key, method))
+                self.registers.append(lambda client, k=key, m=method: self.register_handler(client, k, m))
 
     def import_controller(self, controller: Any):
         if not hasattr(controller, "__controller__"):
