@@ -7,6 +7,7 @@ from .language_controller import LanguageController
 from .ping_controller import PingController
 from .plugin_controller import PluginController
 from .restart_controller import RestartController
+from .settings_controller import SettingsController
 from .start_controller import StartController
 from .sudoer_controller import SudoerController
 from .upgrade_controller import UpgradeController
@@ -23,7 +24,8 @@ from .upgrade_controller import UpgradeController
     StartController,
     SudoerController,
     RestartController,
-    UpgradeController
+    UpgradeController,
+    SettingsController
 ])
 class CallbackQueryController:
     pass
