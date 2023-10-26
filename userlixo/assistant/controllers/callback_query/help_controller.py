@@ -1,27 +1,16 @@
+from kink import inject
 from pyrogram import filters
-from pyrogram.helpers import ikb
 
+from userlixo.assistant.handlers.callback_query.help_callback_query_handler import HelpCallbackQueryHandler
 from userlixo.decorators import on_callback_query, Controller
 
 
 @Controller()
+@inject
 class HelpController:
+    def __init__(self, handler: HelpCallbackQueryHandler):
+        self.handler = handler
+
     @on_callback_query(filters.regex("^help"))
     async def help(self, c, callback_query):
-        await callback_query.answer("Help", show_alert=True)
-
-        await callback_query.edit_message_text(
-            "Help",
-            reply_markup=ikb(
-                [
-                    [
-                        ("🔙 Back", "start"),
-                        ("📚 About", "about_userlixo"),
-                    ],
-                    [
-                        ("📝 Commands", "about_commands"),
-                        ("🔌 Plugins", "about_plugins"),
-                    ],
-                ]
-            ),
-        )
+        await self.handler.handle_callback_query(c, callback_query)
