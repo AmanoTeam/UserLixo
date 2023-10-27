@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from kink import inject
 
 from userlixo.abstract import CallbackQueryHandler
-from userlixo.assistant.handlers.common.help import compose_help_message
+from userlixo.common.help import compose_help_message
 from userlixo.services.language_selector import LanguageSelector
 
 
