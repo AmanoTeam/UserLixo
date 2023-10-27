@@ -4,7 +4,7 @@ from kink import inject
 from pyrogram.types import Message
 
 from userlixo.abstract import MessageHandler
-from userlixo.assistant.handlers.common.plugins import handle_add_plugin_request
+from userlixo.common.plugins import handle_add_plugin_request
 from userlixo.services.language_selector import LanguageSelector
 
 
@@ -16,4 +16,4 @@ class ProcessPythonFileMessageHandler(MessageHandler):
     async def handle_message(self, _client, message: Message):
         lang = self.language_selector.get_lang()
 
-        await handle_add_plugin_request(lang, _client, is_query=False, update=message)
+        await handle_add_plugin_request(lang, _client, update=message)
