@@ -3,6 +3,9 @@ from dataclasses import dataclass
 from pyrogram import filters
 from pyrogram.types import CallbackQuery
 
+from userlixo.assistant.handlers.callback_query.list_plugins_by_type_callback_query_handler import (
+    ListPluginsByTypeCallbackQueryHandler,
+)
 from userlixo.assistant.handlers.callback_query.list_plugins_callback_query_handler import (
     ListPluginsCallbackQueryHandler,
 )
@@ -13,6 +16,7 @@ from userlixo.decorators import Controller, on_callback_query
 @dataclass
 class PluginController:
     list_plugins_handler: ListPluginsCallbackQueryHandler
+    list_plugins_by_type_handler: ListPluginsByTypeCallbackQueryHandler
 
     @on_callback_query(
         filters.regex(
@@ -58,4 +62,6 @@ class PluginController:
 
     @on_callback_query(filters.regex(r"^(?P<type>user|bot)_plugins (?P<page>\d+)"))
     async def list_plugins_by_type(self, _c, callback_query):
-        pass
+        await self.list_plugins_by_type_handler.handle_callback_query(
+            _c, callback_query
+        )
