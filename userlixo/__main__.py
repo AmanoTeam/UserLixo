@@ -50,13 +50,13 @@ from rich import box, print
 from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
-from userlixo.assistant import (
+from userlixo.handlers.assistant import (
     AssistantMessageController,
     AssistantCallbackQueryController,
     AssistantInlineQueryController,
     AssistantWebAppDataController,
 )
-from userlixo.userbot import UserbotMessageController
+from userlixo.handlers.userbot import UserbotMessageController
 
 language_selector = di[LanguageSelector]
 langs = language_selector.get_lang()
