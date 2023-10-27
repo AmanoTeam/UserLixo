@@ -4,7 +4,7 @@ from kink import inject
 from pyrogram.types import Message
 
 from userlixo.abstract import CallbackQueryHandler
-from userlixo.assistant.handlers.common.restart import (
+from userlixo.common.restart import (
     compose_before_restart_message,
     save_before_restart_message_info,
     self_restart_process,

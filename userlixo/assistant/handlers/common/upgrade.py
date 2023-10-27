@@ -3,7 +3,7 @@ from typing import Callable
 
 from langs import Langs
 
-from userlixo.assistant.handlers.common.restart import self_restart_process
+from userlixo.common.restart import self_restart_process
 from userlixo.database import Config
 from userlixo.utils.misc import shell_exec, timezone_shortener
 
