@@ -15,12 +15,6 @@ from pyrogram.helpers import bki
 from pyrogram.utils import PyromodConfig
 from rich import print
 
-from userlixo.assistant.controllers import (
-    MessageController,
-    WebAppDataController,
-    InlineQueryController,
-    CallbackQueryController,
-)
 from userlixo.database import Config
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
@@ -204,11 +198,6 @@ bot = Client(
     plugins=None,
     **pyrogram_config,
 )
-
-MessageController.__controller__.register(bot)
-WebAppDataController.__controller__.register(bot)
-InlineQueryController.__controller__.register(bot)
-CallbackQueryController.__controller__.register(bot)
 
 PyromodConfig.unallowed_click_alert = False
 
