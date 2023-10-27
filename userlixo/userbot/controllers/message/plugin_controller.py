@@ -19,7 +19,7 @@ from userlixo.userbot.handlers.message.process_python_file_message_handler impor
 @dataclass
 class PluginController:
     plugin_action_handler: PluginActionMessageHandler
-    process_python_file: ProcessPythonFileMessageHandler
+    process_python_file_handler: ProcessPythonFileMessageHandler
     list_plugins_handler: ListPluginsMessageHandler
 
     @on_message(filters.reply & filters.su_cmd(r"(plugin )?(?P<action>add|rm|\+|-)"))
@@ -29,7 +29,7 @@ class PluginController:
     @on_message(filters.document & filters.private & ~filters.me)
     async def process_python_file(self, client: Client, message: Message):
         if message.document.file_name.endswith(".py"):
-            await self.process_python_file.handle_message(client, message)
+            await self.process_python_file_handler.handle_message(client, message)
 
     @on_message(filters.su_cmd(r"plugins$"))
     async def list_plugins(self, client: Client, message: Message):
