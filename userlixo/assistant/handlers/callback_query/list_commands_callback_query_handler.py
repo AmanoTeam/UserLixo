@@ -4,7 +4,7 @@ from kink import inject
 from pyrogram.types import CallbackQuery
 
 from userlixo.abstract import CallbackQueryHandler
-from userlixo.assistant.handlers.common.commands import compose_list_commands_message
+from userlixo.common.commands import compose_list_commands_message
 from userlixo.services.language_selector import LanguageSelector
 
 

@@ -3,6 +3,7 @@ from .about_controller import AboutController
 from .execs_controller import ExecsController
 from .help_controller import HelpController
 from .info_controller import InfoController
+from .list_commands_controller import ListCommandsController
 from .ping_controller import PingController
 from .plugin_controller import PluginController
 from .settings_controller import SettingsController
@@ -19,6 +20,7 @@ from .start_controller import StartController
         HelpController,
         StartController,
         SettingsController,
+        ListCommandsController,
     ]
 )
 class MessageController:
