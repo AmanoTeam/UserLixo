@@ -9,6 +9,7 @@ from .plugin_controller import PluginController
 from .restart_controller import RestartController
 from .settings_controller import SettingsController
 from .start_controller import StartController
+from .upgrade_controller import UpgradeController
 
 
 @Controller(
@@ -23,6 +24,7 @@ from .start_controller import StartController
         SettingsController,
         ListCommandsController,
         RestartController,
+        UpgradeController,
     ]
 )
 class MessageController:

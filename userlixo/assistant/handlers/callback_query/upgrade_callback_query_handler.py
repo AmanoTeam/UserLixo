@@ -5,7 +5,7 @@ from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
 from userlixo.abstract import CallbackQueryHandler
-from userlixo.assistant.handlers.common.upgrade import (
+from userlixo.common.upgrade import (
     UpgradeLogicBuilder,
 )
 from userlixo.services.language_selector import LanguageSelector
