@@ -7,12 +7,6 @@ from pathlib import Path
 
 from kink import di
 
-from userlixo.assistant.controllers import (
-    MessageController,
-    WebAppDataController,
-    InlineQueryController,
-    CallbackQueryController,
-)
 from userlixo.services.language_selector import LanguageSelector
 
 if "--no-clear" not in sys.argv:
@@ -56,6 +50,12 @@ from rich import box, print
 from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
+from userlixo.assistant import (
+    AssistantMessageController,
+    AssistantCallbackQueryController,
+    AssistantInlineQueryController,
+    AssistantWebAppDataController,
+)
 
 language_selector = di[LanguageSelector]
 langs = language_selector.get_lang()
@@ -238,10 +238,10 @@ or somehow it became inacessible.\n>> {e}[/yellow]"
         except Exception as e:
             print("Error while sending alert about unused_requirements:\n  > ", e)
 
-    MessageController.__controller__.register(bot)
-    WebAppDataController.__controller__.register(bot)
-    InlineQueryController.__controller__.register(bot)
-    CallbackQueryController.__controller__.register(bot)
+    AssistantMessageController.__controller__.register(bot)
+    AssistantWebAppDataController.__controller__.register(bot)
+    AssistantInlineQueryController.__controller__.register(bot)
+    AssistantCallbackQueryController.__controller__.register(bot)
 
     await idle()
     await user.stop()
