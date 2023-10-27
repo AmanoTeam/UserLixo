@@ -45,4 +45,3 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
                 last_msg = await msg.reply_text(text, reply_markup=keyboard)
         except Exception as e:
             print(e)
-            pass

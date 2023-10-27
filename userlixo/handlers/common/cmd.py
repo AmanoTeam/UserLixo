@@ -6,7 +6,7 @@ from userlixo.utils import shell_exec
 
 
 async def cmd(code, on_result: Callable, on_huge_result: Callable, on_no_result: Callable):
-    output, process = await shell_exec(code)
+    output = (await shell_exec(code))[0]
 
     if not output:
         return await on_no_result()

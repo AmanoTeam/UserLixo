@@ -16,7 +16,8 @@ def open_yml(filename):
 class LanguageSelector:
     def __init__(self):
         strings = {}
-        for string_file in Path.glob("userlixo/strings/*.yml"):
+        for file in Path().glob("userlixo/strings/*.yml"):
+            string_file = file.name
             language_code = re.match(r"userlixo/strings/(.+)\.yml$", string_file)[1]
             strings[language_code] = open_yml(string_file)
 

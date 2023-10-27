@@ -42,14 +42,14 @@ class UpgradeLogicBuilder:
         current_branch = get_branch_if_is_git()
         if not current_branch:
             text = compose_not_git_error_message(lang)
-            return await cls._on_error(text) if cls._on_error else None
+            return await cls._on_error(text) if callable(cls._on_error) else None
 
         stdout, process = await get_git_status()
         if process.returncode != 0:
             await git_merge_abort()
 
             text = compose_upgrade_failed_message(lang, current_branch, process.returncode, stdout)
-            return await cls._on_error(text) if cls._on_error else None
+            return await cls._on_error(text) if callable(cls._on_error) else None
 
         if "Your branch is up to date" in stdout:
             revision = await get_current_commit_short_revision()
@@ -62,7 +62,7 @@ class UpgradeLogicBuilder:
             commits_count = await get_current_commits_count()
 
             text = compose_already_uptodate_message(lang, revision, date, commits_count)
-            return await cls._on_exception(text) if cls._on_exception else None
+            return await cls._on_exception(text) if callable(cls._on_exception) else None
 
         stdout, process = await git_pull_from_branch(current_branch)
 
@@ -70,10 +70,11 @@ class UpgradeLogicBuilder:
             await git_merge_abort()
 
             text = compose_upgrade_failed_message(lang, current_branch, process.returncode, stdout)
-            return await cls._on_error(text) if cls._on_error else None
+            return await cls._on_error(text) if callable(cls._on_error) else None
 
         text = compose_before_upgrade_message(lang)
-        await cls._on_success(text) if cls._on_success else None
+        if callable(cls._on_success):
+            await cls._on_success(text)
 
         self_restart_process()
         return None
@@ -116,25 +117,19 @@ async def git_merge_abort():
 
 
 async def get_current_commit_short_revision():
-    rev, p = await shell_exec("git rev-parse --short HEAD")
-
-    return rev
+    return (await shell_exec("git rev-parse --short HEAD"))[0]
 
 
 async def get_current_commit_date():
-    date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
-
-    return date
+    return (await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"'))[0]
 
 
 async def get_current_commit_timezone():
-    timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
-
-    return timezone
+    return (await shell_exec('git log -1 --format=%cd --date=format:"%z"'))[0]
 
 
 async def get_current_commits_count():
-    commits_count, p = await shell_exec("git rev-list --count HEAD")
+    commits_count = (await shell_exec("git rev-list --count HEAD"))[0]
 
     return int(commits_count)
 

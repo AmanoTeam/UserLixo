@@ -13,7 +13,7 @@ def compose_list_commands_message(lang: Langs, page: int, append_back: bool = Fa
         [*cmds.items()],
         item_data=lambda i, pg: item_format.format(i[0], pg),
         item_title=lambda i, pg: i[0],
-        page_data=lambda pg: page_format.format(pg),
+        page_data=page_format.format,
     )
 
     lines = layout.create(page, columns=2, lines=3)
