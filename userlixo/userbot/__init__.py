@@ -1,1 +1,1 @@
-from .controllers import MessageController
+from .controllers import MessageController as UserbotMessageController
