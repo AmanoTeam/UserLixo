@@ -1,7 +1,10 @@
-from pyrogram import filters
+from pyrogram import filters, Client
 
 from userlixo.assistant.controllers.utils import on_inline_query
 
-on_inline_query(
-    filters.regex(r"^(?P<index>\d+)"),
-)
+
+def register_handlers(client: Client):
+    on_inline_query(
+        client,
+        filters.regex(r"^(?P<index>\d+)"),
+    )

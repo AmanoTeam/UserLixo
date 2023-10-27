@@ -10,13 +10,17 @@ from pathlib import Path
 from typing import Dict
 
 import pyrogram
-import yaml
-from langs import Langs
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.helpers import bki
 from rich import print
 
+from userlixo.assistant.controllers import (
+    MessageController,
+    WebAppDataController,
+    InlineQueryController,
+    CallbackQueryController,
+)
 from userlixo.database import Config
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
@@ -93,8 +97,6 @@ you can just press enter to leave it empty or use the default value. Let's get s
 
         row = await Config.create(key=env_key, value=user_value)
         os.environ[env_key] = row.value
-
-    langs.code = os.environ["LANGUAGE"]
 
     # Sanitize sudoers list
     parts = os.getenv("SUDOERS_LIST").split()
@@ -186,7 +188,8 @@ pyrogram.types.Message.ikb = message_ikb
 # exist. I want to use the fallback also when the key exists but it's invalid
 user = Client(
     os.getenv("PYROGRAM_SESSION") or "user",
-    plugins={"root": "userlixo/handlers/user"},
+    # plugins={"root": "userlixo/handlers/user"},
+    plugins=None,
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
@@ -194,18 +197,6 @@ user = Client(
     **pyrogram_config,
 )
 
-
-def open_yml(filename):
-    with Path(filename).open() as fp:
-        return yaml.safe_load(fp)
-
-
-strings = {}
-for string_file in Path("userlixo/strings").rglob("*.yml"):
-    language_code = re.match(r"userlixo/strings/(.+)\.yml$", str(string_file))[1]
-    strings[language_code] = open_yml(string_file)
-
-langs = Langs(**strings, escape_html=True)
 
 bot = Client(
     "bot",
@@ -213,10 +204,16 @@ bot = Client(
     api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
-    plugins={"root": "userlixo/handlers/bot"},
+    plugins=None,
     parse_mode=ParseMode.HTML,
     **pyrogram_config,
 )
+
+MessageController.register_handlers(bot)
+WebAppDataController.register_handlers(bot)
+InlineQueryController.register_handlers(bot)
+CallbackQueryController.register_handlers(bot)
+
 
 cmds_list = [
     "help",

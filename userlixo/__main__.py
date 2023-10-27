@@ -5,6 +5,10 @@ import os
 import sys
 from pathlib import Path
 
+from kink import di
+
+from userlixo.services.language_selector import LanguageSelector
+
 os.system("clear")
 # Update requirements
 DGRAY = 'echo -e "\033[1;30m"'
@@ -44,9 +48,11 @@ from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
 
+language_selector = di[LanguageSelector]
+langs = language_selector.get_lang()
+
 from userlixo.config import (
     bot,
-    langs,
     load_env,
     plugins,
     sudoers,

@@ -1,9 +1,11 @@
-from pyrogram import filters
+from pyrogram import filters, Client
 
 from userlixo.assistant.controllers.utils import on_message
 
-on_message(filters.document & filters.private & ~filters.me)
 
-on_message(filters.regex("^/(start )?plugin[_ ]add"))
+def register_handlers(client: Client):
+    on_message(client, filters.document & filters.private & ~filters.me)
 
-on_message(filters.regex("^/plugins"))
+    on_message(client, filters.regex("^/(start )?plugin[_ ]add"))
+
+    on_message(client, filters.regex("^/plugins"))
