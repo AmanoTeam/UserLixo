@@ -1,6 +1,6 @@
 from userlixo.decorators import Controller
 from .about_controller import AboutController
-from .cmd_controller import CmdController
+from .execs_controller import ExecsController
 from .info_controller import InfoController
 from .ping_controller import PingController
 from .plugin_controller import PluginController
@@ -12,7 +12,7 @@ from .plugin_controller import PluginController
         PingController,
         InfoController,
         PluginController,
-        CmdController,
+        ExecsController,
     ]
 )
 class MessageController:
