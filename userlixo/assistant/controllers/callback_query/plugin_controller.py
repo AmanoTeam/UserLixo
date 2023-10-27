@@ -3,6 +3,15 @@ from dataclasses import dataclass
 from pyrogram import filters
 from pyrogram.types import CallbackQuery
 
+from userlixo.assistant.handlers.callback_query.add_plugin_callback_query_handler import (
+    AddPluginCallbackQueryHandler,
+)
+from userlixo.assistant.handlers.callback_query.cancel_plugin_callback_query_handler import (
+    CancelPluginCallbackQueryHandler,
+)
+from userlixo.assistant.handlers.callback_query.confirm_add_plugin_callback_query_handler import (
+    ConfirmAddPluginCallbackQueryHandler,
+)
 from userlixo.assistant.handlers.callback_query.info_plugin_callback_query_handler import (
     InfoPluginCallbackQueryHandler,
 )
@@ -29,6 +38,9 @@ class PluginController:
     toggle_plugin_handler: TogglePluginCallbackQueryHandler
     info_plugin_handler: InfoPluginCallbackQueryHandler
     remove_plugin_handler: RemovePluginCallbackQueryHandler
+    add_plugin_handler: AddPluginCallbackQueryHandler
+    cancel_plugin_handler: CancelPluginCallbackQueryHandler
+    confirm_add_plugin_handler: ConfirmAddPluginCallbackQueryHandler
 
     @on_callback_query(
         filters.regex(
@@ -56,17 +68,17 @@ class PluginController:
 
     @on_callback_query(filters.regex("^add_plugin"))
     async def add_plugin(self, _c, callback_query):
-        pass
+        await self.add_plugin_handler.handle_callback_query(_c, callback_query)
 
     @on_callback_query(filters.regex("^cancel_plugin"))
     async def cancel_plugin(self, _c, callback_query):
-        pass
+        await self.cancel_plugin_handler.handle_callback_query(_c, callback_query)
 
     @on_callback_query(
         filters.regex("^confirm_add_plugin (?P<plugin_type>user|bot) (?P<filename>.+)")
     )
     async def confirm_add_plugin(self, _c, callback_query):
-        pass
+        await self.confirm_add_plugin_handler.handle_callback_query(_c, callback_query)
 
     @on_callback_query(filters.regex("^list_plugins"))
     async def list_plugins(self, _c, callback_query: CallbackQuery):
