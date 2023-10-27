@@ -8,7 +8,7 @@ from kink import inject
 from pyrogram.helpers import kb
 from pyrogram.types import Message, WebAppInfo
 
-from userlixo.assistant.handlers.abstract import MessageHandler
+from userlixo.abstract import MessageHandler
 from userlixo.config import user, cmds, plugins
 from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils import shell_exec

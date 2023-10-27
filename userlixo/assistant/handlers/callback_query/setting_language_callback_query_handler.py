@@ -4,7 +4,7 @@ from kink import inject
 from pyrogram.helpers import array_chunk, ikb
 from pyrogram.types import CallbackQuery
 
-from userlixo.assistant.handlers.abstract import CallbackQueryHandler
+from userlixo.abstract import CallbackQueryHandler
 from userlixo.services.language_selector import LanguageSelector
 
 

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from kink import inject
 from pyrogram.types import Message
 
-from userlixo.assistant.handlers.abstract.web_app_data_handler import WebAppDataHandler
+from userlixo.abstract.web_app_data_handler import WebAppDataHandler
 from userlixo.assistant.handlers.common.restart import (
     compose_before_restart_message,
     save_before_restart_message_info,

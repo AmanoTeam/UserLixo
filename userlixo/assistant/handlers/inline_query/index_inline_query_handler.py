@@ -6,7 +6,7 @@ from pyrogram.types import (
     InputTextMessageContent,
 )
 
-from userlixo.assistant.handlers.abstract import InlineQueryHandler
+from userlixo.abstract import InlineQueryHandler
 from userlixo.database import Message
 
 

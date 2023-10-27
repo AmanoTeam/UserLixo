@@ -4,7 +4,7 @@ from kink import inject
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
-from userlixo.assistant.handlers.abstract import CallbackQueryHandler
+from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.upgrade import (
     UpgradeLogicBuilder,
 )

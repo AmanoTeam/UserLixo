@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from kink import inject
 from pyrogram.types import CallbackQuery
 
-from userlixo.assistant.handlers.abstract import CallbackQueryHandler
+from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.restart import (
     self_restart_process,
     save_before_restart_message_info,

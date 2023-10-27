@@ -3,7 +3,7 @@ from datetime import datetime
 
 from kink import inject
 
-from userlixo.assistant.handlers.abstract import CallbackQueryHandler
+from userlixo.abstract import CallbackQueryHandler
 from userlixo.services.language_selector import LanguageSelector
 
 

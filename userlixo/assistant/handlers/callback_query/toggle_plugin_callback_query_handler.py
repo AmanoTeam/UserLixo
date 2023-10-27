@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from kink import inject
 from pyrogram.types import CallbackQuery
 
-from userlixo.assistant.handlers.abstract import CallbackQueryHandler
+from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.plugins import compose_info_plugin_message
 from userlixo.config import plugins, user, bot
 from userlixo.database import Config

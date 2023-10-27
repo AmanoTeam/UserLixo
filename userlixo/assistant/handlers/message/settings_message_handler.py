@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from kink import inject
 
-from userlixo.assistant.handlers.abstract import MessageHandler
+from userlixo.abstract import MessageHandler
 from userlixo.assistant.handlers.common.settings import compose_settings_message
 from userlixo.services.language_selector import LanguageSelector
 

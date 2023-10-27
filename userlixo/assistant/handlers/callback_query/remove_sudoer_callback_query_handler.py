@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from kink import inject
 from pyrogram.types import CallbackQuery
 
-from userlixo.assistant.handlers.abstract import CallbackQueryHandler
+from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.sudoers import compose_list_sudoers_message
 from userlixo.config import sudoers
 from userlixo.database import Config

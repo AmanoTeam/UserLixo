@@ -4,7 +4,7 @@ from kink import inject
 from pyrogram import Client
 from pyrogram.types import Message
 
-from userlixo.assistant.handlers.abstract import MessageHandler
+from userlixo.abstract import MessageHandler
 from userlixo.assistant.handlers.common.start import compose_start_message
 from userlixo.services.language_selector import LanguageSelector
 

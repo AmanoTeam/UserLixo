@@ -4,7 +4,7 @@ from typing import BinaryIO
 from kink import inject
 from pyrogram.types import Message
 
-from userlixo.assistant.handlers.abstract import MessageHandler
+from userlixo.abstract import MessageHandler
 from userlixo.common.cmd import cmd
 from userlixo.services.language_selector import LanguageSelector
 

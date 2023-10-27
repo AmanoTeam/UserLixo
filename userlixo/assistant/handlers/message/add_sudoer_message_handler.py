@@ -6,7 +6,7 @@ from pyrogram import filters
 from pyrogram.helpers import force_reply, ikb
 from pyrogram.types import Message
 
-from userlixo.assistant.handlers.abstract import MessageHandler
+from userlixo.abstract import MessageHandler
 from userlixo.database import Config
 from userlixo.services.language_selector import LanguageSelector
 
