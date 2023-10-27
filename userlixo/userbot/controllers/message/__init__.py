@@ -5,6 +5,7 @@ from .help_controller import HelpController
 from .info_controller import InfoController
 from .ping_controller import PingController
 from .plugin_controller import PluginController
+from .start_controller import StartController
 
 
 @Controller(
@@ -15,6 +16,7 @@ from .plugin_controller import PluginController
         PluginController,
         ExecsController,
         HelpController,
+        StartController,
     ]
 )
 class MessageController:
