@@ -8,6 +8,7 @@ from .restart_controller import RestartController
 from .settings_controller import SettingsController
 from .start_controller import StartController
 from .upgrade_controller import UpgradeController
+from .web_app_controller import WebAppController
 
 
 @Controller(
@@ -20,6 +21,7 @@ from .upgrade_controller import UpgradeController
         StartController,
         UpgradeController,
         HelpController,
+        WebAppController,
     ]
 )
 class MessageController:
