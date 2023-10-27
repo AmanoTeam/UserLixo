@@ -56,6 +56,7 @@ from userlixo.assistant import (
     AssistantInlineQueryController,
     AssistantWebAppDataController,
 )
+from userlixo.userbot import UserbotMessageController
 
 language_selector = di[LanguageSelector]
 langs = language_selector.get_lang()
@@ -242,6 +243,8 @@ or somehow it became inacessible.\n>> {e}[/yellow]"
     AssistantWebAppDataController.__controller__.register(bot)
     AssistantInlineQueryController.__controller__.register(bot)
     AssistantCallbackQueryController.__controller__.register(bot)
+
+    UserbotMessageController.__controller__.register(user)
 
     await idle()
     await user.stop()
