@@ -8,7 +8,7 @@ from userlixo.abstract import CallbackQueryHandler
 from userlixo.common.upgrade import (
     UpgradeLogicBuilder,
 )
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

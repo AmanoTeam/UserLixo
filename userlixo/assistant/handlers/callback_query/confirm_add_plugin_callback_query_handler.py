@@ -15,12 +15,12 @@ from pyrogram.types import CallbackQuery
 from userlixo.abstract import CallbackQueryHandler
 from userlixo.config import user, bot, plugins
 from userlixo.database import Config
-from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils.plugins import (
     read_plugin_info,
     reload_plugins_requirements,
     get_inactive_plugins,
 )
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

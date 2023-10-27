@@ -6,7 +6,7 @@ from pyrogram.types import CallbackQuery
 
 from userlixo.abstract import CallbackQueryHandler
 from userlixo.config import cmds
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

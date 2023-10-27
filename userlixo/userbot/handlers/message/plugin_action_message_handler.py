@@ -12,8 +12,8 @@ from userlixo.abstract import MessageHandler
 from userlixo.common.plugins import handle_add_plugin_request
 from userlixo.config import plugins, user, bot
 from userlixo.database import Config
-from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils.plugins import read_plugin_info, get_inactive_plugins
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

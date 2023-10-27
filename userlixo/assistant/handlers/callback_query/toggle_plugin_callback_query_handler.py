@@ -10,8 +10,8 @@ from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.plugins import compose_info_plugin_message
 from userlixo.config import plugins, user, bot
 from userlixo.database import Config
-from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils.plugins import get_inactive_plugins
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

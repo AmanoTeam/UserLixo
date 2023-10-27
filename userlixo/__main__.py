@@ -7,7 +7,7 @@ from pathlib import Path
 
 from kink import di
 
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 if "--no-clear" not in sys.argv:
     os.system("clear")

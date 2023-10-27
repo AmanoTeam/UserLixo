@@ -5,7 +5,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 
 from userlixo.abstract import MessageHandler
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

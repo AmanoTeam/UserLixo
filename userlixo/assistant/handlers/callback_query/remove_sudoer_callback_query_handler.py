@@ -8,8 +8,8 @@ from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.sudoers import compose_list_sudoers_message
 from userlixo.config import sudoers
 from userlixo.database import Config
-from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils import tryint
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

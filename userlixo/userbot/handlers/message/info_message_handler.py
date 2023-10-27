@@ -9,8 +9,8 @@ from pyrogram.types import Message
 
 from userlixo.abstract import MessageHandler
 from userlixo.config import plugins
-from userlixo.services.language_selector import LanguageSelector
 from userlixo.utils import shell_exec
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

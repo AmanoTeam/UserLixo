@@ -7,7 +7,7 @@ from userlixo.abstract import CallbackQueryHandler
 from userlixo.assistant.handlers.common.plugins import (
     compose_list_plugins_by_type_message,
 )
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

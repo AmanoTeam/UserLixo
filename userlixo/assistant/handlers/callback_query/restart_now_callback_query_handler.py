@@ -8,7 +8,7 @@ from userlixo.common.restart import (
     self_restart_process,
     save_before_restart_message_info,
 )
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

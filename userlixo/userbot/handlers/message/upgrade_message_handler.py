@@ -6,7 +6,7 @@ from pyrogram.types import Message
 
 from userlixo.abstract import MessageHandler
 from userlixo.common.upgrade import UpgradeLogicBuilder
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject

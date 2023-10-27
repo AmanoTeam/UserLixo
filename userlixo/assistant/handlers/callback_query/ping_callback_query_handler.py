@@ -4,7 +4,7 @@ from datetime import datetime
 from kink import inject
 
 from userlixo.abstract import CallbackQueryHandler
-from userlixo.services.language_selector import LanguageSelector
+from userlixo.utils.services.language_selector import LanguageSelector
 
 
 @inject
