@@ -7,7 +7,6 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Dict
 
 import pyrogram
 from pyrogram import Client, filters
@@ -24,7 +23,7 @@ sudoers = []
 
 
 async def load_env():
-    environment_vars: Dict = {
+    environment_vars: dict = {
         "DATABASE_URL": [
             "sqlite://userlixo/database/database.sqlite",
             "Address of the database (sqlite or postgres).",
@@ -145,7 +144,7 @@ def filter_su_cmd(command, prefixes=None, *args, **kwargs):
     if " " in prefixes:
         prefixes = "|".join(re.escape(prefix) for prefix in prefixes.split())
         prefix = f"({prefixes})"
-    elif isinstance(prefixes, (list, str)):
+    elif isinstance(prefixes, list | str):
         if isinstance(prefixes, list):
             prefixes = "".join(prefixes)
         prefix = f"[{re.escape(prefixes)}]"

@@ -1,8 +1,8 @@
 from kink import inject
 from pyrogram.types import CallbackQuery
 
-from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.database import Config
+from userlixo.handlers.abstract import CallbackQueryHandler
 
 
 @inject

@@ -1,6 +1,11 @@
 from .controllers import (
-    MessageController as AssistantMessageController,
-    WebAppDataController as AssistantWebAppDataController,
-    InlineQueryController as AssistantInlineQueryController,
-    CallbackQueryController as AssistantCallbackQueryController,
+    CallbackQueryController,
+    InlineQueryController,
+    MessageController,
+    WebAppDataController,
 )
+
+AssistantMessageController = MessageController
+AssistantInlineQueryController = InlineQueryController
+AssistantCallbackQueryController = CallbackQueryController
+AssistantWebAppDataController = WebAppDataController

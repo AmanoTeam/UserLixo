@@ -1,15 +1,22 @@
 import io
 import re
 import traceback
-from typing import Callable
+from collections.abc import Callable
 
 from meval import meval
 from pyrogram import Client
 from pyrogram.types import Message
 
 
-async def evals(eval_code: str, client: Client, message: Message, on_result: Callable, on_error: Callable,
-                on_huge_result: Callable, on_no_result: Callable):
+async def evals(
+    eval_code: str,
+    client: Client,
+    message: Message,
+    on_result: Callable,
+    on_error: Callable,
+    on_huge_result: Callable,
+    on_no_result: Callable,
+):
     # Shortcuts that will be available for the user code
     c = client
     m = message
@@ -30,7 +37,7 @@ async def evals(eval_code: str, client: Client, message: Message, on_result: Cal
         return await on_no_result()
 
     if len(output) <= 4096:
-        output = re.sub(f'([{re.escape("```")}])', r'\\\1', output)
+        output = re.sub(f'([{re.escape("```")}])', r"\\\1", output)
 
         text = "```bash\n" + output + "\n```"
 
@@ -40,3 +47,4 @@ async def evals(eval_code: str, client: Client, message: Message, on_result: Cal
     strio.name = "output.txt"
     strio.write(output.encode())
     await on_huge_result(strio)
+    return None

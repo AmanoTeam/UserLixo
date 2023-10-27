@@ -5,8 +5,8 @@ from pyrogram import filters
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
-from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.database import Config
+from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.utils.services.language_selector import LanguageSelector
 
 

@@ -1,8 +1,9 @@
 import re
 from dataclasses import dataclass
 
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 
+from userlixo.decorators import Controller, on_message
 from userlixo.handlers.assistant.handlers.message.cmd_message_handler import (
     CmdMessageHandler,
 )
@@ -12,7 +13,6 @@ from userlixo.handlers.assistant.handlers.message.eval_message_handler import (
 from userlixo.handlers.assistant.handlers.message.exec_message_handler import (
     ExecMessageHandler,
 )
-from userlixo.decorators import Controller, on_message
 
 
 @Controller()

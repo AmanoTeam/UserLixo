@@ -3,31 +3,17 @@ from dataclasses import dataclass
 from pyrogram import filters
 from pyrogram.types import CallbackQuery
 
-from userlixo.handlers.assistant.handlers.callback_query.add_plugin_callback_query_handler import (
+from userlixo.decorators import Controller, on_callback_query
+from userlixo.handlers.assistant.handlers.callback_query import (
     AddPluginCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.cancel_plugin_callback_query_handler import (
     CancelPluginCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.confirm_add_plugin_callback_query_handler import (
     ConfirmAddPluginCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.info_plugin_callback_query_handler import (
     InfoPluginCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.list_plugins_by_type_callback_query_handler import (
     ListPluginsByTypeCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.list_plugins_callback_query_handler import (
     ListPluginsCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.remove_plugin_callback_query_handler import (
     RemovePluginCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.toggle_plugin_callback_query_handler import (
     TogglePluginCallbackQueryHandler,
 )
-from userlixo.decorators import Controller, on_callback_query
 
 
 @Controller()
@@ -43,25 +29,22 @@ class PluginController:
     confirm_add_plugin_handler: ConfirmAddPluginCallbackQueryHandler
 
     @on_callback_query(
-        filters.regex(
-            r"^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)"
-        )
+        filters.regex(r"^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)")
     )
     async def info_plugin(self, _c, callback_query):
         await self.info_plugin_handler.handle_callback_query(_c, callback_query)
 
     @on_callback_query(
         filters.regex(
-            r"^(?P<deactivate>de)?activate_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)"
+            r"^(?P<deactivate>de)?activate_plugin (?P<basename>.+)"
+            + r" (?P<plugin_type>user|bot) (?P<page>\d+)"
         )
     )
     async def activate_plugin(self, _c, callback_query):
         pass
 
     @on_callback_query(
-        filters.regex(
-            r"^remove_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)"
-        )
+        filters.regex(r"^remove_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)")
     )
     async def remove_plugin(self, _c, callback_query):
         await self.remove_plugin_handler.handle_callback_query(_c, callback_query)
@@ -86,6 +69,4 @@ class PluginController:
 
     @on_callback_query(filters.regex(r"^(?P<type>user|bot)_plugins (?P<page>\d+)"))
     async def list_plugins_by_type(self, _c, callback_query):
-        await self.list_plugins_by_type_handler.handle_callback_query(
-            _c, callback_query
-        )
+        await self.list_plugins_by_type_handler.handle_callback_query(_c, callback_query)

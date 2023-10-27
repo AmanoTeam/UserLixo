@@ -57,7 +57,7 @@ def write_plugin_info(plugins, lang, info, **kwargs):
 
 
 def read_plugin_info(filename):
-    with Path.open(filename) as f:
+    with Path(filename).open() as f:
         data = f.read()
     if not (
         match := re.search(

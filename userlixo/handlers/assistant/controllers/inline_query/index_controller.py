@@ -2,10 +2,10 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
+from userlixo.decorators import Controller, on_inline_query
 from userlixo.handlers.assistant.handlers.inline_query.index_inline_query_handler import (
     IndexInlineQueryHandler,
 )
-from userlixo.decorators import Controller, on_inline_query
 
 
 @Controller()

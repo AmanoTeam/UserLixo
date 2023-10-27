@@ -2,13 +2,11 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.handlers.assistant.handlers.callback_query.set_language_code_callback_query_handler import (
+from userlixo.decorators import Controller, on_callback_query
+from userlixo.handlers.assistant.handlers.callback_query import (
     SetLanguageCodeCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.setting_language_callback_query_handler import (
     SettingLanguageCallbackQueryHandler,
 )
-from userlixo.decorators import Controller, on_callback_query
 
 
 @Controller()

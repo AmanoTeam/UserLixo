@@ -1,12 +1,12 @@
 import importlib
 import json
-import os
 from dataclasses import dataclass
+from pathlib import Path
 
 from kink import inject
 from pyrogram.types import CallbackQuery
 
-from userlixo.config import plugins, user, bot
+from userlixo.config import bot, plugins, user
 from userlixo.database import Config
 from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.handlers.assistant.handlers.common.plugins import (
@@ -35,7 +35,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
 
         inactive = await get_inactive_plugins(plugins)
 
-        if not os.path.exists(plugin["filename"]):
+        if not Path(plugin["filename"]).exists():
             return await query.edit(lang.plugin_not_exists_on_server)
 
         if plugin["notation"] in inactive:
@@ -45,7 +45,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
         try:
             module = importlib.import_module(plugin["notation"])
         except Exception as e:
-            os.remove(plugin["filename"])
+            Path(plugin["filename"]).unlink()
             return await query.edit(lang.plugin_could_not_load(e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
@@ -55,7 +55,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
         for f in functions:
             c.remove_handler(*f.handler)
         del plugins[plugin_type][basename]
-        os.remove(plugin["filename"])
+        Path(plugin["filename"]).unlink()
 
         await query.answer(lang.plugin_removed(name=basename))
         query.matches = [{"page": page, "type": plugin_type}]
@@ -64,3 +64,4 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
             lang, plugin_type, page, show_add_plugin_button=False, append_back=True
         )
         await query.message.edit(text, reply_markup=keyboard)
+        return None

@@ -2,19 +2,13 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.handlers.assistant.handlers.callback_query.edit_env_callback_query_handler import (
+from userlixo.decorators import Controller, on_callback_query
+from userlixo.handlers.assistant.handlers.callback_query import (
     EditEnvCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.restart_now_callback_query_handler import (
     RestartNowCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.setting_env_callback_query_handler import (
     SettingEnvCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.view_env_callback_query_handler import (
     ViewEnvCallbackQueryHandler,
 )
-from userlixo.decorators import Controller, on_callback_query
 
 
 @Controller()

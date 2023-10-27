@@ -7,18 +7,19 @@ import os
 import re
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 
 from kink import inject
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
-from userlixo.handlers.abstract import CallbackQueryHandler
-from userlixo.config import user, bot, plugins
+from userlixo.config import bot, plugins, user
 from userlixo.database import Config
+from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.utils.plugins import (
+    get_inactive_plugins,
     read_plugin_info,
     reload_plugins_requirements,
-    get_inactive_plugins,
 )
 from userlixo.utils.services.language_selector import LanguageSelector
 
@@ -37,7 +38,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
         client = (user, bot)[plugin_type == "bot"]
 
         cache_filename = query.matches[0]["filename"]
-        basename = os.path.basename(cache_filename)
+        basename = Path(cache_filename).name
         new_filename = "userlixo/handlers/" + plugin_type + "/plugins/" + basename
 
         plugin = read_plugin_info(cache_filename)
@@ -47,20 +48,18 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
 
         requirements = plugin.get("requirements")
         if requirements:
-            DGRAY = 'echo -e "\033[1;30m"'
-            RESET = 'echo -e "\033[0m"'
+            dgray = 'echo -e "\033[1;30m"'
+            reset = 'echo -e "\033[0m"'
             req_list = requirements.split()
             req_text = "".join(f" ├ <code>{r}</code>\n" for r in req_list[:-1])
             req_text += f" └ <code>{req_list[-1]}</code>"
             text = lang.installing_plugin_requirements
             text.escape_html = False
-            await query.edit(text(requirements=req_text))
-            os.system(
-                f"{DGRAY}; {sys.executable} -m pip install {requirements}; {RESET}"
-            )
+            await query.message.edit(text(requirements=req_text))
+            os.system(f"{dgray}; {sys.executable} -m pip install {requirements}; {reset}")
 
         # Safely unload the plugin if existent
-        if os.path.exists(new_filename):
+        if Path(new_filename).exists():
             try:
                 module = importlib.import_module(new_notation)
             except Exception as e:
@@ -83,7 +82,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
                 importlib.reload(module)
             module = importlib.import_module(plugin["notation"])
         except Exception as e:
-            os.remove(new_filename)
+            Path(new_filename).unlink()
             await query.message.edit(lang.plugin_could_not_load(e=e))
             raise e
 
@@ -112,7 +111,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
 
             if r is not None:
                 unload = False
-                if isinstance(r, (tuple, list)):
+                if isinstance(r, tuple | list):
                     if len(r) == 2:
                         if r[0] != 1:
                             await query.message.edit(lang.plugin_could_not_load(e=r[1]))
@@ -120,7 +119,8 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
                     else:
                         await query.message.edit(
                             lang.plugin_could_not_load(
-                                e="The return of post_install_script should be like this: (0, 'nodejs not found')"
+                                e="The return of post_install_script"
+                                + " should be like this: (0, 'nodejs not found')"
                             )
                         )
                         unload = True
@@ -139,8 +139,8 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
                     for f in functions:
                         for handler in f.handlers:
                             client.remove_handler(*handler)
-                    os.remove(new_filename)
-                    return
+                    Path(new_filename).unlink()
+                    return None
 
         plugins[plugin_type][basename] = plugin
         reload_plugins_requirements(plugins)
@@ -155,9 +155,8 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
         quant_per_page = 4 * 2  # lines times columns
         page = math.ceil(len(plugins) / quant_per_page)
 
-        keyboard = ikb(
-            [[(lang.see_plugin_info, f"info_plugin {basename} {plugin_type} {page}")]]
-        )
+        keyboard = ikb([[(lang.see_plugin_info, f"info_plugin {basename} {plugin_type} {page}")]])
         text = lang.plugin_added(name=basename)
 
         await query.message.edit(text, keyboard)
+        return None

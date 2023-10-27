@@ -4,12 +4,12 @@ from dataclasses import dataclass
 from kink import inject
 from pyrogram.types import CallbackQuery
 
+from userlixo.config import sudoers
+from userlixo.database import Config
 from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.handlers.assistant.handlers.common.sudoers import (
     compose_list_sudoers_message,
 )
-from userlixo.config import sudoers
-from userlixo.database import Config
 from userlixo.utils import tryint
 from userlixo.utils.services.language_selector import LanguageSelector
 
@@ -29,9 +29,7 @@ class RemoveSudoerCallbackQueryHandler(CallbackQueryHandler):
         removed = [x for x in sudoers if x != who]
         sudoers[:] = removed
 
-        await Config.get(key="SUDOERS_LIST").update(
-            value=" ".join([*map(str, sudoers)])
-        )
+        await Config.get(key="SUDOERS_LIST").update(value=" ".join([*map(str, sudoers)]))
         os.environ["SUDOERS_LIST"] = " ".join([*map(str, sudoers)])
 
         text, keyboard = await compose_list_sudoers_message(

@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 
+from userlixo.decorators import Controller, on_message
 from userlixo.handlers.assistant.handlers.web_app_data.save_settings_web_app_data_handler import (
     SaveSettingsWebAppDataHandler,
 )
-from userlixo.decorators import Controller, on_message
 
 
 @Controller()

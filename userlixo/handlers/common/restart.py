@@ -9,16 +9,16 @@ from userlixo.database import Config
 
 
 def compose_before_restart_message(lang: Langs):
-    text = lang.restarting_now_alert
-
-    return text
+    return lang.restarting_now_alert
 
 
-async def save_before_restart_message_info(message_id: int, chat_id: int, from_client: Literal["bot", "user"]):
+async def save_before_restart_message_info(
+    message_id: int, chat_id: int, from_client: Literal["bot", "user"]
+):
     await Config.filter(key="restarting_alert").delete()
 
     timestamp = datetime.now().timestamp()
-    
+
     await Config.create(
         **{
             "key": "restarting_alert",

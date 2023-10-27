@@ -2,10 +2,10 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
+from userlixo.decorators import Controller, on_callback_query
 from userlixo.handlers.assistant.handlers.callback_query.help_callback_query_handler import (
     HelpCallbackQueryHandler,
 )
-from userlixo.decorators import on_callback_query, Controller
 
 
 @Controller()

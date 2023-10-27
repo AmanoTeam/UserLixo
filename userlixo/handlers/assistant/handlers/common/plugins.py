@@ -26,9 +26,9 @@ async def compose_list_plugins_by_type_message(
 
     layout = Pagination(
         [*plugins[plugin_type].items()],
-        item_data=lambda i, pg: "info_plugin {} {} {}".format(i[0], plugin_type, pg),
+        item_data=lambda i, pg: f"info_plugin {i[0]} {plugin_type} {pg}",
         item_title=item_title,
-        page_data=lambda pg: "{}_plugins {}".format(plugin_type, pg),
+        page_data=lambda pg: f"{plugin_type}_plugins {pg}",
     )
 
     lines = layout.create(page, lines=4, columns=2)
@@ -37,9 +37,7 @@ async def compose_list_plugins_by_type_message(
     if show_add_plugin_button:
         lines.append([(lang.add_plugin, f"add_plugin {page}")])
     else:  # is command to user
-        lines.append(
-            [(lang.add_plugin, f"t.me/{bot.me.username}?start=plugin_add", "url")]
-        )
+        lines.append([(lang.add_plugin, f"t.me/{bot.me.username}?start=plugin_add", "url")])
 
     if append_back:
         lines.append([(lang.back, "list_plugins")])
@@ -74,10 +72,8 @@ async def compose_info_plugin_message(
             (lang.remove, f"remove_plugin {plugin_basename} {plugin_type} {page}"),
         ]
     ]
-    if "settings" in plugin and plugin["settings"]:
-        lines.append(
-            [(lang.settings, f"plugin_settings {plugin_basename} {plugin_type} {page}")]
-        )
+    if plugin.get("settings"):
+        lines.append([(lang.settings, f"plugin_settings {plugin_basename} {plugin_type} {page}")])
     lines.append([(lang.back, f"{plugin_type}_plugins {page}")])
     keyboard = ikb(lines)
 

@@ -28,16 +28,16 @@ class UpdateController:
         method = self.get_method(key)
         if is_static:
             return method
-        else:
-            is_async = inspect.iscoroutinefunction(method)
 
-            def call(*args, **kwargs):
-                return method(self.cls_instance, *args, **kwargs)
+        is_async = inspect.iscoroutinefunction(method)
 
-            async def async_call(*args, **kwargs):
-                return await method(self.cls_instance, *args, **kwargs)
+        def call(*args, **kwargs):
+            return method(self.cls_instance, *args, **kwargs)
 
-            return async_call if is_async else call
+        async def async_call(*args, **kwargs):
+            return await method(self.cls_instance, *args, **kwargs)
+
+        return async_call if is_async else call
 
     def register_handler(self, client: Client, key, method):
         method_callable = self.get_method_callable(key)
@@ -58,7 +58,9 @@ class UpdateController:
                 continue
 
             if hasattr(method, "on"):
-                self.registers.append(lambda client, k=key, m=method: self.register_handler(client, k, m))
+                self.registers.append(
+                    lambda client, k=key, m=method: self.register_handler(client, k, m)
+                )
 
     def import_controller(self, controller: Any):
         if not hasattr(controller, "__controller__"):

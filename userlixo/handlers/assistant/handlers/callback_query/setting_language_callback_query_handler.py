@@ -17,7 +17,7 @@ class SettingLanguageCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         buttons = []
-        for code, obj in lang.strings.items():
+        for obj in lang.strings.values():
             text, data = (
                 (f"✅ {obj['NAME']}", "noop")
                 if obj["LANGUAGE_CODE"] == lang.code

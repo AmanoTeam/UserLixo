@@ -22,6 +22,4 @@ class PingMessageHandler(MessageHandler):
         diff_ms = (after - before).microseconds / 1000
 
         keyboard = [[("🏓", "ping")]]
-        await message.reply(
-            f"<b>Pong!</b> <code>{diff_ms}</code><code>ms</code>", keyboard
-        )
+        await message.reply(f"<b>Pong!</b> <code>{diff_ms}</code><code>ms</code>", keyboard)

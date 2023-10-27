@@ -1,4 +1,5 @@
 from userlixo.decorators import Controller
+
 from .about_controller import AboutController
 from .command_controller import CommandController
 from .env_vars_controller import EnvVarsController
@@ -13,19 +14,21 @@ from .sudoer_controller import SudoerController
 from .upgrade_controller import UpgradeController
 
 
-@Controller(imports=[
-    AboutController,
-    CommandController,
-    EnvVarsController,
-    HelpController,
-    LanguageController,
-    PingController,
-    PluginController,
-    StartController,
-    SudoerController,
-    RestartController,
-    UpgradeController,
-    SettingsController
-])
+@Controller(
+    imports=[
+        AboutController,
+        CommandController,
+        EnvVarsController,
+        HelpController,
+        LanguageController,
+        PingController,
+        PluginController,
+        StartController,
+        SudoerController,
+        RestartController,
+        UpgradeController,
+        SettingsController,
+    ]
+)
 class CallbackQueryController:
     pass

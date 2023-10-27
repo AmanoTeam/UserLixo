@@ -30,6 +30,4 @@ class EvalMessageHandler(MessageHandler):
         async def on_no_result():
             await message.reply(lang.no_result, quote=True)
 
-        await evals(
-            code, client, message, on_result, on_error, on_huge_result, on_no_result
-        )
+        await evals(code, client, message, on_result, on_error, on_huge_result, on_no_result)

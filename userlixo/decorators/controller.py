@@ -4,7 +4,7 @@ from userlixo.types import UpdateController
 
 
 class Controller:
-    def __init__(self, imports: list = None):
+    def __init__(self, imports: list | None = None):
         if imports is None:
             imports = []
 

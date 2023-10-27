@@ -2,13 +2,11 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.handlers.assistant.handlers.callback_query.info_command_callback_query_handler import (
+from userlixo.decorators import Controller, on_callback_query
+from userlixo.handlers.assistant.handlers.callback_query import (
     InfoCommandCallbackQueryHandler,
-)
-from userlixo.handlers.assistant.handlers.callback_query.list_commands_callback_query_handler import (
     ListCommandsCallbackQueryHandler,
 )
-from userlixo.decorators import Controller, on_callback_query
 
 
 @Controller()

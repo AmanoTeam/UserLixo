@@ -5,8 +5,8 @@ from pyrogram.types import CallbackQuery
 
 from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.handlers.common.restart import (
-    self_restart_process,
     save_before_restart_message_info,
+    self_restart_process,
 )
 from userlixo.utils.services.language_selector import LanguageSelector
 

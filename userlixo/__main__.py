@@ -50,10 +50,11 @@ from rich import box, print
 from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
+
 from userlixo.handlers.assistant import (
-    AssistantMessageController,
     AssistantCallbackQueryController,
     AssistantInlineQueryController,
+    AssistantMessageController,
     AssistantWebAppDataController,
 )
 from userlixo.handlers.userbot import UserbotMessageController

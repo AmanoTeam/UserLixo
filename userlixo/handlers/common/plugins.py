@@ -4,9 +4,9 @@ import re
 from langs import Langs
 from pyrogram import Client, filters
 from pyrogram.helpers import ikb
-from pyrogram.types import Message, CallbackQuery
+from pyrogram.types import CallbackQuery, Message
 
-from userlixo.config import plugins, bot, user
+from userlixo.config import bot, plugins, user
 from userlixo.utils.plugins import read_plugin_info, write_plugin_info
 
 
@@ -28,9 +28,7 @@ def compose_list_plugins_message(lang: Langs, append_back: bool = False):
     return text, keyboard
 
 
-async def handle_add_plugin_request(
-    lang: Langs, client: Client, update: Message | CallbackQuery
-):
+async def handle_add_plugin_request(lang: Langs, client: Client, update: Message | CallbackQuery):
     is_query = isinstance(update, CallbackQuery)
     loop_count = 0
     while True:
@@ -39,11 +37,7 @@ async def handle_add_plugin_request(
             msg = update
             if loop_count > 1:
                 break  # avoid infinite loop
-        elif (
-            not is_query
-            and update.reply_to_message
-            and update.reply_to_message.document
-        ):
+        elif not is_query and update.reply_to_message and update.reply_to_message.document:
             msg = update.reply_to_message
             if loop_count > 1:
                 break  # avoid infinite loop
@@ -75,3 +69,4 @@ async def handle_add_plugin_request(
     ]
     keyboard = ikb(lines)
     await msg.reply(text, reply_markup=keyboard)
+    return None

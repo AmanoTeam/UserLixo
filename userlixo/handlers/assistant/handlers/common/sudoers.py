@@ -2,7 +2,7 @@ from langs import Langs
 from pyrogram import Client
 from pyrogram.helpers import array_chunk, ikb
 
-from userlixo.config import sudoers, user, bot
+from userlixo.config import bot, sudoers, user
 
 
 async def compose_list_sudoers_message(lang: Langs, client: Client, from_user_id: int):
@@ -25,9 +25,7 @@ async def compose_list_sudoers_message(lang: Langs, client: Client, from_user_id
 
         mention = user_id
         if user_obj:
-            mention = (
-                f"@{user_obj.username}" if user_obj.username else user_obj.first_name
-            )
+            mention = f"@{user_obj.username}" if user_obj.username else user_obj.first_name
         text += f"\n👤 {mention}"
 
         if user_real_id not in ["me", user.me.id, from_user_id]:

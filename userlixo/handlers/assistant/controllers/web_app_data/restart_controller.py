@@ -1,9 +1,9 @@
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 
+from userlixo.decorators import Controller, on_message
 from userlixo.handlers.assistant.handlers.web_app_data.restart_web_app_data_handler import (
     RestartWebAppDataHandler,
 )
-from userlixo.decorators import Controller, on_message
 
 
 @Controller()

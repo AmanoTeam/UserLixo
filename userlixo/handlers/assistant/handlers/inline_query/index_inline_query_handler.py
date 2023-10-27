@@ -6,8 +6,8 @@ from pyrogram.types import (
     InputTextMessageContent,
 )
 
-from userlixo.handlers.abstract import InlineQueryHandler
 from userlixo.database import Message
+from userlixo.handlers.abstract import InlineQueryHandler
 
 
 @inject
@@ -19,9 +19,7 @@ class IndexInlineQueryHandler(InlineQueryHandler):
             results = [
                 InlineQueryResultArticle(
                     title="undefined index",
-                    input_message_content=InputTextMessageContent(
-                        f"Undefined index {index}"
-                    ),
+                    input_message_content=InputTextMessageContent(f"Undefined index {index}"),
                 )
             ]
             return await iq.answer(results, cache_time=0)
@@ -32,12 +30,11 @@ class IndexInlineQueryHandler(InlineQueryHandler):
         results = [
             InlineQueryResultArticle(
                 title="index",
-                input_message_content=InputTextMessageContent(
-                    text, disable_web_page_preview=True
-                ),
+                input_message_content=InputTextMessageContent(text, disable_web_page_preview=True),
                 reply_markup=keyboard,
             )
         ]
 
         await iq.answer(results, cache_time=0)
         await (await Message.get(key=message.key)).delete()
+        return None

@@ -33,3 +33,4 @@ class InfoCommandCallbackQueryHandler(CallbackQueryHandler):
 
         text.escape_html = False
         await query.message.edit(text(command=cmd, info=info), keyboard)
+        return None

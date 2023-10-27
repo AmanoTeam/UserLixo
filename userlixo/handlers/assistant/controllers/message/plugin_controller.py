@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 from pyrogram.types import Message
 
+from userlixo.decorators import Controller, on_message
 from userlixo.handlers.assistant.handlers.message.add_plugin_message_handler import (
     AddPluginMessageHandler,
 )
@@ -12,7 +13,6 @@ from userlixo.handlers.assistant.handlers.message.list_plugins_message_handler i
 from userlixo.handlers.assistant.handlers.message.process_python_file_message_handler import (
     ProcessPythonFileMessageHandler,
 )
-from userlixo.decorators import Controller, on_message
 
 
 @Controller()

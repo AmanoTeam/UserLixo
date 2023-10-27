@@ -6,8 +6,8 @@ from pyrogram import filters
 from pyrogram.helpers import force_reply, ikb
 from pyrogram.types import Message
 
-from userlixo.handlers.abstract import MessageHandler
 from userlixo.database import Config
+from userlixo.handlers.abstract import MessageHandler
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -22,17 +22,16 @@ class AddSudoerMessageHandler(MessageHandler):
         print("add_sudoer executed")
 
         text = lang.add_sudoer_ask
-        response = await m.chat.ask(
-            text, filters.text, timeout=600, reply_markup=force_reply()
-        )
+        response = await m.chat.ask(text, filters.text, timeout=600, reply_markup=force_reply())
 
         if not re.match(r"@?\w+$", response.text):
             return await m.reply(lang.add_sudoer_not_match)
 
-        sudoers_str: str = await Config.get(key="SUDOERS_LIST")
+        sudoers_str: str = (await Config.get(key="SUDOERS_LIST")).value
         sudoers = sudoers_str.split(" ")
         sudoers.append(response.text.lstrip("@"))
         await Config.get(key="SUDOERS_LIST").update(value=" ".join(map(str, sudoers)))
 
         keyboard = ikb([[(lang.back, "setting_sudoers")]])
         await m.reply(lang.sudoer_added, keyboard)
+        return None

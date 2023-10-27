@@ -7,8 +7,8 @@ from kink import inject
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from userlixo.handlers.abstract import MessageHandler
 from userlixo.config import plugins
+from userlixo.handlers.abstract import MessageHandler
 from userlixo.utils import shell_exec
 from userlixo.utils.services.language_selector import LanguageSelector
 
@@ -35,7 +35,8 @@ class InfoMessageHandler(MessageHandler):
         remote_version = int(
             (
                 await shell_exec(
-                    """curl -s -I -k 'https://api.github.com/repos/AmanoTeam/UserLixo/commits?per_page=1' | grep -oE '&page=[0-9]+>; rel="last"' | grep -oE '[0-9]+' """
+                    "curl -s -I -k 'https://api.github.com/repos/AmanoTeam/UserLixo/commits?per_page=1'"
+                    + "| grep -oE '&page=[0-9]+>; rel=\"last\"' | grep -oE '[0-9]+' "
                 )
             )[0]
         )
@@ -48,12 +49,10 @@ class InfoMessageHandler(MessageHandler):
             else lang.info_latest
         )
 
-        user_plugins = len([x for x in plugins["user"]])
-        bot_plugins = len([x for x in plugins["bot"]])
+        user_plugins = len(list(plugins["user"]))
+        bot_plugins = len(list(plugins["bot"]))
         plugins_total = user_plugins + bot_plugins
-        append_plugins = (
-            f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
-        )
+        append_plugins = f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
 
         text = lang.info_text(
             pid=pid,

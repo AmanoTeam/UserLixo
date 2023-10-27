@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 
+from userlixo.decorators import Controller, on_message
 from userlixo.handlers.assistant.handlers.message.add_sudoer_message_handler import (
     AddSudoerMessageHandler,
 )
-from userlixo.decorators import Controller, on_message
 
 
 @Controller()

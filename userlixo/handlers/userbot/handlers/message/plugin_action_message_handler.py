@@ -1,18 +1,18 @@
 import hashlib
 import importlib
 import json
-import os
 from dataclasses import dataclass
+from pathlib import Path
 
 from kink import inject
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from userlixo.config import plugins, user, bot
+from userlixo.config import bot, plugins, user
 from userlixo.database import Config
 from userlixo.handlers.abstract import MessageHandler
 from userlixo.handlers.common.plugins import handle_add_plugin_request
-from userlixo.utils.plugins import read_plugin_info, get_inactive_plugins
+from userlixo.utils.plugins import get_inactive_plugins, read_plugin_info
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -43,7 +43,7 @@ class PluginActionMessageHandler(MessageHandler):
         cache_filename = await msg.download("cache/")
         plugin = read_plugin_info(cache_filename)
         if not plugin:
-            os.remove(cache_filename)
+            Path(cache_filename).unlink()
             return await msg.reply(lang.plugin_info_block_not_found, quote=True)
         plugin_type = plugin["type"]
 
@@ -53,22 +53,22 @@ class PluginActionMessageHandler(MessageHandler):
         plugin = plugins[plugin_type][basename]
 
         # compare files via hash
-        with open(cache_filename) as remote_file, open(
+        with Path(cache_filename).open() as remote_file, Path(
             plugin["filename"]
-        ) as local_file:
+        ).open() as local_file:
             local_data = local_file.read()
             local_hash = hashlib.md5(local_data.encode()).hexdigest()[:10]
 
             temp_data = remote_file.read()
             remote_hash = hashlib.md5(temp_data.encode()).hexdigest()[:10]
-        os.remove(cache_filename)
+        Path(cache_filename).unlink()
 
         if local_hash != remote_hash:
             return await act(lang.plugin_rm_remote_local_are_diff(name=basename))
 
         inactive = await get_inactive_plugins(plugins)
 
-        if not os.path.exists(plugin["filename"]):
+        if not Path(plugin["filename"]).exists():
             del plugins[plugin_type][basename]
             return await act(lang.plugin_not_exists_on_server)
 
@@ -79,7 +79,7 @@ class PluginActionMessageHandler(MessageHandler):
         try:
             module = importlib.import_module(plugin["notation"])
         except BaseException as e:
-            os.remove(plugin["filename"])
+            Path(plugin["filename"]).unlink()
             return await act(lang.plugin_could_not_load(e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
@@ -89,6 +89,7 @@ class PluginActionMessageHandler(MessageHandler):
         for f in functions:
             client.remove_handler(*f.handler)
         del plugins[plugin_type][basename]
-        os.remove(plugin["filename"])
+        Path(plugin["filename"]).unlink()
 
         await act(lang.plugin_removed_text(name=basename))
+        return None

@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from pyrogram import filters, Client
+from pyrogram import Client, filters
 
+from userlixo.decorators import Controller, on_message
 from userlixo.handlers.assistant.handlers.message.upgrade_message_handler import (
     UpgradeMessageHandler,
 )
-from userlixo.decorators import Controller, on_message
 
 
 @Controller()

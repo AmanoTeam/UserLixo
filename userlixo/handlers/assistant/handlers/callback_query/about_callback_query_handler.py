@@ -5,8 +5,8 @@ from kink import inject
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
-from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.config import cmds
+from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -36,7 +36,7 @@ class AboutCallbackQueryHandler(CallbackQueryHandler):
                     break
                 examples.append("<code>" + p + commands[n] + "</code>")
             examples = ", ".join(examples)
-            commands_list = [*map(lambda x: f"<code>{x}</code>", commands)]
+            commands_list = [*(f"<code>{x}</code>" for x in commands)]
 
             text.escape_html = False
             text = text(

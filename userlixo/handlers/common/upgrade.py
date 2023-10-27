@@ -1,10 +1,11 @@
+from collections.abc import Callable
 from datetime import datetime
-from typing import Callable
+from pathlib import Path
 
 from langs import Langs
 
-from userlixo.handlers.common.restart import self_restart_process
 from userlixo.database import Config
+from userlixo.handlers.common.restart import self_restart_process
 from userlixo.utils.misc import shell_exec, timezone_shortener
 
 
@@ -47,9 +48,7 @@ class UpgradeLogicBuilder:
         if process.returncode != 0:
             await git_merge_abort()
 
-            text = compose_upgrade_failed_message(
-                lang, current_branch, process.returncode, stdout
-            )
+            text = compose_upgrade_failed_message(lang, current_branch, process.returncode, stdout)
             return await cls._on_error(text) if cls._on_error else None
 
         if "Your branch is up to date" in stdout:
@@ -70,48 +69,35 @@ class UpgradeLogicBuilder:
         if process.returncode != 0:
             await git_merge_abort()
 
-            text = compose_upgrade_failed_message(
-                lang, current_branch, process.returncode, stdout
-            )
+            text = compose_upgrade_failed_message(lang, current_branch, process.returncode, stdout)
             return await cls._on_error(text) if cls._on_error else None
 
         text = compose_before_upgrade_message(lang)
         await cls._on_success(text) if cls._on_success else None
 
         self_restart_process()
+        return None
 
 
 def compose_before_upgrade_message(lang: Langs):
-    text = lang.upgrading_now_alert
-
-    return text
+    return lang.upgrading_now_alert
 
 
 def compose_not_git_error_message(lang: Langs):
-    text = lang.upgrade_error_not_git
-
-    return text
+    return lang.upgrade_error_not_git
 
 
 def compose_upgrade_failed_message(lang: Langs, branch: str, code: int, output: str):
-    text = lang.upgrade_failed(branch=branch, code=code, output=output)
-
-    return text
+    return lang.upgrade_failed(branch=branch, code=code, output=output)
 
 
-def compose_already_uptodate_message(
-    lang: Langs, rev: str, date: str, local_version: int
-):
-    text = lang.upgrade_alert_already_uptodate(
-        rev=rev, date=date, local_version=local_version
-    )
-
-    return text
+def compose_already_uptodate_message(lang: Langs, rev: str, date: str, local_version: int):
+    return lang.upgrade_alert_already_uptodate(rev=rev, date=date, local_version=local_version)
 
 
 def get_branch_if_is_git():
     try:
-        with open(".git/HEAD") as f:
+        with Path(".git/HEAD").open() as f:
             branch = f.read().split("/")[-1].rstrip()
     except FileNotFoundError:
         return None
@@ -159,9 +145,7 @@ async def git_pull_from_branch(branch: str):
     return stdout, process
 
 
-async def save_before_upgrade_message_info(
-    message_id: int, chat_id: int, from_client: str
-):
+async def save_before_upgrade_message_info(message_id: int, chat_id: int, from_client: str):
     await Config.filter(key="restarting_alert").delete()
 
     timestamp = datetime.now().timestamp()

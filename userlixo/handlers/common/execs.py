@@ -2,15 +2,22 @@ import html
 import io
 import re
 import traceback
+from collections.abc import Callable
 from contextlib import redirect_stdout
-from typing import Callable
 
 from pyrogram import Client
 from pyrogram.types import Message
 
 
-async def execs(code: str, client: Client, message: Message, on_result: Callable = None, on_error: Callable = None,
-                on_huge_result: Callable = None, on_no_result: Callable = None):
+async def execs(
+    code: str,
+    client: Client,
+    message: Message,
+    on_result: Callable | None = None,
+    on_error: Callable | None = None,
+    on_huge_result: Callable | None = None,
+    on_no_result: Callable | None = None,
+):
     reply = message.reply_to_message
     user = (reply or message).from_user
     chat = message.chat
@@ -30,15 +37,14 @@ async def __ex(client, message, reply, user, chat):
             await locals()["__ex"](client, message, reply, user, chat)
         except BaseException:
             traceback_string = traceback.format_exc()
-            text = f"<b>{html.escape(traceback_string)}</b>"
-            return text  # send in case of error
+            return f"<b>{html.escape(traceback_string)}</b>"
 
     output = strio.getvalue()
     if not output:
         return await on_no_result()
 
     if len(output) <= 4096:
-        output = re.sub(f'([{re.escape("```")}])', r'\\\1', output)
+        output = re.sub(f'([{re.escape("```")}])', r"\\\1", output)
 
         text = "```bash\n" + output + "\n```"
         return await on_result(text)
@@ -47,3 +53,4 @@ async def __ex(client, message, reply, user, chat):
     strio.name = "output.txt"
     strio.write(output.encode())
     await on_huge_result(strio)
+    return None

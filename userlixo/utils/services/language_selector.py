@@ -1,6 +1,6 @@
-import glob
 import os
 import re
+from pathlib import Path
 
 import yaml
 from kink import inject
@@ -8,16 +8,15 @@ from langs import Langs
 
 
 def open_yml(filename):
-    with open(filename) as fp:
-        data = yaml.safe_load(fp)
-    return data
+    with Path(filename).open() as fp:
+        return yaml.safe_load(fp)
 
 
 @inject
 class LanguageSelector:
     def __init__(self):
         strings = {}
-        for string_file in glob.glob("userlixo/strings/*.yml"):
+        for string_file in Path.glob("userlixo/strings/*.yml"):
             language_code = re.match(r"userlixo/strings/(.+)\.yml$", string_file)[1]
             strings[language_code] = open_yml(string_file)
 
