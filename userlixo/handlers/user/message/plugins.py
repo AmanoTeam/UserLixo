@@ -8,11 +8,11 @@ from pathlib import Path
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from userlixo.handlers.bot.list_plugins import on_list_plugins_u
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
 from userlixo.handlers.bot.add_plugin import on_add_plugin_u
-from userlixo.handlers.bot.list_plugins import on_list_plugins_u
 from userlixo.utils.plugins import get_inactive_plugins, read_plugin_info
 
 
