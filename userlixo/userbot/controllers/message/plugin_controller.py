@@ -4,13 +4,13 @@ from pyrogram import filters, Client
 from pyrogram.types import Message
 
 from userlixo.decorators import Controller, on_message
-from userlixo.userbot.handlers.list_plugins_message_handler import (
+from userlixo.userbot.handlers.message.list_plugins_message_handler import (
     ListPluginsMessageHandler,
 )
-from userlixo.userbot.handlers.plugin_action_message_handler import (
+from userlixo.userbot.handlers.message.plugin_action_message_handler import (
     PluginActionMessageHandler,
 )
-from userlixo.userbot.handlers.process_python_file_message_handler import (
+from userlixo.userbot.handlers.message.process_python_file_message_handler import (
     ProcessPythonFileMessageHandler,
 )
 

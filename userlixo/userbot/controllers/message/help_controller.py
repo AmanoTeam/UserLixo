@@ -4,7 +4,7 @@ from pyrogram import filters, Client
 from pyrogram.types import Message
 
 from userlixo.decorators import Controller, on_message
-from userlixo.userbot.handlers.help_message_handler import HelpMessageHandler
+from userlixo.userbot.handlers.message.help_message_handler import HelpMessageHandler
 
 
 @Controller()
