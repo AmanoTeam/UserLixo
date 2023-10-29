@@ -21,8 +21,15 @@ class RestartCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         text = compose_before_restart_message(lang)
-        msg = await query.edit(text)
+        await query.edit(text)
 
-        await save_before_restart_message_info(msg.id, msg.chat.id, "bot")
+        chat_id = "inline"
+        message_id = query.inline_message_id
+
+        if query.message and query.message.chat:
+            chat_id = query.message.chat.id
+            message_id = query.message.id
+
+        await save_before_restart_message_info(message_id, chat_id, "bot")
 
         self_restart_process()

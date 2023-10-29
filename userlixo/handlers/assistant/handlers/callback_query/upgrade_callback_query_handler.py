@@ -5,6 +5,7 @@ from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
 from userlixo.handlers.abstract import CallbackQueryHandler
+from userlixo.handlers.common.restart import save_before_restart_message_info
 from userlixo.handlers.common.upgrade import (
     UpgradeLogicBuilder,
 )
@@ -27,9 +28,20 @@ class UpgradeCallbackQueryHandler(CallbackQueryHandler):
         async def edit_message(text):
             await query.edit(text)
 
+        async def before_upgrade(text):
+            chat_id = "inline"
+            message_id = query.inline_message_id
+
+            if query.message and query.message.chat:
+                chat_id = query.message.chat.id
+                message_id = query.message.id
+
+            await save_before_restart_message_info(message_id, chat_id, "bot")
+            await edit_message(text)
+
         await (
             UpgradeLogicBuilder.set_lang(lang)
-            .on_success(edit_message)
+            .on_success(before_upgrade)
             .on_error(edit_message_with_keyboard)
             .on_exception(edit_message_with_keyboard)
         ).execute()

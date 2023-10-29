@@ -22,8 +22,12 @@ class RestartNowCallbackQueryHandler(CallbackQueryHandler):
         await query.answer(lang.restarting_now_alert, show_alert=True)
         await query.message.remove_keyboard()
 
-        message_id = query.message.id
-        chat_id = query.message.chat.username or query.message.chat.id
+        chat_id = "inline"
+        message_id = query.inline_message_id
+
+        if query.message and query.message.chat:
+            chat_id = query.message.chat.id
+            message_id = query.message.id
 
         await save_before_restart_message_info(message_id, chat_id, "bot")
         self_restart_process()
