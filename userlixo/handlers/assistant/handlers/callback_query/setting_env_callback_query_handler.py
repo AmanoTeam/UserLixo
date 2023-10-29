@@ -29,4 +29,4 @@ class SettingEnvCallbackQueryHandler(CallbackQueryHandler):
         lines = array_chunk(buttons, 2)
         lines.append([(lang.back, "settings")])
         keyboard = ikb(lines)
-        await query.message.edit(lang.settings_env_text, keyboard)
+        await query.edit(lang.settings_env_text, keyboard)

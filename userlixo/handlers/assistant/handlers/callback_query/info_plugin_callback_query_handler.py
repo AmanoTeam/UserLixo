@@ -30,5 +30,5 @@ class InfoPluginCallbackQueryHandler(CallbackQueryHandler):
             lang, plugin_type, plugin_basename, page
         )
 
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)
         return None

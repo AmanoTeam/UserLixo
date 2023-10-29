@@ -21,4 +21,4 @@ class SettingSudoersCallbackQueryHandler(CallbackQueryHandler):
         text, keyboard = await compose_list_sudoers_message(
             lang, _client, from_user_id=query.from_user.id
         )
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)

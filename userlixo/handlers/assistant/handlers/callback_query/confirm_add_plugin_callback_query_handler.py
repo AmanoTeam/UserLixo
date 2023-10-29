@@ -55,7 +55,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
             req_text += f" └ <code>{req_list[-1]}</code>"
             text = lang.installing_plugin_requirements
             text.escape_html = False
-            await query.message.edit(text(requirements=req_text))
+            await query.edit(text(requirements=req_text))
             os.system(f"{dgray}; {sys.executable} -m pip install {requirements}; {reset}")
 
         # Safely unload the plugin if existent
@@ -63,9 +63,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
             try:
                 module = importlib.import_module(new_notation)
             except Exception as e:
-                return await query.message.edit(
-                    lang.plugin_could_not_load_existent(name=basename, e=e)
-                )
+                return await query.edit(lang.plugin_could_not_load_existent(name=basename, e=e))
 
             functions = [*filter(callable, module.__dict__.values())]
             functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
@@ -83,7 +81,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
             module = importlib.import_module(plugin["notation"])
         except Exception as e:
             Path(new_filename).unlink()
-            await query.message.edit(lang.plugin_could_not_load(e=e))
+            await query.edit(lang.plugin_could_not_load(e=e))
             raise e
 
         functions = [*filter(callable, module.__dict__.values())]
@@ -114,10 +112,10 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
                 if isinstance(r, tuple | list):
                     if len(r) == 2:
                         if r[0] != 1:
-                            await query.message.edit(lang.plugin_could_not_load(e=r[1]))
+                            await query.edit(lang.plugin_could_not_load(e=r[1]))
                             unload = True
                     else:
-                        await query.message.edit(
+                        await query.edit(
                             lang.plugin_could_not_load(
                                 e="The return of post_install_script"
                                 + " should be like this: (0, 'nodejs not found')"
@@ -126,7 +124,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
                         unload = True
 
                 else:
-                    await query.message.edit(
+                    await query.edit(
                         lang.plugin_could_not_load(
                             e="The return of post_install_script should be a list or tuple"
                         )
@@ -158,5 +156,5 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
         keyboard = ikb([[(lang.see_plugin_info, f"info_plugin {basename} {plugin_type} {page}")]])
         text = lang.plugin_added(name=basename)
 
-        await query.message.edit(text, keyboard)
+        await query.edit(text, keyboard)
         return None

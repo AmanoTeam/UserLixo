@@ -34,7 +34,7 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
 
         plugin = plugins[plugin_type][plugin_basename]
         if not Path(plugin["filename"]).exists():
-            return await query.message.edit(lang.plugin_not_exists_on_server)
+            return await query.edit(lang.plugin_not_exists_on_server)
 
         inactive = await get_inactive_plugins(plugins)
 
@@ -50,7 +50,7 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
             module = importlib.import_module(plugin["notation"])
         except Exception as e:
             Path(plugin["filename"]).unlink()
-            return await query.message.edit(lang.plugin_could_not_load(e=e))
+            return await query.edit(lang.plugin_could_not_load(e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
         functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
@@ -66,5 +66,5 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
             lang, plugin_type, plugin_basename, page
         )
 
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)
         return None

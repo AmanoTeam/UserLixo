@@ -63,5 +63,5 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
         text, keyboard = await compose_list_plugins_by_type_message(
             lang, plugin_type, page, show_add_plugin_button=False, append_back=True
         )
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)
         return None

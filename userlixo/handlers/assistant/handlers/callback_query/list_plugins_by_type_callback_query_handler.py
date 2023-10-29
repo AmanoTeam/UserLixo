@@ -25,4 +25,4 @@ class ListPluginsByTypeCallbackQueryHandler(CallbackQueryHandler):
             lang, plugin_type, page, show_add_plugin_button=False, append_back=True
         )
 
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)

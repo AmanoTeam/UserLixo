@@ -19,4 +19,4 @@ class ListCommandsCallbackQueryHandler(CallbackQueryHandler):
         page = int(query.matches[0].group("page") or 0)
 
         text, keyboard = compose_list_commands_message(lang, page, append_back=True)
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)

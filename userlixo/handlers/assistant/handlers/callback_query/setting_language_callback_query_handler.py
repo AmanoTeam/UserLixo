@@ -29,4 +29,4 @@ class SettingLanguageCallbackQueryHandler(CallbackQueryHandler):
         lines.append([(lang.back, "settings")])
 
         keyboard = ikb(lines)
-        await query.message.edit(lang.choose_language, keyboard)
+        await query.edit(lang.choose_language, reply_markup=keyboard)

@@ -16,4 +16,4 @@ class CancelPluginCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         text = lang.command_cancelled
-        await query.message.edit(text)
+        await query.edit(text)

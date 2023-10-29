@@ -32,5 +32,5 @@ class InfoCommandCallbackQueryHandler(CallbackQueryHandler):
         text = lang.command_info
 
         text.escape_html = False
-        await query.message.edit(text(command=cmd, info=info), keyboard)
+        await query.edit(text(command=cmd, info=info), keyboard)
         return None

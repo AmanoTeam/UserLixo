@@ -17,4 +17,4 @@ class ListPluginsCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         text, keyboard = compose_list_plugins_message(lang, append_back=True)
-        await query.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)
