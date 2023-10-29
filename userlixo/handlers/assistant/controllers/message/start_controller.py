@@ -13,6 +13,6 @@ from userlixo.handlers.assistant.handlers.message.start_message_handler import (
 class StartController:
     handler: StartMessageHandler
 
-    @on_message(filters.command("start"))
+    @on_message(filters.regex("^/start$"))
     async def handle_message(self, *args):
         await self.handler.handle_message(*args)
