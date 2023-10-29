@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.types import Message
+from pyrogram.types import CallbackQuery
 
 from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.handlers.common.restart import (
@@ -17,11 +17,11 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class RestartCallbackQueryHandler(CallbackQueryHandler):
     language_selector: LanguageSelector
 
-    async def handle_callback_query(self, _c, m: Message):
+    async def handle_callback_query(self, _c, query: CallbackQuery):
         lang = self.language_selector.get_lang()
 
         text = compose_before_restart_message(lang)
-        msg = await m.edit(text)
+        msg = await query.edit(text)
 
         await save_before_restart_message_info(msg.id, msg.chat.id, "bot")
 

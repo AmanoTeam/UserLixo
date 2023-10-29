@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from kink import inject
+from pyrogram.types import CallbackQuery
 
 from userlixo.handlers.abstract import CallbackQueryHandler
 from userlixo.handlers.common.help import compose_help_message
@@ -12,8 +13,8 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class HelpCallbackQueryHandler(CallbackQueryHandler):
     language_selector: LanguageSelector
 
-    async def handle_callback_query(self, _c, m):
+    async def handle_callback_query(self, _c, query: CallbackQuery):
         lang = self.language_selector.get_lang()
 
         text, keyboard = compose_help_message(lang, append_back=True)
-        await m.message.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard)

@@ -16,16 +16,16 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class UpgradeCallbackQueryHandler(CallbackQueryHandler):
     language_selector: LanguageSelector
 
-    async def handle_callback_query(self, _c, cq: CallbackQuery):
+    async def handle_callback_query(self, _c, query: CallbackQuery):
         lang = self.language_selector.get_lang()
 
         back_keyboard = ikb([[(lang.back, "start")]])
 
         async def edit_message_with_keyboard(text):
-            await cq.message.edit(text, reply_markup=back_keyboard)
+            await query.edit(text, reply_markup=back_keyboard)
 
         async def edit_message(text):
-            await cq.message.edit(text)
+            await query.edit(text)
 
         await (
             UpgradeLogicBuilder.set_lang(lang)
