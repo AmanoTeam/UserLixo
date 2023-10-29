@@ -1,6 +1,6 @@
 from userlixo.decorators import Controller
 
-# from .add_sudoer_controller import AddSudoerController
+from .add_sudoer_controller import AddSudoerController
 from .execs_controller import ExecsController
 from .help_controller import HelpController
 from .plugin_controller import PluginController
@@ -13,7 +13,7 @@ from .web_app_controller import WebAppController
 
 @Controller(
     imports=[
-        # AddSudoerController,
+        AddSudoerController,
         ExecsController,
         PluginController,
         RestartController,
