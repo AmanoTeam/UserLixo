@@ -98,13 +98,18 @@ def compose_already_uptodate_message(lang: Langs, rev: str, date: str, local_ver
 
 def get_branch_if_is_git():
     try:
-        with Path(".git/HEAD").open() as f:
-            # branch = f.read().split("/")[-1].rstrip()
-            branch = f.read().rstrip()
+        head_file = Path(".git/HEAD")
     except FileNotFoundError:
         return None
 
-    return branch
+    with head_file.open() as f:
+        content = f.read().splitlines()
+
+    for line in content:
+        if line.startswith("ref:"):
+            return line.partition("refs/heads/")[2].strip()
+
+    return None
 
 
 async def get_git_status():
