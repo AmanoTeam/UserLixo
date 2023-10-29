@@ -1,8 +1,8 @@
 from collections.abc import Callable
 
-from pyrogram.filters import Filter, user
+from pyrogram.filters import Filter
 
-from userlixo.config import sudoers
+from userlixo.config import filter_sudoers
 
 
 def on_callback_query(
@@ -14,7 +14,7 @@ def on_callback_query(
 
         func.filters = filters
         if sudoers_only:
-            func.filters = filters & user(sudoers)
+            func.filters = filters & filter_sudoers
 
         return func
 

@@ -131,7 +131,7 @@ bot_token = config.get("pyrogram", "bot_token", fallback=None)
 
 
 # All monkeypatch stuff must be done before the Client instance is created
-def filter_sudoers(flt, c, u):
+def filter_sudoers_logic(flt, c, u):
     if not u.from_user:
         return None
     user = u.from_user
@@ -166,7 +166,8 @@ def message_ikb(self):
     return bki(self.reply_markup)
 
 
-pyrogram.filters.sudoers = filters.create(filter_sudoers, "FilterSudoers")
+filter_sudoers = filters.create(filter_sudoers_logic, "FilterSudoers")
+pyrogram.filters.sudoers = filter_sudoers
 pyrogram.filters.su_cmd = filter_su_cmd
 pyrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
 pyrogram.filters.web_data_cmd = filter_web_data_command
