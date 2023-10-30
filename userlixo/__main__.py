@@ -51,10 +51,10 @@ from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
 
-from userlixo.handlers.assistant import (
+from userlixo.handlers import (
     AssistantController,
+    UserbotController,
 )
-from userlixo.handlers.userbot import UserbotMessageController
 
 language_selector = di[LanguageSelector]
 langs = language_selector.get_lang()
@@ -239,7 +239,7 @@ or somehow it became inacessible.\n>> {e}[/yellow]"
 
     AssistantController.__controller__.register(bot)
 
-    UserbotMessageController.__controller__.register(user)
+    UserbotController.__controller__.register(user)
 
     await idle()
     await user.stop()
