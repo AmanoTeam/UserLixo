@@ -51,7 +51,7 @@ from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
 
-from userlixo.handlers import (
+from userlixo.modules import (
     AssistantController,
     UserbotController,
 )
