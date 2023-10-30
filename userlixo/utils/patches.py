@@ -76,7 +76,8 @@ async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
     reply_to = get_proper_reply_id(self, quote=kwargs.get("quote", False))
 
     if not reply_markup or self._client.name == "bot":
-        del kwargs["reply_to_message_id"]
+        if "reply_to_message_id" in kwargs:
+            del kwargs["reply_to_message_id"]
         return await self.reply_text(
             text, *args, reply_markup=reply_markup, reply_to_message_id=reply_to, **kwargs
         )
