@@ -40,9 +40,26 @@ async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
     )
     result = inline_results.results[0]
 
+    is_reply_to_top_message_id_none = self.reply_to_top_message_id is None
+    is_reply_to_message_id_none = self.reply_to_message_id is None
+
+    is_normal_chat_message = is_reply_to_top_message_id_none and is_reply_to_message_id_none
+    is_normal_topic_message = is_reply_to_top_message_id_none and not is_reply_to_message_id_none
+    is_reply_to_topic_message = (
+        not is_reply_to_top_message_id_none and not is_reply_to_message_id_none
+    )
+
     reply_to = None
-    if kwargs.get("quote"):
+    if is_normal_chat_message and kwargs.get("quote"):
         reply_to = self.id
+    if is_normal_topic_message:
+        reply_to = self.reply_to_message_id
+        if kwargs.get("quote"):
+            reply_to = self.id
+    if is_reply_to_topic_message:
+        reply_to = self.reply_to_top_message_id
+        if kwargs.get("quote"):
+            reply_to = self.reply_to_message_id
 
     return await self._client.send_inline_bot_result(
         self.chat.id,
