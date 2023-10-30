@@ -28,7 +28,8 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
         env_requires_restart = ["PREFIXES", "DATABASE_URL", "BOT_TOKEN"]
         try:
             while True:
-                msg = await query.from_user.listen(filters.text, None)
+                user_id = query.from_user.id
+                msg = await query.from_user.listen(chat_id=user_id, filters=filters.text)
                 await last_msg.remove_keyboard()
                 await Config.get(key=key).update(value=msg.text)
                 if key in env_requires_restart:
