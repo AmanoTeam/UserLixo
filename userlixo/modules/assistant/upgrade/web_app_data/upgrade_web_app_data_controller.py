@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from pyrogram import Client, filters
 
 from userlixo.decorators import Controller, on_message
@@ -6,6 +8,7 @@ from .upgrade_web_app_data_handler import UpgradeWebAppDataHandler
 
 
 @Controller()
+@dataclass
 class UpgradeWebAppDataController:
     handler: UpgradeWebAppDataHandler
 
