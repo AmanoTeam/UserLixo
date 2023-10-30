@@ -51,13 +51,10 @@ from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
 
-from userlixo.handlers.assistant import (
-    AssistantCallbackQueryController,
-    AssistantInlineQueryController,
-    AssistantMessageController,
-    AssistantWebAppDataController,
+from userlixo.modules import (
+    AssistantController,
+    UserbotController,
 )
-from userlixo.handlers.userbot import UserbotMessageController
 
 language_selector = di[LanguageSelector]
 langs = language_selector.get_lang()
@@ -240,12 +237,9 @@ or somehow it became inacessible.\n>> {e}[/yellow]"
         except Exception as e:
             print("Error while sending alert about unused_requirements:\n  > ", e)
 
-    AssistantMessageController.__controller__.register(bot)
-    AssistantWebAppDataController.__controller__.register(bot)
-    AssistantInlineQueryController.__controller__.register(bot)
-    AssistantCallbackQueryController.__controller__.register(bot)
+    AssistantController.__controller__.register(bot)
 
-    UserbotMessageController.__controller__.register(user)
+    UserbotController.__controller__.register(user)
 
     await idle()
     await user.stop()
