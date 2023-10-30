@@ -24,6 +24,6 @@ class RestartMessageHandler(MessageHandler):
         text = compose_before_restart_message(lang)
         msg = await message.reply(text)
 
-        await save_before_restart_message_info(msg.id, msg.chat.id, "bot")
+        await save_before_restart_message_info(msg.id, msg.chat.id, "user")
 
         self_restart_process()

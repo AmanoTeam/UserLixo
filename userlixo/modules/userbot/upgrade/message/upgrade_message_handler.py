@@ -5,6 +5,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
+from userlixo.modules.common.restart import save_before_restart_message_info
 from userlixo.modules.common.upgrade import UpgradeLogicBuilder
 from userlixo.utils.services.language_selector import LanguageSelector
 
@@ -20,9 +21,17 @@ class UpgradeMessageHandler(MessageHandler):
         async def reply_message(text):
             await message.reply(text)
 
+        async def before_upgrade(text):
+            msg = await message.reply(text)
+
+            chat_id = msg.chat.id
+            message_id = msg.id
+
+            await save_before_restart_message_info(message_id, chat_id, "user")
+
         await (
             UpgradeLogicBuilder.set_lang(lang)
-            .on_success(reply_message)
+            .on_success(before_upgrade)
             .on_error(reply_message)
             .on_exception(reply_message)
         ).execute()
