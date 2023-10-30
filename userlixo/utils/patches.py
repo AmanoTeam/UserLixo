@@ -54,7 +54,7 @@ def get_message_type(message):
     return message_type
 
 
-def get_proper_reply_id(message, quote=True):
+def get_proper_reply_id(message, quote=False):
     message_type = get_message_type(message)
 
     reply_to = None
