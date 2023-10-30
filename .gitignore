@@ -56,9 +56,6 @@ docs/_build/
 .idea
 
 # Rye
-requirements-dev.lock
-requirements.lock
-.python-version
 .venv/
 
 # Ruff
