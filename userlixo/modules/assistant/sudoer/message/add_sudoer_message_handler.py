@@ -6,6 +6,7 @@ from pyrogram import filters
 from pyrogram.helpers import force_reply, ikb
 from pyrogram.types import Message
 
+from userlixo.config import sudoers, user
 from userlixo.database import Config
 from userlixo.modules.abstract import MessageHandler
 from userlixo.utils.services.language_selector import LanguageSelector
@@ -28,9 +29,10 @@ class AddSudoerMessageHandler(MessageHandler):
             return await m.reply(lang.add_sudoer_not_match)
 
         sudoers_str: str = (await Config.get(key="SUDOERS_LIST")).value
-        sudoers = sudoers_str.split(" ")
-        sudoers.append(response.text.lstrip("@"))
-        await Config.get(key="SUDOERS_LIST").update(value=" ".join(map(str, sudoers)))
+        sudoers_list = sudoers_str.split(" ")
+        sudoers_list.append(response.text.lstrip("@"))
+        sudoers[:] = [user.me.id, *sudoers_list]
+        await Config.get(key="SUDOERS_LIST").update(value=" ".join(map(str, sudoers_list)))
 
         keyboard = ikb([[(lang.back, "setting_sudoers")]])
         await m.reply(lang.sudoer_added, keyboard)
