@@ -7,9 +7,10 @@ Multipurpose Python userbot for Telegram
 ## Requirements
 
 - Python 3.8+
-- [Poetry](https://python-poetry.org/)
+- [Rye](https://rye-up.com/) or [Docker](https://www.docker.com/)
 - An Unix-like OS
-- The `api_id` and `api_hash` [from your own Telegram app](https://my.telegram.org/apps) (don't worry, it's easy to get them)
+- The `api_id` and `api_hash` [from your own Telegram app](https://my.telegram.org/apps) (don't worry, it's easy to get
+  them)
 
 ## Getting started
 
@@ -20,10 +21,11 @@ Multipurpose Python userbot for Telegram
 ### Manually
 
 - It's recommended to start a new tmux or screen session_
-- Install the project with `poetry install`
-- Run the project with `poetry run python -m userlixo`
+- Install the project with `rye sync`
+- Run the project with `rye run python -m userlixo`
 
-> If you are a developer making some modifications, you may want to use the option `--no-updates` to skip the pip updates at every startup.
+> If you are a developer making some modifications, you may want to use the option `--no-updates` to skip the pip
+> updates at every startup and `--no-clear` to skip the clearing of the screen by the script.
 
 ## Setup
 
@@ -32,7 +34,8 @@ At the first run, all requirements will be installed and you'll be asked for som
 ![Screenshot from 2023-07-11 13-16-23](https://github.com/AmanoTeam/UserLixo/assets/29507335/97dc4ef0-1af0-41bb-acc6-1d7e6f01c9ce)
 
 
-> You'll be asked for a `BOT_TOKEN`. That's the bot that will be UserLixo's assistant and its inline mode **MUST** be enabled. You can enable it by sending /setinline to [@BotFather](https://t.me/BotFather).
+> You'll be asked for a `BOT_TOKEN`. That's the bot that will be UserLixo's assistant and its inline mode **MUST** be
+> enabled. You can enable it by sending /setinline to [@BotFather](https://t.me/BotFather).
 
 When you're done, you should be seeing the following message:
 

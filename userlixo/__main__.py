@@ -5,7 +5,12 @@ import os
 import sys
 from pathlib import Path
 
-os.system("clear")
+from kink import di
+
+from userlixo.utils.services.language_selector import LanguageSelector
+
+if "--no-clear" not in sys.argv:
+    os.system("clear")
 # Update requirements
 DGRAY = 'echo -e "\033[1;30m"'
 YELLOW = 'echo -e "\033[0;33m"'
@@ -15,7 +20,8 @@ unused_requirements = []
 if "--no-update" not in sys.argv:
     print("\033[0;32m[1/2] Updating requirements...\033[0m")
     os.system(f"{DGRAY}; {sys.executable} -m pip install . -U; {RESET}")
-    os.system("clear")
+    if "--no-clear" not in sys.argv:
+        os.system("clear")
     # Update plugins requirements
     from userlixo.config import plugins
     from userlixo.utils.plugins import reload_plugins_requirements
@@ -27,7 +33,8 @@ if "--no-update" not in sys.argv:
             f"{DGRAY}; {sys.executable} -m pip install -Ur plugins-requirements.txt; {RESET}"
         )
 print("\033[0m")
-os.system("clear")
+if "--no-clear" not in sys.argv:
+    os.system("clear")
 
 # ruff: noqa: E402
 import contextlib
@@ -44,9 +51,19 @@ from rich.panel import Panel
 from tortoise import run_async
 from tortoise.exceptions import OperationalError
 
+from userlixo.handlers.assistant import (
+    AssistantCallbackQueryController,
+    AssistantInlineQueryController,
+    AssistantMessageController,
+    AssistantWebAppDataController,
+)
+from userlixo.handlers.userbot import UserbotMessageController
+
+language_selector = di[LanguageSelector]
+langs = language_selector.get_lang()
+
 from userlixo.config import (
     bot,
-    langs,
     load_env,
     plugins,
     sudoers,
@@ -98,7 +115,8 @@ async def alert_startup():
 async def main():
     await connect_database()
     await load_env()
-    os.system("clear")
+    if "--no-clear" not in sys.argv:
+        os.system("clear")
 
     @aiocron.crontab("*/1 * * * *")
     async def clean_cache():
@@ -117,7 +135,8 @@ async def main():
         from userlixo.login import main as login
 
         await login()
-        os.system("clear")
+        if "--no-clear" not in sys.argv:
+            os.system("clear")
 
     await user.start()
     await bot.start()
@@ -161,7 +180,7 @@ async def main():
         text = text(rev=rev, date=date, seconds=diff, local_version=local_version)
 
         try:
-            editor = bot if from_cmd.endswith("_bot") else user
+            editor = bot if from_cmd.endswith("bot") else user
             if editor == bot:
                 keyb = ikb([[(langs.back, "start")]])
                 kwargs.update(reply_markup=keyb)
@@ -220,6 +239,14 @@ or somehow it became inacessible.\n>> {e}[/yellow]"
             )
         except Exception as e:
             print("Error while sending alert about unused_requirements:\n  > ", e)
+
+    AssistantMessageController.__controller__.register(bot)
+    AssistantWebAppDataController.__controller__.register(bot)
+    AssistantInlineQueryController.__controller__.register(bot)
+    AssistantCallbackQueryController.__controller__.register(bot)
+
+    UserbotMessageController.__controller__.register(user)
+
     await idle()
     await user.stop()
     await bot.stop()

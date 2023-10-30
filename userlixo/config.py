@@ -7,14 +7,11 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Dict
 
 import pyrogram
-import yaml
-from langs import Langs
 from pyrogram import Client, filters
-from pyrogram.enums import ParseMode
 from pyrogram.helpers import bki
+from pyrogram.utils import PyromodConfig
 from rich import print
 
 from userlixo.database import Config
@@ -26,7 +23,7 @@ sudoers = []
 
 
 async def load_env():
-    environment_vars: Dict = {
+    environment_vars: dict = {
         "DATABASE_URL": [
             "sqlite://userlixo/database/database.sqlite",
             "Address of the database (sqlite or postgres).",
@@ -94,8 +91,6 @@ you can just press enter to leave it empty or use the default value. Let's get s
         row = await Config.create(key=env_key, value=user_value)
         os.environ[env_key] = row.value
 
-    langs.code = os.environ["LANGUAGE"]
-
     # Sanitize sudoers list
     parts = os.getenv("SUDOERS_LIST").split()
     parts = [*(tryint(x.lstrip("@").lower()) for x in parts)]
@@ -128,7 +123,6 @@ pyrogram_config = os.getenv("PYROGRAM_CONFIG") or b64encode("{}")
 pyrogram_config = b64decode(pyrogram_config)
 pyrogram_config = json.loads(pyrogram_config)
 
-
 # parse config.ini values
 config = configparser.ConfigParser()
 api_id = config.get("pyrogram", "api_id", fallback=None)
@@ -137,7 +131,7 @@ bot_token = config.get("pyrogram", "bot_token", fallback=None)
 
 
 # All monkeypatch stuff must be done before the Client instance is created
-def filter_sudoers(flt, c, u):
+def filter_sudoers_logic(flt, c, u):
     if not u.from_user:
         return None
     user = u.from_user
@@ -150,7 +144,7 @@ def filter_su_cmd(command, prefixes=None, *args, **kwargs):
     if " " in prefixes:
         prefixes = "|".join(re.escape(prefix) for prefix in prefixes.split())
         prefix = f"({prefixes})"
-    elif isinstance(prefixes, (list, str)):
+    elif isinstance(prefixes, list | str):
         if isinstance(prefixes, list):
             prefixes = "".join(prefixes)
         prefix = f"[{re.escape(prefixes)}]"
@@ -172,7 +166,8 @@ def message_ikb(self):
     return bki(self.reply_markup)
 
 
-pyrogram.filters.sudoers = filters.create(filter_sudoers, "FilterSudoers")
+filter_sudoers = filters.create(filter_sudoers_logic, "FilterSudoers")
+pyrogram.filters.sudoers = filter_sudoers
 pyrogram.filters.su_cmd = filter_su_cmd
 pyrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
 pyrogram.filters.web_data_cmd = filter_web_data_command
@@ -186,26 +181,13 @@ pyrogram.types.Message.ikb = message_ikb
 # exist. I want to use the fallback also when the key exists but it's invalid
 user = Client(
     os.getenv("PYROGRAM_SESSION") or "user",
-    plugins={"root": "userlixo/handlers/user"},
+    # plugins={"root": "userlixo/handlers/user"},
+    plugins=None,
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
-    parse_mode=ParseMode.HTML,
     **pyrogram_config,
 )
-
-
-def open_yml(filename):
-    with Path(filename).open() as fp:
-        return yaml.safe_load(fp)
-
-
-strings = {}
-for string_file in Path("userlixo/strings").rglob("*.yml"):
-    language_code = re.match(r"userlixo/strings/(.+)\.yml$", str(string_file))[1]
-    strings[language_code] = open_yml(string_file)
-
-langs = Langs(**strings, escape_html=True)
 
 bot = Client(
     "bot",
@@ -213,10 +195,11 @@ bot = Client(
     api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
-    plugins={"root": "userlixo/handlers/bot"},
-    parse_mode=ParseMode.HTML,
+    plugins=None,
     **pyrogram_config,
 )
+
+PyromodConfig.unallowed_click_alert = False
 
 cmds_list = [
     "help",
