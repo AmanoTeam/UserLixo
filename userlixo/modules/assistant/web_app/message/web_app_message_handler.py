@@ -67,6 +67,8 @@ class WebAppMessageHandler(MessageHandler):
                         "web_app": web_app_info,
                     }
                 ]
-            ]
+            ],
+            resize_keyboard=True,
+            placeholder="Update your setting below...",
         )
         await m.reply("Here is your webapp for settings...", reply_markup=keyboard)
