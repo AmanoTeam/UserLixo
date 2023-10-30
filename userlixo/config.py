@@ -147,8 +147,7 @@ def filter_sudoers_logic(flt, c, u):
 
 
 def filter_su_cmd(command, prefixes=None, *args, **kwargs):
-    def callback(flt, c, u):
-        print("filter_su_cmd called")
+    async def callback(flt, c, u):
         _prefixes = prefixes or os.getenv("PREFIXES") or "."
         prefix = ""
         if " " in _prefixes:
@@ -159,7 +158,10 @@ def filter_su_cmd(command, prefixes=None, *args, **kwargs):
                 _prefixes = "".join(_prefixes)
             prefix = f"[{re.escape(_prefixes)}]"
 
-        return filters.sudoers & filters.regex(r"^" + prefix + command, *args, **kwargs)
+        in_sudoers = filters.sudoers(c, u)
+        matches = await filters.regex(r"^" + prefix + command, *args, **kwargs)(c, u)
+
+        return in_sudoers and matches
 
     return filters.create(callback, "FilterSuCmd")
 
