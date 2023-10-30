@@ -52,10 +52,7 @@ from tortoise import run_async
 from tortoise.exceptions import OperationalError
 
 from userlixo.handlers.assistant import (
-    AssistantCallbackQueryController,
-    AssistantInlineQueryController,
-    AssistantMessageController,
-    AssistantWebAppDataController,
+    AssistantController,
 )
 from userlixo.handlers.userbot import UserbotMessageController
 
@@ -240,10 +237,7 @@ or somehow it became inacessible.\n>> {e}[/yellow]"
         except Exception as e:
             print("Error while sending alert about unused_requirements:\n  > ", e)
 
-    AssistantMessageController.__controller__.register(bot)
-    AssistantWebAppDataController.__controller__.register(bot)
-    AssistantInlineQueryController.__controller__.register(bot)
-    AssistantCallbackQueryController.__controller__.register(bot)
+    AssistantController.__controller__.register(bot)
 
     UserbotMessageController.__controller__.register(user)
 
