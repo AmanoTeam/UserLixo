@@ -51,6 +51,14 @@ use your userbot/assistant.",
 
         value_on_db = await Config.get_or_none(key=env_key)
 
+        print(
+            {
+                "key": env_key,
+                "value_on_env": value_on_env,
+                "value_on_db": value_on_db.value if value_on_db else None,
+            }
+        )
+
         if not value_on_db:
             if env_key in restricted_vars:
                 os.environ[env_key] = value_on_env
@@ -139,16 +147,21 @@ def filter_sudoers_logic(flt, c, u):
 
 
 def filter_su_cmd(command, prefixes=None, *args, **kwargs):
-    prefixes = prefixes or os.getenv("PREFIXES") or "."
-    prefix = ""
-    if " " in prefixes:
-        prefixes = "|".join(re.escape(prefix) for prefix in prefixes.split())
-        prefix = f"({prefixes})"
-    elif isinstance(prefixes, list | str):
-        if isinstance(prefixes, list):
-            prefixes = "".join(prefixes)
-        prefix = f"[{re.escape(prefixes)}]"
-    return filters.sudoers & filters.regex(r"^" + prefix + command, *args, **kwargs)
+    def callback(flt, c, u):
+        print("filter_su_cmd called")
+        _prefixes = prefixes or os.getenv("PREFIXES") or "."
+        prefix = ""
+        if " " in _prefixes:
+            _prefixes = "|".join(re.escape(prefix) for prefix in _prefixes.split())
+            prefix = f"({_prefixes})"
+        elif isinstance(_prefixes, list | str):
+            if isinstance(_prefixes, list):
+                _prefixes = "".join(_prefixes)
+            prefix = f"[{re.escape(_prefixes)}]"
+
+        return filters.sudoers & filters.regex(r"^" + prefix + command, *args, **kwargs)
+
+    return filters.create(callback, "FilterSuCmd")
 
 
 def filter_web_app_data(flt, c, u):
