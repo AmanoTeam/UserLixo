@@ -1,6 +1,6 @@
 import os
+import platform
 from dataclasses import dataclass
-from sys import platform
 
 import pyrogram
 from kink import inject
