@@ -26,7 +26,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
 
         basename = query.matches[0]["basename"]
         plugin_type = query.matches[0]["plugin_type"]
-        page = query.matches[0]["page"]
+        page = int(query.matches[0]["page"])
 
         if basename not in plugins[plugin_type]:
             return await query.answer(lang.plugin_not_found(name=basename))
@@ -49,11 +49,12 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
             return await query.edit(lang.plugin_could_not_load(e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
+        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
         c = (user, bot)[plugin_type == "bot"]
         for f in functions:
-            c.remove_handler(*f.handler)
+            for handler in f.handlers:
+                c.remove_handler(*handler)
         del plugins[plugin_type][basename]
         Path(plugin["filename"]).unlink()
 

@@ -53,11 +53,12 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
             return await query.edit(lang.plugin_could_not_load(e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
+        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
         c = (user, bot)[plugin_type == "bot"]
         for f in functions:
-            (c.remove_handler if deactivate else c.add_handler)(*f.handler)
+            for handler in f.handlers:
+                (c.remove_handler if deactivate else c.add_handler)(*handler)
 
         text = lang.plugin_has_been_deactivated if deactivate else lang.plugin_has_been_activated
         await query.answer(text)

@@ -83,11 +83,12 @@ class PluginActionMessageHandler(MessageHandler):
             return await act(lang.plugin_could_not_load(e=e))
 
         functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handler"), functions)]
+        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
         client = (user, bot)[plugin_type == "bot"]
         for f in functions:
-            client.remove_handler(*f.handler)
+            for handler in f.handlers:
+                client.remove_handler(*handler)
         del plugins[plugin_type][basename]
         Path(plugin["filename"]).unlink()
 

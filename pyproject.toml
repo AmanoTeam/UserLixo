@@ -18,6 +18,7 @@ dependencies = [
     "psutil>=5.9.6",
     "kink>=0.7.0",
     "pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn8",
+    "pip>=23.3.1",
 ]
 
 [tool.hatch.build]

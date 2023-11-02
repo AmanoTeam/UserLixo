@@ -32,3 +32,5 @@ tgcrypto==1.2.5
 tortoise-orm==0.20.0
 typing-extensions==4.8.0
 tzlocal==5.2
+# The following packages are considered to be unsafe in a requirements file:
+pip==23.3.1

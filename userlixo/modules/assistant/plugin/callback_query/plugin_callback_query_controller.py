@@ -28,7 +28,7 @@ class PluginCallbackQueryController:
     confirm_add_plugin_handler: ConfirmAddPluginCallbackQueryHandler
 
     @on_callback_query(
-        filters.regex(r"^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<pg>\d+)")
+        filters.regex(r"^info_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)")
     )
     async def info_plugin(self, _c, callback_query):
         await self.info_plugin_handler.handle_callback_query(_c, callback_query)
@@ -39,8 +39,8 @@ class PluginCallbackQueryController:
             + r" (?P<plugin_type>user|bot) (?P<page>\d+)"
         )
     )
-    async def activate_plugin(self, _c, callback_query):
-        pass
+    async def toggle_plugin(self, _c, callback_query):
+        await self.toggle_plugin_handler.handle_callback_query(_c, callback_query)
 
     @on_callback_query(
         filters.regex(r"^remove_plugin (?P<basename>.+) (?P<plugin_type>user|bot) (?P<page>\d+)")

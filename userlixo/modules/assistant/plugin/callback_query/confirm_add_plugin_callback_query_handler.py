@@ -39,12 +39,10 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
 
         cache_filename = query.matches[0]["filename"]
         basename = Path(cache_filename).name
-        new_filename = "userlixo/modules/" + plugin_type + "/plugins/" + basename
+        new_filename = "userlixo/plugins/" + plugin_type + "/" + basename
 
         plugin = read_plugin_info(cache_filename)
-        new_notation = re.sub(
-            "info_plugin_callback_handler.py$", "", os.path.relpath(new_filename)
-        ).replace("/", ".")
+        new_notation = re.sub(".py$", "", os.path.relpath(new_filename)).replace("/", ".")
 
         requirements = plugin.get("requirements")
         if requirements:
@@ -85,7 +83,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
             raise e
 
         functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "modules"), functions)]
+        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
         # if not len(functions):
         #     os.remove(new_filename)
@@ -132,7 +130,7 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
                     unload = True
 
                 if unload:
-                    functions = [*filter(lambda f: hasattr(f, "modules"), functions)]
+                    functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
                     for f in functions:
                         for handler in f.handlers:

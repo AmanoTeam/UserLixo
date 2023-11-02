@@ -119,7 +119,7 @@ async def unload_inactive_plugins():
                     print(f"The plugin {plugin_type}/{name} thrown an error: {e}")
                     continue
                 functions = [*filter(callable, module.__dict__.values())]
-                functions = [*filter(lambda f: hasattr(f, "modules"), functions)]
+                functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
                 for f in functions:
                     for handler in f.handlers:
@@ -196,8 +196,7 @@ pyrogram.types.Message.ikb = message_ikb
 # exist. I want to use the fallback also when the key exists but it's invalid
 user = Client(
     os.getenv("PYROGRAM_SESSION") or "user",
-    # plugins={"root": "userlixo/modules/user"},
-    plugins=None,
+    plugins={"root": "userlixo/plugins/user"},
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
@@ -206,11 +205,11 @@ user = Client(
 
 bot = Client(
     "bot",
+    plugins={"root": "userlixo/plugins/bot"},
     api_id=api_id,
     api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
-    plugins=None,
     **pyrogram_config,
 )
 
@@ -232,9 +231,9 @@ cmds_list = [
 cmds = {x: 1 for x in cmds_list}
 
 plugins = {"user": {}, "bot": {}}
-for file in Path("userlixo/modules").glob("**/plugins/*.py"):
+for file in Path("userlixo/plugins").glob("**/*.py"):
     basename = Path(file).name
-    plugin_type = ("user", "bot")["modules/bot/" in str(file)]
+    plugin_type = ("user", "bot")["/bot/" in str(file)]
     if basename.startswith("__"):
         continue
 
