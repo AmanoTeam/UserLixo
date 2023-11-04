@@ -1,59 +1,26 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
-
-import os
-import sys
+# ruff: noqa: E402
 from pathlib import Path
 
-from kink import di
-
-from userlixo.utils.services.language_selector import LanguageSelector
-
-if "--no-clear" not in sys.argv:
-    os.system("clear")
-# Update requirements
-DGRAY = 'echo -e "\033[1;30m"'
-YELLOW = 'echo -e "\033[0;33m"'
-RESET = 'echo -e "\033[0m"'
-unused_requirements = []
-
-if "--no-update" not in sys.argv:
-    print("\033[0;32m[1/2] Updating requirements...\033[0m")
-    os.system(f"{DGRAY}; {sys.executable} -m pip install . -U; {RESET}")
-    if "--no-clear" not in sys.argv:
-        os.system("clear")
-    # Update plugins requirements
-    from userlixo.config import plugins
-    from userlixo.utils.plugins import reload_plugins_requirements
-
-    if Path("plugins-requirements.txt").exists():
-        requirements, unused_requirements = reload_plugins_requirements(plugins)
-        print("\033[0;32m[2/2] Updating plugins requirements...\033[0m")
-        os.system(
-            f"{DGRAY}; {sys.executable} -m pip install -Ur plugins-requirements.txt; {RESET}"
-        )
-print("\033[0m")
-if "--no-clear" not in sys.argv:
-    os.system("clear")
-
-# ruff: noqa: E402
-import contextlib
-import platform
-from datetime import datetime
-
 import aiocron
-import pyrogram
+from kink import di
 from pyrogram import idle
-from pyrogram.errors import BadRequest
-from pyrogram.helpers import ikb
-from rich import box, print
-from rich.panel import Panel
+from rich import print
+from rich.console import Console
 from tortoise import run_async
-from tortoise.exceptions import OperationalError
 
 from userlixo.modules import (
     AssistantController,
     UserbotController,
+)
+from userlixo.modules.assistant.common.plugins import load_all_installed_plugins
+from userlixo.utils.cache import clean_cache
+from userlixo.utils.services.language_selector import LanguageSelector
+from userlixo.utils.startup import (
+    alert_startup,
+    edit_restarting_alert,
+    print_cli_startup_alert,
 )
 
 language_selector = di[LanguageSelector]
@@ -62,184 +29,59 @@ langs = language_selector.get_lang()
 from userlixo.config import (
     bot,
     load_env,
-    plugins,
     sudoers,
     unload_inactive_plugins,
     user,
 )
-from userlixo.database import Config, connect_database
-from userlixo.utils.misc import shell_exec, timezone_shortener, tryint
+from userlixo.database import connect_database
 
-
-async def alert_startup():
-    local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
-    python_version = platform.python_version()
-    pyrogram_version = pyrogram.__version__
-    system_uname = (await shell_exec("uname -mons"))[0]
-
-    pid = os.getpid()
-    uptime = (
-        await shell_exec("ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' ")
-    )[0]
-
-    user_plugins = len(list(plugins["user"]))
-    bot_plugins = len(list(plugins["bot"]))
-    plugins_total = user_plugins + bot_plugins
-    append_plugins = f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
-
-    text = langs.started_alert(
-        version=local_version,
-        pid=pid,
-        python_version=python_version,
-        pyrogram_version=pyrogram_version,
-        server_uname=system_uname,
-        uptime=uptime,
-        plugins_total=plugins_total,
-        append_plugins=append_plugins,
-    )
-    if "VIRTUAL_ENV" not in os.environ:
-        text += "\n\n" + langs.not_virtualenv_alert
-    logs_chat = os.getenv("LOGS_CHAT")
-    if logs_chat and logs_chat != "me":
-        return await user.send_message(logs_chat, text)
-
-    try:
-        await bot.send_message(user.me.username, text)
-    except BadRequest:
-        await user.send_message(logs_chat, text)
+console = Console()
 
 
 async def main():
-    await connect_database()
-    await load_env()
-    if "--no-clear" not in sys.argv:
-        os.system("clear")
+    with console.status("Connecting to database..."):
+        await connect_database()
 
-    @aiocron.crontab("*/1 * * * *")
-    async def clean_cache():
-        for file in Path("cache/").glob("*"):
-            if not Path(file).is_file():
-                continue
-            creation_time = datetime.fromtimestamp(Path(file).stat().st_ctime)
-            now_time = datetime.now()
-            diff = now_time - creation_time
-            minutes_passed = diff.total_seconds() / 60
+    with console.status("Loading env vars..."):
+        await load_env()
 
-            if minutes_passed >= 10:
-                Path(file).unlink()
+    aiocron.crontab("*/1 * * * *")(clean_cache)
 
-    if not Path("user.session").exists():
+    if not Path("user.session").exists() or not Path("bot.session").exists():
         from userlixo.login import main as login
 
         await login()
-        if "--no-clear" not in sys.argv:
-            os.system("clear")
 
-    await user.start()
-    await bot.start()
-    await unload_inactive_plugins()
+    with console.status("Starting clients..."):
+        await user.start()
+        await bot.start()
 
-    user.me = await user.get_me()
-    bot.me = await bot.get_me()
-    user.assistant = bot
+    with console.status("Unloading inactive plugins..."):
+        await unload_inactive_plugins()
+
+    with console.status("Saving get_me info..."):
+        user.me = await user.get_me()
+
+        bot.me = await bot.get_me()
+        user.assistant = bot
 
     if user.me.id not in sudoers:
         sudoers.append(user.me.id)
 
-    # Editing restaring alert
-    restarting_alert = await Config.filter(key="restarting_alert")
-    if len(restarting_alert) > 1:
-        await Config.filter(key="restarting_alert").delete()
-        restarting_alert = []
+    with console.status("Loading controllers..."):
+        AssistantController.__controller__.register(bot)
+        UserbotController.__controller__.register(user)
 
-    if restarting_alert:
-        restarting_alert = restarting_alert[0]
+    with console.status("Loading plugins..."):
+        await load_all_installed_plugins()
 
-        parts = restarting_alert.value.split("|")
-        message_id, chat_id, cmd_timestamp, from_cmd = parts
+    with console.status("Editing restart alert..."):
+        await edit_restarting_alert(langs)
 
-        cmd_timestamp = float(cmd_timestamp)
-        now_timestamp = datetime.now().timestamp()
-        diff = round(now_timestamp - cmd_timestamp, 2)
+    with console.status("Alerting startup..."):
+        await alert_startup(langs)
 
-        title, p = await shell_exec('git log --format="%B" -1')
-        rev, p = await shell_exec("git rev-parse --short HEAD")
-        date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
-        timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
-        local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
-
-        timezone = timezone_shortener(timezone)
-        date += f" ({timezone})"
-
-        kwargs = {}
-        text = langs.upgraded_alert if from_cmd.startswith("upgrade") else langs.restarted_alert
-
-        text = text(rev=rev, date=date, seconds=diff, local_version=local_version)
-
-        try:
-            editor = bot if from_cmd.endswith("bot") else user
-            if editor == bot:
-                keyb = ikb([[(langs.back, "start")]])
-                kwargs.update(reply_markup=keyb)
-            if chat_id == "inline":
-                await bot.edit_inline_text(message_id, text, **kwargs)
-            else:
-                await editor.edit_message_text(tryint(chat_id), tryint(message_id), text, **kwargs)
-        except BaseException as e:
-            print(
-                f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted \
-or somehow it became inacessible.\n>> {e}[/yellow]"
-            )
-        with contextlib.suppress(OperationalError):
-            await (await Config.get(id=restarting_alert.id)).delete()
-
-    # Showing alert in cli
-    date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
-    timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
-    local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
-
-    timezone = timezone_shortener(timezone)
-    date += f" ({timezone})"
-    mention = "@" + user.me.username if user.me.username else user.me.id
-    text = ":ok: [bold green]UserLixo is running[/bold green] :ok:"
-
-    userlixo_info = {
-        "Version": local_version,
-        "Account": mention,
-        "Bot": "@" + bot.me.username,
-        "Prefixes": os.getenv("PREFIXES"),
-        "Logs_chat": os.getenv("LOGS_CHAT"),
-        "Sudoers": ", ".join([*set(map(str, sudoers))]),  # using set() to make the values unique
-        "Commit_date": date,
-    }
-    for k, v in userlixo_info.items():
-        text += f"\n[dim cyan]{k}:[/dim cyan] [dim]{v}[/dim]"
-
-    print(Panel.fit(text, border_style="green", box=box.ASCII))
-
-    # Sending alert via Telegram
-    try:
-        await alert_startup()
-    except Exception as e:
-        print(f"[bold yellow]Error while sending startup alert to LOGS_CHAT: {e}")
-
-    # Alert about unused requirements
-    if unused_requirements:
-        unused = ", ".join(unused_requirements)
-        print(
-            f"[yellow]The following packages are not required by plugins anymore: [/][cyan]{unused}"  # noqa: E501
-        )
-        try:
-            await user.send_message(
-                os.getenv("LOGS_CHAT"),
-                f"The following packages are not required by plugins anymore: {unused}",
-            )
-        except Exception as e:
-            print("Error while sending alert about unused_requirements:\n  > ", e)
-
-    AssistantController.__controller__.register(bot)
-
-    UserbotController.__controller__.register(user)
+    await print_cli_startup_alert()
 
     await idle()
     await user.stop()
