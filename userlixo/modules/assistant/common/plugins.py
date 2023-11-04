@@ -1,3 +1,7 @@
+import importlib
+import re
+from pathlib import Path
+
 from langs import Langs
 from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
@@ -7,6 +11,28 @@ from userlixo.utils.plugins import (
     get_inactive_plugins,
     write_plugin_info,
 )
+
+
+def filepath_to_plugin_name(filepath: str):
+    relative = Path(filepath).resolve().relative_to(Path.cwd())
+    path_with_dots = str(relative).replace("/", ".")
+    return re.sub(r"\.py$", "", path_with_dots)
+
+
+def import_module_from_filepath(filepath: str):
+    notation = filepath_to_plugin_name(filepath)
+    return importlib.import_module(notation)
+
+
+def load_handlers_from_file(filename: str):
+    try:
+        module = import_module_from_filepath(filename)
+    except Exception as e:
+        print(e)
+        return None
+
+    functions = [*filter(callable, module.__dict__.values())]
+    return [*filter(lambda f: hasattr(f, "handlers"), functions)]
 
 
 async def compose_list_plugins_by_type_message(
