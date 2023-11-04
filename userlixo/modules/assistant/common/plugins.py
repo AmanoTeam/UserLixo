@@ -3,6 +3,7 @@ import re
 from pathlib import Path
 from zipfile import ZipFile
 
+import requirements
 import toml
 import virtualenv
 from activate_virtualenv import activate_virtualenv
@@ -12,6 +13,7 @@ from pyrogram.nav import Pagination
 from rich.console import Console
 
 from userlixo.config import bot, plugins, user
+from userlixo.utils import shell_exec
 from userlixo.utils.plugins import (
     get_inactive_plugins,
     write_plugin_info,
@@ -142,12 +144,74 @@ def parse_plugin_info_from_toml(content: str):
 
 def parse_plugin_requirements_from_info(info: dict):
     if "requirements" not in info:
-        return []
+        return {}
 
     if not isinstance(info["requirements"], list):
         raise InvalidPluginInfoValueError(["requirements must be a list"])
 
-    return info["requirements"]  # TODO: parse list
+    requirements_list = info["requirements"]
+    parsed_dict = {}
+
+    for item in requirements_list:
+        if not isinstance(item, str):
+            raise InvalidPluginInfoValueError(["requirements must be a list of strings"])
+
+        try:
+            parsed = requirements.parse(item)
+        except ValueError as e:
+            raise InvalidPluginInfoValueError([f"could not parse requirement {item}: {e}"])
+
+        parsed = list(parsed)
+
+        if not parsed or not len(parsed):
+            raise InvalidPluginInfoValueError([f"could not parse requirement: {item}"])
+
+        if len(parsed) > 1:
+            raise InvalidPluginInfoValueError(
+                [f"requirement {item} seems to refer to more than one package"]
+            )
+
+        parsed = parsed[0]
+
+        if parsed.name in parsed_dict:
+            raise InvalidPluginInfoValueError([f"requirement {item} is duplicated"])
+
+        parsed_dict[parsed.name] = parsed
+
+    return parsed_dict
+
+
+def convert_parsed_requirements_to_pip_format(parsed_requirements: dict):
+    return "\n".join([parsed.line for parsed in parsed_requirements.values()])
+
+
+def save_plugin_requirements_info_requirements_txt(plugin_folder_path: str):
+    folder = Path(plugin_folder_path)
+    info_toml = (folder / "plugin.toml").read_text()
+    info = parse_plugin_info_from_toml(info_toml)
+
+    requirements_txt_path = Path(plugin_folder_path) / "requirements.txt"
+    if requirements_txt_path.exists():
+        return str(requirements_txt_path)
+
+    plugin_requirements = parse_plugin_requirements_from_info(info)
+    pip_requirements = convert_parsed_requirements_to_pip_format(plugin_requirements)
+
+    requirements_txt_path.write_text(pip_requirements)
+
+    return str(requirements_txt_path)
+
+
+async def install_plugin_requirements_in_its_venv(plugin_folder_path: str):
+    venv_path = await get_plugin_venv_path(plugin_folder_path)
+    requirements_txt_path = save_plugin_requirements_info_requirements_txt(plugin_folder_path)
+
+    stdout, process = await shell_exec(f"{venv_path}/bin/pip install -r {requirements_txt_path}")
+
+    if process.returncode != 0:
+        raise ValueError(f"Error while installing requirements: {stdout}")
+
+    return stdout
 
 
 def validate_plugin_folder(folder_path: str):
@@ -172,6 +236,7 @@ async def load_plugin_by_folder_path(folder_path: str):
     validate_plugin_info(info)
 
     venv_path = await get_plugin_venv_path(folder_path)
+    await install_plugin_requirements_in_its_venv(folder_path)
 
     with activate_virtualenv(venv_path):
         main_file = str(folder / "__init__.py")
