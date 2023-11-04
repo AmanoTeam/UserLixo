@@ -5,15 +5,19 @@ from zipfile import ZipFile
 
 import toml
 import virtualenv
+from activate_virtualenv import activate_virtualenv
 from langs import Langs
 from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
+from rich.console import Console
 
 from userlixo.config import bot, plugins, user
 from userlixo.utils.plugins import (
     get_inactive_plugins,
     write_plugin_info,
 )
+
+console = Console()
 
 
 def filepath_to_plugin_name(filepath: str):
@@ -27,11 +31,11 @@ def import_module_from_filepath(filepath: str):
     return importlib.import_module(notation)
 
 
-def fetch_elements_from_file(filename: str):
+def fetch_plugin_elements_from_file(filename: str):
     try:
         module = import_module_from_filepath(filename)
-    except Exception as e:
-        print(e)
+    except Exception:
+        console.print_exception()
         return None
 
     controllers = []
@@ -70,11 +74,15 @@ def load_plugin_elements(elements: dict):
 
     if "user_handlers" in elements:
         for handler in elements["user_handlers"]:
-            user.add_handler(handler)
+            for h in handler.handlers:
+                console.log(f"Adding handler {h} for user")
+                user.add_handler(*h)
 
     if "bot_handlers" in elements:
         for handler in elements["bot_handlers"]:
-            bot.add_handler(handler)
+            for h in handler.handlers:
+                console.log(f"Adding handler {h} for bot")
+                bot.add_handler(*h)
 
     if "controllers" in elements:
         for controller in elements["controllers"]:
@@ -94,21 +102,19 @@ class InvalidPluginInfoValueError(Exception):
 
 
 def validate_plugin_info(info: dict):
-    required = ["title", "description", "author", "type"]
+    required = ["title", "description", "author"]
     missing = [item for item in required if item not in info]
 
     if missing:
-        raise MissingPluginInfoError("', '.join(missing)")
+        raise MissingPluginInfoError(", ".join(missing))
 
     errors = []
     if info["title"].strip() == "":
         errors.append("title cannot be empty")
-    if re.match(r"\w+$", info["title"]):
+    if not re.match(r"\w+$", info["title"]):
         errors.append("title must be alphanumeric")
     if info["author"].strip() == "":
         errors.append("author cannot be empty")
-    if info["type"] not in ("user", "bot"):
-        errors.append("type must be 'user' or 'bot'")
 
     if errors:
         raise InvalidPluginInfoValueError(errors)
@@ -134,6 +140,16 @@ def parse_plugin_info_from_toml(content: str):
     return parsed_toml["plugin"]
 
 
+def parse_plugin_requirements_from_info(info: dict):
+    if "requirements" not in info:
+        return []
+
+    if not isinstance(info["requirements"], list):
+        raise InvalidPluginInfoValueError(["requirements must be a list"])
+
+    return info["requirements"]  # TODO: parse list
+
+
 def validate_plugin_folder(folder_path: str):
     folder = Path(folder_path)
     if not folder.is_dir():
@@ -146,7 +162,7 @@ def validate_plugin_folder(folder_path: str):
         raise ValueError(f"Invalid folder path: plugin.toml is missing at folder {folder_path}")
 
 
-def load_plugin_by_folder_path(folder_path: str):
+async def load_plugin_by_folder_path(folder_path: str):
     validate_plugin_folder(folder_path)
 
     folder = Path(folder_path)
@@ -155,8 +171,12 @@ def load_plugin_by_folder_path(folder_path: str):
 
     validate_plugin_info(info)
 
-    main_file = str(folder / "__init__.py")
-    elements = fetch_elements_from_file(main_file)
+    venv_path = await get_plugin_venv_path(folder_path)
+
+    with activate_virtualenv(venv_path):
+        main_file = str(folder / "__init__.py")
+        elements = fetch_plugin_elements_from_file(main_file)
+        console.log(f"Loading elements from plugin {info['title']}:", elements)
     load_plugin_elements(elements)
 
 
@@ -173,6 +193,20 @@ async def get_plugin_venv_path(plugin_folder_path: str, create_if_not_exists: bo
 def create_virtualenv_on_plugin_folder(folder_path: str):
     venv_path = str(Path(folder_path) / "venv")
     virtualenv.cli_run([venv_path])
+
+
+async def load_all_installed_plugins():
+    console.log("Loading all installed plugins...")
+    console.log(Path().glob("userlixo/plugins/*"))
+    for folder in Path().glob("userlixo/plugins/*"):
+        if not folder.is_dir():
+            continue
+
+        console.log(f"Found plugin folder: {folder}")
+        try:
+            await load_plugin_by_folder_path(str(folder))
+        except Exception:
+            console.print_exception()
 
 
 async def compose_list_plugins_by_type_message(

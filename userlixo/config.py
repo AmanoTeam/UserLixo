@@ -6,18 +6,18 @@ import importlib
 import json
 import os
 import re
-from pathlib import Path
 
 import pyrogram
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.helpers import bki
 from pyrogram.utils import PyromodConfig
 from rich import print
 
 from userlixo.database import Config
+from userlixo.types.client import Client
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
-from userlixo.utils.plugins import get_inactive_plugins, read_plugin_info
+from userlixo.utils.plugins import get_inactive_plugins
 
 sudoers = []
 
@@ -50,14 +50,6 @@ use your userbot/assistant.",
         value_on_env = os.getenv(env_key, default_value)
 
         value_on_db = await Config.get_or_none(key=env_key)
-
-        print(
-            {
-                "key": env_key,
-                "value_on_env": value_on_env,
-                "value_on_db": value_on_db.value if value_on_db else None,
-            }
-        )
 
         if not value_on_db:
             if env_key in restricted_vars:
@@ -231,11 +223,3 @@ cmds_list = [
 cmds = {x: 1 for x in cmds_list}
 
 plugins = {"user": {}, "bot": {}}
-for file in Path("userlixo/plugins").glob("**/*.py"):
-    basename = Path(file).name
-    plugin_type = ("user", "bot")["/bot/" in str(file)]
-    if basename.startswith("__"):
-        continue
-
-    info = read_plugin_info(file)
-    plugins[plugin_type][basename] = info
