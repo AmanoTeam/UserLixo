@@ -14,8 +14,8 @@ from userlixo.modules import (
     AssistantController,
     UserbotController,
 )
-from userlixo.modules.assistant.common.plugins import load_all_installed_plugins
 from userlixo.utils.cache import clean_cache
+from userlixo.utils.plugins import load_all_installed_plugins
 from userlixo.utils.services.language_selector import LanguageSelector
 from userlixo.utils.startup import (
     alert_startup,
@@ -30,7 +30,6 @@ from userlixo.config import (
     bot,
     load_env,
     sudoers,
-    unload_inactive_plugins,
     user,
 )
 from userlixo.database import connect_database
@@ -55,9 +54,6 @@ async def main():
     with console.status("Starting clients..."):
         await user.start()
         await bot.start()
-
-    with console.status("Unloading inactive plugins..."):
-        await unload_inactive_plugins()
 
     with console.status("Saving get_me info..."):
         user.me = await user.get_me()

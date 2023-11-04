@@ -2,7 +2,6 @@
 # Copyright (c) 2018-2022 Amano Team
 
 import configparser
-import importlib
 import json
 import os
 import re
@@ -17,7 +16,6 @@ from userlixo.database import Config
 from userlixo.types.client import Client
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
-from userlixo.utils.plugins import get_inactive_plugins
 
 sudoers = []
 
@@ -97,25 +95,6 @@ you can just press enter to leave it empty or use the default value. Let's get s
     parts = [*set(parts)]
     parts = [x for x in parts if x != "me"]
     sudoers.extend(parts)
-
-
-async def unload_inactive_plugins():
-    inactive = await get_inactive_plugins(plugins)
-    for plugin_type, items in plugins.items():
-        client = (user, bot)[plugin_type == "bot"]
-        for name, info in items.items():
-            if info["notation"] in inactive:
-                try:
-                    module = importlib.import_module(info["notation"])
-                except BaseException as e:
-                    print(f"The plugin {plugin_type}/{name} thrown an error: {e}")
-                    continue
-                functions = [*filter(callable, module.__dict__.values())]
-                functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-
-                for f in functions:
-                    for handler in f.handlers:
-                        client.remove_handler(*handler)
 
 
 # Extra **kwargs for creating pyrogram.Client (contains api_hash and api_id)
