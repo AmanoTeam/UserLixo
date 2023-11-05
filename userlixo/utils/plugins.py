@@ -124,7 +124,9 @@ def fetch_plugin_elements_from_file(filename: str):
         console.print_exception()
         return None
 
-    controllers = []
+    user_controllers = []
+    bot_controllers = []
+
     user_handlers = []
     bot_handlers = []
 
@@ -141,15 +143,18 @@ def fetch_plugin_elements_from_file(filename: str):
                 user_handlers.append(f)
             if hasattr(f, "is_bot_plugin_handler"):
                 bot_handlers.append(f)
-        elif hasattr(f, "is_controller"):
-            controllers.append(f)
+        elif hasattr(f, "is_user_plugin_controller"):
+            user_controllers.append(f)
+        elif hasattr(f, "is_bot_plugin_controller"):
+            bot_controllers.append(f)
 
     return {
         "pre_load": pre_load,
         "post_load": post_load,
         "user_handlers": user_handlers,
         "bot_handlers": bot_handlers,
-        "controllers": controllers,
+        "user_controllers": user_controllers,
+        "bot_controllers": bot_controllers,
     }
 
 
@@ -170,9 +175,13 @@ def load_plugin_elements(elements: dict):
                 console.log(f"Adding handler {h} for bot")
                 bot.add_handler(*h)
 
-    if "controllers" in elements:
-        for controller in elements["controllers"]:
-            controller.load()
+    if "user_controllers" in elements:
+        for controller in elements["user_controllers"]:
+            controller.__controller__.register(user)
+
+    if "bot_controllers" in elements:
+        for controller in elements["bot_controllers"]:
+            controller.__controller__.register(bot)
 
     if "post_load" in elements:
         for f in elements["post_load"]:
