@@ -3,9 +3,9 @@ from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
 
 from userlixo.config import bot, plugins
+from userlixo.modules.common.plugins import compose_plugin_info_text
 from userlixo.utils.plugins import (
     get_inactive_plugins,
-    write_plugin_info,
 )
 
 
@@ -77,6 +77,6 @@ async def compose_info_plugin_message(
     lines.append([(lang.back, f"{plugin_type}_plugins {page}")])
     keyboard = ikb(lines)
 
-    text = write_plugin_info(plugins, lang, plugin, status_line=status_line)
+    text = compose_plugin_info_text(lang, plugin, status_line=status_line)
 
     return text, keyboard

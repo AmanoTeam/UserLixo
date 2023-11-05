@@ -42,30 +42,6 @@ def reload_plugins_requirements(plugins):
     return requirements, unused
 
 
-def write_plugin_info(plugins, lang, info, **kwargs):
-    lang.escape_html = False
-    info_lines = {"status_line": "", "requirements_line": ""}
-    for item in ["channel", "github", "contributors", "type"]:
-        text = ""
-        if item in info:
-            text = getattr(lang, f"plugin_{item}_line")
-            text = "\n" + text(**{item: info[item]})
-        info_lines[item + "_line"] = text
-
-    lang.escape_html = True
-    if "requirements" in info:
-        info_lines["requirements_line"] = "\n" + lang.plugin_requirements_line(
-            requirements=info["requirements"]
-        )
-
-    text = lang.plugin_info
-    text.escape_html = False
-    return text(
-        info=info,
-        **{**info_lines, **kwargs},  # make kwargs override info_lines
-    )
-
-
 def read_plugin_info(filename):
     with Path(filename).open() as f:
         data = f.read()

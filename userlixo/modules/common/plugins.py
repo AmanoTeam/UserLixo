@@ -6,8 +6,8 @@ from pyrogram import Client, filters
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery, Message
 
-from userlixo.config import bot, plugins, user
-from userlixo.utils.plugins import read_plugin_info, write_plugin_info
+from userlixo.config import bot, user
+from userlixo.utils.plugins import read_plugin_info
 
 
 def compose_list_plugins_message(lang: Langs, append_back: bool = False):
@@ -26,6 +26,30 @@ def compose_list_plugins_message(lang: Langs, append_back: bool = False):
     )
 
     return text, keyboard
+
+
+def compose_plugin_info_text(lang, info, **kwargs):
+    lang.escape_html = False
+    info_lines = {"status_line": "", "requirements_line": ""}
+    for item in ["channel", "github", "contributors", "type"]:
+        text = ""
+        if item in info:
+            text = getattr(lang, f"plugin_{item}_line")
+            text = "\n" + text(**{item: info[item]})
+        info_lines[item + "_line"] = text
+
+    lang.escape_html = True
+    if "requirements" in info:
+        info_lines["requirements_line"] = "\n" + lang.plugin_requirements_line(
+            requirements=info["requirements"]
+        )
+
+    text = lang.plugin_info
+    text.escape_html = False
+    return text(
+        info=info,
+        **{**info_lines, **kwargs},  # make kwargs override info_lines
+    )
 
 
 async def handle_add_plugin_request(lang: Langs, client: Client, update: Message | CallbackQuery):
@@ -60,7 +84,7 @@ async def handle_add_plugin_request(lang: Langs, client: Client, update: Message
     plugin = read_plugin_info(filename)
 
     # Showing info
-    text = write_plugin_info(plugins, lang, plugin, status_line="")
+    text = compose_plugin_info_text(lang, plugin, status_line="")
     lines = [
         [
             (lang.add, f"confirm_add_plugin {plugin['type']} {filename}"),
