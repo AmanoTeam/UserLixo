@@ -7,7 +7,7 @@ from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery, Message
 
 from userlixo.config import bot, user
-from userlixo.utils.plugins import read_plugin_info
+from userlixo.utils.plugins import get_plugin_info_from_zip
 
 
 def compose_list_plugins_message(lang: Langs, append_back: bool = False):
@@ -31,7 +31,7 @@ def compose_list_plugins_message(lang: Langs, append_back: bool = False):
 def compose_plugin_info_text(lang, info, **kwargs):
     lang.escape_html = False
     info_lines = {"status_line": "", "requirements_line": ""}
-    for item in ["channel", "github", "contributors", "type"]:
+    for item in ["channel", "github", "contributors", "description"]:
         text = ""
         if item in info:
             text = getattr(lang, f"plugin_{item}_line")
@@ -81,13 +81,14 @@ async def handle_add_plugin_request(lang: Langs, client: Client, update: Message
         break
     filename = await msg.download("cache/")
     filename = os.path.relpath(filename)
-    plugin = read_plugin_info(filename)
+
+    plugin_info = get_plugin_info_from_zip(filename)
 
     # Showing info
-    text = compose_plugin_info_text(lang, plugin, status_line="")
+    text = compose_plugin_info_text(lang, plugin_info, status_line="")
     lines = [
         [
-            (lang.add, f"confirm_add_plugin {plugin['type']} {filename}"),
+            (lang.add, f"confirm_add_plugin {filename}"),
             (lang.cancel, "cancel_plugin"),
         ]
     ]

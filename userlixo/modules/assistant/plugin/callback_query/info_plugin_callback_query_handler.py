@@ -20,15 +20,12 @@ class InfoPluginCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         plugin_basename = query.matches[0]["basename"]
-        plugin_type = query.matches[0]["plugin_type"]
         page = int(query.matches[0]["page"])
 
-        if plugin_basename not in plugins[plugin_type]:
-            return await query.answer("UNKNOWN")
+        if plugin_basename not in plugins:
+            return await query.answer(f"Plugin {plugin_basename} not found in plugins dict")
 
-        text, keyboard = await compose_info_plugin_message(
-            lang, plugin_type, plugin_basename, page
-        )
+        text, keyboard = await compose_info_plugin_message(lang, plugin_basename, page)
 
         await query.edit(text, reply_markup=keyboard)
         return None

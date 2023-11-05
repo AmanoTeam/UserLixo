@@ -185,12 +185,12 @@ cancel: |-
 upgrade_cancelled: |-
     ✖️ Upgrade cancelado.
 plugins_text: |-
-    🖇 <b>Lista de plugins</b> - <i>{type}</i>
+    🖇 <b>Lista de plugins</b>
     Plugins são add-ons para o UserLixo, que adicionam funções novas e alteram o comportamento usual do UserLixo.
 
 plugin_info: |-
     🖇 <b>Plugin</b> <code>{info[title]}</code>
-    ℹ️ {info[description]}{status_line}{type_line}
+    ℹ️ {info[description]}{status_line}
 
     👤 <b>Autor:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
@@ -202,8 +202,6 @@ plugin_requirements_line: |-
     📦 <b>Requerimentos:</b> {requirements}
 plugin_contributors_line: |-
     👥 <b>Contribuidores:</b> {contributors}
-plugin_type_line: |-
-    ⚙ <b>Tipo:</b> {type}
 
 add_plugin: |-
     ➕ Add plugin
@@ -313,12 +311,6 @@ started_alert: |-
 
 plugin_not_found: |-
     ❕ Plugin {name} não encontrado
-
-list_plugins_select_type: |-
-    🖇 Selecione o tipo de plugin.
-
-    <b>User</b> == plugins para a conta ({user})
-    <b>Bot</b>   == plugins para o bot assistente @{bot}
 
 bot_plugins: |-
     👾 Bot

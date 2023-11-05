@@ -8,6 +8,7 @@ from pyrogram import Client
 class UpdateController:
     def __init__(self, cls):
         self.registers = []
+        self.unregisters = []
         self.cls = cls
         self.cls_instance = self.get_cls_instance()
 
@@ -44,12 +45,20 @@ class UpdateController:
         filters = method.filters if hasattr(method, "filters") else None
         group = method.group if hasattr(method, "group") else 0
 
+        handler = None
         if method.on == "message":
-            client.on_message(filters, group)(method_callable)
+            handler = client.on_message(filters, group)(method_callable)
         elif method.on == "callback_query":
-            client.on_callback_query(filters, group)(method_callable)
+            handler = client.on_callback_query(filters, group)(method_callable)
         elif method.on == "inline_query":
-            client.on_inline_query(filters, group)(method_callable)
+            handler = client.on_inline_query(filters, group)(method_callable)
+
+        if handler is not None:
+
+            def unregister():
+                client.remove_handler(*handler)
+
+            self.registers.append(unregister)
 
     def import_handlers(self):
         for key in dir(self.cls):
@@ -71,3 +80,7 @@ class UpdateController:
     def register(self, client):
         for register in self.registers:
             register(client)
+
+    def unregister(self, client):
+        for unregister in self.unregisters:
+            unregister(client)

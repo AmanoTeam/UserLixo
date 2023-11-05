@@ -1,6 +1,3 @@
-import hashlib
-import importlib
-import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -8,11 +5,14 @@ from kink import inject
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from userlixo.config import bot, plugins, user
-from userlixo.database import Config
+from userlixo.config import plugins
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.plugins import handle_add_plugin_request
-from userlixo.utils.plugins import get_inactive_plugins, read_plugin_info
+from userlixo.utils.plugins import (
+    check_if_plugin_folder_exists,
+    get_plugin_info_from_zip,
+    unload_and_remove_plugin,
+)
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -36,61 +36,26 @@ class PluginActionMessageHandler(MessageHandler):
 
         if not msg.document:
             return await act(lang.plugin_rm_not_document)
-        if not msg.document.file_name.endswith(".py"):
-            return await act(lang.plugin_rm_not_py)
+        if not msg.document.file_name.endswith(".zip"):
+            return await act(lang.plugin_rm_not_zip)
 
-        basename = msg.document.file_name
         cache_filename = await msg.download("cache/")
-        plugin = read_plugin_info(cache_filename)
-        if not plugin:
+
+        plugin_info = get_plugin_info_from_zip(cache_filename)
+        if not plugin_info:
             Path(cache_filename).unlink()
-            return await msg.reply(lang.plugin_info_block_not_found, quote=True)
-        plugin_type = plugin["type"]
+            return await act(lang.plugin_info_block_not_found)
 
-        if basename not in plugins[plugin_type]:
-            return await act(lang.plugin_rm_not_added(name=basename))
+        plugin_name = plugin_info["name"]
+        plugin_path = f"userlixo/plugins/{plugin_name}"
 
-        plugin = plugins[plugin_type][basename]
+        if plugin_name not in plugins:
+            return await act(lang.plugin_rm_not_added(name=plugin_name))
 
-        # compare files via hash
-        with Path(cache_filename).open() as remote_file, Path(
-            plugin["filename"]
-        ).open() as local_file:
-            local_data = local_file.read()
-            local_hash = hashlib.md5(local_data.encode()).hexdigest()[:10]
-
-            temp_data = remote_file.read()
-            remote_hash = hashlib.md5(temp_data.encode()).hexdigest()[:10]
-        Path(cache_filename).unlink()
-
-        if local_hash != remote_hash:
-            return await act(lang.plugin_rm_remote_local_are_diff(name=basename))
-
-        inactive = await get_inactive_plugins(plugins)
-
-        if not Path(plugin["filename"]).exists():
-            del plugins[plugin_type][basename]
+        if not check_if_plugin_folder_exists(plugin_name):
+            del plugins[plugin_name]
             return await act(lang.plugin_not_exists_on_server)
 
-        if plugin["notation"] in inactive:
-            inactive = [x for x in inactive if x != plugin["notation"]]
-            await Config.get(key="INACTIVE_PLUGINS").update(value=json.dumps(inactive))
-
-        try:
-            module = importlib.import_module(plugin["notation"])
-        except BaseException as e:
-            Path(plugin["filename"]).unlink()
-            return await act(lang.plugin_could_not_load(e=e))
-
-        functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-
-        client = (user, bot)[plugin_type == "bot"]
-        for f in functions:
-            for handler in f.handlers:
-                client.remove_handler(*handler)
-        del plugins[plugin_type][basename]
-        Path(plugin["filename"]).unlink()
-
-        await act(lang.plugin_removed_text(name=basename))
+        await unload_and_remove_plugin(plugin_path)
+        await act(lang.plugin_removed_text(name=plugin_name))
         return None
