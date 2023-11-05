@@ -14,6 +14,7 @@ from rich import print
 
 from userlixo.database import Config
 from userlixo.types.client import Client
+from userlixo.types.plugin_info import PluginInfo
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
 
@@ -201,4 +202,4 @@ cmds_list = [
 ]
 cmds = {x: 1 for x in cmds_list}
 
-plugins = {"user": {}, "bot": {}}
+plugins: dict[str, PluginInfo] = {}
