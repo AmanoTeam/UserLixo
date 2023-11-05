@@ -279,7 +279,6 @@ def validate_plugin_folder(plugin_name: str):
 
 
 async def load_plugin(plugin_name: str):
-    folder_path = get_plugin_folder_path(plugin_name)
     validate_plugin_folder(plugin_name)
 
     info = get_plugin_info_from_folder(plugin_name)
@@ -289,8 +288,7 @@ async def load_plugin(plugin_name: str):
     await install_plugin_requirements_in_its_venv(plugin_name)
 
     with activate_virtualenv(venv_path):
-        main_file = str(folder_path)
-        elements = fetch_plugin_elements(main_file)
+        elements = fetch_plugin_elements(plugin_name)
     load_plugin_elements(elements)
 
     return info
@@ -334,7 +332,6 @@ async def unload_and_remove_plugin(plugin_name: str):
 
 
 async def unload_plugin(plugin_name: str):
-    folder_path = get_plugin_folder_path(plugin_name)
     validate_plugin_folder(plugin_name)
 
     info = get_plugin_info_from_folder(plugin_name)
@@ -342,8 +339,7 @@ async def unload_plugin(plugin_name: str):
 
     venv_path = await get_plugin_venv_path(plugin_name)
     with activate_virtualenv(venv_path):
-        main_file = str(folder_path)
-        elements = fetch_plugin_elements(main_file)
+        elements = fetch_plugin_elements(plugin_name)
     unload_each_plugin_element(elements)
 
 
