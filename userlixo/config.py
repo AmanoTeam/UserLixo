@@ -170,7 +170,7 @@ pyrogram.types.Message.ikb = message_ikb
 # exist. I want to use the fallback also when the key exists but it's invalid
 user = Client(
     os.getenv("PYROGRAM_SESSION") or "user",
-    plugins={"root": "userlixo/plugins/user"},
+    plugins={"enabled": False},
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
@@ -179,7 +179,7 @@ user = Client(
 
 bot = Client(
     "bot",
-    plugins={"root": "userlixo/plugins/bot"},
+    plugins={"enabled": False},
     api_id=api_id,
     api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
