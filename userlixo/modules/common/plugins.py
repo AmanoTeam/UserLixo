@@ -51,7 +51,7 @@ async def compose_list_plugins_message(
         lines.append([(lang.add_plugin, f"t.me/{bot.me.username}?start=plugin_add", "url")])
 
     if append_back:
-        lines.append([(lang.back, "settings")])
+        lines.append([(lang.back, "start")])
     keyboard = ikb(lines)
     return lang.plugins_text, keyboard
 
