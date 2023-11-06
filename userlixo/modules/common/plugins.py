@@ -58,26 +58,43 @@ async def compose_list_plugins_message(
 
 def compose_plugin_info_text(lang, info: PluginInfo, **kwargs):
     lang.escape_html = False
-    info_lines = {"status_line": "", "requirements_line": ""}
-    for item in ["channel", "github", "contributors", "description"]:
-        text = ""
-        if getattr(info, item, None):
-            text = getattr(lang, f"plugin_{item}_line")
-            text = "\n" + text(**{item: getattr(info, item)})
-        info_lines[item + "_line"] = text
 
-    lang.escape_html = True
-    if info.requirements:
-        info_lines["requirements_line"] = "\n" + lang.plugin_requirements_line(
-            requirements="\n".join(info.requirements)
-        )
+    name = info.name
+    description = info.description
+    author = info.author
 
-    text = lang.plugin_info
-    text.escape_html = False
-    return text(
-        info=info.__dict__,
-        **{**info_lines, **kwargs},  # make kwargs override info_lines
-    )
+    if isinstance(author, list):
+        author = ", ".join(author)
+
+    version = info.version
+    github = info.github
+    contributors = ", ".join(info.contributors)
+    requirements = "\n    ".join(info.requirements)
+
+    name_line = lang.plugin_name_line(name=name)
+    description_line = lang.plugin_description_line(description=description)
+    author_line = lang.plugin_author_line(author=author)
+
+    version_line = lang.plugin_version_line(version=version)
+    github_line = lang.plugin_github_line(github=github)
+    contributors_line = lang.plugin_contributors_line(contributors=contributors)
+    requirements_line = lang.plugin_requirements_line(requirements=requirements)
+
+    lines = [name_line]
+
+    if version:
+        lines.append(version_line)
+
+    lines.extend([description_line, author_line])
+
+    if github:
+        lines.append(github_line)
+    if contributors:
+        lines.append(contributors_line)
+    if requirements:
+        lines.append(requirements_line)
+
+    return "\n".join(lines)
 
 
 async def handle_add_plugin_request(lang: Langs, client: Client, update: Message | CallbackQuery):
@@ -127,5 +144,5 @@ async def handle_add_plugin_request(lang: Langs, client: Client, update: Message
         ]
     ]
     keyboard = ikb(lines)
-    await msg.reply(text, reply_markup=keyboard)
+    await msg.reply(text, reply_markup=keyboard, disable_web_page_preview=True)
     return None

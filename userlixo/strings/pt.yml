@@ -188,20 +188,27 @@ plugins_text: |-
     🖇 <b>Lista de plugins</b>
     Plugins são add-ons para o UserLixo, que adicionam funções novas e alteram o comportamento usual do UserLixo.
 
-plugin_info: |-
-    🖇 <b>Plugin</b> <code>{info[title]}</code>
-    ℹ️ {info[description]}{status_line}
+plugin_name_line: |-
+    🖇 <b>Plugin:</b> {name}
 
-    👤 <b>Autor:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
+plugin_description_line: |-
+    ℹ️ <b>Descrição:</b> {description}
 
-plugin_channel_line: |-
-    📢 <b>Canal:</b> {channel}
+plugin_author_line: |-
+    👤 <b>Autor:</b> {author}
+
+plugin_version_line: |-
+    🏷 <b>Versão:</b> {version}
+
 plugin_github_line: |-
-    🔃 <b>GitHub:</b> {github}
-plugin_requirements_line: |-
-    📦 <b>Requerimentos:</b> {requirements}
+    📂 <b>GitHub:</b> {github}
+
 plugin_contributors_line: |-
-    👥 <b>Contribuidores:</b> {contributors}
+    🤝 <b>Contribuidores:</b> {contributors}
+
+plugin_requirements_line: |-
+    🔧 <b>Dependências:</b>
+        {requirements}
 
 add_plugin: |-
     ➕ Add plugin

@@ -194,14 +194,27 @@ plugin_info: |
 
     👤 <b>Author:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
-plugin_channel_line: |-
-    📢 <b>Channel:</b> {channel}
+plugin_name_line: |-
+    🖇 <b>Plugin:</b> {name}
+
+plugin_description_line: |-
+    ℹ️ <b>Description:</b> {description}
+
+plugin_author_line: |-
+    👤 <b>Author:</b> {author}
+
+plugin_version_line: |-
+    🏷 <b>Version:</b> {version}
+
 plugin_github_line: |-
-    🔃 <b>GitHub:</b> {github}
-plugin_requirements_line: |-
-    📦 <b>Requirements:</b> {requirements}
+    📂 <b>GitHub:</b> {github}
+
 plugin_contributors_line: |-
-    👥 <b>Contributors:</b> {contributors}
+    🤝 <b>Contributors:</b> {contributors}
+
+plugin_requirements_line: |-
+    🔧 <b>Requirements:</b>
+        {requirements}
 
 add_plugin: |-
     ➕ Add plugin

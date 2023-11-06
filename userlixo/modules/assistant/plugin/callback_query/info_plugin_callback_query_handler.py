@@ -27,5 +27,5 @@ class InfoPluginCallbackQueryHandler(CallbackQueryHandler):
 
         text, keyboard = await compose_info_plugin_message(lang, plugin_basename, page)
 
-        await query.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard, disable_web_page_preview=True)
         return None
