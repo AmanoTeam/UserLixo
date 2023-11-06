@@ -243,7 +243,7 @@ plugin_waiting_file: |-
     ❕ I'm waiting for a <b>file</b> (an UserLixo plugin) to add. I can't add anything else as plugin. Use /cancel to cancel.
 
 plugin_format_not_accepted: |-
-    ❕ Plugins can be only python scripts, ending with the extension '.py'.
+    ❕ Plugins must be zips following the plugin structure.
 
 plugin_too_big: |-
     ❕ This file is too large for a plugin (>5MB), i refuse to download it.
@@ -304,10 +304,10 @@ plugin_removed_text: |-
     🗑 The plugin <code>{name}</code> has been removed!
 
 plugin_rm_not_document: |-
-    ❕ You used <code>plugin rm</code> but didn't reply to a document. Reply to a plugin file (.py) to remove.
+    ❕ You used <code>plugin rm</code> but didn't reply to a document. Reply to a plugin file (.zip) to remove.
 
-plugin_rm_not_py: |-
-    ❕ The document you replied to is not a .py file. <code>plugin rm/add<code> can only be used in reply to UserLixo plugins.
+plugin_rm_not_zip: |-
+    ❕ The document you replied to is not a .zip file. <code>plugin rm/add<code> can only be used in reply to UserLixo plugins.
 
 plugin_rm_not_added: |-
     ❕ I could not find any plugin with named <code>{name}</code>.
@@ -344,11 +344,11 @@ installing_plugin_requirements: |-
 
 about_plugins_text: |-
     🖇 <b>About plugins</b>
-    UserLixo plugins are files (.py) with one or more Pyrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
+    UserLixo plugins are zipped files with one or more Pyrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
 
-     Anyone can create a plugin, so it's recommended to always check what you are adding, because it will have access to your account and server once added.
+    Anyone can create a plugin, so it's recommended to always check what you are adding, because it will have access to your account and server once added.
 
-    There are plugins of type==user, which will be loaded by the userbot's Client (i.e. will add new commands to the userbot) and plugins where type==bot, which will be loaded by the assistant bot.
+    Plugins can add handlers to both userbot and assistant bot.
 
     To see the list of plugins, use the command <code>plugins</code>
 

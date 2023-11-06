@@ -237,7 +237,7 @@ plugin_waiting_file: |-
     ❕ Estou esperando por um <b>arquivo</b> para adicionar. Não posso adicionar nada senão scripts python como plugins. Use /cancel para cancelar.
 
 plugin_format_not_accepted: |-
-    ❕ Plugins podem ser apenas scripts python, terminando com a extensão '.py'.
+    ❕ Plugins precisam ser arquivos zip.
 
 plugin_too_big: |-
     ❕ Esse arquivo é muito grande para ser um plugin (>5MB). Eu me recuso a baixá-lo.
@@ -294,10 +294,10 @@ plugin_removed_text: |-
     🗑 O plugin <code>{name}</code> foi removido!
 
 plugin_rm_not_document: |-
-    ❕ Você usou <code>plugin rm</code> mas não respondeu a nenhum documento. Envie o comando respondendo a um arquivo de plugin (.py) para remover.
+    ❕ Você usou <code>plugin rm</code> mas não respondeu a nenhum documento. Envie o comando respondendo a um arquivo de plugin (.zip) para remover.
 
-plugin_rm_not_py: |-
-    ❕ O documento ao qual você respondeu não é um arquivo .py. Os comandos <code>plugin rm/add</code> podem ser usados somente em resposta a plugins do Userlixo.
+plugin_rm_not_zip: |-
+    ❕ O documento ao qual você respondeu não é um arquivo .zip Os comandos <code>plugin rm/add</code> podem ser usados somente em resposta a plugins do Userlixo.
 
 plugin_rm_not_added: |-
     ❕ Não achei nenhum plugin com o nome <code>{name}</code>.
@@ -335,11 +335,11 @@ installing_plugin_requirements: |-
 
 about_plugins_text: |-
     🖇 <b>Sobre plugins</b>
-    Plugins são arquivos (.py) com um ou mais handlers para adicionar ao UserLixo. Eles podem adicionar novos comandos os mesmo alterar o comportamento habitual do UserLixo.
+    Plugins são arquivos zip com um ou mais handlers para adicionar ao UserLixo. Eles podem adicionar novos comandos os mesmo alterar o comportamento habitual do UserLixo.
 
     Qualquer pessoa pode criar um plugin, então é recomendado sempre checar o que você está adicionando, pois o plugin terá acesso à sua conta e ao seu servidor assim que adicionado.
 
-    Há plugins do tipo "user", que serão carregados pelo objeto Client do userbot (isto é, plugins que adicionarão comandos ao userbot) e há plugins do tipo "bot", que serão carregados pelo bot assistente.
+    Plugins podem adicionar handlers tanto para o userbot como para o bot assistente.
 
     Para ver a lista de plugins, use o comando <code>plugins</code>.
 
