@@ -9,6 +9,7 @@ from userlixo.config import plugins
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.plugins import handle_add_plugin_request
 from userlixo.utils.plugins import (
+    InvalidPluginInfoValueError,
     check_if_plugin_folder_exists,
     get_plugin_info_from_zip,
     unload_and_remove_plugin,
@@ -40,8 +41,11 @@ class PluginActionMessageHandler(MessageHandler):
             return await act(lang.plugin_rm_not_zip)
 
         cache_filename = await msg.download("cache/")
+        try:
+            plugin_info = get_plugin_info_from_zip(cache_filename)
+        except InvalidPluginInfoValueError as e:
+            return await act(lang.plugin_invalid_info_value_error(errors="\n".join(e.args)))
 
-        plugin_info = get_plugin_info_from_zip(cache_filename)
         if not plugin_info:
             Path(cache_filename).unlink()
             return await act(lang.plugin_info_block_not_found)

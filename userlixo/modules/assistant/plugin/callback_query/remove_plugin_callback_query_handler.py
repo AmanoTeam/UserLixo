@@ -6,9 +6,7 @@ from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import CallbackQueryHandler
-from userlixo.modules.assistant.common.plugins import (
-    compose_list_plugins_by_type_message,
-)
+from userlixo.modules.common.plugins import compose_list_plugins_message
 from userlixo.utils.plugins import unload_and_remove_plugin
 from userlixo.utils.services.language_selector import LanguageSelector
 
@@ -37,7 +35,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
         await query.answer(lang.plugin_removed(name=basename))
         query.matches = [{"page": page}]
 
-        text, keyboard = await compose_list_plugins_by_type_message(
+        text, keyboard = await compose_list_plugins_message(
             lang, page, show_add_plugin_button=False, append_back=True
         )
         await query.edit(text, reply_markup=keyboard)

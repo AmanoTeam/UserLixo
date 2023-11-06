@@ -32,10 +32,6 @@ async def get_inactive_plugins(plugins):
 console = Console()
 
 
-class MissingPluginInfoError(Exception):
-    pass
-
-
 class InvalidPluginInfoValueError(Exception):
     pass
 
@@ -58,7 +54,8 @@ def unzip_plugin_to_folder(zip_path: str, plugin_name: str):
 def get_plugin_info_from_zip(zip_path: str) -> PluginInfo | None:
     with ZipFile(zip_path, "r") as zipfile:
         for file_name in zipfile.namelist():
-            if file_name == "plugin.toml":
+            basename = Path(file_name).name
+            if basename == "plugin.toml":
                 content = zipfile.read(file_name).decode("utf-8")
                 info = parse_plugin_info_from_toml(content)
                 validate_plugin_info(info)
@@ -96,12 +93,15 @@ def parse_plugin_info_from_toml(content: str) -> PluginInfo | None:
 
 def validate_plugin_info(info: PluginInfo | None):
     required = ["name", "description", "author"]
+    console.log("info:", info)
     missing = [item for item in required if not getattr(info, item, None)]
 
-    if missing:
-        raise MissingPluginInfoError(", ".join(missing))
-
     errors = []
+
+    if missing:
+        errors = [f"missing required field: {item}" for item in missing]
+        raise InvalidPluginInfoValueError(errors)
+
     if info.name.strip() == "":
         errors.append("name cannot be empty")
     if not re.match(r"\w+$", info.name):
@@ -116,7 +116,7 @@ def validate_plugin_info(info: PluginInfo | None):
 
 
 def parse_plugin_requirements_from_info(info: PluginInfo):
-    if "requirements" not in info:
+    if not info.requirements:
         return {}
 
     requirements_list = info.requirements

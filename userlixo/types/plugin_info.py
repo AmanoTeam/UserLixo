@@ -10,6 +10,7 @@ class PluginInfo:
     contributors: list[str]
     requirements: list[str]
     github: str
+    settings: dict[str, str]
 
     zip_path: str
     folder_path: str
@@ -23,6 +24,7 @@ class PluginInfo:
         contributors = data.get("contributors", [])
         requirements = data.get("requirements", [])
         github = data.get("github", "")
+        settings = data.get("settings", {})
         zip_path = data.get("zip_path", "")
         folder_path = data.get("folder_path", "")
 
@@ -34,6 +36,7 @@ class PluginInfo:
             contributors=contributors,
             requirements=requirements,
             github=github,
+            settings=settings,
             zip_path=zip_path,
             folder_path=folder_path,
         )

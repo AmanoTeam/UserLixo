@@ -188,9 +188,9 @@ plugins_text: |-
   🖇 <b>List of plugins</b>
     Plugins are add-ons for UserLixo that add new features and change usual UserLixo's behavior.
 
-plugin_info: |-
-    🖇 <b>Plugin</b> <code>{info[title]}</code>
-  ℹ️ {info[description]}{status_line}
+plugin_info: |
+    🖇 <b>Plugin</b> <code>{info[name]}</code>
+    ℹ️ {info[description]}{status_line}
 
     👤 <b>Author:</b> {info[author]}{channel_line}{github_line}{contributors_line}{requirements_line}
 
@@ -237,6 +237,10 @@ plugin_too_big: |-
 
 plugin_info_block_not_found: |-
     ❕ This is a python script that follow all requirements, but i could not find the <b>required comment block</b> with the plugin info, so this may not be an UserLixo plugin or its author made a mistake.
+
+plugin_invalid_info_value_error: |-
+    ❕ This plugin has some errors:
+    <code>{errors}</code>
 
 plugin_could_not_load: |-
     ❕ Everything is ok with the plugin, but for some reason i <b>couldn't import</b> it to load at runtime. The file has been deleted from the server. Error:

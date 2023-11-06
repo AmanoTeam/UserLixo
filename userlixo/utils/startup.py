@@ -27,10 +27,8 @@ async def compose_startup_message(lang: Langs):
         await shell_exec("ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' ")
     )[0]
 
-    user_plugins = len(list(plugins["user"]))
-    bot_plugins = len(list(plugins["bot"]))
-    plugins_total = user_plugins + bot_plugins
-    append_plugins = f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
+    plugins_total = len(plugins.keys())
+    append_plugins = f"\n├ 👾 {plugins_total}" if plugins_total else ""
 
     return lang.started_alert(
         version=local_version,

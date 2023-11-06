@@ -28,7 +28,7 @@ class PluginMessageController:
 
     @on_message(filters.document & filters.private & ~filters.me)
     async def process_python_file(self, client: Client, message: Message):
-        if message.document.file_name.endswith(".py"):
+        if message.document.file_name.endswith(".zip"):
             await self.process_python_file_handler.handle_message(client, message)
 
     @on_message(filters.su_cmd(r"plugins$"))
