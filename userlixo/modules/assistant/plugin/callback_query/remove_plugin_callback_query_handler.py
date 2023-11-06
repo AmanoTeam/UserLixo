@@ -31,6 +31,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
             return await query.edit(lang.plugin_not_exists_on_server)
 
         await unload_and_remove_plugin(basename)
+        del plugins[basename]
 
         await query.answer(lang.plugin_removed(name=basename))
         query.matches = [{"page": page}]

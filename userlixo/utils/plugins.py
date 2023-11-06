@@ -347,13 +347,13 @@ def unload_each_plugin_element(elements: PluginElementCollection):
     if elements.user_handlers:
         for handler in elements.user_handlers:
             for h in handler.handlers:
-                console.log(f"Adding handler {h} for user")
+                console.log(f"Removing handler {h} for user")
                 user.remove_handler(*h)
 
     if elements.bot_handlers:
         for handler in elements.bot_handlers:
             for h in handler.handlers:
-                console.log(f"Adding handler {h} for bot")
+                console.log(f"Removing handler {h} for bot")
                 bot.remove_handler(*h)
 
     if elements.user_controllers:
