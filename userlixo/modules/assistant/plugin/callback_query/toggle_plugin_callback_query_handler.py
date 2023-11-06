@@ -1,4 +1,3 @@
-import importlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -12,7 +11,7 @@ from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.modules.assistant.common.plugins import (
     compose_info_plugin_message,
 )
-from userlixo.utils.plugins import get_inactive_plugins, unload_plugin
+from userlixo.utils.plugins import get_inactive_plugins, load_plugin, unload_plugin
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -32,29 +31,23 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
             return await query.answer(lang.plugin_not_found(name=plugin_basename))
 
         plugin = plugins[plugin_basename]
-        if not Path(plugin["filename"]).exists():
+        if not Path(plugin.folder_path).exists():
             return await query.edit(lang.plugin_not_exists_on_server)
 
         inactive = await get_inactive_plugins(plugins)
 
         if deactivate:
-            inactive.append(plugin["notation"])
+            inactive.append(plugin.name)
         else:
-            inactive = [x for x in inactive if x != plugin["notation"]]
+            inactive = [x for x in inactive if x != plugin.name]
 
         inactive = [*set(inactive)]  # make values unique
         await Config.get(key="INACTIVE_PLUGINS").update(value=json.dumps(inactive))
 
-        try:
-            module = importlib.import_module(plugin["notation"])
-        except Exception as e:
-            Path(plugin["filename"]).unlink()
-            return await query.edit(lang.plugin_could_not_load(e=e))
-
-        functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-
-        await unload_plugin(plugin.name)
+        if deactivate:
+            await unload_plugin(plugin.name)
+        else:
+            await load_plugin(plugin.name)
 
         text = lang.plugin_has_been_deactivated if deactivate else lang.plugin_has_been_activated
         await query.answer(text)

@@ -199,12 +199,17 @@ def create_virtualenv(venv_path: str):
 
 
 async def load_all_installed_plugins():
+    inactive = await get_inactive_plugins(plugins)
+
     for folder in Path().glob("userlixo/plugins/*"):
         if not folder.is_dir():
             continue
 
+        plugin_name = folder.stem
+        if plugin_name in inactive:
+            continue
+
         try:
-            plugin_name = folder.stem
             info = await load_plugin(plugin_name)
             plugins[info.name] = info
         except Exception:
