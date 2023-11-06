@@ -8,7 +8,6 @@ from pathlib import Path
 import aiocron
 from kink import di
 from pyrogram import idle
-from rich import print
 from rich.console import Console
 from rich.logging import RichHandler
 from tortoise import run_async
@@ -112,8 +111,9 @@ async def main():
 
 if __name__ == "__main__":
     try:
+        logger.info("Starting UserLixo...")
         run_async(main())
     except KeyboardInterrupt:
-        print("[red]Forced stop... Bye!")
+        logger.warning("Forced stop... Bye!")
     finally:
-        print("[red]UserLixo stopped... Bye!")
+        logger.warning("UserLixo stopped... Bye!")
