@@ -18,6 +18,7 @@ from rich.console import Console
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
+from userlixo.types.client import Client
 from userlixo.types.handler_callable import HandlerCallable
 from userlixo.types.plugin_element_collection import PluginElementCollection
 from userlixo.types.plugin_info import PluginInfo
@@ -93,7 +94,6 @@ def parse_plugin_info_from_toml(content: str) -> PluginInfo | None:
 
 def validate_plugin_info(info: PluginInfo | None):
     required = ["name", "description", "author"]
-    console.log("info:", info)
     missing = [item for item in required if not getattr(info, item, None)]
 
     errors = []
@@ -289,27 +289,31 @@ async def load_plugin(plugin_name: str):
 
     with activate_virtualenv(venv_path):
         elements = fetch_plugin_elements(plugin_name)
-    load_plugin_elements(elements)
+    load_plugin_elements(elements, plugin_name)
 
     return info
 
 
-def load_plugin_elements(elements: PluginElementCollection):
+def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
     if elements.pre_load:
         for f in elements.pre_load:
             f()
 
     if elements.user_handlers:
         for handler in elements.user_handlers:
-            for h in handler.handlers:
-                console.log(f"Adding handler {h} for user")
-                user.add_handler(*h)
+            for item in handler.handlers:
+                h, group = item
+                h.plugin_handler = plugin_name
+                console.log(f"Adding handler {item} for user")
+                user.add_handler(h, group)
 
     if elements.bot_handlers:
         for handler in elements.bot_handlers:
-            for h in handler.handlers:
-                console.log(f"Adding handler {h} for bot")
-                bot.add_handler(*h)
+            for item in handler.handlers:
+                h, group = item
+                h.plugin_handler = plugin_name
+                console.log(f"Adding handler {item} for bot")
+                user.add_handler(h, group)
 
     if elements.user_controllers:
         for controller in elements.user_controllers:
@@ -325,41 +329,22 @@ def load_plugin_elements(elements: PluginElementCollection):
 
 
 async def unload_and_remove_plugin(plugin_name: str):
-    folder_path = get_plugin_folder_path(plugin_name)
     await unload_plugin(plugin_name)
 
+    folder_path = get_plugin_folder_path(plugin_name)
     rmtree(str(folder_path))
 
 
 async def unload_plugin(plugin_name: str):
     validate_plugin_folder(plugin_name)
 
-    info = get_plugin_info_from_folder(plugin_name)
-    validate_plugin_info(info)
-
-    venv_path = await get_plugin_venv_path(plugin_name)
-    with activate_virtualenv(venv_path):
-        elements = fetch_plugin_elements(plugin_name)
-    unload_each_plugin_element(elements)
+    remove_plugin_handlers(plugin_name, user)
+    remove_plugin_handlers(plugin_name, bot)
 
 
-def unload_each_plugin_element(elements: PluginElementCollection):
-    if elements.user_handlers:
-        for handler in elements.user_handlers:
-            for h in handler.handlers:
-                console.log(f"Removing handler {h} for user")
-                user.remove_handler(*h)
-
-    if elements.bot_handlers:
-        for handler in elements.bot_handlers:
-            for h in handler.handlers:
-                console.log(f"Removing handler {h} for bot")
-                bot.remove_handler(*h)
-
-    if elements.user_controllers:
-        for controller in elements.user_controllers:
-            controller.__controller__.unregister(user)
-
-    if elements.bot_controllers:
-        for controller in elements.bot_controllers:
-            controller.__controller__.unregister(bot)
+def remove_plugin_handlers(plugin_name: str, client: Client):
+    for handlers in client.dispatcher.groups.values():
+        for handler in handlers:
+            if hasattr(handler, "plugin_handler") and handler.plugin_handler == plugin_name:
+                handlers.remove(handler)
+                console.log(f"Removing handler {handler} from {client}")
