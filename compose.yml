@@ -5,6 +5,5 @@ services:
     stdin_open: true # docker run -i
     tty: true
     container_name: userlixo
-    command: runuser -u vscode -- sh -c "cd /usr/src/userlixo && python3 -m userlixo --no-clear"
     volumes:
       - .:/usr/src/userlixo

@@ -1,8 +1,12 @@
-FROM mcr.microsoft.com/devcontainers/python:3.11
+FROM python:3.10-bullseye
 
 RUN git config --global --add safe.directory /usr/src/userlixo
 
-WORKDIR /backend
-COPY ./requirements.lock /backend/
-RUN sed '/-e/d' requirements.lock > requirements.txt
-RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y \
+    git python3-dev python3-pip python3-setuptools
+
+COPY .docker .docker
+
+ENV IS_DOCKER=1
+
+ENTRYPOINT ["/bin/bash", ".docker/entrypoint.sh"]
