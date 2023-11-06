@@ -183,11 +183,16 @@ async def install_plugin_requirements_in_its_venv(plugin_name: str):
     return stdout
 
 
-async def get_plugin_venv_path(plugin_name: str, create_if_not_exists: bool = True):
+async def get_plugin_venv_path(
+    plugin_name: str, create_if_not_exists: bool = True, overwrite_if_exists: bool = False
+):
     folder_path = get_plugin_folder_path(plugin_name)
     venv_path = str(folder_path / "venv")
 
     if create_if_not_exists and not Path(venv_path).exists():
+        create_virtualenv(venv_path)
+    elif overwrite_if_exists:
+        rmtree(venv_path)
         create_virtualenv(venv_path)
 
     return venv_path
