@@ -16,7 +16,7 @@ The `__init__.py` file is where you define all the elements that will be loaded 
 
 - **Handlers**: You can define user and bot handlers using `@user_handler` and `@bot_handler` decorators. Handlers are responsible for processing incoming messages and executing specific actions based on predefined triggers.
 
-- **Pre-Load and Post-Load Functions**: These functions are executed before and after the load of the plugin elements into UserLixo. You can use them for any necessary setup or cleanup operations.
+- **Pre-Load and Post-Load Functions**: These functions are executed before and after the load of the plugin elements into UserLixo. You can use them for any necessary setup or cleanup operations. You can define pre-load and post-load functions using the `@pre_load` and `@post_load` decorators.
 
 It's essential to note that while the core functionality of your plugin, such as controllers and handlers, should be defined in the `__init__.py`, you can structure your plugin code in any way you prefer. You have the flexibility to organize your code across multiple files (and multiple directory levels) and import the necessary components into the `__init__.py`.
 
