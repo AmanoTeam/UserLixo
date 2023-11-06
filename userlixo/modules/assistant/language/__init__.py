@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import LanguageCallbackQueryController
 
 
-@Controller(imports=[LanguageCallbackQueryController])
+@controller(imports=[LanguageCallbackQueryController])
 class LanguageController:
     pass

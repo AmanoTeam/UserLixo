@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import UpgradeMessageController
 
 
-@Controller(imports=[UpgradeMessageController])
+@controller(imports=[UpgradeMessageController])
 class UpgradeController:
     pass

@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import StartMessageController
 
 
-@Controller(imports=[StartMessageController])
+@controller(imports=[StartMessageController])
 class StartController:
     pass

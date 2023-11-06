@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .inline_query import IndexInlineQueryController
 
 
-@Controller(imports=[IndexInlineQueryController])
+@controller(imports=[IndexInlineQueryController])
 class InlineIndexController:
     pass

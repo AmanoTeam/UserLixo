@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.decorators import Controller, on_callback_query
+from userlixo.decorators import controller, on_callback_query
 
 from .edit_env_callback_query_handler import EditEnvCallbackQueryHandler
 from .restart_now_callback_query_handler import RestartNowCallbackQueryHandler
@@ -10,7 +10,7 @@ from .setting_env_callback_query_handler import SettingEnvCallbackQueryHandler
 from .view_env_callback_query_handler import ViewEnvCallbackQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class EnvVarsCallbackQueryController:
     setting_env_handler: SettingEnvCallbackQueryHandler

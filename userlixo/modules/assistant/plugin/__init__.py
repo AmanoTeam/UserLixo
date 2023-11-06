@@ -1,9 +1,9 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import PluginCallbackQueryController
 from .message import PluginMessageController
 
 
-@Controller(imports=[PluginCallbackQueryController, PluginMessageController])
+@controller(imports=[PluginCallbackQueryController, PluginMessageController])
 class PluginController:
     pass

@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import PingCallbackQueryController
 
 
-@Controller(imports=[PingCallbackQueryController])
+@controller(imports=[PingCallbackQueryController])
 class PingController:
     pass

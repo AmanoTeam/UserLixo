@@ -1,4 +1,4 @@
-from ...decorators import Controller
+from ...decorators import controller
 from .about import AboutController
 from .execs import ExecsController
 from .help import HelpController
@@ -12,7 +12,7 @@ from .start import StartController
 from .upgrade import UpgradeController
 
 
-@Controller(
+@controller(
     imports=[
         AboutController,
         ExecsController,

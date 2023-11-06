@@ -1,4 +1,4 @@
-from ...decorators import Controller
+from ...decorators import controller
 from .about import AboutController
 from .command import CommandController
 from .env_vars import EnvVarsController
@@ -16,7 +16,7 @@ from .upgrade import UpgradeController
 from .web_app import WebAppController
 
 
-@Controller(
+@controller(
     imports=[
         AboutController,
         CommandController,

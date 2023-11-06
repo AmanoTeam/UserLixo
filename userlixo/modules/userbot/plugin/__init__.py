@@ -1,9 +1,9 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import PluginMessageController
 
 
-@Controller(
+@controller(
     imports=[
         PluginMessageController,
     ]

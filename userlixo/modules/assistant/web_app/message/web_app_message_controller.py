@@ -3,12 +3,12 @@ from dataclasses import dataclass
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from userlixo.decorators import Controller, on_message
+from userlixo.decorators import controller, on_message
 
 from .web_app_message_handler import WebAppMessageHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class WebAppMessageController:
     handler: WebAppMessageHandler

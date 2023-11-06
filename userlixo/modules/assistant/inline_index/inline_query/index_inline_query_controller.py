@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.decorators import Controller, on_inline_query
+from userlixo.decorators import controller, on_inline_query
 
 from .index_inline_query_handler import IndexInlineQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class IndexInlineQueryController:
     handler: IndexInlineQueryHandler

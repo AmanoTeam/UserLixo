@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 from pyrogram import Client, filters
 
-from userlixo.decorators import Controller, on_message
+from userlixo.decorators import controller, on_message
 
 from .restart_message_handler import RestartMessageHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class RestartMessageController:
     handler: RestartMessageHandler

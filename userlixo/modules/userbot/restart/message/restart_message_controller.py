@@ -3,13 +3,13 @@ from dataclasses import dataclass
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from userlixo.decorators import Controller, on_message
+from userlixo.decorators import controller, on_message
 from userlixo.modules.userbot.restart.message.restart_message_handler import (
     RestartMessageHandler,
 )
 
 
-@Controller()
+@controller()
 @dataclass
 class RestartMessageController:
     handler: RestartMessageHandler

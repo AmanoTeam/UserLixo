@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 from pyrogram import Client, filters
 
-from userlixo.decorators import Controller, on_callback_query
+from userlixo.decorators import controller, on_callback_query
 
 from .upgrade_callback_query_handler import UpgradeCallbackQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class UpgradeCallbackQueryController:
     handler: UpgradeCallbackQueryHandler

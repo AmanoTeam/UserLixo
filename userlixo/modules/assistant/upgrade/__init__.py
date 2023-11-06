@@ -1,11 +1,11 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import UpgradeCallbackQueryController
 from .message import UpgradeMessageController
 from .web_app_data import UpgradeWebAppDataController
 
 
-@Controller(
+@controller(
     imports=[UpgradeMessageController, UpgradeCallbackQueryController, UpgradeWebAppDataController]
 )
 class UpgradeController:

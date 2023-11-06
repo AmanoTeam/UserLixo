@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import EnvVarsCallbackQueryController
 
 
-@Controller(imports=[EnvVarsCallbackQueryController])
+@controller(imports=[EnvVarsCallbackQueryController])
 class EnvVarsController:
     pass

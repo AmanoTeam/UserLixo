@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import SettingsMessageController
 
 
-@Controller(imports=[SettingsMessageController])
+@controller(imports=[SettingsMessageController])
 class SettingsController:
     pass

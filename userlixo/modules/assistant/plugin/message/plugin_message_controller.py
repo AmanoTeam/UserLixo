@@ -3,14 +3,14 @@ from dataclasses import dataclass
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from userlixo.decorators import Controller, on_message
+from userlixo.decorators import controller, on_message
 
 from .add_plugin_message_handler import AddPluginMessageHandler
 from .list_plugins_message_handler import ListPluginsMessageHandler
 from .process_python_file_message_handler import ProcessPythonFileMessageHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class PluginMessageController:
     list_plugins_handler: ListPluginsMessageHandler

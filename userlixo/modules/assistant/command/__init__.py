@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import CommandCallbackQueryController
 
 
-@Controller(imports=[CommandCallbackQueryController])
+@controller(imports=[CommandCallbackQueryController])
 class CommandController:
     pass

@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import ListCommandsMessageController
 
 
-@Controller(imports=[ListCommandsMessageController])
+@controller(imports=[ListCommandsMessageController])
 class ListCommandsController:
     pass

@@ -1,9 +1,9 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import StartCallbackQueryController
 from .message import StartMessageController
 
 
-@Controller(imports=[StartMessageController, StartCallbackQueryController])
+@controller(imports=[StartMessageController, StartCallbackQueryController])
 class StartController:
     pass

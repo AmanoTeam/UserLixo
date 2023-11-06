@@ -1,9 +1,9 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import SudoerCallbackQueryController
 from .message import AddSudoerMessageController
 
 
-@Controller(imports=[AddSudoerMessageController, SudoerCallbackQueryController])
+@controller(imports=[AddSudoerMessageController, SudoerCallbackQueryController])
 class SudoerController:
     pass

@@ -2,13 +2,13 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.decorators import Controller, on_callback_query
+from userlixo.decorators import controller, on_callback_query
 
 from .remove_sudoer_callback_query_handler import RemoveSudoerCallbackQueryHandler
 from .setting_sudoers_callback_query_handler import SettingSudoersCallbackQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class SudoerCallbackQueryController:
     setting_sudoers_handler: SettingSudoersCallbackQueryHandler

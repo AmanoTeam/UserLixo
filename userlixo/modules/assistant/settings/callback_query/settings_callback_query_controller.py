@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 from pyrogram import Client, filters
 
-from userlixo.decorators import Controller, on_callback_query
+from userlixo.decorators import controller, on_callback_query
 
 from .settings_callback_query_handler import SettingsCallbackQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class SettingsCallbackQueryController:
     handler: SettingsCallbackQueryHandler

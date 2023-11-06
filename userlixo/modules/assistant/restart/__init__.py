@@ -1,11 +1,11 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import RestartCallbackQueryController
 from .message import RestartMessageController
 from .web_app_data import RestartWebAppDataController
 
 
-@Controller(
+@controller(
     imports=[RestartMessageController, RestartCallbackQueryController, RestartWebAppDataController]
 )
 class RestartController:

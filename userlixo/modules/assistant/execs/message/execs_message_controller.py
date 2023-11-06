@@ -3,14 +3,14 @@ from dataclasses import dataclass
 
 from pyrogram import Client, filters
 
-from userlixo.decorators import Controller, on_message
+from userlixo.decorators import controller, on_message
 
 from .cmd_message_handler import CmdMessageHandler
 from .eval_message_handler import EvalMessageHandler
 from .exec_message_handler import ExecMessageHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class ExecsMessageController:
     cmd_handler: CmdMessageHandler

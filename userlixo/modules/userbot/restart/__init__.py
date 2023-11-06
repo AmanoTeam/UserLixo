@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import RestartMessageController
 
 
-@Controller(imports=[RestartMessageController])
+@controller(imports=[RestartMessageController])
 class RestartController:
     pass

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.decorators import Controller, on_callback_query
+from userlixo.decorators import controller, on_callback_query
 
 from .add_plugin_callback_query_handler import AddPluginCallbackQueryHandler
 from .cancel_plugin_callback_query_handler import CancelPluginCallbackQueryHandler
@@ -13,7 +13,7 @@ from .remove_plugin_callback_query_handler import RemovePluginCallbackQueryHandl
 from .toggle_plugin_callback_query_handler import TogglePluginCallbackQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class PluginCallbackQueryController:
     list_plugins_handler: ListPluginsCallbackQueryHandler

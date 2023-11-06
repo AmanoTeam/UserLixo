@@ -1,11 +1,11 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import SettingsCallbackQueryController
 from .message import SettingsMessageController
 from .web_app_data import SaveSettingsWebAppDataController
 
 
-@Controller(
+@controller(
     imports=[
         SettingsMessageController,
         SettingsCallbackQueryController,

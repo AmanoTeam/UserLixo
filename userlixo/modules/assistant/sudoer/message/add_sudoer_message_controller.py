@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 from pyrogram import Client, filters
 
-from userlixo.decorators import Controller, on_message
+from userlixo.decorators import controller, on_message
 
 from .add_sudoer_message_handler import AddSudoerMessageHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class AddSudoerMessageController:
     handler: AddSudoerMessageHandler

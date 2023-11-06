@@ -1,9 +1,9 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .callback_query import HelpCallbackQueryController
 from .message import HelpMessageController
 
 
-@Controller(imports=[HelpMessageController, HelpCallbackQueryController])
+@controller(imports=[HelpMessageController, HelpCallbackQueryController])
 class HelpController:
     pass

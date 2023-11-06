@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import InfoMessageController
 
 
-@Controller(imports=[InfoMessageController])
+@controller(imports=[InfoMessageController])
 class InfoController:
     pass

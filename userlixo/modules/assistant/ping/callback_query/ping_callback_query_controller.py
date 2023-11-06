@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 from pyrogram import filters
 
-from userlixo.decorators import Controller, on_callback_query
+from userlixo.decorators import controller, on_callback_query
 
 from .ping_callback_query_handler import PingCallbackQueryHandler
 
 
-@Controller()
+@controller()
 @dataclass
 class PingCallbackQueryController:
     handler: PingCallbackQueryHandler

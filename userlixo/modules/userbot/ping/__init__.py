@@ -1,8 +1,8 @@
-from userlixo.decorators import Controller
+from userlixo.decorators import controller
 
 from .message import PingMessageController
 
 
-@Controller(imports=[PingMessageController])
+@controller(imports=[PingMessageController])
 class PingController:
     pass
