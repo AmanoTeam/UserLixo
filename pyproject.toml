@@ -19,6 +19,9 @@ dependencies = [
     "kink>=0.7.0",
     "pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn8",
     "pip>=23.3.1",
+    "activate_virtualenv @ file:///home/dev/workspace/personal/UserLixo/../activate_virtualenv",
+    "toml>=0.10.2",
+    "requirements-parser>=0.5.0",
 ]
 
 [tool.hatch.build]

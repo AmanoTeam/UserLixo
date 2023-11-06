@@ -1,4 +1,3 @@
-import importlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -6,13 +5,13 @@ from pathlib import Path
 from kink import inject
 from pyrogram.types import CallbackQuery
 
-from userlixo.config import bot, plugins, user
+from userlixo.config import plugins
 from userlixo.database import Config
 from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.modules.assistant.common.plugins import (
     compose_info_plugin_message,
 )
-from userlixo.utils.plugins import get_inactive_plugins
+from userlixo.utils.plugins import get_inactive_plugins, load_plugin, unload_plugin
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -25,47 +24,35 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         plugin_basename = query.matches[0]["basename"]
-        plugin_type = query.matches[0]["plugin_type"]
         deactivate = query.matches[0]["deactivate"]
         page = int(query.matches[0]["page"])
 
-        if plugin_basename not in plugins[plugin_type]:
+        if plugin_basename not in plugins:
             return await query.answer(lang.plugin_not_found(name=plugin_basename))
 
-        plugin = plugins[plugin_type][plugin_basename]
-        if not Path(plugin["filename"]).exists():
+        plugin = plugins[plugin_basename]
+        if not Path(plugin.folder_path).exists():
             return await query.edit(lang.plugin_not_exists_on_server)
 
         inactive = await get_inactive_plugins(plugins)
 
         if deactivate:
-            inactive.append(plugin["notation"])
+            inactive.append(plugin.name)
         else:
-            inactive = [x for x in inactive if x != plugin["notation"]]
+            inactive = [x for x in inactive if x != plugin.name]
 
         inactive = [*set(inactive)]  # make values unique
         await Config.get(key="INACTIVE_PLUGINS").update(value=json.dumps(inactive))
 
-        try:
-            module = importlib.import_module(plugin["notation"])
-        except Exception as e:
-            Path(plugin["filename"]).unlink()
-            return await query.edit(lang.plugin_could_not_load(e=e))
-
-        functions = [*filter(callable, module.__dict__.values())]
-        functions = [*filter(lambda f: hasattr(f, "handlers"), functions)]
-
-        c = (user, bot)[plugin_type == "bot"]
-        for f in functions:
-            for handler in f.handlers:
-                (c.remove_handler if deactivate else c.add_handler)(*handler)
+        if deactivate:
+            await unload_plugin(plugin.name)
+        else:
+            await load_plugin(plugin.name)
 
         text = lang.plugin_has_been_deactivated if deactivate else lang.plugin_has_been_activated
         await query.answer(text)
 
-        text, keyboard = await compose_info_plugin_message(
-            lang, plugin_type, plugin_basename, page
-        )
+        text, keyboard = await compose_info_plugin_message(lang, plugin_basename, page)
 
-        await query.edit(text, reply_markup=keyboard)
+        await query.edit(text, reply_markup=keyboard, disable_web_page_preview=True)
         return None

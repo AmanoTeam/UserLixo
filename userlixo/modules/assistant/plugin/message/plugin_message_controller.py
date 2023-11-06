@@ -19,7 +19,7 @@ class PluginMessageController:
 
     @on_message(filters.document & filters.private & ~filters.me)
     async def handle_plugin(self, client: Client, message: Message):
-        if message.document.file_name.endswith(".py"):
+        if message.document.file_name.endswith(".zip"):
             await self.process_python_file_handler.handle_message(client, message)
 
     @on_message(filters.regex("^/(start )?plugin[_ ]add"))
