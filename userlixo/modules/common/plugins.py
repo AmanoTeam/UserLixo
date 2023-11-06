@@ -80,21 +80,20 @@ def compose_plugin_info_text(lang, info: PluginInfo, **kwargs):
     contributors_line = lang.plugin_contributors_line(contributors=contributors)
     requirements_line = lang.plugin_requirements_line(requirements=requirements)
 
-    lines = [name_line]
+    lines = [
+        name_line,
+        version_line if version else None,
+        github_line if github else None,
+        "",
+        description_line,
+        "",
+        author_line,
+        contributors_line if contributors else None,
+        "",
+        requirements_line if requirements else None,
+    ]
 
-    if version:
-        lines.append(version_line)
-
-    lines.extend([description_line, author_line])
-
-    if github:
-        lines.append(github_line)
-    if contributors:
-        lines.append(contributors_line)
-    if requirements:
-        lines.append(requirements_line)
-
-    return "\n".join(lines)
+    return "\n".join(filter(lambda x: x is not None, lines))
 
 
 async def handle_add_plugin_request(lang: Langs, client: Client, update: Message | CallbackQuery):
