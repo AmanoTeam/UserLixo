@@ -80,3 +80,30 @@ zip ./userlixo/cache/PLUGIN_NAME.zip -r userlixo/plugins/PLUGIN_NAME/* -x "*venv
 
 The command above will create a zip file named `PLUGIN_NAME.zip` in the `userlixo/cache` directory. It will include all the files and directories in the `userlixo/plugins/PLUGIN_NAME` directory, excluding the `venv` directory, `__pycache__` directory, and `requirements.txt` file.
 The option `-j` ensures the files at `userlixo/plugins/PLUGIN_NAME/` will be added at the root of the zip file, without creating the structure of parent folders (`userlixo/plugins/PLUGIN_NAME/`).
+
+### Managing Plugin Dependencies
+
+In UserLixo, handling plugin dependencies is crucial for a conflict-free experience. The `requirements` property in the `plugin.toml` file plays a key role, but it must follow the `pip` package manager's syntax.
+
+#### Isolated Environments
+
+Each plugin operates within its isolated virtual environment, preventing dependency conflicts. When installing a plugin, UserLixo creates a dedicated virtualenv. This isolation ensures that one plugin's dependencies don't interfere with others.
+
+#### Easy Cleanup
+
+Uninstalling a plugin is a breeze. UserLixo can delete the plugin folder, including its virtualenv. This eliminates the need for manual dependency cleanup, saving time and maintaining a clean environment.
+
+#### Specifying Dependencies
+
+Define your plugin's dependencies in the `requirements` property of `plugin.toml` using `pip` syntax. For instance:
+
+```toml
+[plugin]
+...
+requirements = [
+    "Pillow>=10.1.0",
+    "httpx[http2]>=0.25.1"
+]
+```
+
+By adhering to these practices, you ensure correct dependency handling and easy plugin removal.
