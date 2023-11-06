@@ -255,10 +255,10 @@ def fetch_plugin_elements(plugin_name: str) -> PluginElementCollection | None:
             if hasattr(f, "is_bot_plugin_handler"):
                 f = typing.cast(HandlerCallable, f)
                 bot_handlers.append(f)
-        elif hasattr(f, "is_user_plugin_controller"):
-            user_controllers.append(f)
-        elif hasattr(f, "is_bot_plugin_controller"):
-            bot_controllers.append(f)
+            if hasattr(f, "is_user_plugin_controller"):
+                user_controllers.append(f)
+            if hasattr(f, "is_bot_plugin_controller"):
+                bot_controllers.append(f)
 
     return PluginElementCollection(
         pre_load=pre_load,

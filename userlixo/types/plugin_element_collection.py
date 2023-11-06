@@ -12,5 +12,5 @@ class PluginElementCollection:
     user_handlers: list[HandlerCallable]
     bot_handlers: list[HandlerCallable]
 
-    user_controllers: list[type]
-    bot_controllers: list[type]
+    user_controllers: list[Callable]
+    bot_controllers: list[Callable]

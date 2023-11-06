@@ -3,6 +3,7 @@ from typing import Any
 
 from kink import di
 from pyrogram import Client
+from pyrogram.handlers import CallbackQueryHandler, InlineQueryHandler, MessageHandler
 
 
 class UpdateController:
@@ -50,11 +51,11 @@ class UpdateController:
 
         handler = None
         if method.on == "message":
-            handler = client.on_message(filters, group)(method_callable)
+            handler = client.add_handler(MessageHandler(method_callable, filters), group)
         elif method.on == "callback_query":
-            handler = client.on_callback_query(filters, group)(method_callable)
+            handler = client.add_handler(CallbackQueryHandler(method_callable, filters), group)
         elif method.on == "inline_query":
-            handler = client.on_inline_query(filters, group)(method_callable)
+            handler = client.add_handler(InlineQueryHandler(method_callable, filters), group)
 
         if handler is not None:
             if plugin_handler is not None:
@@ -64,7 +65,7 @@ class UpdateController:
             def unregister():
                 client.remove_handler(*handler)
 
-            self.registers.append(unregister)
+            self.unregisters.append(unregister)
 
     def import_handlers(self):
         for key in dir(self.cls):
