@@ -10,7 +10,7 @@ from .list_plugins_message_handler import ListPluginsMessageHandler
 from .process_python_file_message_handler import ProcessPythonFileMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class PluginMessageController:
     list_plugins_handler: ListPluginsMessageHandler

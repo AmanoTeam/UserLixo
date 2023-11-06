@@ -10,7 +10,7 @@ from .setting_env_callback_query_handler import SettingEnvCallbackQueryHandler
 from .view_env_callback_query_handler import ViewEnvCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class EnvVarsCallbackQueryController:
     setting_env_handler: SettingEnvCallbackQueryHandler

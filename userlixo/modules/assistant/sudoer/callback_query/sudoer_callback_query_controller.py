@@ -8,7 +8,7 @@ from .remove_sudoer_callback_query_handler import RemoveSudoerCallbackQueryHandl
 from .setting_sudoers_callback_query_handler import SettingSudoersCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class SudoerCallbackQueryController:
     setting_sudoers_handler: SettingSudoersCallbackQueryHandler

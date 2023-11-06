@@ -9,7 +9,7 @@ from userlixo.modules.userbot.upgrade.message.upgrade_message_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class UpgradeMessageController:
     handler: UpgradeMessageHandler

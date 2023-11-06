@@ -9,7 +9,7 @@ from userlixo.modules.userbot.restart.message.restart_message_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class RestartMessageController:
     handler: RestartMessageHandler

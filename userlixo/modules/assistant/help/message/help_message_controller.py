@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_message
 from .help_message_handler import HelpMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class HelpMessageController:
     handler: HelpMessageHandler

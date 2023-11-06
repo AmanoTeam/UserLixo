@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_callback_query
 from .settings_callback_query_handler import SettingsCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class SettingsCallbackQueryController:
     handler: SettingsCallbackQueryHandler

@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_message
 from .save_settings_web_app_data_handler import SaveSettingsWebAppDataHandler
 
 
-@controller()
+@controller
 @dataclass
 class SaveSettingsWebAppDataController:
     handler: SaveSettingsWebAppDataHandler

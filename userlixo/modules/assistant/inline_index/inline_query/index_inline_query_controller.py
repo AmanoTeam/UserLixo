@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_inline_query
 from .index_inline_query_handler import IndexInlineQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class IndexInlineQueryController:
     handler: IndexInlineQueryHandler

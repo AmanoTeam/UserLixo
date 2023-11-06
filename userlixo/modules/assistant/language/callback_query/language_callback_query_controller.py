@@ -8,7 +8,7 @@ from .set_language_code_callback_query_handler import SetLanguageCodeCallbackQue
 from .setting_language_callback_query_handler import SettingLanguageCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class LanguageCallbackQueryController:
     setting_language_handler: SettingLanguageCallbackQueryHandler

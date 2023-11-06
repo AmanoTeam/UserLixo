@@ -8,7 +8,7 @@ from .info_command_callback_query_handler import InfoCommandCallbackQueryHandler
 from .list_commands_callback_query_handler import ListCommandsCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class CommandCallbackQueryController:
     list_commands_handler: ListCommandsCallbackQueryHandler

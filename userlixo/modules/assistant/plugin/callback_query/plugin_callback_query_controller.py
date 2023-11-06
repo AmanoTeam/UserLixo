@@ -13,7 +13,7 @@ from .remove_plugin_callback_query_handler import RemovePluginCallbackQueryHandl
 from .toggle_plugin_callback_query_handler import TogglePluginCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class PluginCallbackQueryController:
     list_plugins_handler: ListPluginsCallbackQueryHandler

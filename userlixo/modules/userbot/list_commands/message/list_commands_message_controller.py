@@ -9,7 +9,7 @@ from userlixo.modules.userbot.list_commands.message.list_commands_message_handle
 )
 
 
-@controller()
+@controller
 @dataclass
 class ListCommandsMessageController:
     handler: ListCommandsMessageHandler

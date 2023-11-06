@@ -8,7 +8,7 @@ from userlixo.decorators import controller, on_message
 from .web_app_message_handler import WebAppMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class WebAppMessageController:
     handler: WebAppMessageHandler

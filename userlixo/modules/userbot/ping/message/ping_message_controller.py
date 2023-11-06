@@ -9,7 +9,7 @@ from userlixo.modules.userbot.ping.message.ping_message_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class PingMessageController:
     handler: PingMessageHandler

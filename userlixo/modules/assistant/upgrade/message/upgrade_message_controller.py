@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_message
 from .upgrade_message_handler import UpgradeMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class UpgradeMessageController:
     handler: UpgradeMessageHandler

@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_message
 from .restart_web_app_data_handler import RestartWebAppDataHandler
 
 
-@controller()
+@controller
 @dataclass
 class RestartWebAppDataController:
     handler: RestartWebAppDataHandler

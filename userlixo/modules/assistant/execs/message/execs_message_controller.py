@@ -10,7 +10,7 @@ from .eval_message_handler import EvalMessageHandler
 from .exec_message_handler import ExecMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class ExecsMessageController:
     cmd_handler: CmdMessageHandler

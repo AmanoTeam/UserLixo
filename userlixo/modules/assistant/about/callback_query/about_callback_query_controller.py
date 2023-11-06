@@ -9,7 +9,7 @@ from .about_callback_query_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class AboutCallbackQueryController:
     handler: AboutCallbackQueryHandler

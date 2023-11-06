@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_callback_query
 from .ping_callback_query_handler import PingCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class PingCallbackQueryController:
     handler: PingCallbackQueryHandler

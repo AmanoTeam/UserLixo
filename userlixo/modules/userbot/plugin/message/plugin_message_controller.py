@@ -15,7 +15,7 @@ from userlixo.modules.userbot.plugin.message.process_python_file_message_handler
 )
 
 
-@controller()
+@controller
 @dataclass
 class PluginMessageController:
     plugin_action_handler: PluginActionMessageHandler

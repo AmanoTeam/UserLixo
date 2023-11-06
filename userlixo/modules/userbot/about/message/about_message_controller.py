@@ -9,7 +9,7 @@ from userlixo.modules.userbot.about.message.about_message_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class AboutMessageController:
     handler: AboutMessageHandler

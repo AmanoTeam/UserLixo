@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_callback_query
 from .upgrade_callback_query_handler import UpgradeCallbackQueryHandler
 
 
-@controller()
+@controller
 @dataclass
 class UpgradeCallbackQueryController:
     handler: UpgradeCallbackQueryHandler

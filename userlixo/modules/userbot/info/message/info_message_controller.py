@@ -9,7 +9,7 @@ from userlixo.modules.userbot.info.message.info_message_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class InfoMessageController:
     handler: InfoMessageHandler

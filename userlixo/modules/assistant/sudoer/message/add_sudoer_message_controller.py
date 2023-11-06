@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_message
 from .add_sudoer_message_handler import AddSudoerMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class AddSudoerMessageController:
     handler: AddSudoerMessageHandler

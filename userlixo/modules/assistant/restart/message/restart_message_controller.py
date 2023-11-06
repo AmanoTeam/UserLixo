@@ -7,7 +7,7 @@ from userlixo.decorators import controller, on_message
 from .restart_message_handler import RestartMessageHandler
 
 
-@controller()
+@controller
 @dataclass
 class RestartMessageController:
     handler: RestartMessageHandler

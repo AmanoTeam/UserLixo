@@ -16,7 +16,7 @@ from userlixo.modules.userbot.execs.message.exec_message_handler import (
 )
 
 
-@controller()
+@controller
 @dataclass
 class ExecsMessageController:
     cmd_handler: CmdMessageHandler
