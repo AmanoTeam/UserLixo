@@ -20,8 +20,6 @@ class AddSudoerMessageHandler(MessageHandler):
     async def handle_message(self, _c, m: Message):
         lang = self.language_selector.get_lang()
 
-        print("add_sudoer executed")
-
         text = lang.add_sudoer_ask
         response = await m.chat.ask(text, filters.text, timeout=600, reply_markup=force_reply())
 

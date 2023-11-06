@@ -1,4 +1,5 @@
 import contextlib
+import logging
 import os
 import platform
 from datetime import datetime
@@ -14,6 +15,8 @@ from tortoise.exceptions import OperationalError
 from userlixo.config import bot, plugins, sudoers, user
 from userlixo.database import Config
 from userlixo.utils import shell_exec, timezone_shortener, tryint
+
+logger = logging.getLogger(__name__)
 
 
 async def compose_startup_message(lang: Langs):
@@ -105,7 +108,7 @@ async def alert_startup(lang: Langs):
         except BadRequest:
             await user.send_message(logs_chat, text)
     except Exception as e:
-        print(f"[bold yellow]Error while sending startup alert to LOGS_CHAT: {e}")
+        logger.error(f"[bold yellow]Error while sending startup alert to LOGS_CHAT: {e}")
 
 
 async def edit_restarting_alert(lang: Langs):
@@ -133,7 +136,7 @@ async def edit_restarting_alert(lang: Langs):
             else:
                 await editor.edit_message_text(tryint(chat_id), tryint(message_id), text, **kwargs)
         except BaseException as e:
-            print(
+            logger.error(
                 f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted \
     or somehow it became inaccessible.\n>> {e}[/yellow]"
             )

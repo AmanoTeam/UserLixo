@@ -3,6 +3,7 @@
 
 import importlib
 import json
+import logging
 import re
 import typing
 from collections.abc import Callable
@@ -14,7 +15,6 @@ import requirements
 import toml
 import virtualenv
 from activate_virtualenv import activate_virtualenv
-from rich.console import Console
 
 from userlixo.config import bot, plugins, user
 from userlixo.database import Config
@@ -24,13 +24,12 @@ from userlixo.types.plugin_element_collection import PluginElementCollection
 from userlixo.types.plugin_info import PluginInfo
 from userlixo.utils import shell_exec
 
+logger = logging.getLogger(__name__)
+
 
 async def get_inactive_plugins(plugins):
     inactive = (await Config.get_or_create({"value": "[]"}, key="INACTIVE_PLUGINS"))[0].value
     return json.loads(inactive)
-
-
-console = Console()
 
 
 class InvalidPluginInfoValueError(Exception):
@@ -212,8 +211,8 @@ async def load_all_installed_plugins():
         try:
             info = await load_plugin(plugin_name)
             plugins[info.name] = info
-        except Exception:
-            console.print_exception()
+        except Exception as e:
+            logger.exception("Error while loading plugin", exc_info=e)
 
 
 def filepath_to_notation(filepath: str):
@@ -230,8 +229,8 @@ def fetch_plugin_elements(plugin_name: str) -> PluginElementCollection | None:
     folder_path = get_plugin_folder_path(plugin_name)
     try:
         module = import_module_from_filepath(str(folder_path))
-    except Exception:
-        console.print_exception()
+    except Exception as e:
+        logger.exception("Error while importing plugin", exc_info=e)
         return None
 
     user_controllers = []
@@ -309,7 +308,6 @@ def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
             for item in handler.handlers:
                 h, group = item
                 h.plugin_handler = plugin_name
-                console.log(f"Adding handler {item} for user")
                 user.add_handler(h, group)
 
     if elements.bot_handlers:
@@ -317,7 +315,6 @@ def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
             for item in handler.handlers:
                 h, group = item
                 h.plugin_handler = plugin_name
-                console.log(f"Adding handler {item} for bot")
                 user.add_handler(h, group)
 
     if elements.user_controllers:
@@ -352,4 +349,3 @@ def remove_plugin_handlers(plugin_name: str, client: Client):
         for handler in handlers:
             if hasattr(handler, "plugin_handler") and handler.plugin_handler == plugin_name:
                 handlers.remove(handler)
-                console.log(f"Removing handler {handler} from {client}")

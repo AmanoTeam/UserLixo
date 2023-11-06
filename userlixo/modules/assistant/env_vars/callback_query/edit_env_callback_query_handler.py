@@ -1,3 +1,4 @@
+import logging
 from dataclasses import dataclass
 
 from kink import inject
@@ -8,6 +9,8 @@ from pyrogram.types import CallbackQuery
 from userlixo.database import Config
 from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.utils.services.language_selector import LanguageSelector
+
+logger = logging.getLogger(__name__)
 
 
 @inject
@@ -45,4 +48,4 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
                     keyboard = ikb([[(lang.back, "setting_env")]])
                 last_msg = await msg.reply_text(text, reply_markup=keyboard)
         except Exception as e:
-            print(e)
+            logger.exception(e)

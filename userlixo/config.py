@@ -3,6 +3,7 @@
 
 import configparser
 import json
+import logging
 import os
 import re
 
@@ -10,7 +11,6 @@ import pyrogram
 from pyrogram import filters
 from pyrogram.helpers import bki
 from pyrogram.utils import PyromodConfig
-from rich import print
 
 from userlixo.database import Config
 from userlixo.types.client import Client
@@ -19,6 +19,8 @@ from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
 
 sudoers = []
+
+logger = logging.getLogger(__name__)
 
 
 async def load_env():
@@ -65,7 +67,7 @@ first step we need to setup some config vars.\n\nYou will be asked for a value f
 you can just press enter to leave it empty or use the default value. Let's get started![/]"
         else:
             text = "[bold yellow]Some required config vars are missing. Let's add them.[/]"
-        print(text)
+        logger.info(text)
     for env_key, value_on_env, env_info in missing_vars:
         text = f"\n┌ [light_sea_green]{env_key}[/light_sea_green]"
         if value_on_env != "":
@@ -73,18 +75,18 @@ you can just press enter to leave it empty or use the default value. Let's get s
         elif env_key in required_vars:
             text += " [yellow](required)[/]"
         text += f"\n├ [medium_purple4 italic]{env_info}[/]"
-        print(text)
+        logger.info(text)
 
         try:
             user_value = input("└> ")
         except (KeyboardInterrupt, EOFError):
-            print("[red1]Operation cancelled by user")
+            logger.info("[red1]Operation cancelled by user")
             exit()
         if not user_value:
             user_value = value_on_env
 
         if env_key in required_vars and not user_value:
-            print(f"[red1]{env_key} is required, cannot be empty.")
+            logger.info(f"[red1]{env_key} is required, cannot be empty.")
             exit()
 
         row = await Config.create(key=env_key, value=user_value)
