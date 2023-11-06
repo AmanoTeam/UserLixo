@@ -322,11 +322,11 @@ def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
 
     if elements.user_controllers:
         for controller in elements.user_controllers:
-            controller.__controller__.register(user)
+            controller.__controller__.register(user, plugin_handler=plugin_name)
 
     if elements.bot_controllers:
         for controller in elements.bot_controllers:
-            controller.__controller__.register(bot)
+            controller.__controller__.register(bot, plugin_handler=plugin_name)
 
     if elements.post_load:
         for f in elements.post_load:

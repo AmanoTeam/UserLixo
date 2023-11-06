@@ -6,11 +6,12 @@ from pyrogram import Client
 
 
 class UpdateController:
-    def __init__(self, cls):
+    def __init__(self, cls, plugin_handler: str | None = None):
         self.registers = []
         self.unregisters = []
         self.cls = cls
         self.cls_instance = self.get_cls_instance()
+        self.plugin_handler = plugin_handler
 
         self.import_handlers()
 
@@ -40,7 +41,9 @@ class UpdateController:
 
         return async_call if is_async else call
 
-    def register_handler(self, client: Client, key, method):
+    def register_handler(
+        self, client: Client, plugin_handler: str | None = None, key=None, method=None
+    ):
         method_callable = self.get_method_callable(key)
         filters = method.filters if hasattr(method, "filters") else None
         group = method.group if hasattr(method, "group") else 0
@@ -54,6 +57,9 @@ class UpdateController:
             handler = client.on_inline_query(filters, group)(method_callable)
 
         if handler is not None:
+            if plugin_handler is not None:
+                h, group = handler
+                h.plugin_handler = plugin_handler
 
             def unregister():
                 client.remove_handler(*handler)
@@ -68,7 +74,9 @@ class UpdateController:
 
             if hasattr(method, "on"):
                 self.registers.append(
-                    lambda client, k=key, m=method: self.register_handler(client, k, m)
+                    lambda client, plugin_handler, k=key, m=method: self.register_handler(
+                        client, plugin_handler, k, m
+                    )
                 )
 
     def import_controller(self, controller: Any):
@@ -77,9 +85,9 @@ class UpdateController:
 
         self.registers.extend(controller.__controller__.registers)
 
-    def register(self, client):
+    def register(self, client, plugin_handler: str | None = None):
         for register in self.registers:
-            register(client)
+            register(client, plugin_handler=plugin_handler)
 
     def unregister(self, client):
         for unregister in self.unregisters:
