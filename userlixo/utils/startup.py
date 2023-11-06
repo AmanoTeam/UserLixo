@@ -2,6 +2,7 @@ import contextlib
 import logging
 import os
 import platform
+import sys
 from datetime import datetime
 
 import pyrogram
@@ -17,6 +18,18 @@ from userlixo.database import Config
 from userlixo.utils import shell_exec, timezone_shortener, tryint
 
 logger = logging.getLogger(__name__)
+
+
+def update_requirements():
+    gray_color = "\033[1;30m"
+    reset_color = "\033[0m"
+
+    if os.getenv("IS_DOCKER"):
+        os.system(
+            f"{gray_color}; {sys.executable} -m pip install -r requirements.txt; {reset_color}"
+        )
+    else:
+        os.system(f"{gray_color}; rye sync; {reset_color}")
 
 
 async def compose_startup_message(lang: Langs):
