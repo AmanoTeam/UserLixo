@@ -7,7 +7,7 @@
 #   all-features: false
 
 -e file:.
-activate-virtualenv @ file:///home/dev/workspace/personal/UserLixo/../activate_virtualenv
+activate-virtualenv==0.1.5
 aiocron==1.8
 aiosqlite==0.17.0
 cfgv==3.4.0
