@@ -27,8 +27,7 @@ async def compose_startup_message(lang: Langs):
         await shell_exec("ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' ")
     )[0]
 
-    plugins_total = len(plugins.keys())
-    append_plugins = f"\n├ 👾 {plugins_total}" if plugins_total else ""
+    plugins_total = len(plugins)
 
     return lang.started_alert(
         version=local_version,
@@ -38,7 +37,6 @@ async def compose_startup_message(lang: Langs):
         server_uname=system_uname,
         uptime=uptime,
         plugins_total=plugins_total,
-        append_plugins=append_plugins,
     )
 
 

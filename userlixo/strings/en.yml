@@ -224,7 +224,7 @@ info_text: |-
      ├ Python <b>v{python_version}</b>
      └ Pyrogram <b>v{pyrogram_version}</b>
 
-    🖇 {plugins_total} plugins{append_plugins}
+    🖇 {plugins_total} plugins
 
     💻 <b>{uname}</b>
      ├ <b>PID:</b> <code>{pid}</code>
@@ -320,7 +320,7 @@ started_alert: |-
      ├ Python <b>v{python_version}</b>
      └ Pyrogram <b>v{pyrogram_version}</b>
 
-    🖇 {plugins_total} plugins{append_plugins}
+    🖇 {plugins_total} plugins
 
     💻 <b>{server_uname}</b>
      └ <b>UserLixo's uptime</b>: {uptime}

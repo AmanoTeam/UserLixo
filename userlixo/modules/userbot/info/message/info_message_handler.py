@@ -49,10 +49,7 @@ class InfoMessageHandler(MessageHandler):
             else lang.info_latest
         )
 
-        user_plugins = len(list(plugins["user"]))
-        bot_plugins = len(list(plugins["bot"]))
-        plugins_total = user_plugins + bot_plugins
-        append_plugins = f"\n├ 👤 {user_plugins}\n└ 👾 {bot_plugins}" if plugins_total else ""
+        plugins_total = len(plugins)
 
         text = lang.info_text(
             pid=pid,
@@ -63,6 +60,5 @@ class InfoMessageHandler(MessageHandler):
             python_version=python_version,
             pyrogram_version=pyrogram_version,
             plugins_total=plugins_total,
-            append_plugins=append_plugins,
         )
         await act(text)
