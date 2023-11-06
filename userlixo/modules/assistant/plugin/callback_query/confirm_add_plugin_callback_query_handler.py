@@ -28,11 +28,21 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
         cache_filename = query.matches[0]["filename"]
         basename = Path(cache_filename).stem
 
+        loading_keyboard = ikb([[("🕔", "dumb_button")]])
+
+        await query.edit(
+            lang.starting_plugin_installation(name=basename), reply_markup=loading_keyboard
+        )
+
         try:
             unzip_plugin_to_folder(cache_filename, basename)
         except Exception as e:
             await query.edit(lang.plugin_could_not_unzip(e=str(e)))
             return
+
+        await query.edit(
+            lang.starting_plugin_elements_loading(name=basename), reply_markup=loading_keyboard
+        )
 
         try:
             await load_plugin(basename)
@@ -40,6 +50,10 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
             await query.edit(lang.plugin_could_not_load(e=str(e)))
             await unload_and_remove_plugin(basename)
             return
+
+        await query.edit(
+            lang.starting_plugin_info_saving(name=basename), reply_markup=loading_keyboard
+        )
 
         plugin_info = get_plugin_info_from_folder(basename)
 

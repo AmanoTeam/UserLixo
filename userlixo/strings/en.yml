@@ -370,3 +370,15 @@ not_virtualenv_alert: |-
 
 running_post_install_script: |-
     ⭕ Running the post-install script.
+
+starting_plugin_installation: |-
+    🕔 Extracting plugin {name}...
+
+starting_plugin_elements_loading: |-
+    ✅ Plugin {name} extracted.
+    🕔 Loading elements of plugin {name}...
+
+starting_plugin_info_saving: |-
+    ✅ Plugin {name} extracted.
+    ✅ Elements of plugin {name} loaded.
+    🕔 Saving the plugin {name} info...
