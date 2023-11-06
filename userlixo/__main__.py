@@ -46,7 +46,7 @@ logger = logging.getLogger("userlixo")
 console = Console()
 
 
-async def main():
+async def bootstrap():
     logger.debug("Connecting to database...")
     await connect_database()
     logger.debug("Connected to database!")
@@ -94,6 +94,11 @@ async def main():
     logger.debug("Editing restart alert...")
     await edit_restarting_alert(langs)
     logger.debug("Edited restart alert!")
+
+
+async def main():
+    with console.status("[bold orchid]Starting UserLixo...", spinner_style="bold medium_purple2"):
+        await bootstrap()
 
     logger.debug("Alerting startup...")
     await alert_startup(langs)
