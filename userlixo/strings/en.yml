@@ -403,3 +403,12 @@ plugin_setting_not_found: |-
 
 plugin_setting_option_not_found: |-
     ❕ Option "{option}" is not a valid option for setting {key} of plugin {plugin_name}.
+
+plugin_setting_toggle_disabled: |-
+    🌗 Enable
+
+plugin_setting_not_bool: |-
+    ❕ The setting {key} of plugin {plugin_name} is not a boolean setting.
+
+plugin_setting_toggle_enabled: |-
+    🌓 Disable

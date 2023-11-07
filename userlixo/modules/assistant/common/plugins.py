@@ -62,7 +62,17 @@ def compose_plugin_settings_open_message(
             else f"ℹ️ Type: {setting.type.value}"
         ),
         "",
-        f"🏷 Value: {setting.value}" if setting.value else "🏷 Value: <empty>" "",
+        (
+            (
+                f"🏷 Value: {setting.value}"
+                if setting.value is not None
+                else "🏷 Value: &lt;empty&gt;"
+            )
+            if setting.type != SettingsType.bool
+            else (
+                f"🏷 Value: {setting.value} 🟢" if setting.value else f"🏷 Value: {setting.value} 🔴"
+            )
+        ),
         f"🔧 Min length: {setting.min_length}" if setting.min_length else None,
         f"🔧 Max length: {setting.max_length}" if setting.max_length else None,
         f"🔧 Pattern: {setting.pattern}" if setting.pattern else None,
@@ -90,6 +100,17 @@ def compose_plugin_settings_open_message(
 
         nav = Pagination(setting.options, compose_page_data, compose_item_data, compose_item_title)
         lines.extend(nav.create(options_page, lines=3, columns=2))
+    elif setting.type == SettingsType.bool:
+        lines.append(
+            [
+                (
+                    lang.plugin_setting_toggle_enabled
+                    if setting.value
+                    else lang.plugin_setting_toggle_disabled,
+                    f"PS_toggle {plugin_name} {key} {settings_page} {options_page} {plugins_page}",
+                )
+            ]
+        )
 
     lines.append([(lang.back, f"plugin_settings {plugin_name} {settings_page} {plugins_page}")])
 

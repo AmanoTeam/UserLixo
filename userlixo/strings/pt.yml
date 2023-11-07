@@ -399,3 +399,12 @@ plugin_setting_not_found: |-
 
 plugin_setting_option_not_found: |-
     ❕ Opção "{option}" inválida para a configuração {key} do plugin {plugin_name}.
+
+plugin_setting_toggle_disabled: |-
+    🌗 Ativar
+
+plugin_setting_not_bool: |-
+    ❕ {key} não é uma configuração booleana do plugin {plugin_name}.
+
+plugin_setting_toggle_enabled: |-
+    🌓 Desativar
