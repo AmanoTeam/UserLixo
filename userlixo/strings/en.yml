@@ -394,3 +394,9 @@ plugin_could_not_unzip: |-
 
 no_result: |-
     No result
+
+plugin_setting_open_text: |-
+    🖇 Plugin <code>{plugin_name}</code> settings -> <code>{key}</code>
+
+plugin_setting_not_found: |-
+    ❕ Setting {key} of plugin {plugin_name} was not found.

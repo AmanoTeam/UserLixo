@@ -1,4 +1,7 @@
+import contextlib
+
 from userlixo.types.plugin_settings import PluginSettings
+from userlixo.types.settings_type import SettingsType
 
 
 class PluginInfo:
@@ -49,6 +52,9 @@ class PluginInfo:
             max_value = v.get("max_value", None)
 
             value = default
+
+            with contextlib.suppress(ValueError):
+                setting_type = SettingsType(setting_type)
 
             self.settings[k] = PluginSettings(
                 type=setting_type,

@@ -390,3 +390,9 @@ no_result: |-
 plugin_invalid_info_value_error: |-
     ❕ Este plugin contém alguns erros:
     <code>{errors}</code>
+
+plugin_setting_open_text: |-
+    🖇 Plugin <code>{plugin_name}</code> -> configuração <b>{setting[label]}</b>
+
+plugin_setting_not_found: |-
+    ❕ Configuração {key} do plugin {plugin_name} não encontrada.

@@ -42,7 +42,7 @@ class PluginSettingsCallbackQueryHandler(CallbackQueryHandler):
 
         def compose_data(item: tuple[str, PluginSettings], _page: int):
             key, value = item
-            return f"plugin_setting_open {plugin_name} {key} {plugins_page} {settings_page}"
+            return f"plugin_setting_open {plugin_name} {key} {settings_page} 0 {plugins_page}"
 
         nav = Pagination(
             list(plugin_info.settings.items()), compose_page_data, compose_data, compose_title

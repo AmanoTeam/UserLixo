@@ -5,7 +5,7 @@ from userlixo.types.settings_type import SettingsType
 
 @dataclass
 class PluginSettings:
-    type: SettingsType
+    type: SettingsType | str
     label: str
     description: str | None
     default: str | int | bool | None

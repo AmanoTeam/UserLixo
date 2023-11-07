@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
-import contextlib
 import importlib
 import json
 import logging
@@ -133,7 +132,7 @@ def validate_plugin_settings(settings_dict: dict[str, PluginSettings]):
     errors = []
 
     for k, v in settings_dict.items():
-        if v.type not in SettingsType.__members__:
+        if not isinstance(v.type, SettingsType):
             errors.append(f"setting {k}: invalid type: {v.type}")
 
         if not isinstance(v.label, str):
@@ -309,12 +308,14 @@ async def load_all_installed_plugins():
 
         plugin_name = folder.stem
         if plugin_name in inactive:
-            with contextlib.suppress(Exception):
+            try:
                 info = get_plugin_info_from_folder(plugin_name)
                 validate_plugin_info(info)
 
                 if info:
                     plugins[info.name] = info
+            except Exception as e:
+                logger.exception("Error while loading inactive plugin", exc_info=e)
             continue
 
         try:
