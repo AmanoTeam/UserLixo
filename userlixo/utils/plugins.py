@@ -22,6 +22,8 @@ from userlixo.types.client import Client
 from userlixo.types.handler_callable import HandlerCallable
 from userlixo.types.plugin_element_collection import PluginElementCollection
 from userlixo.types.plugin_info import PluginInfo
+from userlixo.types.plugin_settings import PluginSettings
+from userlixo.types.settings_type import SettingsType
 from userlixo.utils import shell_exec
 
 logger = logging.getLogger(__name__)
@@ -32,7 +34,11 @@ async def get_inactive_plugins(plugins):
     return json.loads(inactive)
 
 
-class InvalidPluginInfoValueError(Exception):
+class InvalidPluginInfoValueError(ValueError):
+    pass
+
+
+class InvalidPluginSettingsValueError(ValueError):
     pass
 
 
@@ -59,6 +65,7 @@ def get_plugin_info_from_zip(zip_path: str) -> PluginInfo | None:
                 content = zipfile.read(file_name).decode("utf-8")
                 info = parse_plugin_info_from_toml(content)
                 validate_plugin_info(info)
+
                 if info:
                     info.zip_path = zip_path
                     return info
@@ -88,7 +95,9 @@ def parse_plugin_info_from_toml(content: str) -> PluginInfo | None:
     if "plugin" not in parsed_toml:
         return None
 
-    return PluginInfo.from_dict(parsed_toml["plugin"])
+    settings = parsed_toml.get("settings", None)
+
+    return PluginInfo().fill_info(parsed_toml["plugin"]).fill_settings(settings)
 
 
 def validate_plugin_info(info: PluginInfo | None):
@@ -110,8 +119,50 @@ def validate_plugin_info(info: PluginInfo | None):
     ):
         errors.append("author cannot be empty")
 
+    try:
+        if info.settings:
+            validate_plugin_settings(info.settings)
+    except InvalidPluginSettingsValueError as e:
+        errors.extend(e.args[0])
+
     if errors:
         raise InvalidPluginInfoValueError(errors)
+
+
+def validate_plugin_settings(settings_dict: dict[str, PluginSettings]):
+    errors = []
+
+    for k, v in settings_dict.items():
+        if v.type not in SettingsType.__members__:
+            errors.append(f"setting {k}: invalid type: {v.type}")
+
+        if not isinstance(v.label, str):
+            errors.append(f"setting {k}: label must be a string")
+
+        if v.label.strip() == "":
+            errors.append(f"setting {k}: label cannot be empty")
+
+        if v.description and not isinstance(v.description, str):
+            errors.append(f"setting {k}: description must be a string")
+
+        if v.type == SettingsType.select and not len(v.options):
+            errors.append(f"setting {k}: select type requires options")
+
+        if v.default:
+            if v.type == SettingsType.select and v.default not in v.options:
+                errors.append(f"setting {k}: default value must be one of the options")
+
+            if v.type == SettingsType.bool and not isinstance(v.default, bool):
+                errors.append(f"setting {k}: default value must be a boolean")
+
+            if v.type == SettingsType.int and not isinstance(v.default, int):
+                errors.append(f"setting {k}: default value must be an integer")
+
+            if v.type == SettingsType.text and not isinstance(v.default, str):
+                errors.append(f"setting {k}: default value must be a string")
+
+    if errors:
+        raise InvalidPluginSettingsValueError(errors)
 
 
 def parse_plugin_requirements_from_info(info: PluginInfo):

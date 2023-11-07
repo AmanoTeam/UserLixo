@@ -1,7 +1,6 @@
-from dataclasses import dataclass
+from userlixo.types.plugin_settings import PluginSettings
 
 
-@dataclass
 class PluginInfo:
     name: str
     description: str
@@ -10,33 +9,46 @@ class PluginInfo:
     contributors: list[str]
     requirements: list[str]
     github: str
-    settings: dict[str, str]
+
+    settings: dict[str, PluginSettings] | None
 
     zip_path: str
     folder_path: str
 
-    @staticmethod
-    def from_dict(data: dict):
-        name = data.get("name", "")
-        description = data.get("description", "")
-        version = data.get("version", "")
-        author = data.get("author", "")
-        contributors = data.get("contributors", [])
-        requirements = data.get("requirements", [])
-        github = data.get("github", "")
-        settings = data.get("settings", {})
-        zip_path = data.get("zip_path", "")
-        folder_path = data.get("folder_path", "")
+    def __init__(self):
+        self.settings = {}
 
-        return PluginInfo(
-            name=name,
-            description=description,
-            version=version,
-            author=author,
-            contributors=contributors,
-            requirements=requirements,
-            github=github,
-            settings=settings,
-            zip_path=zip_path,
-            folder_path=folder_path,
-        )
+    def fill_info(self, info_dict: dict):
+        self.name = info_dict.get("name", "")
+        self.description = info_dict.get("description", "")
+        self.version = info_dict.get("version", "")
+        self.author = info_dict.get("author", "")
+        self.contributors = info_dict.get("contributors", [])
+        self.requirements = info_dict.get("requirements", [])
+        self.github = info_dict.get("github", "")
+        self.zip_path = info_dict.get("zip_path", "")
+        self.folder_path = info_dict.get("folder_path", "")
+
+        return self
+
+    def fill_settings(self, settings_dict: dict | None):
+        if not settings_dict:
+            self.settings = None
+            return self
+
+        for k, v in settings_dict.items():
+            setting_type = v.get("type", "")
+            label = v.get("label", "")
+            description = v.get("description", "")
+            default = v.get("default", "")
+            options = v.get("options", [])
+
+            self.settings[k] = PluginSettings(
+                type=setting_type,
+                label=label,
+                description=description,
+                default=default,
+                options=options,
+            )
+
+        return self
