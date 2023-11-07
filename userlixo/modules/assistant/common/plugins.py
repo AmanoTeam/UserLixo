@@ -1,8 +1,11 @@
 from langs import Langs
 from pyrogram.helpers import ikb
+from pyrogram.nav import Pagination
 
 from userlixo.config import plugins
 from userlixo.modules.common.plugins import compose_plugin_info_text
+from userlixo.types.plugin_settings import PluginSettings
+from userlixo.types.settings_type import SettingsType
 from userlixo.utils.plugins import get_inactive_plugins
 
 
@@ -36,5 +39,60 @@ async def compose_info_plugin_message(lang: Langs, plugin_basename: str, page: i
     keyboard = ikb(lines)
 
     text = compose_plugin_info_text(lang, plugin, status_line="")
+
+    return text, keyboard
+
+
+def compose_plugin_settings_open_message(
+    lang: Langs,
+    setting: PluginSettings,
+    plugin_name: str,
+    key: str,
+    settings_page: int,
+    options_page: int,
+    plugins_page: int,
+):
+    text_lines = [
+        lang.plugin_setting_open_text(plugin_name=plugin_name, key=key),
+        "",
+        f"⚙️ Label: {setting.label}",
+        (
+            f"ℹ️ Type: {setting.type.value}. {setting.description}"
+            if setting.description
+            else f"ℹ️ Type: {setting.type.value}"
+        ),
+        "",
+        f"🏷 Value: {setting.value}" if setting.value else "🏷 Value: <empty>" "",
+        f"🔧 Min length: {setting.min_length}" if setting.min_length else None,
+        f"🔧 Max length: {setting.max_length}" if setting.max_length else None,
+        f"🔧 Pattern: {setting.pattern}" if setting.pattern else None,
+        f"🔧 Min value: {setting.min_value}" if setting.min_value else None,
+        f"🔧 Max value: {setting.max_value}" if setting.max_value else None,
+    ]
+    text_lines = [line for line in text_lines if line is not None]
+    text = "\n".join(text_lines)
+
+    lines = []
+
+    if setting.type == SettingsType.select:
+
+        def compose_page_data(pg: int):
+            return f"plugin_setting_open {plugin_name}" f"{key} {pg} {options_page} {plugins_page}"
+
+        def compose_item_data(option: str | int | bool, _pg: int):
+            return (
+                f"PS_select {plugin_name} {key} {option}"
+                f" {settings_page} {options_page} {plugins_page}"
+            )
+
+        def compose_item_title(option: str | int | bool, _pg: int):
+            return f"✨ {option}" if option == setting.value else option
+
+        nav = Pagination(setting.options, compose_page_data, compose_item_data, compose_item_title)
+        lines.extend(nav.create(options_page, lines=3, columns=2))
+
+    lines.append([(lang.back, f"plugin_settings {plugin_name} {settings_page} {plugins_page}")])
+
+    keyboard = ikb(lines)
 
     return text, keyboard

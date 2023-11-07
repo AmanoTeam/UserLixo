@@ -10,6 +10,7 @@ from .confirm_add_plugin_callback_query_handler import ConfirmAddPluginCallbackQ
 from .info_plugin_callback_query_handler import InfoPluginCallbackQueryHandler
 from .list_plugins_callback_query_handler import ListPluginsCallbackQueryHandler
 from .plugin_setting_open_callback_query_handler import PluginSettingOpenCallbackQueryHandler
+from .plugin_setting_select_callback_query_handler import PluginSettingSelectCallbackQueryHandler
 from .plugin_settings_callback_query_handler import PluginSettingsCallbackQueryHandler
 from .remove_plugin_callback_query_handler import RemovePluginCallbackQueryHandler
 from .toggle_plugin_callback_query_handler import TogglePluginCallbackQueryHandler
@@ -24,6 +25,7 @@ class PluginCallbackQueryController:
     remove_plugin_handler: RemovePluginCallbackQueryHandler
     plugin_settings_handler: PluginSettingsCallbackQueryHandler
     plugin_setting_open_handler: PluginSettingOpenCallbackQueryHandler
+    plugin_setting_select_handler: PluginSettingSelectCallbackQueryHandler
     add_plugin_handler: AddPluginCallbackQueryHandler
     cancel_plugin_handler: CancelPluginCallbackQueryHandler
     confirm_add_plugin_handler: ConfirmAddPluginCallbackQueryHandler
@@ -58,6 +60,15 @@ class PluginCallbackQueryController:
     )
     async def plugin_setting_open(self, _c, callback_query):
         await self.plugin_setting_open_handler.handle_callback_query(_c, callback_query)
+
+    @on_callback_query(
+        filters.regex(
+            r"^PS_select (?P<plugin_name>.+) (?P<key>.+) (?P<option>.+)"
+            r" (?P<settings_page>\d+) (?P<options_page>\d+) (?P<plugins_page>\d+)"
+        )
+    )
+    async def plugin_setting_select(self, _c, callback_query):
+        await self.plugin_setting_select_handler.handle_callback_query(_c, callback_query)
 
     @on_callback_query(filters.regex("^add_plugin"))
     async def add_plugin(self, _c, callback_query):

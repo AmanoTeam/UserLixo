@@ -396,3 +396,6 @@ plugin_setting_open_text: |-
 
 plugin_setting_not_found: |-
     ❕ Configuração {key} do plugin {plugin_name} não encontrada.
+
+plugin_setting_option_not_found: |-
+    ❕ Opção "{option}" inválida para a configuração {key} do plugin {plugin_name}.

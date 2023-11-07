@@ -400,3 +400,6 @@ plugin_setting_open_text: |-
 
 plugin_setting_not_found: |-
     ❕ Setting {key} of plugin {plugin_name} was not found.
+
+plugin_setting_option_not_found: |-
+    ❕ Option "{option}" is not a valid option for setting {key} of plugin {plugin_name}.

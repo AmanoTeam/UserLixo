@@ -12,7 +12,7 @@ from userlixo.utils.services.language_selector import LanguageSelector
 
 @inject
 @dataclass
-class PluginSettingOpenCallbackQueryHandler(CallbackQueryHandler):
+class PluginSettingSelectCallbackQueryHandler(CallbackQueryHandler):
     language_selector: LanguageSelector
 
     async def handle_callback_query(self, _client: Client, query: CallbackQuery):
@@ -23,6 +23,7 @@ class PluginSettingOpenCallbackQueryHandler(CallbackQueryHandler):
         settings_page = int(query.matches[0].group("settings_page"))
         options_page = int(query.matches[0].group("options_page"))
         key = query.matches[0].group("key")
+        option = query.matches[0].group("option")
 
         plugin_info = plugins.get(plugin_name, None)
         if not plugin_info:
@@ -37,6 +38,18 @@ class PluginSettingOpenCallbackQueryHandler(CallbackQueryHandler):
             return await query.answer(
                 lang.plugin_setting_not_found(plugin_name=plugin_name, key=key), show_alert=True
             )
+
+        setting = plugin_info.settings[key]
+
+        if option not in setting.options:
+            return await query.answer(
+                lang.plugin_setting_option_not_found(
+                    plugin_name=plugin_name, key=key, option=option
+                ),
+                show_alert=True,
+            )
+
+        setting.value = option
 
         setting = plugin_info.settings[key]
 
