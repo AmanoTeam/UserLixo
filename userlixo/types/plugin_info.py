@@ -40,13 +40,15 @@ class PluginInfo:
             setting_type = v.get("type", "")
             label = v.get("label", "")
             description = v.get("description", "")
-            default = v.get("default", "")
+            default = v.get("default", None)
             options = v.get("options", [])
             min_length = v.get("min_length", None)
             max_length = v.get("max_length", None)
             pattern = v.get("pattern", None)
             min_value = v.get("min_value", None)
             max_value = v.get("max_value", None)
+
+            value = default
 
             self.settings[k] = PluginSettings(
                 type=setting_type,
@@ -59,6 +61,7 @@ class PluginInfo:
                 pattern=pattern,
                 min_value=min_value,
                 max_value=max_value,
+                value=value,
             )
 
         return self
