@@ -6,3 +6,4 @@ class SettingsType(Enum):
     bool = "bool"
     int = "int"
     select = "select"
+    range = "range"

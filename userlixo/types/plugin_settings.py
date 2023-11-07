@@ -13,3 +13,5 @@ class PluginSettings:
     min_length: int | None
     max_length: int | None
     pattern: str | None
+    min_value: int | None
+    max_value: int | None
