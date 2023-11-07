@@ -10,3 +10,6 @@ class PluginSettings:
     description: str | None
     default: str | int | bool | None
     options: list[str | int | bool] | None
+    min_length: int | None
+    max_length: int | None
+    pattern: str | None

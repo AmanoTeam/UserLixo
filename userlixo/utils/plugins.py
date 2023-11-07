@@ -161,6 +161,34 @@ def validate_plugin_settings(settings_dict: dict[str, PluginSettings]):
             if v.type == SettingsType.text and not isinstance(v.default, str):
                 errors.append(f"setting {k}: default value must be a string")
 
+        if v.type == SettingsType.text:
+            if v.min_length and not isinstance(v.min_length, int):
+                errors.append(f"setting {k}: min_length must be an integer")
+
+            if v.max_length and not isinstance(v.max_length, int):
+                errors.append(f"setting {k}: max_length must be an integer")
+
+            if v.pattern and not isinstance(v.pattern, str):
+                errors.append(f"setting {k}: pattern must be a string")
+
+            if v.min_length and v.max_length and v.min_length > v.max_length:
+                errors.append(f"setting {k}: min_length must be less than max_length")
+
+            if v.min_length and v.min_length < 0:
+                errors.append(f"setting {k}: min_length must be greater than zero")
+
+            if v.max_length and v.max_length < 0:
+                errors.append(f"setting {k}: max_length must be greater than zero")
+
+            if v.min_length and v.default and len(v.default) < v.min_length:
+                errors.append(f"setting {k}: default value must be greater than min_length")
+
+            if v.max_length and v.default and len(v.default) > v.max_length:
+                errors.append(f"setting {k}: default value must be less than max_length")
+
+            if v.pattern and v.default and not re.match(v.pattern, v.default):
+                errors.append(f"setting {k}: default value must match pattern")
+
     if errors:
         raise InvalidPluginSettingsValueError(errors)
 
