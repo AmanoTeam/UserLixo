@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
-
+import contextlib
 import importlib
 import json
 import logging
@@ -309,6 +309,12 @@ async def load_all_installed_plugins():
 
         plugin_name = folder.stem
         if plugin_name in inactive:
+            with contextlib.suppress(Exception):
+                info = get_plugin_info_from_folder(plugin_name)
+                validate_plugin_info(info)
+
+                if info:
+                    plugins[info.name] = info
             continue
 
         try:
