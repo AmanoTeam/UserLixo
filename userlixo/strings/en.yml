@@ -382,3 +382,15 @@ starting_plugin_info_saving: |-
     ✅ Plugin {name} extracted.
     ✅ Elements of plugin {name} loaded.
     🕔 Saving the plugin {name} info...
+
+plugin_settings_text: |-
+    🖇 Plugin <code>{plugin_name}</code> -> <b>Settings</b>
+
+plugin_settings_not_found: |-
+    ❕ Could not find any settings on the required plugin. Maybe it has been updated since this message was sent.
+
+plugin_could_not_unzip: |-
+    ❕ Failed to unzip the plugin!
+
+no_result: |-
+    No result

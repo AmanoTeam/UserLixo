@@ -31,7 +31,7 @@ async def compose_info_plugin_message(lang: Langs, plugin_basename: str, page: i
         ]
     ]
     if plugin.settings:
-        lines.append([(lang.settings, f"plugin_settings {plugin_basename} {page}")])
+        lines.append([(lang.settings, f"plugin_settings {plugin_basename} 0 {page}")])
     lines.append([(lang.back, f"list_plugins {page}")])
     keyboard = ikb(lines)
 

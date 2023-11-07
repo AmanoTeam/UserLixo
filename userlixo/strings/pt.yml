@@ -373,3 +373,20 @@ starting_plugin_info_saving: |-
     ✅ Plugin {name} extraído.
     ✅ Elementos do plugin {name} carregados.
     🕔 Salvando info do plugin {name}...
+
+plugin_settings_text: |-
+    🖇 Plugin <code>{plugin_name}</code> -> <b>Configurações</b>
+
+plugin_settings_not_found: |-
+    ❕ Não achei nenhuma configuração para este plugin. Talvez o plugin tenha sido atualizado após o envio desta mensagem.
+
+plugin_could_not_unzip: |-
+    ❕ Falha ao descompactar plugin.
+
+no_result: |-
+    Sem resultados
+
+
+plugin_invalid_info_value_error: |-
+    ❕ Este plugin contém alguns erros:
+    <code>{errors}</code>
