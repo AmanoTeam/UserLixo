@@ -17,7 +17,7 @@ dependencies = [
     "meval>=2.5",
     "psutil>=5.9.6",
     "kink>=0.7.0",
-    "pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn8",
+    "pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn9",
     "pip>=23.3.1",
     "activate_virtualenv>=0.1.5",
     "toml>=0.10.2",

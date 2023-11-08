@@ -29,7 +29,7 @@ psutil==5.9.6
 pyaes==1.6.1
 pygments==2.16.1
 pypika-tortoise==0.1.6
-pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn8
+pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn9
 pysocks==1.7.1
 python-dateutil==2.8.2
 pytz==2023.3.post1
