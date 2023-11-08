@@ -16,7 +16,7 @@ import virtualenv
 from activate_virtualenv import activate_virtualenv
 
 from userlixo.config import bot, plugins, user
-from userlixo.database import Config
+from userlixo.database import Config, PluginSetting
 from userlixo.types.client import Client
 from userlixo.types.handler_callable import HandlerCallable
 from userlixo.types.plugin_element_collection import PluginElementCollection
@@ -299,6 +299,19 @@ def create_virtualenv(venv_path: str):
     virtualenv.cli_run([venv_path])
 
 
+async def load_settings_values_for_plugin(plugin_name: str):
+    plugin_info = plugins.get(plugin_name, None)
+    if not plugin_info:
+        return
+    settings = await PluginSetting.filter(plugin=plugin_name).all()
+
+    for setting in settings:
+        if setting.key not in plugin_info.settings:
+            continue
+
+        plugin_info.settings[setting.key].value = setting.value
+
+
 async def load_all_installed_plugins():
     inactive = await get_inactive_plugins(plugins)
 
@@ -314,6 +327,8 @@ async def load_all_installed_plugins():
 
                 if info:
                     plugins[info.name] = info
+                    await load_settings_values_for_plugin(info.name)
+
             except Exception as e:
                 logger.exception("Error while loading inactive plugin", exc_info=e)
             continue

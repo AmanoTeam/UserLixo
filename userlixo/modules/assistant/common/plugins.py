@@ -159,7 +159,9 @@ async def ask_and_handle_plugin_settings(
                 return await msg.reply_text(lang.plugin_not_found(name=plugin_name))
 
             plugin_info.settings[key].value = msg.text
-            await PluginSetting.get(plugin=plugin_name, key=key).update(value=msg.text)
+            await PluginSetting.update_or_create(
+                defaults={"value": msg.text}, plugin=plugin_name, key=key
+            )
 
             text, keyboard = compose_plugin_settings_open_message(
                 lang, setting, plugin_name, key, settings_page, options_page, plugins_page
