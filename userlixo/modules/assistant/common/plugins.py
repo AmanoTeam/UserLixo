@@ -1,12 +1,20 @@
+import logging
+
 from langs import Langs
+from pyrogram import filters
 from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
+from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
+from userlixo.database import PluginSetting
 from userlixo.modules.common.plugins import compose_plugin_info_text
+from userlixo.types.client import Client
 from userlixo.types.plugin_settings import PluginSettings
 from userlixo.types.settings_type import SettingsType
 from userlixo.utils.plugins import get_inactive_plugins
+
+logger = logging.getLogger(__name__)
 
 
 async def compose_info_plugin_message(lang: Langs, plugin_basename: str, page: int):
@@ -80,7 +88,6 @@ def compose_plugin_settings_open_message(
         f"🔧 Max value: {setting.max_value}" if setting.max_value else None,
     ]
     text_lines = [line for line in text_lines if line is not None]
-    text = "\n".join(text_lines)
 
     lines = []
 
@@ -111,9 +118,53 @@ def compose_plugin_settings_open_message(
                 )
             ]
         )
+    elif setting.type in [SettingsType.text, SettingsType.range, SettingsType.int]:
+        text_lines.extend(["", lang.plugin_setting_open_text_input])
+
+    text = "\n".join(text_lines)
 
     lines.append([(lang.back, f"plugin_settings {plugin_name} {settings_page} {plugins_page}")])
 
     keyboard = ikb(lines)
 
     return text, keyboard
+
+
+async def ask_and_handle_plugin_settings(
+    client: Client,
+    query: CallbackQuery,
+    lang: Langs,
+    setting: PluginSettings,
+    plugin_name: str,
+    key: str,
+    settings_page: int,
+    options_page: int,
+    plugins_page: int,
+):
+    text, keyboard = compose_plugin_settings_open_message(
+        lang, setting, plugin_name, key, settings_page, options_page, plugins_page
+    )
+
+    await query.edit(text, reply_markup=keyboard)
+    last_msg = query.message
+
+    try:
+        while True:
+            user_id = query.from_user.id
+            msg = await client.listen(chat_id=user_id, user_id=user_id, filters=filters.text)
+            await last_msg.remove_keyboard()
+
+            plugin_info = plugins.get(plugin_name, None)
+            if not plugin_info:
+                return await msg.reply_text(lang.plugin_not_found(name=plugin_name))
+
+            plugin_info.settings[key].value = msg.text
+            await PluginSetting.get(plugin=plugin_name, key=key).update(value=msg.text)
+
+            text, keyboard = compose_plugin_settings_open_message(
+                lang, setting, plugin_name, key, settings_page, options_page, plugins_page
+            )
+
+            last_msg = await msg.reply_text(text, reply_markup=keyboard)
+    except Exception as e:
+        logger.exception(e)

@@ -6,7 +6,7 @@ from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import CallbackQueryHandler
-from userlixo.modules.assistant.common.plugins import compose_plugin_settings_open_message
+from userlixo.modules.assistant.common.plugins import ask_and_handle_plugin_settings
 from userlixo.utils.services.language_selector import LanguageSelector
 
 
@@ -15,7 +15,7 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class PluginSettingSelectCallbackQueryHandler(CallbackQueryHandler):
     language_selector: LanguageSelector
 
-    async def handle_callback_query(self, _client: Client, query: CallbackQuery):
+    async def handle_callback_query(self, client: Client, query: CallbackQuery):
         lang = self.language_selector.get_lang()
 
         plugin_name = query.matches[0].group("plugin_name")
@@ -53,9 +53,16 @@ class PluginSettingSelectCallbackQueryHandler(CallbackQueryHandler):
 
         setting = plugin_info.settings[key]
 
-        text, keyboard = compose_plugin_settings_open_message(
-            lang, setting, plugin_name, key, settings_page, options_page, plugins_page
+        await ask_and_handle_plugin_settings(
+            client,
+            query,
+            lang,
+            setting,
+            plugin_name,
+            key,
+            settings_page,
+            options_page,
+            plugins_page,
         )
 
-        await query.edit(text, reply_markup=keyboard)
         return None

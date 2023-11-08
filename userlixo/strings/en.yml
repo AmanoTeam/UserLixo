@@ -412,3 +412,6 @@ plugin_setting_not_bool: |-
 
 plugin_setting_toggle_enabled: |-
     🌓 Disable
+
+plugin_setting_open_text_input: |-
+    To edit it, send the new value in this chat.

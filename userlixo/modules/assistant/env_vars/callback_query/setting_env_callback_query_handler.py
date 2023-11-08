@@ -19,7 +19,7 @@ class SettingEnvCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         if query.message:
-            query.message.chat.stop_listening()
+            await query.message.chat.stop_listening()
         buttons = []
         async for row in Config.all():
             btn = (f"👁‍🗨 {row.key}", f"view_env {row.key}")

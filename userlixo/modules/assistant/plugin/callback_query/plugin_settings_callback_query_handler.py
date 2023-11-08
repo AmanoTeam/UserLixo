@@ -17,12 +17,14 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class PluginSettingsCallbackQueryHandler(CallbackQueryHandler):
     language_selector: LanguageSelector
 
-    async def handle_callback_query(self, _client: Client, query: CallbackQuery):
+    async def handle_callback_query(self, client: Client, query: CallbackQuery):
         lang = self.language_selector.get_lang()
 
         plugin_name = query.matches[0].group("plugin_name")
         plugins_page = int(query.matches[0].group("plugins_page"))
         settings_page = int(query.matches[0].group("settings_page"))
+
+        await client.stop_listening(chat_id=query.message.chat.id)
 
         plugin_info = plugins.get(plugin_name, None)
         if not plugin_info:

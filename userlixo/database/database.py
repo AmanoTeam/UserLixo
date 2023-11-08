@@ -20,6 +20,13 @@ class Config(Model):
     value = fields.CharField(max_length=255)
 
 
+class PluginSetting(Model):
+    id = fields.IntField(pk=True)
+    plugin = fields.CharField(max_length=255)
+    key = fields.CharField(max_length=255)
+    value = fields.CharField(max_length=255)
+
+
 async def connect_database():
     await Tortoise.init(
         {

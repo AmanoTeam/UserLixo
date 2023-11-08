@@ -408,3 +408,6 @@ plugin_setting_not_bool: |-
 
 plugin_setting_toggle_enabled: |-
     🌓 Desativar
+
+plugin_setting_open_text_input: |-
+    Para editar, envie o novo valor neste chat.
