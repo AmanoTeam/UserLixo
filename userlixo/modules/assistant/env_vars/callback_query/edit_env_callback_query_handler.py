@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from kink import inject
 from pyrogram import filters
+from pyrogram.errors import ListenerStopped
 from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 
@@ -47,5 +48,7 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
                     text = lang.edit_env_text(key=key, value=msg.text)
                     keyboard = ikb([[(lang.back, "setting_env")]])
                 last_msg = await msg.reply_text(text, reply_markup=keyboard)
+        except ListenerStopped:
+            logger.debug("Stopped listening for message in EditEnvCallbackQueryHandler")
         except Exception as e:
             logger.exception(e)
