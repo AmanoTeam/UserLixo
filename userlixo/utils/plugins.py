@@ -22,8 +22,8 @@ from userlixo.types.handler_callable import HandlerCallable
 from userlixo.types.plugin_element_collection import PluginElementCollection
 from userlixo.types.plugin_info import PluginInfo
 from userlixo.types.plugin_settings import PluginSettings
-from userlixo.types.settings_type import SettingsType
 from userlixo.utils import shell_exec
+from userlixo.utils.validation import ValidateSetting
 
 logger = logging.getLogger(__name__)
 
@@ -122,93 +122,24 @@ def validate_plugin_info(info: PluginInfo | None):
         if info.settings:
             validate_plugin_settings(info.settings)
     except InvalidPluginSettingsValueError as e:
-        errors.extend(e.args[0])
+        errors.extend([f"settings: {k}: {v}" for k, v in e.args[0].items()])
 
     if errors:
         raise InvalidPluginInfoValueError(errors)
 
 
 def validate_plugin_settings(settings_dict: dict[str, PluginSettings]):
-    errors = []
+    all_errors = {}
 
     for k, v in settings_dict.items():
-        if not isinstance(v.type, SettingsType):
-            errors.append(f"setting {k}: invalid type: {v.type}")
+        errors = []
 
-        if not isinstance(v.label, str):
-            errors.append(f"setting {k}: label must be a string")
+        errors.extend(ValidateSetting(v).check())
 
-        if v.label.strip() == "":
-            errors.append(f"setting {k}: label cannot be empty")
+        all_errors[k] = errors
 
-        if v.description and not isinstance(v.description, str):
-            errors.append(f"setting {k}: description must be a string")
-
-        if v.type == SettingsType.select and not len(v.options):
-            errors.append(f"setting {k}: select type requires options")
-
-        if v.default:
-            if v.type == SettingsType.select and v.default not in v.options:
-                errors.append(f"setting {k}: default value must be one of the options")
-
-            if v.type == SettingsType.bool and not isinstance(v.default, bool):
-                errors.append(f"setting {k}: default value must be a boolean")
-
-            if v.type == SettingsType.int and not isinstance(v.default, int):
-                errors.append(f"setting {k}: default value must be an integer")
-
-            if v.type == SettingsType.text and not isinstance(v.default, str):
-                errors.append(f"setting {k}: default value must be a string")
-
-            if v.type == SettingsType.range and not isinstance(v.default, int):
-                errors.append(f"setting {k}: default value must be an integer")
-
-        if v.type == SettingsType.text:
-            if v.min_length and not isinstance(v.min_length, int):
-                errors.append(f"setting {k}: min_length must be an integer")
-
-            if v.max_length and not isinstance(v.max_length, int):
-                errors.append(f"setting {k}: max_length must be an integer")
-
-            if v.pattern and not isinstance(v.pattern, str):
-                errors.append(f"setting {k}: pattern must be a string")
-
-            if v.min_length and v.max_length and v.min_length > v.max_length:
-                errors.append(f"setting {k}: min_length must be less than max_length")
-
-            if v.min_length and v.min_length < 0:
-                errors.append(f"setting {k}: min_length must be greater than zero")
-
-            if v.max_length and v.max_length < 0:
-                errors.append(f"setting {k}: max_length must be greater than zero")
-
-            if v.min_length and v.default and len(v.default) < v.min_length:
-                errors.append(f"setting {k}: default value must be greater than min_length")
-
-            if v.max_length and v.default and len(v.default) > v.max_length:
-                errors.append(f"setting {k}: default value must be less than max_length")
-
-            if v.pattern and v.default and not re.match(v.pattern, v.default):
-                errors.append(f"setting {k}: default value must match pattern")
-
-        if v.type == SettingsType.range:
-            if v.min_value and not isinstance(v.min_value, int):
-                errors.append(f"setting {k}: min_value must be an integer")
-
-            if v.max_value and not isinstance(v.max_value, int):
-                errors.append(f"setting {k}: max_value must be an integer")
-
-            if v.min_value and v.max_value and v.min_value > v.max_value:
-                errors.append(f"setting {k}: min_value must be less than max_value")
-
-            if v.min_value and v.default and v.default < v.min_value:
-                errors.append(f"setting {k}: default value must be greater than min_value")
-
-            if v.max_value and v.default and v.default > v.max_value:
-                errors.append(f"setting {k}: default value must be less than max_value")
-
-    if errors:
-        raise InvalidPluginSettingsValueError(errors)
+    if any(len(v) for v in all_errors.values()):
+        raise InvalidPluginSettingsValueError(all_errors)
 
 
 def parse_plugin_requirements_from_info(info: PluginInfo):
