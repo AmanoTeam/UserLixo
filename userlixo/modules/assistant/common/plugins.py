@@ -158,7 +158,19 @@ async def ask_and_handle_plugin_settings(
             if not plugin_info:
                 return await msg.reply_text(lang.plugin_not_found(name=plugin_name))
 
-            plugin_info.settings[key].value = msg.text
+            if not plugin_info.settings:
+                return await msg.reply_text(
+                    lang.plugin_settings_not_found(plugin_name=plugin_name)
+                )
+
+            if key not in plugin_info.settings:
+                return await msg.reply_text(
+                    lang.plugin_setting_not_found(plugin_name=plugin_name, key=key)
+                )
+
+            plugin_setting = plugin_info.settings[key]
+
+            plugin_setting.value = msg.text
             await PluginSetting.update_or_create(
                 defaults={"value": msg.text}, plugin=plugin_name, key=key
             )
