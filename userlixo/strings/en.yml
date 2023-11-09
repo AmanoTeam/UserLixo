@@ -255,6 +255,10 @@ plugin_invalid_info_value_error: |-
     ❕ This plugin has some errors:
     <code>{errors}</code>
 
+plugin_invalid_setting_value_error: |-
+    ❕ The value for the setting <code>{key}</code> of the plugin <code>{plugin}</code> has some errors:
+    <code>{errors}</code>
+
 plugin_could_not_load: |-
     ❕ Everything is ok with the plugin, but for some reason i <b>couldn't import</b> it to load at runtime. The file has been deleted from the server. Error:
     <code>{e}</code>

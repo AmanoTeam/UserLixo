@@ -13,6 +13,7 @@ from userlixo.types.client import Client
 from userlixo.types.plugin_settings import PluginSettings
 from userlixo.types.settings_type import SettingsType
 from userlixo.utils.plugins import get_inactive_plugins
+from userlixo.utils.validation import ValidateSettingValue
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +73,7 @@ def compose_plugin_settings_open_message(
         "",
         (
             (
-                f"🏷 Value: {setting.value}"
+                f"🏷 Value: <code>{setting.value}</code>"
                 if setting.value is not None
                 else "🏷 Value: &lt;empty&gt;"
             )
@@ -81,11 +82,11 @@ def compose_plugin_settings_open_message(
                 f"🏷 Value: {setting.value} 🟢" if setting.value else f"🏷 Value: {setting.value} 🔴"
             )
         ),
-        f"🔧 Min length: {setting.min_length}" if setting.min_length else None,
-        f"🔧 Max length: {setting.max_length}" if setting.max_length else None,
-        f"🔧 Pattern: {setting.pattern}" if setting.pattern else None,
-        f"🔧 Min value: {setting.min_value}" if setting.min_value else None,
-        f"🔧 Max value: {setting.max_value}" if setting.max_value else None,
+        f"🔧 Min length: <code>{setting.min_length}</code>" if setting.min_length else None,
+        f"🔧 Max length: <code>{setting.max_length}</code>" if setting.max_length else None,
+        f"🔧 Pattern: <code>{setting.pattern}</code>" if setting.pattern else None,
+        f"🔧 Min value: <code>{setting.min_value}</code>" if setting.min_value else None,
+        f"🔧 Max value: <code>{setting.max_value}</code>" if setting.max_value else None,
     ]
     text_lines = [line for line in text_lines if line is not None]
 
@@ -170,10 +171,25 @@ async def ask_and_handle_plugin_settings(
 
             plugin_setting = plugin_info.settings[key]
 
-            plugin_setting.value = msg.text
-            await PluginSetting.update_or_create(
-                defaults={"value": msg.text}, plugin=plugin_name, key=key
-            )
+            value = msg.text
+            errors = ValidateSettingValue(plugin_setting).check(value)
+            if len(errors):
+                errors_text = "\n".join(errors)
+                await msg.reply(
+                    lang.plugin_invalid_setting_value_error(
+                        key=key, plugin=plugin_name, errors=errors_text
+                    )
+                )
+            else:
+                if plugin_setting.type == SettingsType.int:
+                    value = int(value)
+                elif plugin_setting.type == SettingsType.bool:
+                    value = value.lower() == "true"
+
+                plugin_setting.value = value
+                await PluginSetting.update_or_create(
+                    defaults={"value": msg.text}, plugin=plugin_name, key=key
+                )
 
             text, keyboard = compose_plugin_settings_open_message(
                 lang, setting, plugin_name, key, settings_page, options_page, plugins_page

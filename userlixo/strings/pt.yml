@@ -411,3 +411,7 @@ plugin_setting_toggle_enabled: |-
 
 plugin_setting_open_text_input: |-
     Para editar, envie o novo valor neste chat.
+
+plugin_invalid_setting_value_error: |-
+    ❕ O valor para a configuração <code>{key}</code> do plugin <code>{plugin}</code> contém alguns erros:
+    <code>{errors}</code>
