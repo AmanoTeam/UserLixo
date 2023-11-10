@@ -161,6 +161,9 @@ async def ask_and_handle_plugin_settings(
     await query.edit(text, reply_markup=keyboard)
     last_msg = query.message
 
+    if setting.type in [SettingsType.select, SettingsType.bool]:
+        return None
+
     try:
         while True:
             user_id = query.from_user.id
