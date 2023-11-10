@@ -52,7 +52,11 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
         text = lang.plugin_has_been_deactivated if deactivate else lang.plugin_has_been_activated
         await query.answer(text)
 
-        text, keyboard = await compose_info_plugin_message(lang, plugin_basename, page)
+        is_inline = query.inline_message_id is not None
+
+        text, keyboard = await compose_info_plugin_message(
+            lang, plugin_basename, page, use_deeplink=is_inline
+        )
 
         await query.edit(text, reply_markup=keyboard, disable_web_page_preview=True)
         return None

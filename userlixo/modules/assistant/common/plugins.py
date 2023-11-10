@@ -1,4 +1,5 @@
 import logging
+import urllib.parse
 
 from langs import Langs
 from pyrogram import filters
@@ -6,7 +7,7 @@ from pyrogram.helpers import ikb
 from pyrogram.nav import Pagination
 from pyrogram.types import CallbackQuery
 
-from userlixo.config import plugins
+from userlixo.config import bot, plugins
 from userlixo.database import PluginSetting
 from userlixo.modules.common.plugins import compose_plugin_info_text
 from userlixo.types.client import Client
@@ -18,7 +19,9 @@ from userlixo.utils.validation import ValidateSettingValue
 logger = logging.getLogger(__name__)
 
 
-async def compose_info_plugin_message(lang: Langs, plugin_basename: str, page: int):
+async def compose_info_plugin_message(
+    lang: Langs, plugin_basename: str, page: int, use_deeplink: bool = False
+):
     plugin = plugins[plugin_basename]
 
     inactive = await get_inactive_plugins(plugins)
@@ -43,7 +46,15 @@ async def compose_info_plugin_message(lang: Langs, plugin_basename: str, page: i
         ]
     ]
     if plugin.settings:
-        lines.append([(lang.settings, f"plugin_settings {plugin_basename} 0 {page}")])
+        param = f"plugin_settings {plugin_basename} 0 {page}"
+        urlencoded = urllib.parse.urlencode({"start": param.replace(" ", "=")})
+        url = f"https://t.me/{bot.me.username}?{urlencoded}"
+
+        if use_deeplink:
+            lines.append([(lang.settings, url, "url")])
+        else:
+            lines.append([(lang.settings, param)])
+
     lines.append([(lang.back, f"list_plugins {page}")])
     keyboard = ikb(lines)
 
@@ -213,3 +224,34 @@ async def ask_and_handle_plugin_settings(
             last_msg = await msg.reply_text(text, reply_markup=keyboard)
     except Exception as e:
         logger.exception(e)
+
+
+def compose_plugin_settings_message(
+    lang: Langs, plugin_name: str, plugins_page: int, settings_page: int, append_back: bool = True
+):
+    def compose_page_data(page: int):
+        return f"plugin_settings {plugin_name} {page} {plugins_page}"
+
+    def compose_title(item: tuple[str, PluginSettings], _page: int):
+        key, value = item
+        return f"⚙️ {value.label}"
+
+    def compose_data(item: tuple[str, PluginSettings], _page: int):
+        key, value = item
+        return f"plugin_setting_open {plugin_name} {key} {settings_page} 0 {plugins_page}"
+
+    plugin_info = plugins.get(plugin_name, None)
+
+    nav = Pagination(
+        list(plugin_info.settings.items()), compose_page_data, compose_data, compose_title
+    )
+    lines = nav.create(settings_page, lines=3, columns=2)
+
+    if append_back:
+        lines.append([(lang.back, f"info_plugin {plugin_name} {plugins_page}")])
+
+    keyboard = ikb(lines)
+
+    text = lang.plugin_settings_text(plugin_name=plugin_name)
+
+    return text, keyboard

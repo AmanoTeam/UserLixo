@@ -19,7 +19,7 @@ from userlixo.utils.plugins import (
 async def compose_list_plugins_message(
     lang: Langs,
     page_number: int,
-    show_add_plugin_button: bool = True,
+    use_deeplink: bool = False,
     append_back: bool = False,
 ):
     inactive_plugins = await get_inactive_plugins(plugins)
@@ -44,11 +44,10 @@ async def compose_list_plugins_message(
 
     lines = layout.create(page_number, lines=4, columns=2)
 
-    # if the message is /plugins (sent to bot) or it's a callback query 'plugins'
-    if show_add_plugin_button:
-        lines.append([(lang.add_plugin, f"add_plugin {page_number}")])
-    else:  # is command to user
+    if use_deeplink:
         lines.append([(lang.add_plugin, f"t.me/{bot.me.username}?start=plugin_add", "url")])
+    else:
+        lines.append([(lang.add_plugin, f"add_plugin {page_number}")])
 
     if append_back:
         lines.append([(lang.back, "start")])

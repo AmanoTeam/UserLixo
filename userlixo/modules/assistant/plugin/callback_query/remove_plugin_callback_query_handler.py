@@ -36,8 +36,10 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
         await query.answer(lang.plugin_removed(name=basename))
         query.matches = [{"page": page}]
 
+        is_inline = query.inline_message_id is not None
+
         text, keyboard = await compose_list_plugins_message(
-            lang, page, show_add_plugin_button=False, append_back=True
+            lang, page, append_back=True, use_deeplink=is_inline
         )
         await query.edit(text, reply_markup=keyboard)
         return None
