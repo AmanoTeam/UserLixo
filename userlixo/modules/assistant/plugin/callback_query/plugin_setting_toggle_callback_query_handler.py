@@ -5,6 +5,7 @@ from pyrogram import Client
 from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
+from userlixo.database import PluginSetting
 from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.modules.assistant.common.plugins import (
     ask_and_handle_plugin_settings,
@@ -49,6 +50,9 @@ class PluginSettingToggleCallbackQueryHandler(CallbackQueryHandler):
             )
 
         setting.value = not setting.value
+        await PluginSetting.update_or_create(
+            defaults={"value": setting.value}, plugin=plugin_name, key=key
+        )
 
         await ask_and_handle_plugin_settings(
             client,
