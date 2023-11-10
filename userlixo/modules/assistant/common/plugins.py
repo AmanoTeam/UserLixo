@@ -124,6 +124,18 @@ def compose_plugin_settings_open_message(
 
     text = "\n".join(text_lines)
 
+    if (not setting.default and setting.value is not None) or (
+        setting.default and setting.value != setting.default
+    ):
+        lines.append(
+            [
+                (
+                    lang.plugin_setting_reset_to_default,
+                    f"PS_reset {plugin_name} {key} {settings_page} {options_page} {plugins_page}",
+                )
+            ]
+        )
+
     lines.append([(lang.back, f"plugin_settings {plugin_name} {settings_page} {plugins_page}")])
 
     keyboard = ikb(lines)

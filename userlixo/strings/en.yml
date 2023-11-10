@@ -419,3 +419,6 @@ plugin_setting_toggle_enabled: |-
 
 plugin_setting_open_text_input: |-
     To edit it, send the new value in this chat.
+
+plugin_setting_reset_to_default: |-
+    ↩️ Reset to default value

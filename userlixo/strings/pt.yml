@@ -415,3 +415,6 @@ plugin_setting_open_text_input: |-
 plugin_invalid_setting_value_error: |-
     ❕ O valor para a configuração <code>{key}</code> do plugin <code>{plugin}</code> contém alguns erros:
     <code>{errors}</code>
+
+plugin_setting_reset_to_default: |-
+    ↩️ Resetar ao valor padrão
