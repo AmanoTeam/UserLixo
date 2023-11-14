@@ -1,6 +1,7 @@
 pillow
 aiohttp
 git+https://github.com/AmanoTeam/pyrogram.git#egg=Pyrogram
+git+https://github.com/F33RNI/EdgeGPT
 tgcrypto
 youtube-dl
 chromeprinter
@@ -11,5 +12,4 @@ desciclopedia
 telegraph
 pySmartDL
 httpx[http2]
-EdgeGPT
 opencv-python

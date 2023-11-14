@@ -1,13 +1,7 @@
 __pycache__/
-.vscode/
-.idea/
-.venv/
-venv/
-dls/
-downloads/
-db.json
+bard_coockies.json
+database.sqlite*
 *.session*
-*.png
-*.jpg
 config.py
+downloads/
 cookies.json

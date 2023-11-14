@@ -1,58 +1,30 @@
-import ast
-import asyncio
-import importlib.util
-import os
 import time
-import types
+import os
 import zipfile
-from asyncio.futures import Future
 from functools import partial, wraps
+import asyncio
 from typing import Callable, Coroutine
-
+import ast
+from asyncio.futures import Future
+import types
+import importlib.util
+import math
 import httpx
 
 loop = asyncio.get_event_loop()
 
+timeout = httpx.Timeout(40, pool=None)
 
-http = httpx.AsyncClient(http2=True)
+http = httpx.AsyncClient(http2=True, timeout=timeout)
 
-
-def aiowrap(fn: Callable) -> Coroutine:
-    @wraps(fn)
-    def decorator(*args, **kwargs):
-        wrapped = partial(fn, *args, **kwargs)
-
-        return loop.run_in_executor(None, wrapped)
-
-    return decorator
-
-
-@aiowrap
-def backup_sources(output_file=None):
-    ctime = int(time.time())
-
-    if (
-        output_file is not None
-        and isinstance(output_file, str)
-        and not output_file.lower().endswith(".zip")
-    ):
-        output_file += ".zip"
-
-    fname = output_file or "backup-{}.zip".format(ctime)
-
-    with zipfile.ZipFile(fname, "w", zipfile.ZIP_DEFLATED) as backup:
-        for folder, _, files in os.walk("."):
-            for file in files:
-                if (
-                    file != fname
-                    and not file.endswith(".pyc")
-                    and ".heroku" not in folder.split("/")
-                    and "dls" not in folder.split("/")
-                ):
-                    backup.write(os.path.join(folder, file))
-
-    return fname
-
+def pretty_size(size_bytes):
+    if size_bytes == 0:
+        return "0B"
+    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+    i = int(math.floor(math.log(size_bytes, 1024)))
+    p = math.pow(1024, i)
+    s = round(size_bytes / p, 2)
+    return f"{s} {size_name[i]}"
 
 async def meval(code, local_vars):
     # Don't clutter locals
@@ -132,10 +104,37 @@ async def meval(code, local_vars):
     return r
 
 
-def switch_case(switch, cases):
-    if switch in cases:
-        return cases[switch]
-    elif "default_case" in cases:
-        return cases["default_case"]
-    else:
-        return None
+def aiowrap(fn: Callable) -> Coroutine:
+    @wraps(fn)
+    def decorator(*args, **kwargs):
+        wrapped = partial(fn, *args, **kwargs)
+
+        return loop.run_in_executor(None, wrapped)
+
+    return decorator
+
+@aiowrap
+def backup_sources(output_file=None):
+    ctime = int(time.time())
+
+    if (
+        output_file is not None
+        and isinstance(output_file, str)
+        and not output_file.lower().endswith(".zip")
+    ):
+        output_file += ".zip"
+
+    fname = output_file or "backup-{}.zip".format(ctime)
+
+    with zipfile.ZipFile(fname, "w", zipfile.ZIP_DEFLATED) as backup:
+        for folder, _, files in os.walk("."):
+            for file in files:
+                if (
+                    file != fname
+                    and not file.endswith(".pyc")
+                    and ".heroku" not in folder.split("/")
+                    and "dls" not in folder.split("/")
+                ):
+                    backup.write(os.path.join(folder, file))
+
+    return fname

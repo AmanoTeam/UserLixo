@@ -7,12 +7,11 @@ from contextlib import redirect_stdout
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
+from locales import use_lang
 
-from config import cmds
-
-
-@Client.on_message(filters.command("exec", prefixes=".") & filters.me)
-async def execs(client: Client, message: Message):
+@Client.on_message(filters.command("exec", prefixes=".") & filters.sudoers)
+@use_lang()
+async def execs(client: Client, message: Message, t):
     strio = io.StringIO()
     code = re.split(r"[\n ]+", message.text, 1)[1]
     exec(
@@ -30,8 +29,6 @@ async def execs(client: Client, message: Message):
     if strio.getvalue():
         out = f"<code>{html.escape(strio.getvalue())}</code>"
     else:
-        out = "Command executed."
+        out = t("exec_seucess")
     await message.edit(out, parse_mode=ParseMode.HTML)
 
-
-cmds.update({".exec": "Run commands on python"})

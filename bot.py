@@ -1,52 +1,40 @@
-import asyncio
-
-from pyrogram import idle, Client
-try:
-    from config import API_ID, API_HASH
-except ImportError as e:
-    raise ImportError("Could not import the config file. Run 'python setup.py' first.") from e
-
-from db import db, save
-
+from pathlib import Path
+import os
+from pyrogram import idle
+from tortoise import run_async
+from config import bot, user
+from version import ascii_art, version
+import reload
+from db import Config
+import db
 
 async def main():
-    client = Client("my_account", api_id=API_ID, api_hash=API_HASH, plugins=dict(root="plugins"))
-
-    await client.start()
-
-    if "restart" in db:
-        text = "Restarted"
-        if "branch" in db["restart"]:
-            text += (
-                f". Upgraded from the branch '<code>{db['restart']['branch']}</code>'"
-            )
-        await client.edit_message_text(db["restart"]["cid"], db["restart"]["mid"], text)
-        del db["restart"]
-        save(db)
-
-    # Saving the account data on startup
-    try:
-        info = await client.get_chat("me")
-        personal_data = dict(
-            first_name=info.first_name,
-            last_name=info.last_name or "",
-            description=info.bio or "",
-            faked=False,
-            user_photo=False,
+    await db.connect_database()
+    if not Path("bot.session").exists():
+        os.system("clear")
+        print("Login Bot:")
+    await bot.start()
+    if not Path("user.session").exists():
+        os.system("clear")
+        print("login user")
+    await user.start()
+    os.system("clear")
+    print(ascii_art)
+    bot.me = await bot.get_me()
+    user.me = await user.get_me()
+    await reload.main()
+    restart = await Config.get_or_none(id="restart")
+    if restart and restart.valuej:
+        await user.edit_message_text(
+            chat_id=restart.valuej["chat_id"],
+            message_id=restart.valuej["message_id"],
+            text="UserLixo Restarted!\nVersion: " + version + "\n\nBot: " + bot.me.mention + "\nUser: " + user.me.mention
         )
-
-        db["personal_data"] = personal_data
-        save(db)
-        print("Personal account data updated!")
-    except Exception as e:
-        print(f"Could not save the personal account data on startup. Cause: {e}")
-
+        await Config.filter(id="restart").delete()
+    else:
+        await bot.send_message(user.me.id, "UserLixo Started!\nVersion: " + version + "\n\nBot: " + bot.me.mention + "\nUser: " + user.me.mention)
     await idle()
-    await client.stop()
+    await bot.stop()
+    await user.stop()
 
-
-event_policy = asyncio.get_event_loop_policy()
-loop = event_policy.new_event_loop()
-asyncio.set_event_loop(loop)
-
-loop.run_until_complete(main())
+run_async(main())
