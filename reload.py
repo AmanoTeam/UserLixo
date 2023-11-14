@@ -40,6 +40,7 @@ try:
     print("Bard API loaded")
 
 except:
+    chatbard = None
     print("Bard API not loaded")
 
 async def query_edit(self, text: str, reply_markup=None, answer_kwargs={}, *args, **kwargs):

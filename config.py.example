@@ -1,0 +1,12 @@
+from pyrogram import Client
+
+plugins = []
+
+#--- Telegram config ---
+
+API_ID = ''
+API_HASH = ''
+
+bot = Client("bot", api_id=API_ID, api_hash=API_HASH, plugins=dict(root="plugins/bot"))
+user = Client("user", api_id=API_ID, api_hash=API_HASH, plugins=dict(root="plugins/user"))
+user.assistant = bot
