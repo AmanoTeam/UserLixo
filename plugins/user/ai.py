@@ -9,11 +9,12 @@ from BingImageCreator import ImageGen
 from reload import chatbard
 import io
 from utils import http
-
+from locales import use_lang
 
 # This function is triggered when the ".bing" command is sent by a sudoer
 @Client.on_message(filters.command("bing", prefixes=".") & filters.sudoers)
-async def bing(c: Client, m: Message):
+@use_lang()
+async def bing(c: Client, m: Message, t):
     try:
         # Check if cookies.json file exists
         if os.path.exists('./cookies.json'):
@@ -35,7 +36,7 @@ async def bing(c: Client, m: Message):
             mtext = m.text.split(".bing ", maxsplit=1)[1]
 
         # Edit the message to show that the bot is searching
-        await m.edit(f"Searching {mtext}...")
+        await m.edit(t("ai_bing_searching").format(text=mtext))
         # Ask the bot to search for the mtext
         response = await bot.ask(prompt=mtext, conversation_style=ConversationStyle.creative, simplify_response=True)
         # Delete the conversation after getting the response
@@ -63,7 +64,7 @@ async def bing(c: Client, m: Message):
 
 # This function is triggered when the ".bingimg" command is sent by a sudoer
 @Client.on_message(filters.command("bingimg", prefixes=".") & filters.sudoers)
-async def bingimg(c: Client, m: Message):
+async def bingimg(c: Client, m: Message, t):
     # Split the message text into words
     text = m.text.split(" ", maxsplit=1)
     # If the message contains a text, get the text
@@ -74,9 +75,9 @@ async def bingimg(c: Client, m: Message):
         text = m.reply_to_message.text
     else:
         # If the message doesn't contain a text, edit the message to show an error
-        return await m.edit("No text provided")
+        return await m.edit(t("ai_no_text"))
     # Edit the message to show that the bot is making the image
-    await m.edit(f"Making {text}...")
+    await m.edit(t("ai_making_image").format(text=text))
     # Open the cookies.json file and load the cookies
     with open('./cookies.json', 'r', encoding='utf-8') as f:
         cookies = json.load(f)
@@ -115,7 +116,8 @@ async def bingimg(c: Client, m: Message):
 
 # This function is triggered when the ".bard" command is sent by a sudoer
 @Client.on_message(filters.command("bard", prefixes=".") & filters.sudoers)
-async def bardc(c: Client, m: Message):
+@use_lang()
+async def bardc(c: Client, m: Message, t):
     # Check if the message is a reply to another message
     if m.reply_to_message:
         mtext = m.reply_to_message.text
@@ -127,9 +129,9 @@ async def bardc(c: Client, m: Message):
         mtext = m.text.split(" ", maxsplit=1)[1]
     else:
         # If the message doesn't contain a text, edit the message to show an error
-        return await m.edit("No text provided")
+        return await m.edit(t("ai_no_text"))
     # Edit the message to show that the bot is searching
-    await m.edit(f"Searching... {mtext}...")
+    await m.edit(t("ai_bard_searching").format(text=mtext))
     print(mtext)
     # Get the answer from the chatbard for the mtext
     response = chatbard.get_answer(mtext)
