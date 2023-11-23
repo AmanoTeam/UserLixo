@@ -1,52 +1,52 @@
-NAME: English
-LANGUAGE_CODE: en-US
-FLAG: '🇺🇸'
+NAME: Português
+LANGUAGE_CODE: pt-BR
+FLAG: '🇧🇷'
 tr_test: This is a test sentence in English.
 #geral
-back: '« Back'
+back: '« Voltar'
 #backup.py
-initiating_backup: Initiating backup...
-backup_caption: Backup requested by on {date}.
-uploading_backup: Uploading backup...
-backup_completed: Backup completed in {time} seconds
+initiating_backup: Iniciando backup...
+backup_caption: Backup solicitado por em {date}.
+uploading_backup: Enviando backup...
+backup_completed: Backup concluído em {time} segundos
 #cmd.py
-cmd_no_output: Command executed successfully.
+cmd_no_output: Comando executado com sucesso.
 #dicio.py
-choose_options: "Choose one of the options:"
+choose_options: "Escolha uma das opções:"
 #execs.py
-exec_seucess: Executed successfully.
+exec_seucess: Executado com sucesso.
 #kibe.py
-kibe_wait: '👍 Processing...'
-kibe_resize_video: '📹 Resizing video...'
-kibe_resize_photo: '🖼️ Resizing photo...'
-kibe_adding: '📤 Adding sticker to pack...'
-kibe_creating: '📤 Creating pack...'
-kibes_open: Add Sticker to Telegram
-kibee_open: Add Emoji to Telegram
-kibe_done: '👍 Done!'
+kibe_wait: '👍 Processando...'
+kibe_resize_video: '📹 Redimensionando vídeo...'
+kibe_resize_photo: '🖼️ Redimensionando foto...'
+kibe_adding: '📤 Adicionando sticker ao pacote...'
+kibe_creating: '📤 Criando pacote...'
+kibes_open: Adicionar Sticker ao Telegram
+kibee_open: Adicionar Emoji ao Telegram
+kibe_done: '👍 Concluído!'
 #wiki.py
-wiki_choose: "Choose one of the titles below:"
-read_more: Read more
-wiki_error: An error occurred while getting the Wikipedia page.
-wiki_no_results: No results found for {query}.
+wiki_choose: "Escolha dos titulos abaixo:"
+read_more: Ler mais
+wiki_error: Ocorreu um erro ao pegar a pagina da Wikipedia.
+wiki_no_results: Nenhum resultado encontrado para {query}.
 #config.py
-config_choose: "Choose one of the options to configure:"
-choose_lang: "Choose one of the languages below:"
-lang_set: Language set to English.
-lang: Change language
+config_choose: "Escolha uma das opções para configurar:"
+choose_lang: "Escolha um dos idiomas abaixo:"
+lang_set: Idioma definido para Português.
+lang: Alteriar idioma
 #mix.py on
-not_bot: does not work with bots.
-no_data: This person has disabled his last seen.
-online: "{mention} is on"
-offline: "{mention} is off for: \n"
-years: "**{years}** year\n"
-months: "**{months}** months\n"
-days: "**{days}** days\n"
-hours: "**{hours}** hours\n"
-minutes: "**{minutes}** minutes\n"
-seconds: "**{seconds}** seconds\n"
-deleted: This user no longer exists.
+not_bot: não funciona com bots.
+no_data: Esta pessoa desativou seu visto por último.
+online: "{mention} está online"
+offline: "{mention} está offline por: \n"
+years: "**{years}** ano\n"
+months: "**{months}** meses\n"
+days: "**{days}** dias\n"
+hours: "**{hours}** horas\n"
+minutes: "**{minutes}** minutos\n"
+seconds: "**{seconds}** segundos\n"
+deleted: Esse usuário não existe mais.
 #fake.py
-fake_init: Initiating Fake of user {mention}...
-fake_back: Returning to the original profile...
-fake_done: Now I'm {mention}!
+fake_init: Iniciando Fake do usuário {mention}...
+fake_back: Voltando para o perfil original...
+fake_done: Agora eu sou o {mention}!
