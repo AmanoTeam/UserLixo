@@ -1,0 +1,52 @@
+NAME: English
+LANGUAGE_CODE: en-US
+FLAG: '🇺🇸'
+tr_test: This is a test sentence in English.
+#geral
+back: '« Back'
+#backup.py
+initiating_backup: Initiating backup...
+backup_caption: Backup requested {name} by on {date}.
+uploading_backup: Uploading backup...
+backup_completed: Backup completed in {time} seconds
+#cmd.py
+cmd_no_output: Command executed successfully.
+#dicio.py
+choose_options: "Choose one of the options:"
+#execs.py
+exec_seucess: Executed successfully.
+#kibe.py
+kibe_wait: '👍 Processing...'
+kibe_resize_video: '📹 Resizing video...'
+kibe_resize_photo: '🖼️ Resizing photo...'
+kibe_adding: '📤 Adding sticker to pack...'
+kibe_creating: '📤 Creating pack...'
+kibes_open: Add Sticker to Telegram
+kibee_open: Add Emoji to Telegram
+kibe_done: '👍 Done!'
+#wiki.py
+wiki_choose: "Choose one of the titles below:"
+read_more: Read more
+wiki_error: An error occurred while getting the Wikipedia page.
+wiki_no_results: No results found for {query}.
+#config.py
+config_choose: "Choose one of the options to configure:"
+choose_lang: "Choose one of the languages below:"
+lang_set: Language set to English.
+lang: Change language
+#mix.py on
+not_bot: does not work with bots.
+no_data: This person has disabled his last seen.
+online: "{mention} is on"
+offline: "{mention} is off for: \n"
+years: "**{years}** year\n"
+months: "**{months}** months\n"
+days: "**{days}** days\n"
+hours: "**{hours}** hours\n"
+minutes: "**{minutes}** minutes\n"
+seconds: "**{seconds}** seconds\n"
+deleted: This user no longer exists.
+#fake.py
+fake_init: Initiating Fake of user {mention}...
+fake_back: Returning to the original profile...
+fake_done: Now I'm {mention}!
