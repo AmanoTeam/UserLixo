@@ -6,7 +6,7 @@ tr_test: This is a test sentence in English.
 back: '« Voltar'
 #backup.py
 initiating_backup: Iniciando backup...
-backup_caption: Backup requested {name} by on {date}.
+backup_caption: Backup solicitado por {name} em {date}.
 uploading_backup: Enviando backup...
 backup_completed: Backup concluído em {time} segundos
 #cmd.py
