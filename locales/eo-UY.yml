@@ -1,56 +1,56 @@
-NAME: English
-LANGUAGE_CODE: en-US
-FLAG: '🇺🇸'
+NAME: Esperanto
+LANGUAGE_CODE: eo-UY
+FLAG: '🇪🇴'
 #geral
-back: '« Back'
+back: '« Reiru'
 #backup.py
-initiating_backup: Initiating backup...
-backup_caption: Backup requested by {name} on {date}.
-uploading_backup: Uploading backup...
-backup_completed: Backup completed in {time} seconds
+initiating_backup: Komencante sekurkopion...
+backup_caption: Sekurkopio petita de {name} je {date}.
+uploading_backup: Alŝutante sekurkopion...
+backup_completed: Sekurkopio finiĝis post {time} sekundoj
 #cmd.py
-cmd_no_output: Command executed successfully.
+cmd_no_output: Komando efektivigita sukcese.
 #dicio.py
-choose_options: "Choose one of the options:"
+choose_options: "Elektu unu el la opcioj:"
 #execs.py
-exec_seucess: Executed successfully.
+exec_seucess: Ekzekutita sukcese.
 #kibe.py
-kibe_wait: '👍 Processing...'
-kibe_resize_video: '📹 Resizing video...'
-kibe_resize_photo: '🖼️ Resizing photo...'
-kibe_adding: '📤 Adding sticker to pack...'
-kibe_creating: '📤 Creating pack...'
-kibes_open: Add Sticker to Telegram
-kibee_open: Add Emoji to Telegram
-kibe_done: '👍 Done!'
+kibe_wait: '👍 Prilaborado...'
+kibe_resize_video: '📹 Regrandigo de video...'
+kibe_resize_photo: '🖼️ Regrandigo de foto...'
+kibe_adding: '📤 Aldonante sticker al paki...'
+kibe_creating: '📤 Kreante pako...'
+kibes_open: Aldonu glumarkon al Telegram
+kibee_open: Aldonu Emoji al Telegram
+kibe_done: '👍 Farita!'
 #wiki.py
-wiki_choose: "Choose one of the titles below:"
-read_more: Read more
-wiki_error: An error occurred while getting the Wikipedia page.
-wiki_no_results: No results found for {query}.
+wiki_choose: "Elektu unu el la subaj titoloj:"
+read_more: Legu pli
+wiki_error: Okazis eraro dum ricevado de la Vikipedio-paĝo.
+wiki_no_results: Neniuj rezultoj trovitaj por {query}.
 #config.py
-config_choose: "Choose one of the options to configure:"
-choose_lang: "Choose one of the languages below:"
-lang_set: Language set to English.
-lang: Change language
+config_choose: "Elektu unu el la opcioj por agordi:"
+choose_lang: "Elektu unu el la malsupraj lingvoj:"
+lang_set: Lingvo agordita al Esperanto.
+lang: Ŝanĝiĝi lingvon
 #mix.py on
-not_bot: does not work with bots.
-no_data: This person has disabled his last seen.
-online: "{mention} is on"
-offline: "{mention} is off for: \n"
-years: "**{years}** year\n"
-months: "**{months}** months\n"
-days: "**{days}** days\n"
-hours: "**{hours}** hours\n"
-minutes: "**{minutes}** minutes\n"
-seconds: "**{seconds}** seconds\n"
-deleted: This user no longer exists.
+not_bot: Ĉi tio ne funkcias kun robotoj.
+no_data: Ĉi tiu persono malfunkciigis sian lastan viditon.
+online: "{mention} estas interreta"
+offline: "{mention} estas eksterrete por:\n"
+years: "**{years}** jaro\n"
+months: "**{months}** monatoj\n"
+days: "**{days}** tagoj\n"
+hours: "**{hours}** horoj\n"
+minutes: "**{minutes}** minutoj\n"
+seconds: "**{seconds}** sekundoj\n"
+deleted: Ĉi tiu uzanto ne plu ekzistas.
 #fake.py
-fake_init: Initiating Fake of user {mention}...
-fake_back: Returning to the original profile...
-fake_done: Now I'm {mention}!
+fake_init: Komencante falsaĵon de uzanto {mention}...
+fake_back: Revenante al la originala profilo...
+fake_done: Nun mi estas {mention}!
 #ai.py
-ai_bing_searching: "Searching \"{text}\" on Bing..."
-ai_no_text: "You need to send a text to search or make image."
-ai_making_image: "Making image whith \"{text}\"..."
-ai_bard_searching: "Searching \"{text}\" on Bard..."
+ai_bing_searching: "Serĉante \"{text}\" ĉe Bing..."
+ai_no_text: "Vi devas sendi tekston por serĉi aŭ fari bildon."
+ai_making_image: "Farante bildon kun \"{text}\"..."
+ai_bard_searching: "Serĉante \"{text}\" ĉe Bard..."
