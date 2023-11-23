@@ -9,6 +9,7 @@ import inspect
 langs = [
     "en-US",
     "pt-BR",
+    "es-ES"
 ]
 
 default_language = "pt-BR"

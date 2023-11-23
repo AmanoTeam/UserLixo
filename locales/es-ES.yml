@@ -1,0 +1,52 @@
+NAME: Spanish
+LANGUAGE_CODE: es-ES
+FLAG: '🇪🇸'
+tr_test: This is a test sentence in English.
+#geral
+back: '« Atrás'
+#backup.py
+initiating_backup: Iniciando la copia de seguridad...
+backup_caption: Copia de seguridad solicitada por {name} en {date}.
+uploading_backup: Cargando copia de seguridad...
+backup_completed: Copia de seguridad completada en {time} segundos
+#cmd.py
+cmd_no_output: Comando ejecutado correctamente.
+#dicio.py
+choose_options: "Choose one of the options:"
+#execs.py
+exec_seucess: Aplicación con éxito.
+#kibe.py
+kibe_wait: '👍 Procesando...'
+kibe_resize_video: '📹 Redimensionando vídeo...'
+kibe_resize_photo: '🖼️ Redimensionando foto...'
+kibe_adding: '📤 Agregando pegatina al paquete...'
+kibe_creating: '📤 Creando paquete...'
+kibes_open: Añadir pegatina a Telegram
+kibee_open: Añadir Emoji a Telegram
+kibe_done: '👍 ¡Hecho!'
+#wiki.py
+wiki_choose: "Elige uno de los siguientes títulos:"
+read_more: Leer más
+wiki_error: Se ha producido un error al obtener la página de Wikipedia.
+wiki_no_results: No se han encontrado resultados para {query}.
+#config.py
+config_choose: "Elija una de las opciones a configurar:"
+choose_lang: "Elija uno de los siguientes idiomas:"
+lang_set: El idioma se ha establecido en español.
+lang: Cambiar idioma
+#mix.py on
+not_bot: no funciona con bots.
+no_data: Esta persona ha deshabilitado su último visto.
+online: "{mention} está en línea"
+offline: "{mention} está desconectado por:\n"
+years: "**{years}** año\n"
+months: "**{months}** meses\n"
+days: "**{days}** días\n"
+hours: "**{hours}** horas\n"
+minutes: "**{minutes}** minutos\n"
+seconds: "**{seconds}** segundos\n"
+deleted: Este usuario ya no existe.
+#fake.py
+fake_init: Iniciando Fake del usuario {mention}...
+fake_back: Volviendo al perfil original...
+fake_done: '¡Ahora soy {mention}!'
