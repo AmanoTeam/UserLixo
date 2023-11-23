@@ -18,7 +18,7 @@ async def backup(c: Client, m: Message, t):
     await bot.send_document(
         chat_id=c.me.id,
         document=arq,
-        caption=t("backup_caption").format(date=d1),
+        caption=t("backup_caption").format(name=m.from_user.mention, date=d1),
     )
     d2 = datetime.now()
     await m.edit(t("backup_completed").format(time=(d2 - d1).seconds))

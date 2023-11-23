@@ -9,7 +9,7 @@ back: « Back
 
 # backup.py
 initiating_backup: Initiating backup...
-backup_caption: Backup requested by on {date}.
+backup_caption: Backup requested {name} by on {date}.
 uploading_backup: Uploading backup...
 backup_completed: Backup completed in {time} seconds
 
