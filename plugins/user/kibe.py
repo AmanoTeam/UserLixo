@@ -40,7 +40,7 @@ async def kibe(c: Client, m: Message, t):
     # If no emoji, use the default or the one set in the settings
     if not emoji:
         settings = (await Config.get_or_create(id="kibe"))[0]
-        if settings.valuej is {}:
+        if not settings.valuej:
             emoji = "🤔"
         else:
             emoji = settings.valuej["emoji"]
@@ -352,10 +352,8 @@ async def config_kibe(c: Client, m: CallbackQuery):
 async def config_kibe_emoji(c: Client, cq: CallbackQuery):
     # Get the settings for "kibe", or create them if they don't exist
     settings = (await Config.get_or_create(id="kibe"))[0]
-    print(settings)
-    print(settings.valuej)
     # If the settings are empty, initialize them with a default emoji
-    if settings.valuej is {}:
+    if not settings.valuej:
         settings = {"emoji": "🤔"}
     else:
         settings = settings.valuej
