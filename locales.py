@@ -9,10 +9,11 @@ import inspect
 langs = [
     "en-US",
     "pt-BR",
-    "es-ES"
+    "es-ES",
+    "eo-UY"
 ]
 
-default_language = "pt-BR"
+default_language = "en-US"
 
 def cache_localizations(files: List[str]) -> Dict[str, Dict[str, Dict[str, str]]]:
     ldict = {lang: {} for lang in langs}
