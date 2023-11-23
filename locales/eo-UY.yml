@@ -1,11 +1,11 @@
-NAME: English
+NAME: Esperanto
 LANGUAGE_CODE: en-US
 FLAG: '🇺🇸'
 #geral
 back: '« Back'
 #backup.py
 initiating_backup: Initiating backup...
-backup_caption: Backup requested by {name} on {date}.
+backup_caption: Rezervo petita de {name} je {date}.
 uploading_backup: Uploading backup...
 backup_completed: Backup completed in {time} seconds
 #cmd.py
