@@ -2,7 +2,7 @@ NAME: Spanish
 LANGUAGE_CODE: es-ES
 FLAG: '🇪🇸'
 #geral
-back: '« Atrás'
+back: '« Volver'
 #backup.py
 initiating_backup: Iniciando la copia de seguridad...
 backup_caption: Copia de seguridad solicitada por {name} en {date}.
