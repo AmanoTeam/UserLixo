@@ -50,7 +50,7 @@ fake_init: Iniciando Fake del usuario {mention}...
 fake_back: Volviendo al perfil original...
 fake_done: '¡Ahora soy {mention}!'
 #ai.py
-ai_bing_searching: "Searching \"{text}\" on Bing..."
-ai_no_text: "You need to send a text to search or make image."
-ai_making_image: "Making image whith \"{text}\"..."
-ai_bard_searching: "Searching \"{text}\" on Bard..."
+ai_bing_searching: "Buscando \"{text}\" en Bing..."
+ai_no_text: "Necesita enviar un texto para buscar o hacer una imagen."
+ai_making_image: "Haciendo imagen con \"{text}\"..."
+ai_bard_searching: "Buscando \"{text}\" en Bard..."
