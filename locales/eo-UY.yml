@@ -1,7 +1,6 @@
 NAME: English
 LANGUAGE_CODE: en-US
 FLAG: '🇺🇸'
-tr_test: This is a test sentence in English.
 #geral
 back: '« Back'
 #backup.py
@@ -50,3 +49,8 @@ deleted: This user no longer exists.
 fake_init: Initiating Fake of user {mention}...
 fake_back: Returning to the original profile...
 fake_done: Now I'm {mention}!
+#ai.py
+ai_bing_searching: "Searching \"{text}\" on Bing..."
+ai_no_text: "You need to send a text to search or make image."
+ai_making_image: "Making image whith \"{text}\"..."
+ai_bard_searching: "Searching \"{text}\" on Bard..."
