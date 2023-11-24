@@ -1,0 +1,62 @@
+NAME: French
+LANGUAGE_CODE: fr-FR
+FLAG: '🇫🇷'
+#geral
+back: '« Retour'
+#backup.py
+initiating_backup: Lancement de la sauvegarde...
+backup_caption: Sauvegarde demandée par {name} le {date}.
+uploading_backup: Téléchargement de la sauvegarde...
+backup_completed: Sauvegarde terminée en {time} secondes
+#cmd.py
+cmd_no_output: Commande exécutée avec succès.
+#dicio.py
+choose_options: "Choisissez l'une des options :"
+#execs.py
+exec_seucess: Exécuté avec succès.
+#kibe.py
+kibe_wait: '👍 Traitement...'
+kibe_resize_video: '📹 Redimensionnement de la vidéo...'
+kibe_resize_photo: '🖼️ Redimensionnement de la photo...'
+kibe_adding: '📤 Ajout d''autocollant au pack...'
+kibe_creating: '📤 Création du pack...'
+kibes_open: Ajouter un autocollant à Telegram
+kibee_open: Ajouter un emoji à Telegram
+kibe_done: '👍 Terminé!'
+#wiki.py
+wiki_choose: "Choisissez l'un des titres ci-dessous:"
+read_more: Lire la suite
+wiki_error: Une erreur s'est produite lors de l'obtention de la page Wikipédia.
+wiki_no_results: Aucun résultat trouvé pour {query}.
+#config.py
+config_choose: "Choisissez l'une des options de configuration:"
+choose_lang: "Choisissez l'une des langues ci-dessous:"
+lang_set: Langue définie sur l'anglais.
+lang: Changer de langue
+#mix.py on
+not_bot: ne fonctionne pas avec les bots.
+no_data: Cette personne a désactivé sa dernière vue.
+online: "{mention} est en ligne"
+offline: "{mention} est hors ligne depuis:\n"
+years: "**{years}** an\n"
+months: "**{months}** mois\n"
+days: "**{days}** jours\n"
+hours: "**{hours}** heures\n"
+minutes: "**{minutes}** minutes\n"
+seconds: "**{seconds}** secondes\n"
+deleted: Cet utilisateur n'existe plus.
+#fake.py
+fake_init: Lancement du faux profil de l'utilisateur {mention}...
+fake_back: Retour au profil original...
+fake_done: Je suis maintenant {mention}!
+#ai.py
+ai_bing_searching: "Recherche de \"{text}\" sur Bing..."
+ai_no_text: "Vous devez envoyer un texte pour effectuer une recherche ou créer une image."
+ai_making_image: "\"Création d'une image avec \"{text}\"..."
+ai_bard_searching: "\"Recherche de \"{text}\" sur Bard..."
+#upgrade.py
+not_git_repo: "Erreur: Vous devez être dans un dépôt git pour effectuer la mise à jour."
+upgrade_in_progress: "\"Mise à jour des sources à partir de la branche '{branch}'..."
+already_up_to_date: "Il n'y a rien à mettre à jour à partir de la branche '{branch}'."
+restarting: "Redémarrage..."
+upgrade_failed: "La mise à jour à partir de la branche '{branch}' a échoué (le processus s'est terminé avec le code de retour {returncode}) : \\n{decode}"
