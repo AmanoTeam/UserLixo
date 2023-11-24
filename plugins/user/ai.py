@@ -64,6 +64,7 @@ async def bing(c: Client, m: Message, t):
 
 # This function is triggered when the ".bingimg" command is sent by a sudoer
 @Client.on_message(filters.command("bingimg", prefixes=".") & filters.sudoers)
+@use_lang()
 async def bingimg(c: Client, m: Message, t):
     # Split the message text into words
     text = m.text.split(" ", maxsplit=1)
