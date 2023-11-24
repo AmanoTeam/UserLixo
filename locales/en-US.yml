@@ -61,8 +61,14 @@ fake_back: Returning to the original profile...
 fake_done: Now I'm {mention}!
 
 # ai.py
-
 ai_bing_searching: "Searching \"{text}\" on Bing..."
 ai_no_text: "You need to send a text to search or make image."
 ai_making_image: "Making image whith \"{text}\"..."
 ai_bard_searching: "Searching \"{text}\" on Bard..."
+
+# upgrade.py
+not_git_repo: "Error: You must be inside a git repository to upgrade."
+upgrade_in_progress: "Upgrading source from branch '{branch}'..."
+already_up_to_date: "There's nothing to upgrade from branch '{branch}'."
+restarting: "Restarting..."
+upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {returncode}):\n{decode}"
