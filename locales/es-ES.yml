@@ -52,11 +52,11 @@ fake_done: '¡Ahora soy {mention}!'
 #ai.py
 ai_bing_searching: "Buscando \"{text}\" en Bing..."
 ai_no_text: "Necesita enviar un texto para buscar o hacer una imagen."
-ai_making_image: "Making image whith \"{text}\"..."
+ai_making_image: "Haciendo imagen con \"{text}\"..."
 ai_bard_searching: "Buscando \"{text}\" en Bard..."
 #upgrade.py
-not_git_repo: "Error: You must be inside a git repository to upgrade."
-upgrade_in_progress: "Upgrading source from branch '{branch}'..."
-already_up_to_date: "There's nothing to upgrade from branch '{branch}'."
-restarting: "Restarting..."
-upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {returncode}):\n{decode}"
+not_git_repo: "Error: Debe estar dentro de un repositorio git para actualizar."
+upgrade_in_progress: "Actualizando source de la branch '{branch}'..."
+already_up_to_date: "No hay nada que actualizar desde la branch '{branch}'."
+restarting: "Reiniciando..."
+upgrade_failed: "Falló la actualización de la branch '{branch}' (proceso finalizado con {returncode}):\n{decode}"

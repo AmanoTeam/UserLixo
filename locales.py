@@ -10,7 +10,8 @@ langs = [
     "en-US",
     "pt-BR",
     "es-ES",
-    "eo-UY"
+    "eo-UY",
+    "fr-FR"
 ]
 
 default_language = "en-US"
