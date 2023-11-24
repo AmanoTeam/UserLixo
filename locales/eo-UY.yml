@@ -52,5 +52,11 @@ fake_done: Nun mi estas {mention}!
 #ai.py
 ai_bing_searching: "Serĉante \"{text}\" ĉe Bing..."
 ai_no_text: "Vi devas sendi tekston por serĉi aŭ fari bildon."
-ai_making_image: "Farante bildon kun \"{text}\"..."
+ai_making_image: "Making image whith \"{text}\"..."
 ai_bard_searching: "Serĉante \"{text}\" ĉe Bard..."
+#upgrade.py
+not_git_repo: "Error: You must be inside a git repository to upgrade."
+upgrade_in_progress: "Upgrading source from branch '{branch}'..."
+already_up_to_date: "There's nothing to upgrade from branch '{branch}'."
+restarting: "Restarting..."
+upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {returncode}):\n{decode}"
