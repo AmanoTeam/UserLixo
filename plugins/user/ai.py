@@ -133,10 +133,8 @@ async def bardc(c: Client, m: Message, t):
         return await m.edit(t("ai_no_text"))
     # Edit the message to show that the bot is searching
     await m.edit(t("ai_bard_searching").format(text=mtext))
-    print(mtext)
     # Get the answer from the chatbard for the mtext
     response = chatbard.get_answer(mtext)
-    print(response)
     # If the response contains images, create a list of photos from the images and reply to the message with the photos
     if response["images"]:
         photos = []

@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
+from pyrogram.types import Message, CallbackQuery
+from pyrogram.helpers import ikb
 from locales import use_lang
 from pyrogram.enums import UserStatus, MessageEntityType
 from datetime import datetime
@@ -9,6 +10,9 @@ from config import bot
 import os
 import sys
 import asyncio
+from utils import http
+from typing import Union
+from datetime import datetime
 
 @Client.on_message(filters.command("on", prefixes=".") & filters.sudoers)
 @use_lang()
@@ -115,3 +119,38 @@ async def tagall(c: Client, m: Message, t):
         text += f"{user.mention}\n"
     
     await m.reply_text(text)
+
+@Client.on_message(filters.command("mcserver", prefixes=".") & filters.sudoers)
+@bot.on_callback_query(filters.regex("^mcserver") & filters.sudoers)
+@use_lang()
+async def mcserver(c: Client, m: Union[Message, CallbackQuery], t):
+    if isinstance(m, CallbackQuery):
+        fun = m.edit_message_text
+        ip = m.data.split(" ")[1]
+    elif isinstance(m, Message):
+        fun = m.reply
+        ip = m.text.split(" ", 1)[1]
+    
+    r = await http.get(f"https://api.mcsrvstat.us/2/{ip}")
+    a = r.json()
+    
+    keyb = [[("🔄 " + t("refresh"), f"mcserver {ip}")]]
+    
+    if a["online"]:
+        txt = f"""<b>STATUS SERVER:</b>
+    IP: {a['hostname'] if 'hostname' in a else a['ip']} (<code>{a['ip']}</code>)
+    <b>Port:</b> <code>{a['port']}</code>
+    <b>Online:</b> <code>{a['online']}</code>
+    <b>Mods:</b> <code>{len(a['mods']['names']) if 'mods' in a else 'N/A'}</code>
+    <b>Players:</b> <code>{a['players']['online']}/{a['players']['max']}</code>
+    <b>Version:</b> <code>{a['version']}</code>
+    <b>MOTD:</b> {a['motd']['html'][0]}\n\n"""
+        txt += f"Updated at: <code>{datetime.fromtimestamp(a['debug']['cachetime']-10800)}</code>\n"""
+        txt += f"Next update in: <code>{datetime.fromtimestamp(a['debug']['cacheexpire']-10800)}</code>"
+    else:
+        txt = f"""<b>STATUS SERVER:</b>
+    <b>IP:</b> {a['hostname'] if 'hostname' in a else a['ip']} (<code>{a['ip']}</code>)
+    <b>Port:</b> <code>{a['port']}</code>
+    <b>Online:</b> <code>{a['online']}</code>"""
+    
+    await fun(txt, reply_markup=ikb(keyb))

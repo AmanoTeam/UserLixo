@@ -1,4 +1,4 @@
-version = "2.0.0-beta.5"
+version = "2.0.0-beta.6"
 
 ascii_art = f"""
 
