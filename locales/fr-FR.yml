@@ -52,11 +52,20 @@ fake_done: Je suis maintenant {mention}!
 #ai.py
 ai_bing_searching: "Recherche de \"{text}\" sur Bing..."
 ai_no_text: "Vous devez envoyer un texte pour effectuer une recherche ou créer une image."
-ai_making_image: "\"Création d'une image avec \"{text}\"..."
-ai_bard_searching: "\"Recherche de \"{text}\" sur Bard..."
+ai_making_image: "Création d'une image avec \"{text}\"..."
+ai_bard_searching: "Recherche de \"{text}\" sur Bard..."
 #upgrade.py
 not_git_repo: "Erreur: Vous devez être dans un dépôt git pour effectuer la mise à jour."
 upgrade_in_progress: "\"Mise à jour des sources à partir de la branche '{branch}'..."
 already_up_to_date: "Il n'y a rien à mettre à jour à partir de la branche '{branch}'."
 restarting: "Redémarrage..."
 upgrade_failed: "La mise à jour à partir de la branche '{branch}' a échoué (le processus s'est terminé avec le code de retour {returncode}) : \\n{decode}"
+#youtube.py
+ytdl_missing_argument: "Missing argument: URL or search query."
+ytdl_audio_button: "💿 Audio"
+ytdl_video_button: "📹 Video"
+ytdl_file_too_big: "The file is too big to be sent."
+ytdl_downloading: "Downloading..."
+ytdl_send_error: "An error occurred while sending the file.\n{errmsg}"
+ytdl_sending: "Sending..."
+ytdl_sent: "Sent as sucessfully."
