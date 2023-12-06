@@ -15,15 +15,14 @@ def compose_before_restart_message(lang: Langs):
 async def save_before_restart_message_info(
     message_id: int, chat_id: int, from_client: Literal["bot", "user"]
 ):
-    await Config.filter(key="restarting_alert").delete()
+    query = Config.delete().where(Config.key == "restarting_alert")
+    query.execute()
 
     timestamp = datetime.now().timestamp()
 
-    await Config.create(
-        **{
-            "key": "restarting_alert",
-            "value": f"{message_id}|{chat_id}|{timestamp}|restart{from_client}",
-        }
+    Config.create(
+        key="restarting_alert",
+        value=f"{message_id}|{chat_id}|{timestamp}|restart{from_client}",
     )
 
 

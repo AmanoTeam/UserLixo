@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
 # ruff: noqa: E402
+import asyncio
 import logging
 import os
 from pathlib import Path
@@ -10,7 +11,6 @@ from kink import di
 from hydrogram import idle
 from rich.console import Console
 from rich.logging import RichHandler
-from tortoise import run_async
 
 from userlixo.modules import (
     AssistantController,
@@ -34,7 +34,6 @@ from userlixo.config import (
     sudoers,
     user,
 )
-from userlixo.database import connect_database
 
 if os.getenv("DEBUG", None) == "true" or os.getenv("LOG_LEVEL", None) == "DEBUG":
     logging.basicConfig(level="DEBUG", handlers=[RichHandler()])
@@ -82,10 +81,6 @@ async def bootstrap():
 
 
 async def main():
-    logger.debug("Connecting to database...")
-    await connect_database()
-    logger.debug("Connected to database!")
-
     logger.debug("Loading env vars...")
     await load_env()
     logger.debug("Loaded env vars!")
@@ -117,7 +112,8 @@ async def main():
 if __name__ == "__main__":
     try:
         logger.info("Starting UserLixo...")
-        run_async(main())
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(main())
     except KeyboardInterrupt:
         logger.warning("Forced stop... Bye!")
     finally:

@@ -2,6 +2,6 @@
 # Copyright (c) 2018-2022 Amano Team
 
 
-from .database import Config, Message, PluginSetting, connect_database
+from .database import Config, Message, PluginSetting
 
-__all__: list[str] = ["Config", "connect_database", "Message", "PluginSetting"]
+__all__: list[str] = ["Config", "Message", "PluginSetting"]

@@ -11,7 +11,6 @@ from hydrogram.errors import BadRequest
 from hydrogram.helpers import ikb
 from rich import box, print
 from rich.panel import Panel
-from tortoise.exceptions import OperationalError
 
 from userlixo.config import bot, plugins, sudoers, user
 from userlixo.database import Config
@@ -125,14 +124,9 @@ async def alert_startup(lang: Langs):
 
 
 async def edit_restarting_alert(lang: Langs):
-    restarting_alert = await Config.filter(key="restarting_alert")
-    if len(restarting_alert) > 1:
-        await Config.filter(key="restarting_alert").delete()
-        restarting_alert = []
+    restarting_alert = Config.get_or_none(Config.key == "restarting_alert")
 
     if restarting_alert:
-        restarting_alert = restarting_alert[0]
-
         message_id, chat_id, cmd_timestamp, from_cmd = restarting_alert.value.split("|")
 
         text = await compose_restarting_message(lang, float(cmd_timestamp), from_cmd)
@@ -153,5 +147,5 @@ async def edit_restarting_alert(lang: Langs):
                 f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted \
     or somehow it became inaccessible.\n>> {e}[/yellow]"
             )
-        with contextlib.suppress(OperationalError):
-            await (await Config.get(id=restarting_alert.id)).delete()
+
+        restarting_alert.delete_instance()
