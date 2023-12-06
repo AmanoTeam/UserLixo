@@ -1,3 +1,5 @@
+import json
+
 from kink import inject
 from pyrogram.helpers import ikb
 from pyrogram.types import (
@@ -24,7 +26,8 @@ class IndexInlineQueryHandler(InlineQueryHandler):
             ]
             return await iq.answer(results, cache_time=0)
 
-        keyboard = ikb(message.keyboard)
+        reply_markup = json.loads(message.keyboard)
+        keyboard = ikb(reply_markup)
         text = message.text
 
         results = [

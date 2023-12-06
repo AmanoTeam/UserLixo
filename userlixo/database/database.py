@@ -7,10 +7,6 @@ from peewee import *
 database = SqliteDatabase('userlixo/database/database.sqlite')
 
 
-class UnknownField(object):
-    def __init__(self, *_, **__): pass
-
-
 class BaseModel(Model):
     class Meta:
         database = database
@@ -26,7 +22,7 @@ class Config(BaseModel):
 
 class Message(BaseModel):
     key = AutoField()
-    keyboard = UnknownField()  # JSON
+    keyboard = CharField()
     text = CharField()
 
     class Meta:
