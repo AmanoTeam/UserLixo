@@ -42,7 +42,8 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
             inactive = [x for x in inactive if x != plugin.name]
 
         inactive = [*set(inactive)]  # make values unique
-        await Config.get(key="INACTIVE_PLUGINS").update(value=json.dumps(inactive))
+        inactive_plugins: Config = Config.get(Config.key == "INACTIVE_PLUGINS")
+        inactive_plugins.update(value=json.dumps(inactive))
 
         if deactivate:
             await unload_plugin(plugin.name)

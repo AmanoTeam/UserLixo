@@ -14,7 +14,7 @@ from userlixo.modules.abstract import InlineQueryHandler
 class IndexInlineQueryHandler(InlineQueryHandler):
     async def handle_inline_query(self, _c, iq: InlineQuery):
         index = int(iq.matches[0]["index"])
-        message = await Message.get_or_none(key=index)
+        message = Message.get_or_none(Message.key == index)
         if not message:
             results = [
                 InlineQueryResultArticle(
@@ -36,5 +36,5 @@ class IndexInlineQueryHandler(InlineQueryHandler):
         ]
 
         await iq.answer(results, cache_time=0)
-        await (await Message.get(key=message.key)).delete()
+        Message.get(Message.key == message.key).delete_instance()
         return None

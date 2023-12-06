@@ -83,7 +83,7 @@ async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
         )
     if type(reply_markup) == types.InlineKeyboardMarkup:
         reply_markup = bki(reply_markup)
-    message = await Message.create(text=text, keyboard=reply_markup)
+    message = Message.create(text=text, keyboard=reply_markup)
 
     bot = self._client.assistant
     inline_results = await self._client.get_inline_bot_results(

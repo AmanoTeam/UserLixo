@@ -23,7 +23,7 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
         lang = self.language_selector.get_lang()
 
         key = query.matches[0]["key"]
-        value = (await Config.get_or_none(key=key)).value
+        value = (Config.get_or_none(Config.key == key)).value
 
         text = lang.edit_env_text(key=key, value=value)
         keyboard = ikb([[(lang.back, "setting_env")]])
@@ -35,7 +35,7 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
                 user_id = query.from_user.id
                 msg = await query.from_user.listen(chat_id=user_id, filters=filters.text)
                 await last_msg.remove_keyboard()
-                await Config.get(key=key).update(value=msg.text)
+                Config.get(Config.key == key).update(value=msg.text)
                 if key in env_requires_restart:
                     text = lang.edit_env_text_restart(key=key, value=msg.text)
                     keyboard = ikb(

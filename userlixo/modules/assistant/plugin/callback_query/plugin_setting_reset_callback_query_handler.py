@@ -31,11 +31,14 @@ class PluginSettingResetCallbackQueryHandler(CallbackQueryHandler):
 
         setting.value = setting.default
         if setting.default is not None:
-            await PluginSetting.update_or_create(
-                defaults={"value": setting.value}, plugin=plugin_name, key=key
-            )
+            does_exist = PluginSetting.get_or_none(plugin=plugin_name, key=key)
+            if does_exist:
+                does_exist.value = setting.value
+                does_exist.save()
+            else:
+                PluginSetting.create(plugin=plugin_name, key=key, value=setting.value)
         else:
-            await PluginSetting.filter(plugin=plugin_name, key=key).delete()
+            PluginSetting.delete().where(plugin=plugin_name, key=key).execute()
 
         await ask_and_handle_plugin_settings(
             client,

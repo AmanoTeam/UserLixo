@@ -20,7 +20,7 @@ class SetLanguageCodeCallbackQueryHandler(CallbackQueryHandler):
 
         match = query.matches[0]
         lang = lang.get_language(match["code"])
-        await Config.get(key="LANGUAGE").update(value=lang.code)
+        Config.get(Config.key == "LANGUAGE").update(value=lang.code)
         os.environ["LANGUAGE"] = lang.code
         buttons = []
         for obj in lang.strings.values():

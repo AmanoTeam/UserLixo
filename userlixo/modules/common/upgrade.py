@@ -147,13 +147,12 @@ async def git_pull_from_branch(branch: str):
 
 
 async def save_before_upgrade_message_info(message_id: int, chat_id: int, from_client: str):
-    await Config.filter(key="restarting_alert").delete()
+    query = Config.delete().where(Config.key == "restarting_alert")
+    query.execute()
 
     timestamp = datetime.now().timestamp()
 
-    await Config.create(
-        **{
-            "key": "restarting_alert",
-            "value": f"{message_id}|{chat_id}|{timestamp}|upgrade{from_client}",
-        }
+    Config.create(
+        key="restarting_alert",
+        value=f"{message_id}|{chat_id}|{timestamp}|upgrade{from_client}",
     )
