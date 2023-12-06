@@ -1,6 +1,6 @@
-import pyrogram
+import hydrogram
 
 
-class Client(pyrogram.client.Client):
-    me: pyrogram.types.User
-    assistant: pyrogram.client.Client
+class Client(hydrogram.client.Client):
+    me: hydrogram.types.User
+    assistant: hydrogram.client.Client

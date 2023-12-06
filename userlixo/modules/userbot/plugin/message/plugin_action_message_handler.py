@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from kink import inject
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.types import Message
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import MessageHandler

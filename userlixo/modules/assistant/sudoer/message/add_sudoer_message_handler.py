@@ -2,9 +2,9 @@ import re
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram import filters
-from pyrogram.helpers import force_reply, ikb
-from pyrogram.types import Message
+from hydrogram import filters
+from hydrogram.helpers import force_reply, ikb
+from hydrogram.types import Message
 
 from userlixo.config import sudoers, user
 from userlixo.database import Config

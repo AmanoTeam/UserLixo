@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from pyrogram import Client
-from pyrogram.types import InlineQuery
+from hydrogram import Client
+from hydrogram.types import InlineQuery
 
 
 class InlineQueryHandler(ABC):

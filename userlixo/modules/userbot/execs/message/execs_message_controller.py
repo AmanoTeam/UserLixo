@@ -1,8 +1,8 @@
 import re
 from dataclasses import dataclass
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.types import Message
 
 from userlixo.decorators import controller, on_message
 from userlixo.modules.userbot.execs.message.cmd_message_handler import (

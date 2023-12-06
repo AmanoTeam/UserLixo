@@ -72,7 +72,7 @@ edit_env_text: |-
 about_userlixo_text: |-
     🚮 UserLixo is an userbot made for fun by @AmanoTeam. It's aimed to bring cool features and functional design with technology and creativity.
 
-    📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
+    📦 Powered by <a href="https://hydrogram.amanoteam.com/">Hydrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
 
     🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Channel</a> | <a href="https://t.me/UserLixoChat">Chat</a>
 edit_env_text_restart: |-
@@ -222,7 +222,7 @@ add_plugin: |-
 info_text: |-
     ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
      ├ Python <b>v{python_version}</b>
-     └ Pyrogram <b>v{pyrogram_version}</b>
+     └ Hydrogram <b>v{hydrogram_version}</b>
 
     🖇 {plugins_total} plugins
 
@@ -322,7 +322,7 @@ plugin_rm_remote_local_are_diff: |-
 started_alert: |-
     🛸 UserLixo <b>v{version}</b> started! (PID: <code>{pid}</code>)
      ├ Python <b>v{python_version}</b>
-     └ Pyrogram <b>v{pyrogram_version}</b>
+     └ Hydrogram <b>v{hydrogram_version}</b>
 
     🖇 {plugins_total} plugins
 
@@ -348,7 +348,7 @@ installing_plugin_requirements: |-
 
 about_plugins_text: |-
     🖇 <b>About plugins</b>
-    UserLixo plugins are zipped files with one or more Pyrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
+    UserLixo plugins are zipped files with one or more Hydrogram handlers to add to UserLixo. They may add new commands or even alter the habitual UserLixo behaviour.
 
     Anyone can create a plugin, so it's recommended to always check what you are adding, because it will have access to your account and server once added.
 

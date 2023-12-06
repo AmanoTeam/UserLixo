@@ -2,7 +2,7 @@ import os
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.types import CallbackQuery
+from hydrogram.types import CallbackQuery
 
 from userlixo.config import sudoers
 from userlixo.database import Config

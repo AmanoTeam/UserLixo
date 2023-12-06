@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 import psutil
 from kink import inject
-from pyrogram.helpers import kb
-from pyrogram.types import Message, WebAppInfo
+from hydrogram.helpers import kb
+from hydrogram.types import Message, WebAppInfo
 
 from userlixo.config import cmds, plugins, user
 from userlixo.modules.abstract import MessageHandler

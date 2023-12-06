@@ -5,8 +5,8 @@ import traceback
 from collections.abc import Callable
 from contextlib import redirect_stdout
 
-from pyrogram import Client
-from pyrogram.types import Message
+from hydrogram import Client
+from hydrogram.types import Message
 
 
 async def execs(

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import aiocron
 from kink import di
-from pyrogram import idle
+from hydrogram import idle
 from rich.console import Console
 from rich.logging import RichHandler
 from tortoise import run_async

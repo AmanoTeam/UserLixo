@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 
 import click
-import pyrogram.errors
+import hydrogram.errors
 from rich import print
 
 
@@ -31,24 +31,24 @@ async def main():
 the user and bot accounts."
     if __name__ == "__main__":
         text = "[bold dodger_blue1 underline]Welcome to UserLixo![/]\n[deep_sky_blue1]We are \
-going to login into the user account to get PYROGRAM_CONFIG and PYROGRAM_SESSION values."
+going to login into the user account to get HYDROGRAM_CONFIG and HYDROGRAM_SESSION values."
     text += "\n\nYou will be asked for a value for each var, but you can just press enter to use \
 the default value (if there be any). Let's get started![/]"
     print(text)
 
     if Path("config.ini").exists():
         config.read("config.ini")
-    elif Path(Path("~/.pyrogramrc").expanduser()).exists():
-        config.read(Path("~/.pyrogramrc").expanduser())
+    elif Path(Path("~/.hydrogramrc").expanduser()).exists():
+        config.read(Path("~/.hydrogramrc").expanduser())
 
-    config.setdefault("pyrogram", {})
+    config.setdefault("hydrogram", {})
 
     fields = ["api_id", "api_hash"]
 
     for key in fields:
         text = f"\n┌ [light_sea_green]{key}[/light_sea_green]"
-        if key in config["pyrogram"]:
-            text += f" [deep_sky_blue4](default: {config['pyrogram'][key]})[/]"
+        if key in config["hydrogram"]:
+            text += f" [deep_sky_blue4](default: {config['hydrogram'][key]})[/]"
         print(text)
 
         try:
@@ -57,16 +57,16 @@ the default value (if there be any). Let's get started![/]"
             print("[red1]Operation cancelled by user")
             exit()
         if not user_value:
-            user_value = config["pyrogram"].get(key, "")
+            user_value = config["hydrogram"].get(key, "")
         if not user_value:
             print(f"[red1]{key} is required, cannot be empty.")
             exit()
-        config["pyrogram"][key] = user_value
+        config["hydrogram"][key] = user_value
 
     with Path("config.ini").open("w") as fp:
         config.write(fp)
 
-    from pyrogram import Client
+    from hydrogram import Client
 
     login_user = True
     if Path("user.session").exists():
@@ -90,9 +90,9 @@ the default value (if there be any). Let's get started![/]"
         print("\n\n[bold green]- Logging in using existing user.session...")
 
     # parse config.ini values
-    api_id = config.get("pyrogram", "api_id", fallback=None)
-    api_hash = config.get("pyrogram", "api_hash", fallback=None)
-    bot_token = config.get("pyrogram", "bot_token", fallback=None)
+    api_id = config.get("hydrogram", "api_id", fallback=None)
+    api_hash = config.get("hydrogram", "api_hash", fallback=None)
+    bot_token = config.get("hydrogram", "bot_token", fallback=None)
 
     user = Client(
         "user",
@@ -114,10 +114,10 @@ the default value (if there be any). Let's get started![/]"
     print(f"[green]- OK! Logged in as {mention}[/]")
 
     if __name__ == "__main__":
-        print("\nYour PYROGRAM_CONFIG (SENSITIVE DATA, DO NOT SHARE):")
+        print("\nYour HYDROGRAM_CONFIG (SENSITIVE DATA, DO NOT SHARE):")
         print(f"[blue]{session_config}[/]")
 
-        print("\nYour PYROGRAM_SESSION (SENSITIVE DATA, DO NOT SHARE):")
+        print("\nYour HYDROGRAM_SESSION (SENSITIVE DATA, DO NOT SHARE):")
         print(f"[blue]{session_string}[/]\n")
         return await user.stop()
 
@@ -168,7 +168,7 @@ the default value (if there be any). Let's get started![/]"
             bot_token=os.getenv("BOT_TOKEN"),
         )
         await bot.start()
-    except pyrogram.errors.AccessTokenInvalid:
+    except hydrogram.errors.AccessTokenInvalid:
         print("[red1]The bot access token is invalid")
         exit()
 

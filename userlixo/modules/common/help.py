@@ -1,5 +1,5 @@
 from langs import Langs
-from pyrogram.helpers import ikb
+from hydrogram.helpers import ikb
 
 
 def compose_help_message(lang: Langs, append_back: bool = False):

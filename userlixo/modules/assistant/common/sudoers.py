@@ -1,6 +1,6 @@
 from langs import Langs
-from pyrogram import Client
-from pyrogram.helpers import array_chunk, ikb
+from hydrogram import Client
+from hydrogram.helpers import array_chunk, ikb
 
 from userlixo.config import bot, sudoers, user
 

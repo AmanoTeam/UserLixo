@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.enums import ChatType
-from pyrogram.types import Message
+from hydrogram.enums import ChatType
+from hydrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.plugins import compose_list_plugins_message

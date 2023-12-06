@@ -4,8 +4,8 @@
 import contextlib
 from enum import Enum
 
-from pyrogram import types
-from pyrogram.helpers import bki, ikb
+from hydrogram import types
+from hydrogram.helpers import bki, ikb
 
 from userlixo.database import Message
 

@@ -2,10 +2,10 @@ import logging
 import urllib.parse
 
 from langs import Langs
-from pyrogram import filters
-from pyrogram.helpers import ikb
-from pyrogram.nav import Pagination
-from pyrogram.types import CallbackQuery
+from hydrogram import filters
+from hydrogram.helpers import ikb
+from hydrogram.nav import Pagination
+from hydrogram.types import CallbackQuery
 
 from userlixo.config import bot, plugins
 from userlixo.database import PluginSetting

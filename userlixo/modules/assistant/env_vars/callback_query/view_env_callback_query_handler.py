@@ -1,5 +1,5 @@
 from kink import inject
-from pyrogram.types import CallbackQuery
+from hydrogram.types import CallbackQuery
 
 from userlixo.database import Config
 from userlixo.modules.abstract import CallbackQueryHandler

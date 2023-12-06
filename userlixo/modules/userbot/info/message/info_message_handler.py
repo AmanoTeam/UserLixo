@@ -2,10 +2,10 @@ import os
 import platform
 from dataclasses import dataclass
 
-import pyrogram
+import hydrogram
 from kink import inject
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from hydrogram import Client, filters
+from hydrogram.types import Message
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import MessageHandler
@@ -41,7 +41,7 @@ class InfoMessageHandler(MessageHandler):
             )[0]
         )
         python_version = platform.python_version()
-        pyrogram_version = pyrogram.__version__
+        hydrogram_version = hydrogram.__version__
 
         ul_status = (
             lang.info_upgradable_to(version=remote_version)
@@ -58,7 +58,7 @@ class InfoMessageHandler(MessageHandler):
             local_version=local_version,
             ul_status=ul_status,
             python_version=python_version,
-            pyrogram_version=pyrogram_version,
+            hydrogram_version=hydrogram_version,
             plugins_total=plugins_total,
         )
         await act(text)

@@ -2,10 +2,10 @@ import logging
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram import filters
-from pyrogram.errors import ListenerStopped
-from pyrogram.helpers import ikb
-from pyrogram.types import CallbackQuery
+from hydrogram import filters
+from hydrogram.errors import ListenerStopped
+from hydrogram.helpers import ikb
+from hydrogram.types import CallbackQuery
 
 from userlixo.database import Config
 from userlixo.modules.abstract import CallbackQueryHandler

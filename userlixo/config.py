@@ -7,10 +7,10 @@ import logging
 import os
 import re
 
-import pyrogram
-from pyrogram import filters
-from pyrogram.helpers import bki
-from pyrogram.utils import PyromodConfig
+import hydrogram
+from hydrogram import filters
+from hydrogram.helpers import bki
+from hydrogram.utils import PyromodConfig
 
 from userlixo.database import Config
 from userlixo.types.client import Client
@@ -102,16 +102,16 @@ you can just press enter to leave it empty or use the default value. Let's get s
     sudoers.extend(parts)
 
 
-# Extra **kwargs for creating pyrogram.Client (contains api_hash and api_id)
-pyrogram_config = os.getenv("PYROGRAM_CONFIG") or b64encode("{}")
-pyrogram_config = b64decode(pyrogram_config)
-pyrogram_config = json.loads(pyrogram_config)
+# Extra **kwargs for creating hydrogram.Client (contains api_hash and api_id)
+hydrogram_config = os.getenv("HYDROGRAM_CONFIG") or b64encode("{}")
+hydrogram_config = b64decode(hydrogram_config)
+hydrogram_config = json.loads(hydrogram_config)
 
 # parse config.ini values
 config = configparser.ConfigParser()
-api_id = config.get("pyrogram", "api_id", fallback=None)
-api_hash = config.get("pyrogram", "api_hash", fallback=None)
-bot_token = config.get("pyrogram", "bot_token", fallback=None)
+api_id = config.get("hydrogram", "api_id", fallback=None)
+api_hash = config.get("hydrogram", "api_hash", fallback=None)
+bot_token = config.get("hydrogram", "bot_token", fallback=None)
 
 
 # All monkeypatch stuff must be done before the Client instance is created
@@ -158,25 +158,25 @@ def message_ikb(self):
 
 
 filter_sudoers = filters.create(filter_sudoers_logic, "FilterSudoers")
-pyrogram.filters.sudoers = filter_sudoers
-pyrogram.filters.su_cmd = filter_su_cmd
-pyrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
-pyrogram.filters.web_data_cmd = filter_web_data_command
-pyrogram.types.CallbackQuery.edit = query_edit
-pyrogram.types.Message.remove_keyboard = remove_keyboard
-pyrogram.types.Message.reply = reply_text
-pyrogram.types.Message.edit = edit_text
-pyrogram.types.Message.ikb = message_ikb
+hydrogram.filters.sudoers = filter_sudoers
+hydrogram.filters.su_cmd = filter_su_cmd
+hydrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
+hydrogram.filters.web_data_cmd = filter_web_data_command
+hydrogram.types.CallbackQuery.edit = query_edit
+hydrogram.types.Message.remove_keyboard = remove_keyboard
+hydrogram.types.Message.reply = reply_text
+hydrogram.types.Message.edit = edit_text
+hydrogram.types.Message.ikb = message_ikb
 
 # I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't
 # exist. I want to use the fallback also when the key exists but it's invalid
 user = Client(
-    os.getenv("PYROGRAM_SESSION") or "user",
+    os.getenv("HYDROGRAM_SESSION") or "user",
     plugins={"enabled": False},
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
-    **pyrogram_config,
+    **hydrogram_config,
 )
 
 bot = Client(
@@ -186,7 +186,7 @@ bot = Client(
     api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
-    **pyrogram_config,
+    **hydrogram_config,
 )
 
 PyromodConfig.unallowed_click_alert = False

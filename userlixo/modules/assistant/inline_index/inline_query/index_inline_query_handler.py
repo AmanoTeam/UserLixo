@@ -1,6 +1,6 @@
 from kink import inject
-from pyrogram.helpers import ikb
-from pyrogram.types import (
+from hydrogram.helpers import ikb
+from hydrogram.types import (
     InlineQuery,
     InlineQueryResultArticle,
     InputTextMessageContent,

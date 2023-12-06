@@ -2,10 +2,10 @@ import os
 import re
 
 from langs import Langs
-from pyrogram import Client, filters
-from pyrogram.helpers import ikb
-from pyrogram.nav import Pagination
-from pyrogram.types import CallbackQuery, Message
+from hydrogram import Client, filters
+from hydrogram.helpers import ikb
+from hydrogram.nav import Pagination
+from hydrogram.types import CallbackQuery, Message
 
 from userlixo.config import bot, plugins
 from userlixo.types.plugin_info import PluginInfo

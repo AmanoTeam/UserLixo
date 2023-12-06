@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.helpers import array_chunk, ikb
-from pyrogram.types import CallbackQuery
+from hydrogram.helpers import array_chunk, ikb
+from hydrogram.types import CallbackQuery
 
 from userlixo.config import bot
 from userlixo.database import Config

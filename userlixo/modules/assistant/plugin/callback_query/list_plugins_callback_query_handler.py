@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.types import CallbackQuery
+from hydrogram.types import CallbackQuery
 
 from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.modules.common.plugins import compose_list_plugins_message

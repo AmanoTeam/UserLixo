@@ -72,7 +72,7 @@ edit_env_text: |-
 about_userlixo_text: |-
     🚮 UserLixo é um bot feito por diversão pela @AmanoTeam. Seu foco é trazer funções legais e um design funcional com tecnologia e criatividade.
 
-    📦 Powered by <a href="https://docs.pyrogram.org/">Pyrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
+    📦 Powered by <a href="https://hydrogram.amanoteam.com/">Hydrogram</a> with <a href="https://github.com/usernein/pyromod">pyromod</a>.
 
     🗂 <b>Links</b>: <a href="https://github.com/AmanoTeam/UserLixo">Github</a> | <a href="https://t.me/UserLixo">Canal</a> | <a href="https://t.me/UserLixoChat">Chat</a>
 edit_env_text_restart: |-
@@ -216,7 +216,7 @@ add_plugin: |-
 info_text: |-
     ℹ️ <b>UserLixo v{local_version} ({ul_status})</b>
      ├ Python <b>v{python_version}</b>
-     └ Pyrogram <b>v{pyrogram_version}</b>
+     └ Hydrogram <b>v{hydrogram_version}</b>
 
     🖇 {plugins_total} plugins
 
@@ -309,7 +309,7 @@ plugin_rm_remote_local_are_diff: |-
 started_alert: |-
     🛸 UserLixo <b>v{version}</b> iniciado! (PID: <code>{pid}</code>)
      ├ Python <b>v{python_version}</b>
-     └ Pyrogram <b>v{pyrogram_version}</b>
+     └ Hydrogram <b>v{hydrogram_version}</b>
 
     🖇 {plugins_total} plugins
 

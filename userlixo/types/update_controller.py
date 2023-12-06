@@ -2,8 +2,8 @@ import inspect
 from typing import Any
 
 from kink import di
-from pyrogram import Client
-from pyrogram.handlers import CallbackQueryHandler, InlineQueryHandler, MessageHandler
+from hydrogram import Client
+from hydrogram.handlers import CallbackQueryHandler, InlineQueryHandler, MessageHandler
 
 
 class UpdateController:

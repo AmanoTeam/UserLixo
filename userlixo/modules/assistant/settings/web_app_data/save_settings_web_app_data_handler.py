@@ -3,7 +3,7 @@ import os
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.types import Message, ReplyKeyboardRemove
+from hydrogram.types import Message, ReplyKeyboardRemove
 
 from userlixo.config import sudoers, user
 from userlixo.database import Config

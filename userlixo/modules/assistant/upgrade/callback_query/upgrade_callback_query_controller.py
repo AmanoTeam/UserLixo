@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from pyrogram import Client, filters
+from hydrogram import Client, filters
 
 from userlixo.decorators import controller, on_callback_query
 

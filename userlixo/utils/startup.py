@@ -5,10 +5,10 @@ import platform
 import sys
 from datetime import datetime
 
-import pyrogram
+import hydrogram
 from langs import Langs
-from pyrogram.errors import BadRequest
-from pyrogram.helpers import ikb
+from hydrogram.errors import BadRequest
+from hydrogram.helpers import ikb
 from rich import box, print
 from rich.panel import Panel
 from tortoise.exceptions import OperationalError
@@ -35,7 +35,7 @@ def update_requirements():
 async def compose_startup_message(lang: Langs):
     local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
     python_version = platform.python_version()
-    pyrogram_version = pyrogram.__version__
+    hydrogram_version = hydrogram.__version__
     system_uname = (await shell_exec("uname -mons"))[0]
 
     pid = os.getpid()
@@ -49,7 +49,7 @@ async def compose_startup_message(lang: Langs):
         version=local_version,
         pid=pid,
         python_version=python_version,
-        pyrogram_version=pyrogram_version,
+        hydrogram_version=hydrogram_version,
         server_uname=system_uname,
         uptime=uptime,
         plugins_total=plugins_total,

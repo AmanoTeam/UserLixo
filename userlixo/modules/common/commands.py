@@ -1,6 +1,6 @@
 from langs import Langs
-from pyrogram.helpers import ikb
-from pyrogram.nav import Pagination
+from hydrogram.helpers import ikb
+from hydrogram.nav import Pagination
 
 from userlixo.config import cmds
 

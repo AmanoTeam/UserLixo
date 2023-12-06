@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram import Client
-from pyrogram.types import Message
+from hydrogram import Client
+from hydrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.restart import (

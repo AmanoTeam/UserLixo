@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from kink import inject
-from pyrogram.types import CallbackQuery
+from hydrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.database import Config

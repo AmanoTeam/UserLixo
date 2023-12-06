@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from kink import inject
-from pyrogram import Client
-from pyrogram.enums import ChatAction
-from pyrogram.types import Message
+from hydrogram import Client
+from hydrogram.enums import ChatAction
+from hydrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.utils.services.language_selector import LanguageSelector

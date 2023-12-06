@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from kink import inject
-from pyrogram.types import Message
+from hydrogram.types import Message
 
 from userlixo.modules.abstract.web_app_data_handler import WebAppDataHandler
 from userlixo.modules.common.restart import (
