@@ -52,7 +52,7 @@ use your userbot/assistant.",
     for env_key, (default_value, env_info) in environment_vars.items():
         value_on_env = os.getenv(env_key, default_value)
 
-        value_on_db = await Config.get_or_none(key=env_key)
+        value_on_db = Config.get_or_none(Config.key == env_key)
 
         if not value_on_db:
             if env_key in restricted_vars:
@@ -91,7 +91,7 @@ you can just press enter to leave it empty or use the default value. Let's get s
             logger.info(f"[red1]{env_key} is required, cannot be empty.")
             exit()
 
-        row = await Config.create(key=env_key, value=user_value)
+        row = Config.create(key=env_key, value=user_value)
         os.environ[env_key] = row.value
 
     # Sanitize sudoers list

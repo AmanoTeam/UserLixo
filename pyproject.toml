@@ -13,7 +13,6 @@ dependencies = [
     "aiocron>=1.8",
     "click>=8.1.7",
     "PyYAML>=6.0.1",
-    "tortoise-orm>=0.20.0",
     "meval>=2.5",
     "psutil>=5.9.6",
     "kink>=0.7.0",
@@ -23,6 +22,7 @@ dependencies = [
     "toml>=0.10.2",
     "requirements-parser>=0.5.0",
     "virtualenv>=20.24.6",
+    "peewee>=3.17.0",
 ]
 
 [tool.hatch.build]

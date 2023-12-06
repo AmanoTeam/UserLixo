@@ -21,7 +21,7 @@ class SettingEnvCallbackQueryHandler(CallbackQueryHandler):
         if query.message:
             await query.message.chat.stop_listening()
         buttons = []
-        async for row in Config.all():
+        for row in Config.select():
             btn = (f"👁‍🗨 {row.key}", f"view_env {row.key}")
             if query.message and query.message.from_user.id == bot.me.id:
                 btn = (f"📝 {row.key}", f"edit_env {row.key}")

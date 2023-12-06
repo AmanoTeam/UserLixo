@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 async def get_inactive_plugins(plugins):
-    inactive = (await Config.get_or_create({"value": "[]"}, key="INACTIVE_PLUGINS"))[0].value
+    inactive = (Config.get_or_create(defaults={"value": "[]"}, key="INACTIVE_PLUGINS"))[0].value
     return json.loads(inactive)
 
 
@@ -116,7 +116,7 @@ def validate_plugin_info(info: PluginInfo | None):
     if not re.match(r"\w+$", info.name):
         errors.append("name must be alphanumeric")
     if (isinstance(info.author, str) and info.author.strip() == "") or (
-        isinstance(info.author, list) and not len(info.author)
+            isinstance(info.author, list) and not len(info.author)
     ):
         errors.append("author cannot be empty")
 
@@ -214,7 +214,7 @@ async def install_plugin_requirements_in_its_venv(plugin_name: str):
 
 
 async def get_plugin_venv_path(
-    plugin_name: str, create_if_not_exists: bool = True, overwrite_if_exists: bool = False
+        plugin_name: str, create_if_not_exists: bool = True, overwrite_if_exists: bool = False
 ):
     folder_path = get_plugin_folder_path(plugin_name)
     venv_path = str(folder_path / "venv")
@@ -236,7 +236,7 @@ async def load_settings_values_for_plugin(plugin_name: str):
     plugin_info = plugins.get(plugin_name, None)
     if not plugin_info:
         return
-    settings = await PluginSetting.filter(plugin=plugin_name).all()
+    settings = PluginSetting.select(PluginSetting.plugin == plugin_name)
 
     for setting in settings:
         if setting.key not in plugin_info.settings:
