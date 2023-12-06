@@ -19,7 +19,8 @@ class SaveSettingsWebAppDataHandler(WebAppDataHandler):
     async def handle_web_app_data(self, _c, m: Message):
         async def update_config(key, value):
             for obj in Config.select(Config.key == key):
-                obj.update(value=value)
+                obj.value = value
+                obj.save()
             os.environ[key] = value
 
         settings = json.loads(m.web_app_data.data.split("--", 1)[1])

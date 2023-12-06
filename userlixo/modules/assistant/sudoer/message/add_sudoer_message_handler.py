@@ -30,7 +30,7 @@ class AddSudoerMessageHandler(MessageHandler):
         sudoers_list = sudoers_str.split(" ")
         sudoers_list.append(response.text.lstrip("@"))
         sudoers[:] = [user.me.id, *sudoers_list]
-        Config.get(Config.key == "SUDOERS_LIST").update(value=" ".join(map(str, sudoers_list)))
+        Config.update(value=" ".join(map(str, sudoers_list))).where(Config.key == "SUDOERS_LIST").execute()
 
         keyboard = ikb([[(lang.back, "setting_sudoers")]])
         await m.reply(lang.sudoer_added, keyboard)

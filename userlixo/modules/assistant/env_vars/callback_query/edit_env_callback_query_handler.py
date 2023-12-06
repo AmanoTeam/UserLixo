@@ -35,7 +35,7 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
                 user_id = query.from_user.id
                 msg = await query.from_user.listen(chat_id=user_id, filters=filters.text)
                 await last_msg.remove_keyboard()
-                Config.get(Config.key == key).update(value=msg.text)
+                Config.update(value=msg.text).where(Config.key == key).execute()
                 if key in env_requires_restart:
                     text = lang.edit_env_text_restart(key=key, value=msg.text)
                     keyboard = ikb(
