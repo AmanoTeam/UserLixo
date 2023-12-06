@@ -47,24 +47,9 @@ console = Console()
 
 
 async def bootstrap():
-    logger.debug("Connecting to database...")
-    await connect_database()
-    logger.debug("Connected to database!")
-
-    logger.debug("Loading env vars...")
-    await load_env()
-    logger.debug("Loaded env vars!")
-
     logger.debug("Loading crons...")
     aiocron.crontab("*/1 * * * *")(clean_cache)
     logger.debug("Loaded crons!")
-
-    if not Path("user.session").exists() or not Path("bot.session").exists():
-        logger.debug("No sessions found, starting login...")
-        from userlixo.login import main as login
-
-        await login()
-        logger.debug("Logged in!")
 
     logger.debug("Starting clients...")
     await user.start()
@@ -97,6 +82,21 @@ async def bootstrap():
 
 
 async def main():
+    logger.debug("Connecting to database...")
+    await connect_database()
+    logger.debug("Connected to database!")
+
+    logger.debug("Loading env vars...")
+    await load_env()
+    logger.debug("Loaded env vars!")
+
+    if not Path("user.session").exists() or not Path("bot.session").exists():
+        logger.debug("No sessions found, starting login...")
+        from userlixo.login import main as login
+
+        await login()
+        logger.debug("Logged in!")
+
     with console.status("[bold orchid]Starting UserLixo...", spinner_style="bold medium_purple2"):
         await bootstrap()
 

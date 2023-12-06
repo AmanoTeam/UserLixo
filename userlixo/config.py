@@ -18,6 +18,8 @@ from userlixo.types.plugin_info import PluginInfo
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
 
+from rich import print
+
 sudoers = []
 
 logger = logging.getLogger(__name__)
@@ -75,7 +77,7 @@ you can just press enter to leave it empty or use the default value. Let's get s
         elif env_key in required_vars:
             text += " [yellow](required)[/]"
         text += f"\n├ [medium_purple4 italic]{env_info}[/]"
-        logger.info(text)
+        print(text)
 
         try:
             user_value = input("└> ")
