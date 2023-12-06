@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2018-2022 Amano Team
+import asyncio
 import importlib
 import json
 import logging
 import re
 import typing
 from collections.abc import Callable
+from inspect import iscoroutinefunction
 from pathlib import Path
 from shutil import rmtree
 from zipfile import ZipFile
@@ -357,7 +359,10 @@ async def load_plugin(plugin_name: str):
 def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
     if elements.pre_load:
         for f in elements.pre_load:
-            f()
+            if iscoroutinefunction(f):
+                asyncio.create_task(f())
+            else:
+                f()
 
     if elements.user_handlers:
         for handler in elements.user_handlers:
@@ -383,7 +388,10 @@ def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
 
     if elements.post_load:
         for f in elements.post_load:
-            f()
+            if iscoroutinefunction(f):
+                asyncio.create_task(f())
+            else:
+                f()
 
 
 async def unload_and_remove_plugin(plugin_name: str):
