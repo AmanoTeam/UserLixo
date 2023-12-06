@@ -127,14 +127,6 @@ async def edit_restarting_alert(lang: Langs):
     restarting_alert = Config.get_or_none(Config.key == "restarting_alert")
 
     if restarting_alert:
-        query = Config.delete().where(Config.key == "restarting_alert")
-        query.execute()
-
-        restarting_alert = None
-
-    if restarting_alert:
-        restarting_alert = restarting_alert[0]
-
         message_id, chat_id, cmd_timestamp, from_cmd = restarting_alert.value.split("|")
 
         text = await compose_restarting_message(lang, float(cmd_timestamp), from_cmd)
@@ -156,4 +148,4 @@ async def edit_restarting_alert(lang: Langs):
     or somehow it became inaccessible.\n>> {e}[/yellow]"
             )
 
-        Config.get(Config.id == restarting_alert.id).delete_instance()
+        restarting_alert.delete_instance()
