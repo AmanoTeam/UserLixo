@@ -6,43 +6,6 @@ import pyrogram
 from db import Message, Config
 from config import user
 
-from bardapi import Bard
-import requests
-import json
-
-try:
-    session = requests.Session()
-
-    session_cookies = json.load(open("bard_coockies.json", "r"))
-    secure_1psid = None
-
-    for cookie in session_cookies:
-        session.cookies.set(cookie["name"], 
-                            cookie["value"],
-                            domain=cookie["domain"],
-                            path=cookie["path"])
-        if secure_1psid is None and cookie["name"] == "__Secure-1PSID":
-            secure_1psid = cookie["value"]
-        
-    session.headers = {
-                    "Host": "bard.google.com",
-                    "X-Same-Domain": "1",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) "
-                                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                                "Chrome/91.4472.114 Safari/537.36",
-                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-                    "Origin": "https://bard.google.com",
-                    "Referer": "https://bard.google.com/",
-                }
-
-    chatbard = Bard(session=session, token=secure_1psid)
-
-    print("Bard API loaded")
-
-except:
-    chatbard = None
-    print("Bard API not loaded")
-
 async def query_edit(self, text: str, reply_markup=None, answer_kwargs={}, *args, **kwargs):
     with contextlib.suppress(BaseException):
         await self.answer(**answer_kwargs)
