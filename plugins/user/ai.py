@@ -54,7 +54,10 @@ async def bing(c: Client, m: Message, t):
 
             # Check if the message is a reply to another message
             if m.reply_to_message:
-                mtext = m.reply_to_message.text
+                if m.reply_to_message.text:
+                    mtext = m.reply_to_message.text
+                else:
+                    mtext = m.reply_to_message.caption
                 # If the message contains a text, add it to the mtext
                 if len(m.text.split(" ", maxsplit=1)) >= 2:
                     mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
@@ -173,7 +176,10 @@ async def bardc(c: Client, m: Message, t):
         
         # Check if the message is a reply to another message
         if m.reply_to_message:
-            mtext = m.reply_to_message.text
+            if m.reply_to_message.text:
+                mtext = m.reply_to_message.text
+            else:
+                mtext = m.reply_to_message.caption
             # If the message contains a text, add it to the mtext
             if len(m.text.split(" ", maxsplit=1)) >= 2:
                 mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
