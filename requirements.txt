@@ -11,3 +11,5 @@ gtts
 desciclopedia
 wikipedia
 yt_dlp
+markdown
+telegraph
