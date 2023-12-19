@@ -3,7 +3,7 @@ LANGUAGE_CODE: pt-BR
 FLAG: '🇧🇷'
 #geral
 back: '« Voltar'
-canceled: Canceled.
+canceled: Cancelado.
 #backup.py
 initiating_backup: Iniciando backup...
 backup_caption: Backup solicitado por {name} em {date}.
@@ -24,11 +24,11 @@ kibe_creating: '📤 Criando pacote...'
 kibes_open: Adicionar Sticker ao Telegram
 kibee_open: Adicionar Emoji ao Telegram
 kibe_done: '👍 Concluído!'
-kibe_config_button: "Kibe settings"
-Kibe_settings: Change Kibe settings
-kibe_emoji: "Choose kibe emoji"
-kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe or /cancel to cancel"
-kibe_emoji_set: "Kibe emoji set to {emoji}"
+kibe_config_button: "Configurações do Kibe"
+Kibe_settings: Mudar configurações do Kibe
+kibe_emoji: "Escolher emoji padrão do kibe"
+kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que deseja usar no kibe ou /cancel para cancelar"
+kibe_emoji_set: "Emoji padrão do Kibe definido para {emoji}"
 #wiki.py
 wiki_choose: "Escolha dos titulos abaixo:"
 read_more: Ler mais
@@ -39,8 +39,8 @@ config_choose: "Escolha uma das opções para configurar:"
 choose_lang: "Escolha um dos idiomas abaixo:"
 lang_set: Idioma definido para Português.
 lang: Alteriar idioma
-plugins_settings_button: Plugins settings
-plugins_settings: "Choose one plugin to configure:"
+plugins_settings_button: Configurações dos Plugins
+plugins_settings: "Escolha um plugin para configurar:"
 #mix.py on
 not_bot: não funciona com bots.
 no_data: Esta pessoa desativou seu visto por último.
@@ -62,14 +62,14 @@ ai_bing_searching: "Procurando \"{text}\" no Bing..."
 ai_no_text: "Você precisa enviar um texto para pesquisar ou fazer imagem."
 ai_making_image: "Fazendo uma imagem com \"{text}\"..."
 ai_bard_searching: "Procurando \"{text}\" no bard..."
-bing_config_button: "BingAI settings"
-bing_settings: "BingAI settings"
-ai_mode: "change BingAI style"
-ai_mode_choose: "Choose one of the options:"
-ai_mode_creative: "Creative"
-ai_mode_balanced: "Balanced"
-ai_mode_precise: "Precise"
-ai_mode_changed: "BingAI style changed to {style} style."
+bing_config_button: "Configurações do BingAI"
+bing_settings: "Configurações do BingAI"
+ai_mode: "alterar estilo BingAI"
+ai_mode_choose: "Escolha uma das opções:"
+ai_mode_creative: "Criativo"
+ai_mode_balanced: "Balanceado"
+ai_mode_precise: "Precisa"
+ai_mode_changed: "Estilo BingAI alterado para o estilo {style}."
 #upgrade.py
 not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
 upgrade_in_progress: "Atualizando a source do branch '{branch}'..."
