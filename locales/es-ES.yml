@@ -3,6 +3,7 @@ LANGUAGE_CODE: es-ES
 FLAG: '🇪🇸'
 #geral
 back: '« Volver'
+canceled: Canceled.
 #backup.py
 initiating_backup: Iniciando la copia de seguridad...
 backup_caption: Copia de seguridad solicitada por {name} en {date}.
@@ -23,6 +24,11 @@ kibe_creating: '📤 Creando paquete...'
 kibes_open: Añadir pegatina a Telegram
 kibee_open: Añadir Emoji a Telegram
 kibe_done: '👍 ¡Hecho!'
+kibe_config_button: "Kibe settings"
+Kibe_settings: Change Kibe settings
+kibe_emoji: "Choose kibe emoji"
+kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe or /cancel to cancel"
+kibe_emoji_set: "Kibe emoji set to {emoji}"
 #wiki.py
 wiki_choose: "Elige uno de los siguientes títulos:"
 read_more: Leer más
@@ -33,6 +39,8 @@ config_choose: "Elija una de las opciones a configurar:"
 choose_lang: "Elija uno de los siguientes idiomas:"
 lang_set: El idioma se ha establecido en español.
 lang: Cambiar idioma
+plugins_settings_button: Plugins settings
+plugins_settings: "Choose one plugin to configure:"
 #mix.py on
 not_bot: no funciona con bots.
 no_data: Esta persona ha deshabilitado su último visto.
@@ -54,6 +62,14 @@ ai_bing_searching: "Buscando \"{text}\" en Bing..."
 ai_no_text: "Necesita enviar un texto para buscar o hacer una imagen."
 ai_making_image: "Haciendo imagen con \"{text}\"..."
 ai_bard_searching: "Buscando \"{text}\" en Bard..."
+bing_config_button: "BingAI settings"
+bing_settings: "BingAI settings"
+ai_mode: "change BingAI style"
+ai_mode_choose: "Choose one of the options:"
+ai_mode_creative: "Creative"
+ai_mode_balanced: "Balanced"
+ai_mode_precise: "Precise"
+ai_mode_changed: "BingAI style changed to {style} style."
 #upgrade.py
 not_git_repo: "Error: Debe estar dentro de un repositorio git para actualizar."
 upgrade_in_progress: "Actualizando source de la branch '{branch}'..."
