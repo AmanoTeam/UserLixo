@@ -4,7 +4,7 @@ import re
 
 from EdgeGPT.EdgeGPT import Chatbot, ConversationStyle
 from pyrogram import Client, filters
-from pyrogram.types import Message, InputMediaPhoto
+from pyrogram.types import Message, InputMediaPhoto, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from BingImageCreator import ImageGen
 import io
 from utils import http
@@ -13,6 +13,8 @@ import requests
 from bardapi import Bard
 import markdown
 from telegraph.aio import Telegraph
+from config import plugins, bot
+from db import Config
 
 bing_instances = {}
 bard_instances = {}
@@ -51,14 +53,20 @@ async def bing(c: Client, m: Message, t):
             if m.reply_to_message and len(m.text.split(" ", maxsplit=1)) >= 2:
                 mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
 
+        istelegraph = True if mtext.startswith("-t") else False
+        mtext = mtext[3:] if istelegraph else mtext
         await m.edit(t("ai_bing_searching").format(text=mtext))
-        response = await bot.ask(prompt=mtext, conversation_style=ConversationStyle.creative, simplify_response=True)
-        text = f'<pre>{mtext}</pre>\n\n{response["text"]}'
+        style = ConversationStyle.creative
+        if await Config.filter(id="bing").exists():
+            mode = (await Config.get(id="bing")).value
+            style = ConversationStyle.balanced if mode == "balanced" else ConversationStyle.precise
+        response = await bot.ask(prompt=mtext, conversation_style=style, simplify_response=True)
+        text = f'{style}<pre>{mtext}</pre>\n\n{response["text"]}'
         links = re.findall(r'\[(\d+)\.\s(.*?)\]\((.*?)\)', response["sources_text"])
         for link in links:
             text = text.replace(f"[^{link[0]}^]", f'<a href="{link[2]}">[{link[0]}]</a>')
 
-        if len(text) > 4096:
+        if len(text) > 4096 or istelegraph:
             await telegraph.create_account(short_name="EdgeGPT")
             text = markdown.markdown(text)
             page = await telegraph.create_page(f"Bing-userlixo-{c.me.first_name}", html_content=text, author_name="EdgeGPT", author_url="https://t.me/UserLixo")
@@ -124,11 +132,13 @@ async def bardc(c: Client, m: Message, t):
         bot = Bard(session=session, token=secure_1psid)
         mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(" ", maxsplit=1)[1]
 
+    istelegraph = True if mtext.startswith("-t") else False
+    mtext = mtext[3:] if istelegraph else mtext
     await m.edit(t("ai_bard_searching").format(text=mtext))
     response = bot.get_answer(mtext)
     text = f'<pre>{mtext}</pre>\n\n{response["content"]}'
 
-    if len(text) > 4096:
+    if len(text) > 4096 or istelegraph:
         await telegraph.create_account(short_name="Bard")
         text = markdown.markdown(text)
         for i in range(text.count("[Image of")):
@@ -144,3 +154,67 @@ async def bardc(c: Client, m: Message, t):
         m = await m.edit(text[:4096])
 
     bard_instances[m.id] = bot
+
+plugins.append("bing")
+
+@bot.on_callback_query(filters.regex(r"\bconfig_plugin_bing\b"))
+@use_lang()
+async def config_bing(c: Client, cq: CallbackQuery, t):
+    await cq.edit(t("bing_settings"), reply_markup=InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=t("ai_mode"),
+                callback_data="config_plugin_ai_mode"
+            )
+        ], [
+            InlineKeyboardButton(
+                text=t("back"),
+                callback_data="config_plugins"
+            )
+        ]
+    ]))
+
+@bot.on_callback_query(filters.regex(r"\bconfig_plugin_ai_mode\b"))
+@use_lang()
+async def config_ai_mode(c: Client, cq: CallbackQuery, t):
+    await cq.edit(t("ai_mode_choose"), reply_markup=InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=t("ai_mode_creative"),
+                callback_data="config_plugin_ai_mode_creative"
+            ),
+            InlineKeyboardButton(
+                text=t("ai_mode_balanced"),
+                callback_data="config_plugin_ai_mode_balanced"
+            ),
+            InlineKeyboardButton(
+                text=t("ai_mode_precise"),
+                callback_data="config_plugin_ai_mode_precise"
+            )
+        ] , [
+            InlineKeyboardButton(
+                text=t("back"),
+                callback_data="config_plugin_bing"
+            )
+        ]
+    ]))
+
+@bot.on_callback_query(filters.regex(r"config_plugin_ai_mode_"))
+@use_lang()
+async def config_ai_mode(c: Client, cq: CallbackQuery, t):
+    await Config.get_or_create(id="bing")
+    mode = cq.data.split("_")[-1]
+    if mode == "creative":
+        await Config.filter(id="bing").update(value="creative")
+    elif mode == "balanced":
+        await Config.filter(id="bing").update(value="balanced")
+    elif mode == "precise":
+        await Config.filter(id="bing").update(value="precise")
+    await cq.edit(t("ai_mode_changed").format(style=t(f"ai_mode_{mode}")), reply_markup=InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=t("back"),
+                callback_data="config_plugin_bing"
+            )
+        ]
+    ]))

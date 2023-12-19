@@ -14,7 +14,7 @@ async def config(c: Client, m:Union[Message, CallbackQuery], t):
     keyb = [
         [
             (t("lang"), "config_lang"),
-            (t("plugins_settings"), "config_plugins")
+            (t("plugins_settings_button"), "config_plugins")
         ]
     ]
 
@@ -55,7 +55,7 @@ async def config_plugins(c: Client, m: CallbackQuery, t):
         if i % 3 == 0 and i != 0:
             table.append(row)
             row = []
-        row.append((plugin, f"config_plugin_{plugin}"))
+        row.append((t(f"{plugin}_config_button"), f"config_plugin_{plugin}"))
     table.append(row)
     
     table.append([(t("back"), "config")])

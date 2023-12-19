@@ -331,17 +331,18 @@ plugins.append("kibe")
 
 
 @bot.on_callback_query(filters.regex(r"\bconfig_plugin_kibe\b"))
-async def config_kibe(c: Client, m: CallbackQuery):
+@use_lang()
+async def config_kibe(c: Client, m: CallbackQuery, t):
     # Edit the message to display the settings for the "kibe" plugin
-    await m.edit("Kibe settings", reply_markup=InlineKeyboardMarkup([
+    await m.edit(t("Kibe_settings"), reply_markup=InlineKeyboardMarkup([
         [
             InlineKeyboardButton(
-                text="Emoji",
+                text=t("kibe_emoji"),
                 callback_data="config_plugin_kibe_emoji"
             )
         ], [
             InlineKeyboardButton(
-                text="Back",
+                text=t("back"),
                 callback_data="config_plugins"
             )
         ]
@@ -349,7 +350,8 @@ async def config_kibe(c: Client, m: CallbackQuery):
 
 
 @bot.on_callback_query(filters.regex(r"config_plugin_kibe_emoji"))
-async def config_kibe_emoji(c: Client, cq: CallbackQuery):
+@use_lang()
+async def config_kibe_emoji(c: Client, cq: CallbackQuery, t):
     # Get the settings for "kibe", or create them if they don't exist
     settings = (await Config.get_or_create(id="kibe"))[0]
     # If the settings are empty, initialize them with a default emoji
@@ -361,7 +363,7 @@ async def config_kibe_emoji(c: Client, cq: CallbackQuery):
     m = cq.message
 
     # Ask the user to send the emoji they want to use for "kibe"
-    await cq.edit_message_text(f"Current emoji: {settings['emoji']}\nSend the emoji you want to use in kibe or /cancel to cancel")
+    await cq.edit_message_text(t("kibe_emoji_choose").format(emoji=settings["emoji"]))
 
     cmessage = None
     # Wait for the user to send a message with the new emoji
@@ -375,10 +377,10 @@ async def config_kibe_emoji(c: Client, cq: CallbackQuery):
 
     # If the user sends "/cancel", cancel the operation and go back
     if text == "/cancel":
-        return await cq.edit_message_text("Cancelled", reply_markup=InlineKeyboardMarkup([
+        return await cq.edit_message_text(t("cancel"), reply_markup=InlineKeyboardMarkup([
             [
                 InlineKeyboardButton(
-                    text="Back",
+                    text=t("back"),
                     callback_data="config_plugin_kibe"
                 )
             ]
@@ -389,7 +391,7 @@ async def config_kibe_emoji(c: Client, cq: CallbackQuery):
     await Config.get(id="kibe").update(valuej=settings)
 
     # Confirm to the user that the emoji has been set
-    await cq.edit_message_text(f"Emoji set to {text}", reply_markup=InlineKeyboardMarkup([
+    await cq.edit_message_text(t("kibe_emoji_set").format(emoji=text), reply_markup=InlineKeyboardMarkup([
         [
             InlineKeyboardButton(
                 text="Back",
