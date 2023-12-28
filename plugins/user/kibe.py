@@ -377,7 +377,7 @@ async def config_kibe_emoji(c: Client, cq: CallbackQuery, t):
 
     # If the user sends "/cancel", cancel the operation and go back
     if text == "/cancel":
-        return await cq.edit_message_text(t("cancel"), reply_markup=InlineKeyboardMarkup([
+        return await cq.edit_message_text(t("canceled"), reply_markup=InlineKeyboardMarkup([
             [
                 InlineKeyboardButton(
                     text=t("back"),

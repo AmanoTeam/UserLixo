@@ -19,8 +19,6 @@ from db import Config
 bing_instances = {}
 bard_instances = {}
 
-telegraph = Telegraph()
-
 async def filter_bing_logic(flt, client:Client, message: Message):
     if message:
         if message.reply_to_message_id and message.reply_to_message_id in bing_instances:
@@ -44,37 +42,44 @@ filter_bard = filters.create(filter_bard_logic)
 @use_lang()
 async def bing(c: Client, m: Message, t):
     try:
-        if (m.reply_to_message_id and m.reply_to_message_id in bing_instances):
-            bot = bing_instances.pop(m.reply_to_message_id)
+        if m.reply_to_message_id and m.reply_to_message_id in bing_instances:
+            bot, taccount, path = bing_instances.pop(m.reply_to_message_id)
             mtext = m.text
         else:
             bot = await Chatbot.create(cookies=json.load(open('./cookies.json', 'r', encoding='utf-8'))) if os.path.exists('./cookies.json') else await Chatbot.create()
+            taccount = Telegraph()
+            taccount.create_account(short_name="EdgeGPT")
+            path = None
             mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(".bing ", maxsplit=1)[1]
             if m.reply_to_message and len(m.text.split(" ", maxsplit=1)) >= 2:
                 mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
 
-        istelegraph = True if mtext.startswith("-t") else False
+        istelegraph = mtext.startswith("-t")
         mtext = mtext[3:] if istelegraph else mtext
-        await m.edit(t("ai_bing_searching").format(text=mtext))
+        await m.edit(t("ai_bing_searching").format(text=f"<pre>{mtext}</pre>"))
         style = ConversationStyle.creative
         if await Config.filter(id="bing").exists():
             mode = (await Config.get(id="bing")).value
             style = ConversationStyle.balanced if mode == "balanced" else ConversationStyle.precise
         response = await bot.ask(prompt=mtext, conversation_style=style, simplify_response=True)
-        text = f'{style}<pre>{mtext}</pre>\n\n{response["text"]}'
         links = re.findall(r'\[(\d+)\.\s(.*?)\]\((.*?)\)', response["sources_text"])
         for link in links:
             text = text.replace(f"[^{link[0]}^]", f'<a href="{link[2]}">[{link[0]}]</a>')
+        ttext = markdown.markdown(response["text"])
 
-        if len(text) > 4096 or istelegraph:
-            await telegraph.create_account(short_name="EdgeGPT")
-            text = markdown.markdown(text)
-            page = await telegraph.create_page(f"Bing-userlixo-{c.me.first_name}", html_content=text, author_name="EdgeGPT", author_url="https://t.me/UserLixo")
-            m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
+        page_content = f'<blockquote>{mtext}</blockquote>\n\n{ttext}'
+        page_title = f"EdgeGPT-userlixo-{c.me.first_name}"
+        author_info = {"author_name": "EdgeGPT", "author_url": "https://t.me/UserLixo"}
+
+        if path:
+            oldt = (await taccount.get_page(path))["content"]
+            page = await taccount.edit_page(path, title=page_title, html_content=oldt+page_content, **author_info)
         else:
-            m = await m.edit(text, disable_web_page_preview=True)
+            page = await taccount.create_page(page_title, html_content=page_content, **author_info)
         
-        bing_instances[m.id] = bot
+        m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"] if len(response["text"]) > 4096 or istelegraph else response["text"]}')
+        
+        bing_instances[m.id] = [bot, taccount, page["path"]]
     except Exception as e:
         await m.edit(str(e))
 
@@ -105,55 +110,69 @@ async def bingimg(c: Client, m: Message, t):
     else:
         await m.reply_media_group(photos)
 
-# This function is triggered when the ".bard" command is sent by a sudoer
 @Client.on_message((filters.command("bard", prefixes=".") | filter_bard) & filters.sudoers)
 @use_lang()
 async def bardc(c: Client, m: Message, t):
-    if m.reply_to_message_id and m.reply_to_message_id in bard_instances:
-        bot = bard_instances[m.reply_to_message_id]
-        mtext = m.text
-    else:
-        session = requests.Session()
-        session_cookies = json.load(open("bard_coockies.json", "r"))
-        secure_1psid = next((cookie["value"] for cookie in session_cookies if cookie["name"] == "__Secure-1PSID"), None)
+    try:
+        if m.reply_to_message_id and m.reply_to_message_id in bard_instances:
+            bot, taccount, path = bard_instances.pop(m.reply_to_message_id)
+            mtext = m.text
+        else:
+            taccount = Telegraph()
+            await taccount.create_account(short_name="Bard")
+            path = None
+            session = requests.Session()
+            session_cookies = json.load(open("bard_coockies.json", "r"))
+            secure_1psid = next((cookie["value"] for cookie in session_cookies if cookie["name"] == "__Secure-1PSID"), None)
 
-        for cookie in session_cookies:
-            session.cookies.set(cookie["name"], cookie["value"], domain=cookie["domain"], path=cookie["path"])
+            for cookie in session_cookies:
+                session.cookies.set(cookie["name"], cookie["value"], domain=cookie["domain"], path=cookie["path"])
 
-        session.headers = {
-            "Host": "bard.google.com",
-            "X-Same-Domain": "1",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.4472.114 Safari/537.36",
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-            "Origin": "https://bard.google.com",
-            "Referer": "https://bard.google.com/",
-        }
+            session.headers = {
+                "Host": "bard.google.com",
+                "X-Same-Domain": "1",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.4472.114 Safari/537.36",
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                "Origin": "https://bard.google.com",
+                "Referer": "https://bard.google.com/",
+            }
 
-        bot = Bard(session=session, token=secure_1psid)
-        mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(" ", maxsplit=1)[1]
+            bot = Bard(session=session, token=secure_1psid)
+            mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(" ", maxsplit=1)[1]
 
-    istelegraph = True if mtext.startswith("-t") else False
-    mtext = mtext[3:] if istelegraph else mtext
-    await m.edit(t("ai_bard_searching").format(text=mtext))
-    response = bot.get_answer(mtext)
-    text = f'<pre>{mtext}</pre>\n\n{response["content"]}'
+        istelegraph = mtext.startswith("-t")
+        mtext = mtext[3:] if istelegraph else mtext
+        await m.edit(t("ai_bard_searching").format(text=f"<pre>{mtext}</pre>"))
+        response = bot.get_answer(mtext)
+        text = f'<pre>{mtext}</pre>\n\n{response["content"]}'
 
-    if len(text) > 4096 or istelegraph:
-        await telegraph.create_account(short_name="Bard")
-        text = markdown.markdown(text)
-        for i in range(text.count("[Image of")):
-            inicio = text.index("[Image of")
-            fim = text.index("]", inicio) + 1
-            text = text[:inicio] + f"<img src='{response['images'][i]}'>" + text[fim:]
-        page = await telegraph.create_page(f"Bard-userlixo-{c.me.first_name}", html_content=text, author_name="Bard", author_url="https://t.me/UserLixo")
-        m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
-    elif response["images"]:
-        photos = [InputMediaPhoto(io.BytesIO((await http.get(i)).content), caption=text[:4096] if n == 0 else None) for n, i in enumerate(response["images"])]
-        m = await m.reply_media_group(photos)
-    else:
-        m = await m.edit(text[:4096])
+        ttext = markdown.markdown(response["content"])
+        for i in range(ttext.count("[Image of")):
+            inicio = ttext.index("[Image of")
+            fim = ttext.index("]", inicio) + 1
+            ttext = ttext[:inicio] + f"<img src='{response['images'][i]}'>" + ttext[fim:]
 
-    bard_instances[m.id] = bot
+        page_content = f'<blockquote>{mtext}</blockquote>\n\n{ttext}'
+        page_title = f"Bard-userlixo-{c.me.first_name}"
+        author_info = {"author_name": "Bard", "author_url": "https://t.me/UserLixo"}
+
+        if path:
+            oldt = (await taccount.get_page(path))["content"]
+            page = await taccount.edit_page(path, title=page_title, html_content=oldt+page_content, **author_info)
+        else:
+            page = await taccount.create_page(page_title, html_content=page_content, **author_info)
+
+        if len(text) > 4096 or istelegraph:
+            m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
+        elif response["images"]:
+            photos = [InputMediaPhoto(io.BytesIO((await http.get(i)).content), caption=text[:4096] if n == 0 else None) for n, i in enumerate(response["images"])]
+            m = (await m.reply_media_group(photos))[0]
+        else:
+            m = await m.edit(text[:4096])
+
+        bard_instances[m.id] = [bot, taccount, page["path"]]
+    except Exception as e:
+        await m.edit(str(e))
 
 plugins.append("bing")
 
