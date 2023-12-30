@@ -36,3 +36,7 @@ class PluginSetting(BaseModel):
 
     class Meta:
         table_name = 'pluginsetting'
+
+
+database.connect()
+database.create_tables([Config, Message, PluginSetting])
