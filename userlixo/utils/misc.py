@@ -3,6 +3,7 @@
 
 import asyncio
 import base64
+import locale
 import re
 
 
@@ -28,7 +29,7 @@ async def shell_exec(code, treat=True):
 
     stdout = (await process.communicate())[0]
     if treat:
-        stdout = stdout.decode().strip()
+        stdout = stdout.decode(locale.getpreferredencoding()).strip()
     return stdout, process
 
 

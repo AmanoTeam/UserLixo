@@ -1,7 +1,10 @@
+import datetime
 import os
 import platform
+import time
 from dataclasses import dataclass
 
+import psutil
 import pyrogram
 from kink import inject
 from pyrogram import Client, filters
@@ -24,22 +27,25 @@ class InfoMessageHandler(MessageHandler):
         act = message.edit if await filters.me(client, message) else message.reply
 
         pid = os.getpid()
-        uptime = (
-            await shell_exec(
-                "ps -o pid,etime --no-headers -p " + str(pid) + " | awk '{print $2}' "
-            )
-        )[0]
+        p = psutil.Process(pid)
+        start_time = p.create_time()
+        now_time = time.time()
+        uptime = datetime.timedelta(seconds=int(now_time - start_time))
 
         uname = (await shell_exec("uname -mons"))[0]
         local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
-        remote_version = int(
-            (
-                await shell_exec(
-                    "curl -s -I -k 'https://api.github.com/repos/AmanoTeam/UserLixo/commits?per_page=1'"
-                    + "| grep -oE '&page=[0-9]+>; rel=\"last\"' | grep -oE '[0-9]+' "
-                )
-            )[0]
-        )
+        try:
+            remote_version = int(
+                (
+                    await shell_exec(
+                        "curl -s -I -k 'https://api.github.com/repos/AmanoTeam/UserLixo/commits?per_page=1'"
+                        + "| grep -oE '&page=[0-9]+>; rel=\"last\"' | grep -oE '[0-9]+' "
+                    )
+                )[0]
+            )
+        except ValueError:
+            remote_version = "???"
+
         python_version = platform.python_version()
         pyrogram_version = pyrogram.__version__
 
@@ -47,7 +53,7 @@ class InfoMessageHandler(MessageHandler):
             lang.info_upgradable_to(version=remote_version)
             if local_version < remote_version
             else lang.info_latest
-        )
+        ) if remote_version is int else lang.unknown
 
         plugins_total = len(plugins)
 

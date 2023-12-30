@@ -63,7 +63,7 @@ the default value (if there be any). Let's get started![/]"
             exit()
         config["pyrogram"][key] = user_value
 
-    with Path("config.ini").open("w") as fp:
+    with Path("config.ini").open("w", encoding="utf-8") as fp:
         config.write(fp)
 
     from pyrogram import Client

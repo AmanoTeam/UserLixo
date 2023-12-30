@@ -31,14 +31,14 @@ all_keys = [x for x in all_keys if x not in reserved]
 
 for strings_path in Path(dir_path).rglob("*.yml"):
     synced = True
-    with Path(strings_path).open() as file:
+    with Path(strings_path).open(encoding="utf-8") as file:
         obj = yaml.safe_load(file)
         print(f"[blue]\n- {obj['NAME']} ({obj['LANGUAGE_CODE']})[/]")
 
     not_in_yml = [key for key in all_keys if key not in obj]
     for key in not_in_yml:
         to_write = f"\n{key}: |-\n    {key.upper()}\n"
-        with Path(strings_path).open("a") as file:
+        with Path(strings_path).open("a", encoding="utf-8") as file:
             if file.write(to_write):
                 synced = False
                 print(f'[green]    New key "{key}" written into {Path(file.name).name}[/]')

@@ -11,6 +11,7 @@ activate-virtualenv==0.1.5
 aiocron==1.8
 aiosqlite==0.17.0
 click==8.1.7
+colorama==0.4.6
 croniter==2.0.1
 distlib==0.3.7
 filelock==3.13.1
@@ -36,6 +37,7 @@ tgcrypto==1.2.5
 toml==0.10.2
 types-setuptools==68.2.0.0
 typing-extensions==4.8.0
+tzdata==2023.4
 tzlocal==5.2
 virtualenv==20.24.6
 # The following packages are considered to be unsafe in a requirements file:

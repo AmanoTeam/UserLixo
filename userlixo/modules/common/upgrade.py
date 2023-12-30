@@ -102,7 +102,7 @@ def get_branch_if_is_git():
     except FileNotFoundError:
         return None
 
-    with head_file.open() as f:
+    with head_file.open(encoding="utf-8") as f:
         content = f.read().splitlines()
 
     for line in content:
