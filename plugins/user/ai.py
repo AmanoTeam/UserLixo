@@ -139,11 +139,20 @@ async def bardc(c: Client, m: Message, t):
 
             bot = Bard(session=session, token=secure_1psid)
             mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(" ", maxsplit=1)[1]
+            if m.reply_to_message and len(m.text.split(" ", maxsplit=1)) >= 2:
+                mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
 
         istelegraph = mtext.startswith("-t")
         mtext = mtext[3:] if istelegraph else mtext
         await m.edit(t("ai_bard_searching").format(text=f"<pre>{mtext}</pre>"))
-        response = bot.get_answer(mtext)
+        if m.reply_to_message and (m.reply_to_message.photo or m.reply_to_message.sticker):
+            file = await c.download_media(m.reply_to_message, in_memory=True)
+            file_name = file.name
+            file_bytes = bytes(file.getbuffer())
+        else:
+            file_bytes = None
+            file_name = None
+        response = bot.get_answer(mtext, image=file_bytes, image_name=file_name)
         text = f'<pre>{mtext}</pre>\n\n{response["content"]}'
 
         ttext = markdown.markdown(response["content"])
