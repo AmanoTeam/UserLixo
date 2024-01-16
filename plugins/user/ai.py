@@ -7,6 +7,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InputMediaPhoto, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from BingImageCreator import ImageGen
 import io
+from tempfile import NamedTemporaryFile
 from utils import http
 from locales import use_lang
 import requests
@@ -99,6 +100,10 @@ async def bingimg(c: Client, m: Message, t):
 
     try:
         urls = img_gen.get_images(str(text))
+        for aurl in urls:
+            if aurl.endswith('.svg'):
+                urls.remove(aurl)
+
     except Exception as e:
         return await m.edit(str(e))
 
@@ -149,6 +154,9 @@ async def bardc(c: Client, m: Message, t):
             file = await c.download_media(m.reply_to_message, in_memory=True)
             file_name = file.name
             file_bytes = bytes(file.getbuffer())
+            with NamedTemporaryFile() as f:
+                f.write(file_bytes)
+                teleimg = await taccount.upload_file(f.name)
         else:
             file_bytes = None
             file_name = None
@@ -161,7 +169,8 @@ async def bardc(c: Client, m: Message, t):
             fim = ttext.index("]", inicio) + 1
             ttext = ttext[:inicio] + f"<img src='{response['images'][i]}'>" + ttext[fim:]
 
-        page_content = f'<blockquote>{mtext}</blockquote>\n\n{ttext}'
+        page_content =  f"<img src='https://telegra.ph{teleimg[0]['src']}'><br>\n\n" if teleimg else ""
+        page_content += f'<blockquote>{mtext}</blockquote>\n\n{ttext}'
         page_title = f"Bard-userlixo-{c.me.first_name}"
         author_info = {"author_name": "Bard", "author_url": "https://t.me/UserLixo"}
 
