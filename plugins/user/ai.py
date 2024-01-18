@@ -198,7 +198,12 @@ async def bardc(c: Client, m: Message, t):
             with NamedTemporaryFile() as f:
                 f.write(bytes(voice['audio']))
                 newm = m.reply_to_message if m.reply_to_message else m
-                newm = await m.reply_voice(f.name, caption=f'<pre>{mtext}</pre>\n\n{page["url"]}')
+                newm = await c.send_voice(
+                                          m.chat.id,
+                                          f.name, 
+                                          caption=f'<pre>{mtext}</pre>\n\n{page["url"]}',
+                                          reply_to_message_id=m.reply_to_message.id if m.reply_to_message else None
+                                          )
             if m.from_user.is_self:
                 await m.delete()
         elif len(text) > 4096 or istelegraph:
