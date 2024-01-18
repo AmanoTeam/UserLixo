@@ -118,6 +118,7 @@ async def bingimg(c: Client, m: Message, t):
 @Client.on_message((filters.command("bard", prefixes=".") | filter_bard) & filters.sudoers)
 @use_lang()
 async def bardc(c: Client, m: Message, t):
+    teleimg = None
     try:
         if m.reply_to_message_id and m.reply_to_message_id in bard_instances:
             bot, taccount, path = bard_instances.pop(m.reply_to_message_id)
@@ -143,20 +144,32 @@ async def bardc(c: Client, m: Message, t):
             }
 
             bot = Bard(session=session, token=secure_1psid)
-            mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(" ", maxsplit=1)[1]
-            if m.reply_to_message and len(m.text.split(" ", maxsplit=1)) >= 2:
-                mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            if m.reply_to_message and m.reply_to_message.text:
+                mtext = m.reply_to_message.text
+                if len(m.text.split(" ", maxsplit=1)) >= 2:
+                    mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            elif m.reply_to_message and m.reply_to_message.caption:
+                mtext = m.reply_to_message.caption
+                if len(m.text.split(" ", maxsplit=1)) >= 2:
+                    mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            else:
+                mtext = m.text.split(" ", maxsplit=1)[1]
 
         istelegraph = mtext.startswith("-t")
         mtext = mtext[3:] if istelegraph else mtext
+        isvoice = mtext.startswith("-v")
+        mtext = mtext[3:] if isvoice else mtext
         await m.edit(t("ai_bard_searching").format(text=f"<pre>{mtext}</pre>"))
         if m.reply_to_message and (m.reply_to_message.photo or m.reply_to_message.sticker):
             file = await c.download_media(m.reply_to_message, in_memory=True)
             file_name = file.name
             file_bytes = bytes(file.getbuffer())
-            with NamedTemporaryFile() as f:
-                f.write(file_bytes)
-                teleimg = await taccount.upload_file(f.name)
+            try:
+                with NamedTemporaryFile() as f:
+                    f.write(file_bytes)
+                    teleimg = await taccount.upload_file(f.name)
+            except:
+                pass
         else:
             file_bytes = None
             file_name = None
@@ -179,16 +192,23 @@ async def bardc(c: Client, m: Message, t):
             page = await taccount.edit_page(path, title=page_title, html_content=oldt+page_content, **author_info)
         else:
             page = await taccount.create_page(page_title, html_content=page_content, **author_info)
-
-        if len(text) > 4096 or istelegraph:
-            m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
+        if isvoice:
+            voice = bot.speech(response["content"])
+            with NamedTemporaryFile() as f:
+                f.write(bytes(voice['audio']))
+                newm = m.reply_to_message if m.reply_to_message else m
+                newm = await m.reply_voice(f.name, caption=f'<pre>{mtext}</pre>\n\n{page["url"]}')
+            if m.from_user.is_self:
+                await m.delete()
+        elif len(text) > 4096 or istelegraph:
+            newm = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
         elif response["images"]:
             photos = [InputMediaPhoto(io.BytesIO((await http.get(i)).content), caption=text[:4096] if n == 0 else None) for n, i in enumerate(response["images"])]
-            m = (await m.reply_media_group(photos))[0]
+            newm = (await m.reply_media_group(photos))[0]
         else:
-            m = await m.edit(text[:4096])
+            newm = await m.edit(text[:4096])
 
-        bard_instances[m.id] = [bot, taccount, page["path"]]
+        bard_instances[newm.id] = [bot, taccount, page["path"]]
     except Exception as e:
         await m.edit(str(e))
 
@@ -238,7 +258,7 @@ async def config_ai_mode(c: Client, cq: CallbackQuery, t):
 
 @bot.on_callback_query(filters.regex(r"config_plugin_ai_mode_"))
 @use_lang()
-async def config_ai_mode(c: Client, cq: CallbackQuery, t):
+async def config_ai_modes(c: Client, cq: CallbackQuery, t):
     await Config.get_or_create(id="bing")
     mode = cq.data.split("_")[-1]
     if mode == "creative":
