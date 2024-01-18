@@ -49,7 +49,7 @@ async def bing(c: Client, m: Message, t):
         else:
             bot = await Chatbot.create(cookies=json.load(open('./cookies.json', 'r', encoding='utf-8'))) if os.path.exists('./cookies.json') else await Chatbot.create()
             taccount = Telegraph()
-            taccount.create_account(short_name="EdgeGPT")
+            await taccount.create_account(short_name="EdgeGPT")
             path = None
             mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(".bing ", maxsplit=1)[1]
             if m.reply_to_message and len(m.text.split(" ", maxsplit=1)) >= 2:
@@ -64,6 +64,7 @@ async def bing(c: Client, m: Message, t):
             style = ConversationStyle.balanced if mode == "balanced" else ConversationStyle.precise
         response = await bot.ask(prompt=mtext, conversation_style=style, simplify_response=True)
         links = re.findall(r'\[(\d+)\.\s(.*?)\]\((.*?)\)', response["sources_text"])
+        text = response["text"]
         for link in links:
             text = text.replace(f"[^{link[0]}^]", f'<a href="{link[2]}">[{link[0]}]</a>')
         ttext = markdown.markdown(response["text"])
@@ -78,7 +79,7 @@ async def bing(c: Client, m: Message, t):
         else:
             page = await taccount.create_page(page_title, html_content=page_content, **author_info)
         
-        m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"] if len(response["text"]) > 4096 or istelegraph else response["text"]}')
+        m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"] if len(response["text"]) > 4096 or istelegraph else text[:4096]}')
         
         bing_instances[m.id] = [bot, taccount, page["path"]]
     except Exception as e:
