@@ -38,25 +38,60 @@ async def filter_bard_logic(flt, client:Client, message: Message):
 
 filter_bard = filters.create(filter_bard_logic)
 
+async def update_page(taccount, path, page_title, page_content, author_info):
+    if path:
+        oldt = (await taccount.get_page(path))["content"]
+        page = await taccount.edit_page(path, title=page_title, html_content=oldt+page_content, **author_info)
+    else:
+        page = await taccount.create_page(page_title, html_content=page_content, **author_info)
+    return page
+
+async def process_mode(mtext, mmode):
+    if mtext.startswith("-m"):
+        mmode = "message"
+        mtext = mtext[3:]
+    elif mtext.startswith("-t"):
+        mmode = "telegraph"
+        mtext = mtext[3:]
+    elif mtext.startswith("-v"):
+        mmode = "voice"
+        mtext = mtext[3:]
+    elif not mmode:
+        mmode = "message"
+    return mmode, mtext
+
 # This function is triggered when the ".bing" command is sent by a sudoer
 @Client.on_message((filters.command("bing", prefixes=".") | filter_bing) & filters.sudoers)
 @use_lang()
 async def bing(c: Client, m: Message, t):
+    mmode = None
     try:
         if m.reply_to_message_id and m.reply_to_message_id in bing_instances:
-            bot, taccount, path = bing_instances.pop(m.reply_to_message_id)
+            bot, taccount, path, mmode = bing_instances.pop(m.reply_to_message_id)
             mtext = m.text
         else:
             bot = await Chatbot.create(cookies=json.load(open('./cookies.json', 'r', encoding='utf-8'))) if os.path.exists('./cookies.json') else await Chatbot.create()
             taccount = Telegraph()
             await taccount.create_account(short_name="EdgeGPT")
             path = None
-            mtext = m.reply_to_message.text if m.reply_to_message and m.reply_to_message.text else m.reply_to_message.caption if m.reply_to_message else m.text.split(".bing ", maxsplit=1)[1]
-            if m.reply_to_message and len(m.text.split(" ", maxsplit=1)) >= 2:
-                mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            if m.reply_to_message and m.reply_to_message.text:
+                mtext = m.reply_to_message.text
+                if len(m.text.split(" ", maxsplit=1)) >= 2:
+                    mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            elif m.reply_to_message and m.reply_to_message.caption:
+                mtext = m.reply_to_message.caption
+                if len(m.text.split(" ", maxsplit=1)) >= 2:
+                    mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            elif m.reply_to_message and m.reply_to_message.poll:
+                mtext = m.reply_to_message.poll.question+"\n"
+                for n, option in enumerate(m.reply_to_message.poll.options):
+                    mtext += f"\n{n+1}) {option.text}"
+                if len(m.text.split(" ", maxsplit=1)) >= 2:
+                    mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            else:
+                mtext = m.text.split(" ", maxsplit=1)[1]
 
-        istelegraph = mtext.startswith("-t")
-        mtext = mtext[3:] if istelegraph else mtext
+        mmode, mtext = await process_mode(mtext, mmode)
         await m.edit(t("ai_bing_searching").format(text=f"<pre>{mtext}</pre>"))
         style = ConversationStyle.creative
         if await Config.filter(id="bing").exists():
@@ -73,15 +108,14 @@ async def bing(c: Client, m: Message, t):
         page_title = f"EdgeGPT-userlixo-{c.me.first_name}"
         author_info = {"author_name": "EdgeGPT", "author_url": "https://t.me/UserLixo"}
 
-        if path:
-            oldt = (await taccount.get_page(path))["content"]
-            page = await taccount.edit_page(path, title=page_title, html_content=oldt+page_content, **author_info)
+        page = await update_page(taccount, path, page_title, page_content, author_info)
+        
+        if len(text) > 4096 or mmode == "telegraph":
+            newm = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
         else:
-            page = await taccount.create_page(page_title, html_content=page_content, **author_info)
+            newm = await m.edit(f"<pre>{mtext}</pre>\n\n{text[:4096]}")
         
-        m = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"] if len(response["text"]) > 4096 or istelegraph else text[:4096]}')
-        
-        bing_instances[m.id] = [bot, taccount, page["path"]]
+        bing_instances[newm.id] = [bot, taccount, page["path"], mmode]
     except Exception as e:
         await m.edit(str(e))
 
@@ -120,9 +154,10 @@ async def bingimg(c: Client, m: Message, t):
 @use_lang()
 async def bardc(c: Client, m: Message, t):
     teleimg = None
+    mmode = None
     try:
         if m.reply_to_message_id and m.reply_to_message_id in bard_instances:
-            bot, taccount, path = bard_instances.pop(m.reply_to_message_id)
+            bot, taccount, path, mmode = bard_instances.pop(m.reply_to_message_id)
             mtext = m.text
         else:
             taccount = Telegraph()
@@ -153,13 +188,16 @@ async def bardc(c: Client, m: Message, t):
                 mtext = m.reply_to_message.caption
                 if len(m.text.split(" ", maxsplit=1)) >= 2:
                     mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
+            elif m.reply_to_message and m.reply_to_message.poll:
+                mtext = m.reply_to_message.poll.question+"\n"
+                for n, option in enumerate(m.reply_to_message.poll.options):
+                    mtext += f"\n{n+1}) {option.text}"
+                if len(m.text.split(" ", maxsplit=1)) >= 2:
+                    mtext = m.text.split(" ", maxsplit=1)[1] + "\n" + f"\"{mtext}\""
             else:
                 mtext = m.text.split(" ", maxsplit=1)[1]
-
-        istelegraph = mtext.startswith("-t")
-        mtext = mtext[3:] if istelegraph else mtext
-        isvoice = mtext.startswith("-v")
-        mtext = mtext[3:] if isvoice else mtext
+        
+        mmode, mtext = await process_mode(mtext, mmode)
         await m.edit(t("ai_bard_searching").format(text=f"<pre>{mtext}</pre>"))
         if m.reply_to_message and (m.reply_to_message.photo or m.reply_to_message.sticker):
             file = await c.download_media(m.reply_to_message, in_memory=True)
@@ -188,12 +226,8 @@ async def bardc(c: Client, m: Message, t):
         page_title = f"Bard-userlixo-{c.me.first_name}"
         author_info = {"author_name": "Bard", "author_url": "https://t.me/UserLixo"}
 
-        if path:
-            oldt = (await taccount.get_page(path))["content"]
-            page = await taccount.edit_page(path, title=page_title, html_content=oldt+page_content, **author_info)
-        else:
-            page = await taccount.create_page(page_title, html_content=page_content, **author_info)
-        if isvoice:
+        page = await update_page(taccount, path, page_title, page_content, author_info)
+        if mmode == "voice":
             voice = bot.speech(response["content"])
             with NamedTemporaryFile() as f:
                 f.write(bytes(voice['audio']))
@@ -206,7 +240,7 @@ async def bardc(c: Client, m: Message, t):
                                           )
             if m.from_user.is_self:
                 await m.delete()
-        elif len(text) > 4096 or istelegraph:
+        elif len(text) > 4096 or mmode == "telegraph":
             newm = await m.edit(f'<pre>{mtext}</pre>\n\n{page["url"]}')
         elif response["images"]:
             photos = [InputMediaPhoto(io.BytesIO((await http.get(i)).content), caption=text[:4096] if n == 0 else None) for n, i in enumerate(response["images"])]
@@ -214,7 +248,7 @@ async def bardc(c: Client, m: Message, t):
         else:
             newm = await m.edit(text[:4096])
 
-        bard_instances[newm.id] = [bot, taccount, page["path"]]
+        bard_instances[newm.id] = [bot, taccount, page["path"], mmode]
     except Exception as e:
         await m.edit(str(e))
 
