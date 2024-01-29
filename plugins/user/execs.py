@@ -11,18 +11,18 @@ from locales import use_lang
 
 @Client.on_message(filters.command("exec", prefixes=".") & filters.sudoers)
 @use_lang()
-async def execs(client: Client, message: Message, t):
+async def execs(c: Client, m: Message, t):
     strio = io.StringIO()
-    code = re.split(r"[\n ]+", message.text, 1)[1]
+    code = re.split(r"[\n ]+", m.text, 1)[1]
     exec(
-        "async def __ex(client: Client, message: Message): "
+        "async def __ex(c: Client, m: Message): "
         + " ".join("\n " + l for l in code.split("\n"))
     )
     with redirect_stdout(strio):
         try:
-            await locals()["__ex"](client, message)
+            await locals()["__ex"](c, m)
         except:
-            return await message.reply_text(
+            return await m.reply_text(
                 html.escape(traceback.format_exc()), parse_mode=ParseMode.HTML
             )
 
@@ -30,5 +30,5 @@ async def execs(client: Client, message: Message, t):
         out = f"<code>{html.escape(strio.getvalue())}</code>"
     else:
         out = t("exec_seucess")
-    await message.edit(out, parse_mode=ParseMode.HTML)
+    await m.edit(out, parse_mode=ParseMode.HTML)
 

@@ -57,7 +57,10 @@ async def process_mode(mtext, mmode):
         mmode = "voice"
         mtext = mtext[3:]
     elif not mmode:
-        mmode = "message"
+        mmode = (await Config.get_or_create(id="bard"))[0].value
+        print(mmode)
+        if not mmode:
+            mmode = "message"
     return mmode, mtext
 
 # This function is triggered when the ".bing" command is sent by a sudoer
@@ -312,6 +315,73 @@ async def config_ai_modes(c: Client, cq: CallbackQuery, t):
             InlineKeyboardButton(
                 text=t("back"),
                 callback_data="config_plugin_bing"
+            )
+        ]
+    ]))
+
+plugins.append("bard")
+
+@bot.on_callback_query(filters.regex(r"\bconfig_plugin_bard\b"))
+@use_lang()
+async def config_bard(c: Client, cq: CallbackQuery, t):
+    await cq.edit(t("bard_settings"), reply_markup=InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=t("ai_mode"),
+                callback_data="config_plugin_bard_mode"
+            )
+        ],[
+            InlineKeyboardButton(
+                text=t("back"),
+                callback_data="config_plugins"
+            )
+        ]
+    ]))
+
+@bot.on_callback_query(filters.regex(r"\bconfig_plugin_bard_mode\b"))
+@use_lang()
+async def config_bard_mode(c: Client, cq: CallbackQuery, t):
+    bc = await Config.get_or_create(id="bard")
+    if bc[0].value:
+        mode = bc[0].value
+    else:
+        mode = "message"
+    await cq.edit(t("ai_mode_choose"), reply_markup=InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=t(f"ai_mode_{mode}"),
+                callback_data="config_plugin_bard_mode_toggle"
+            ),
+        ], [
+            InlineKeyboardButton(
+                text=t("back"),
+                callback_data="config_plugin_bard"
+            )
+        ]
+    ]))
+
+@bot.on_callback_query(filters.regex(r"\bconfig_plugin_bard_mode_toggle\b"))
+@use_lang()
+async def config_bard_mode_toggle(c: Client, cq: CallbackQuery, t):
+    bc = await Config.get(id="bard")
+    if bc.value:
+        mode = bc.value
+    else:
+        mode = "message"
+    modes = ["message", "voice", "telegraph"]
+    mode = modes[(modes.index(mode)+1)%len(modes)]
+    
+    await Config.filter(id="bard").update(value=mode)
+    await cq.edit(t("ai_mode_choose"), reply_markup=InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                text=t(f"ai_mode_{mode}"),
+                callback_data="config_plugin_bard_mode_toggle"
+            ),
+        ], [
+            InlineKeyboardButton(
+                text=t("back"),
+                callback_data="config_plugin_bard"
             )
         ]
     ]))
