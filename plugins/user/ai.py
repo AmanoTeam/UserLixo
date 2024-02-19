@@ -153,7 +153,7 @@ async def bingimg(c: Client, m: Message, t):
     else:
         await m.reply_media_group(photos)
 
-@Client.on_message((filters.command("bard", prefixes=".") | filter_bard) & filters.sudoers)
+@Client.on_message((filters.command(["bard", "gemini"], prefixes=".") | filter_bard) & filters.sudoers)
 @use_lang()
 async def bardc(c: Client, m: Message, t):
     teleimg = None
@@ -174,12 +174,12 @@ async def bardc(c: Client, m: Message, t):
                 session.cookies.set(cookie["name"], cookie["value"], domain=cookie["domain"], path=cookie["path"])
 
             session.headers = {
-                "Host": "bard.google.com",
+                "Host": "gemini.google.com",
                 "X-Same-Domain": "1",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.4472.114 Safari/537.36",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-                "Origin": "https://bard.google.com",
-                "Referer": "https://bard.google.com/",
+                "Origin": "https://gemini.google.com",
+                "Referer": "https://gemini.google.com/",
             }
 
             bot = Bard(session=session, token=secure_1psid)
