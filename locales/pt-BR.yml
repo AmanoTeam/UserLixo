@@ -16,6 +16,10 @@ choose_options: "Escolha uma das opções:"
 #execs.py
 exec_seucess: Executado com sucesso.
 #kibe.py
+kibe_choose: Por favor, escolha o formato do kibe
+sticker: Sticker
+emoji: Emoji
+both: Os dois
 kibe_wait: '👍 Processando...'
 kibe_resize_video: '📹 Redimensionando vídeo...'
 kibe_resize_photo: '🖼️ Redimensionando foto...'
