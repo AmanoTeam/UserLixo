@@ -49,10 +49,10 @@ async def kibe(c: Client, m: Message, t):
     if rmsg:
         keyb = [
             [
-                ("Sticker", f"kibes_{m.chat.id}_{rmsg.id}_{emoji}"),
-                ("Emoji", f"kibee_{m.chat.id}_{rmsg.id}_{emoji}"),
+                (t("sticker"), f"kibes_{m.chat.id}_{rmsg.id}_{emoji}"),
+                (t("emoji"), f"kibee_{m.chat.id}_{rmsg.id}_{emoji}"),
             ], [
-                ("Both", f"kibea_{m.chat.id}_{rmsg.id}_{emoji}"),
+                (t("both"), f"kibea_{m.chat.id}_{rmsg.id}_{emoji}"),
             ]
         ]
 
@@ -306,14 +306,14 @@ async def resize_video(video, ctime, maxsize):
 
     # Set the bitrate based on the max size
     if maxsize == (512, 512):
-        file = "0.5M"
+        bitrate = 256
     else:
-        file = "0.05M"
+        bitrate = 64
 
     # Define the command to resize the video using ffmpeg
     command = [
         "ffmpeg", "-i", video, "-vf", f"scale={maxsize[0]}:{scale}",
-        "-c:v", "libvpx-vp9", "-b:v", file, "-r", "30", "-t", "3", "-an", f"n{ctime}.webm"
+        "-c:v", "libvpx-vp9", "-b:v", f"{bitrate}k", "-r", "30", "-t", "3", "-an", f"n{ctime}.webm"
     ]
 
     # Run the command
