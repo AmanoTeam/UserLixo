@@ -16,6 +16,10 @@ choose_options: "Elektu unu el la opcioj:"
 #execs.py
 exec_seucess: Ekzekutita sukcese.
 #kibe.py
+kibe_choose: Please choose the kibe format
+sticker: Sticker
+emoji: Emoji
+both: Both
 kibe_wait: '👍 Prilaborado...'
 kibe_resize_video: '📹 Regrandigo de video...'
 kibe_resize_photo: '🖼️ Regrandigo de foto...'
