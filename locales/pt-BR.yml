@@ -62,18 +62,18 @@ fake_init: Iniciando Fake do usuário {mention}...
 fake_back: Voltando para o perfil original...
 fake_done: Agora eu sou o {mention}!
 #ai.py
-ai_bing_searching: "Procurando \"{text}\" no Bing..."
+ai_bing_searching: "Procurando \"{text}\" no Copilot..."
 ai_no_text: "Você precisa enviar um texto para pesquisar ou fazer imagem."
 ai_making_image: "Fazendo uma imagem com \"{text}\"..."
-ai_bard_searching: "Procurando \"{text}\" no bard..."
-bing_config_button: "Configurações do BingAI"
-bing_settings: "Configurações do BingAI"
-ai_mode: "alterar estilo BingAI"
+ai_bard_searching: "Procurando \"{text}\" no Gemini..."
+bing_config_button: "Configurações do Copilot AI"
+bing_settings: "Configurações do Copilot AI"
+ai_mode: "alterar estilo Copilot AI"
 ai_mode_choose: "Escolha uma das opções:"
 ai_mode_creative: "Criativo"
 ai_mode_balanced: "Balanceado"
 ai_mode_precise: "Precisa"
-ai_mode_changed: "Estilo BingAI alterado para o estilo {style}."
+ai_mode_changed: "Estilo Copilot AI alterado para o estilo {style}."
 #upgrade.py
 not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
 upgrade_in_progress: "Atualizando a source do branch '{branch}'..."
