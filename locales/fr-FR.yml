@@ -80,6 +80,8 @@ upgrade_in_progress: "\"Mise à jour des sources à partir de la branche '{branc
 already_up_to_date: "Il n'y a rien à mettre à jour à partir de la branche '{branch}'."
 restarting: "Redémarrage..."
 upgrade_failed: "La mise à jour à partir de la branche '{branch}' a échoué (le processus s'est terminé avec le code de retour {returncode}) : \\n{decode}"
+updating_requirements: "Updating requirements..."
+requirements_update_failed: "Requirements update failed:\n{decode}"
 #youtube.py
 ytdl_missing_argument: "Missing argument: URL or search query."
 ytdl_audio_button: "💿 Audio"
