@@ -1,8 +1,8 @@
 import os
 from dataclasses import dataclass
 
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import sudoers
 from userlixo.database import Config
@@ -29,7 +29,9 @@ class RemoveSudoerCallbackQueryHandler(CallbackQueryHandler):
         removed = [x for x in sudoers if x != who]
         sudoers[:] = removed
 
-        Config.update(value=" ".join([*map(str, sudoers)])).where(Config.key == "SUDOERS_LIST").execute()
+        Config.update(value=" ".join([*map(str, sudoers)])).where(
+            Config.key == "SUDOERS_LIST"
+        ).execute()
         os.environ["SUDOERS_LIST"] = " ".join([*map(str, sudoers)])
 
         text, keyboard = await compose_list_sudoers_message(

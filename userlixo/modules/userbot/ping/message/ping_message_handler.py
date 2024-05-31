@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 
+from hydrogram import Client
+from hydrogram.enums import ChatAction
+from hydrogram.types import Message
 from kink import inject
-from pyrogram import Client
-from pyrogram.enums import ChatAction
-from pyrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.utils.services.language_selector import LanguageSelector
@@ -15,10 +15,11 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class PingMessageHandler(MessageHandler):
     language_selector: LanguageSelector
 
-    async def handle_message(self, client: Client, message: Message):
-        before = datetime.now()
+    @staticmethod
+    async def handle_message(client: Client, message: Message):
+        before = datetime.now(tz=UTC)
         await client.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
-        after = datetime.now()
+        after = datetime.now(tz=UTC)
         diff_ms = (after - before).microseconds / 1000
 
         keyboard = [[("🏓", "ping")]]

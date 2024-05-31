@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from pyrogram import Client
-from pyrogram.types import CallbackQuery
+from hydrogram import Client
+from hydrogram.types import CallbackQuery
 
 
 class CallbackQueryHandler(ABC):

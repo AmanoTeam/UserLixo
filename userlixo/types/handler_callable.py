@@ -1,6 +1,6 @@
 from collections.abc import Callable
 
-from pyrogram.handlers.handler import Handler
+from hydrogram.handlers.handler import Handler
 
 
 class HandlerCallable(Callable):

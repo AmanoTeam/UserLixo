@@ -1,10 +1,10 @@
 import re
 from dataclasses import dataclass
 
+from hydrogram import filters
+from hydrogram.helpers import force_reply, ikb
+from hydrogram.types import Message
 from kink import inject
-from pyrogram import filters
-from pyrogram.helpers import force_reply, ikb
-from pyrogram.types import Message
 
 from userlixo.config import sudoers, user
 from userlixo.database import Config
@@ -30,7 +30,9 @@ class AddSudoerMessageHandler(MessageHandler):
         sudoers_list = sudoers_str.split(" ")
         sudoers_list.append(response.text.lstrip("@"))
         sudoers[:] = [user.me.id, *sudoers_list]
-        Config.update(value=" ".join(map(str, sudoers_list))).where(Config.key == "SUDOERS_LIST").execute()
+        Config.update(value=" ".join(map(str, sudoers_list))).where(
+            Config.key == "SUDOERS_LIST"
+        ).execute()
 
         keyboard = ikb([[(lang.back, "setting_sudoers")]])
         await m.reply(lang.sudoer_added, keyboard)

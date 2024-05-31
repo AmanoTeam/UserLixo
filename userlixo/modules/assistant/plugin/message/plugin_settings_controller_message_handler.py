@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
+from hydrogram import Client
+from hydrogram.types import Message
 from kink import inject
-from pyrogram import Client
-from pyrogram.types import Message
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import MessageHandler
@@ -27,9 +27,7 @@ class PluginSettingsMessageHandler(MessageHandler):
             return await message.reply(lang.plugin_not_found(name=plugin_name))
 
         if not plugin_info.settings:
-            return await message.reply(
-                lang.plugin_settings_not_found(plugin_name=plugin_name)
-            )
+            return await message.reply(lang.plugin_settings_not_found(plugin_name=plugin_name))
 
         await client.stop_listening(chat_id=message.chat.id)
 

@@ -1,12 +1,12 @@
 import json
 
-from kink import inject
-from pyrogram.helpers import ikb
-from pyrogram.types import (
+from hydrogram.helpers import ikb
+from hydrogram.types import (
     InlineQuery,
     InlineQueryResultArticle,
     InputTextMessageContent,
 )
+from kink import inject
 
 from userlixo.database import Message
 from userlixo.modules.abstract import InlineQueryHandler
@@ -14,7 +14,8 @@ from userlixo.modules.abstract import InlineQueryHandler
 
 @inject
 class IndexInlineQueryHandler(InlineQueryHandler):
-    async def handle_inline_query(self, _c, iq: InlineQuery):
+    @staticmethod
+    async def handle_inline_query(_c, iq: InlineQuery):
         index = int(iq.matches[0]["index"])
         message = Message.get_or_none(Message.key == index)
         if not message:

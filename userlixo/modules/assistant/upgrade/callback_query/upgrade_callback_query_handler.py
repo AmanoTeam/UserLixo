@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
+from hydrogram.helpers import ikb
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.helpers import ikb
-from pyrogram.types import CallbackQuery
 
 from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.modules.common.restart import save_before_restart_message_info
@@ -36,7 +36,7 @@ class UpgradeCallbackQueryHandler(CallbackQueryHandler):
                 chat_id = query.message.chat.id
                 message_id = query.message.id
 
-            await save_before_restart_message_info(message_id, chat_id, "bot")
+            save_before_restart_message_info(message_id, chat_id, "bot")
             await edit_message(text)
 
         await (

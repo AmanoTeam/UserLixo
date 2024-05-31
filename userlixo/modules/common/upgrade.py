@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 from langs import Langs
@@ -146,11 +146,11 @@ async def git_pull_from_branch(branch: str):
     return stdout, process
 
 
-async def save_before_upgrade_message_info(message_id: int, chat_id: int, from_client: str):
+def save_before_upgrade_message_info(message_id: int, chat_id: int, from_client: str):
     query = Config.delete().where(Config.key == "restarting_alert")
     query.execute()
 
-    timestamp = datetime.now().timestamp()
+    timestamp = datetime.now(tz=UTC).timestamp()
 
     Config.create(
         key="restarting_alert",

@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import BinaryIO
 
+from hydrogram.types import Message
 from kink import inject
-from pyrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.cmd import cmd

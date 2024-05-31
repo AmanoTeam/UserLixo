@@ -3,12 +3,12 @@ import re
 import traceback
 from collections.abc import Callable
 
+from hydrogram import Client
+from hydrogram.types import Message
 from meval import meval
-from pyrogram import Client
-from pyrogram.types import Message
 
 
-async def evals(
+async def evals(  # noqa: PLR0917
     eval_code: str,
     client: Client,
     message: Message,

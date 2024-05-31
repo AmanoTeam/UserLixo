@@ -1,11 +1,11 @@
 import logging
 from dataclasses import dataclass
 
+from hydrogram import filters
+from hydrogram.errors import ListenerStopped
+from hydrogram.helpers import ikb
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram import filters
-from pyrogram.errors import ListenerStopped
-from pyrogram.helpers import ikb
-from pyrogram.types import CallbackQuery
 
 from userlixo.database import Config
 from userlixo.modules.abstract import CallbackQueryHandler
@@ -38,12 +38,10 @@ class EditEnvCallbackQueryHandler(CallbackQueryHandler):
                 Config.update(value=msg.text).where(Config.key == key).execute()
                 if key in env_requires_restart:
                     text = lang.edit_env_text_restart(key=key, value=msg.text)
-                    keyboard = ikb(
-                        [
-                            [(lang.restart_now, "restart_now")],
-                            [(lang.back, "setting_env")],
-                        ]
-                    )
+                    keyboard = ikb([
+                        [(lang.restart_now, "restart_now")],
+                        [(lang.back, "setting_env")],
+                    ])
                 else:
                     text = lang.edit_env_text(key=key, value=msg.text)
                     keyboard = ikb([[(lang.back, "setting_env")]])

@@ -3,7 +3,7 @@ from .setting_sudoers_callback_query_handler import SettingSudoersCallbackQueryH
 from .sudoer_callback_query_controller import SudoerCallbackQueryController
 
 __all__ = [
-    "SudoerCallbackQueryController",
     "RemoveSudoerCallbackQueryHandler",
     "SettingSudoersCallbackQueryHandler",
+    "SudoerCallbackQueryController",
 ]

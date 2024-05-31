@@ -1,4 +1,5 @@
-from ...decorators import controller
+from userlixo.decorators import controller
+
 from .about import AboutController
 from .execs import ExecsController
 from .help import HelpController

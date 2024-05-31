@@ -2,9 +2,9 @@ import math
 from dataclasses import dataclass
 from pathlib import Path
 
+from hydrogram.helpers import ikb
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.helpers import ikb
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import CallbackQueryHandler
@@ -45,10 +45,10 @@ class ConfirmAddPluginCallbackQueryHandler(CallbackQueryHandler):
         )
 
         try:
-            await load_plugin(basename)
+            load_plugin(basename)
         except Exception as e:
             await query.edit(lang.plugin_could_not_load(e=str(e)))
-            await unload_and_remove_plugin(basename)
+            unload_and_remove_plugin(basename)
             return
 
         await query.edit(

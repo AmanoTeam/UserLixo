@@ -2,9 +2,9 @@
 # Copyright (c) 2018-2022 Amano Team
 
 
-from peewee import *
+from peewee import AutoField, CharField, Model, SqliteDatabase
 
-database = SqliteDatabase('userlixo/database/database.sqlite')
+database = SqliteDatabase("userlixo/database/database.sqlite")
 
 
 class BaseModel(Model):
@@ -17,7 +17,7 @@ class Config(BaseModel):
     value = CharField()
 
     class Meta:
-        table_name = 'config'
+        table_name = "config"
 
 
 class Message(BaseModel):
@@ -26,7 +26,7 @@ class Message(BaseModel):
     text = CharField()
 
     class Meta:
-        table_name = 'message'
+        table_name = "message"
 
 
 class PluginSetting(BaseModel):
@@ -35,7 +35,7 @@ class PluginSetting(BaseModel):
     value = CharField()
 
     class Meta:
-        table_name = 'pluginsetting'
+        table_name = "pluginsetting"
 
 
 database.connect()

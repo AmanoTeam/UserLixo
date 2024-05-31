@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from pyrogram import Client, filters
+from hydrogram import Client, filters
 
 from userlixo.decorators import controller, on_message
 
@@ -17,14 +17,14 @@ class ExecsMessageController:
     eval_handler: EvalMessageHandler
     exec_handler: ExecMessageHandler
 
-    @on_message(filters.regex(r"^/(?P<command>cmd|sh)\s+(?P<code>.+)", flags=re.S))
+    @on_message(filters.regex(r"^/(?P<command>cmd|sh)\s+(?P<code>.+)", flags=re.DOTALL))
     async def cmd_sh(self, client: Client, message):
         await self.cmd_handler.handle_message(client, message)
 
-    @on_message(filters.regex(r"^/(?P<cmd>ex(ec)?)\s+(?P<code>.+)", flags=re.S))
+    @on_message(filters.regex(r"^/(?P<cmd>ex(ec)?)\s+(?P<code>.+)", flags=re.DOTALL))
     async def execs(self, client: Client, message):
         await self.exec_handler.handle_message(client, message)
 
-    @on_message(filters.regex(r"^/(?P<cmd>ev(al)?)\s+(?P<code>.+)", flags=re.S))
+    @on_message(filters.regex(r"^/(?P<cmd>ev(al)?)\s+(?P<code>.+)", flags=re.DOTALL))
     async def evals(self, client: Client, message):
         await self.eval_handler.handle_message(client, message)

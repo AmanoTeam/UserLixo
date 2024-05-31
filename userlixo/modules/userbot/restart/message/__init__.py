@@ -1,4 +1,4 @@
 from .restart_message_controller import RestartMessageController
 from .restart_message_handler import RestartMessageHandler
 
-__all__ = ["RestartMessageHandler", "RestartMessageController"]
+__all__ = ["RestartMessageController", "RestartMessageHandler"]

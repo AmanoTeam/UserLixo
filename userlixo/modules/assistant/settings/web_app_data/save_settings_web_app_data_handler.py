@@ -2,8 +2,8 @@ import json
 import os
 from dataclasses import dataclass
 
+from hydrogram.types import Message, ReplyKeyboardRemove
 from kink import inject
-from pyrogram.types import Message, ReplyKeyboardRemove
 
 from userlixo.config import sudoers, user
 from userlixo.database import Config
@@ -16,8 +16,9 @@ from userlixo.utils.services.language_selector import LanguageSelector
 class SaveSettingsWebAppDataHandler(WebAppDataHandler):
     language_selector: LanguageSelector
 
-    async def handle_web_app_data(self, _c, m: Message):
-        async def update_config(key, value):
+    @staticmethod
+    async def handle_web_app_data(_c, m: Message):
+        def update_config(key, value):
             for obj in Config.select(Config.key == key):
                 obj.value = value
                 obj.save()

@@ -7,11 +7,12 @@ import os
 from pathlib import Path
 
 import aiocron
+from hydrogram import idle
 from kink import di
-from pyrogram import idle
 from rich.console import Console
 from rich.logging import RichHandler
 
+from userlixo.login import main as login
 from userlixo.modules import (
     AssistantController,
     UserbotController,
@@ -72,7 +73,7 @@ async def bootstrap():
     logger.debug("Loaded controllers!")
 
     logger.debug("Loading plugins...")
-    await load_all_installed_plugins()
+    load_all_installed_plugins()
     logger.debug("Loaded plugins!")
 
     logger.debug("Editing restart alert...")
@@ -82,12 +83,11 @@ async def bootstrap():
 
 async def main():
     logger.debug("Loading env vars...")
-    await load_env()
+    load_env()
     logger.debug("Loaded env vars!")
 
     if not Path("user.session").exists() or not Path("bot.session").exists():
         logger.debug("No sessions found, starting login...")
-        from userlixo.login import main as login
 
         await login()
         logger.debug("Logged in!")

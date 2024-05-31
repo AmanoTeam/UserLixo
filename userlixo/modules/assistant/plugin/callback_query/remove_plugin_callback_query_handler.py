@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from pathlib import Path
 
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import CallbackQueryHandler
@@ -30,7 +30,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
         if not Path(plugin.folder_path).exists():
             return await query.edit(lang.plugin_not_exists_on_server)
 
-        await unload_and_remove_plugin(basename)
+        unload_and_remove_plugin(basename)
         del plugins[basename]
 
         await query.answer(lang.plugin_removed(name=basename))
@@ -38,7 +38,7 @@ class RemovePluginCallbackQueryHandler(CallbackQueryHandler):
 
         is_inline = query.inline_message_id is not None
 
-        text, keyboard = await compose_list_plugins_message(
+        text, keyboard = compose_list_plugins_message(
             lang, page, append_back=True, use_deeplink=is_inline
         )
         await query.edit(text, reply_markup=keyboard)

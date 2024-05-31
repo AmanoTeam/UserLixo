@@ -36,7 +36,7 @@ class ValidateSetting:
         if not isinstance(self.setting.label, str):
             errors.append("label must be a string")
 
-        if self.setting.label.strip() == "":
+        if not self.setting.label.strip():
             errors.append("label cannot be empty")
 
         if self.setting.description and not isinstance(self.setting.description, str):
@@ -139,7 +139,8 @@ class ValidateSettingValue:
         if self.setting.type == SettingsType.select:
             return self.select(value)
 
-        raise ValueError(f"Invalid setting type: {self.setting.type}")
+        msg = f"Invalid setting type: {self.setting.type}"
+        raise ValueError(msg)
 
     def str(self, value: str) -> list[str]:
         errors = []
@@ -179,13 +180,14 @@ class ValidateSettingValue:
 
         return []
 
-    def bool(self, value) -> list[str]:
+    @staticmethod
+    def bool(value) -> list[str]:
         errors = []
 
         if not isinstance(value, bool) and not isinstance(value, str):
             errors.append("This value must be a boolean or a string that represents a boolean.")
 
-        if not isinstance(value, bool) and value.lower() not in ("true", "false"):
+        if not isinstance(value, bool) and value.lower() not in {"true", "false"}:
             errors.append("This setting must be a boolean.")
 
         return errors
@@ -195,7 +197,7 @@ class ValidateSettingValue:
 
         if value not in self.setting.options:
             errors.append(
-                f"This setting must be one of the following: {', '.join(self.setting.options)}."
+                f"This setting must be one of the following: {", ".join(self.setting.options)}."
             )
 
         return errors

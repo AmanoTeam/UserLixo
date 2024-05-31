@@ -1,11 +1,11 @@
 import os
 import re
 
+from hydrogram import Client, filters
+from hydrogram.helpers import ikb
+from hydrogram.nav import Pagination
+from hydrogram.types import CallbackQuery, Message
 from langs import Langs
-from pyrogram import Client, filters
-from pyrogram.helpers import ikb
-from pyrogram.nav import Pagination
-from pyrogram.types import CallbackQuery, Message
 
 from userlixo.config import bot, plugins
 from userlixo.types.plugin_info import PluginInfo
@@ -16,13 +16,13 @@ from userlixo.utils.plugins import (
 )
 
 
-async def compose_list_plugins_message(
+def compose_list_plugins_message(
     lang: Langs,
     page_number: int,
     use_deeplink: bool = False,
     append_back: bool = False,
 ):
-    inactive_plugins = await get_inactive_plugins(plugins)
+    inactive_plugins = get_inactive_plugins(plugins)
 
     def item_title(plugin: PluginInfo, _pg):
         name = plugin.name
@@ -110,37 +110,46 @@ async def handle_add_plugin_request(lang: Langs, client: Client, update: Message
                 break  # avoid infinite loop
         else:
             msg = await update.from_user.ask(lang.plugin_file_ask)
-        if await filters.regex("/cancel")(client, msg):
+        if filters.regex("/cancel")(client, msg):
             return await msg.reply(lang.command_cancelled)
-        if not msg.document:
-            await msg.reply(lang.plugin_waiting_file, quote=True)
-            continue
-        if not re.search("(zip)$", msg.document.file_name):
-            await msg.reply(lang.plugin_format_not_accepted, quote=True)
-            continue
-        if msg.document.file_size > (5 * 1024 * 1024):
-            await msg.reply(lang.plugin_too_big, quote=True)
-            continue
-        break
-    filename = await msg.download("cache/")
-    filename = os.path.relpath(filename)
 
-    try:
-        plugin_info = get_plugin_info_from_zip(filename)
-    except InvalidPluginInfoValueError as e:
-        return await msg.reply(lang.plugin_invalid_info_value_error(errors="\n".join(e.args[0])))
+        # Check and download plugin file
+        filename = await check_and_download_plugin_file(msg, lang)
+        if not filename:
+            continue
 
-    if not plugin_info:
-        return await msg.reply(lang.plugin_info_block_not_found)
+        try:
+            plugin_info = get_plugin_info_from_zip(filename)
+        except InvalidPluginInfoValueError as e:
+            return await msg.reply(
+                lang.plugin_invalid_info_value_error(errors="\n".join(e.args[0]))
+            )
 
-    # Showing info
-    text = compose_plugin_info_text(lang, plugin_info, status_line="")
-    lines = [
-        [
-            (lang.add, f"confirm_add_plugin {filename}"),
-            (lang.cancel, "cancel_plugin"),
+        if not plugin_info:
+            return await msg.reply(lang.plugin_info_block_not_found)
+
+        # Showing info
+        text = compose_plugin_info_text(lang, plugin_info, status_line="")
+        lines = [
+            [
+                (lang.add, f"confirm_add_plugin {filename}"),
+                (lang.cancel, "cancel_plugin"),
+            ]
         ]
-    ]
-    keyboard = ikb(lines)
-    await msg.reply(text, reply_markup=keyboard, disable_web_page_preview=True)
-    return None
+        keyboard = ikb(lines)
+        await msg.reply(text, reply_markup=keyboard, disable_web_page_preview=True)
+        return None
+
+
+async def check_and_download_plugin_file(msg, lang):
+    if not msg.document:
+        await msg.reply(lang.plugin_waiting_file, quote=True)
+        return None
+    if not re.search("(zip)$", msg.document.file_name):
+        await msg.reply(lang.plugin_format_not_accepted, quote=True)
+        return None
+    if msg.document.file_size > (5 * 1024 * 1024):
+        await msg.reply(lang.plugin_too_big, quote=True)
+        return None
+    filename = await msg.download("cache/")
+    return os.path.relpath(filename)

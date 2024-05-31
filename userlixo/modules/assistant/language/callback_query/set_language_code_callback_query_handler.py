@@ -1,9 +1,9 @@
 import os
 from dataclasses import dataclass
 
+from hydrogram.helpers import array_chunk, ikb
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.helpers import array_chunk, ikb
-from pyrogram.types import CallbackQuery
 
 from userlixo.database import Config
 from userlixo.modules.abstract import CallbackQueryHandler
@@ -25,9 +25,9 @@ class SetLanguageCodeCallbackQueryHandler(CallbackQueryHandler):
         buttons = []
         for obj in lang.strings.values():
             text, data = (
-                (f"✅ {obj['NAME']}", "noop")
+                (f"✅ {obj["NAME"]}", "noop")
                 if obj["LANGUAGE_CODE"] == lang.code
-                else (obj["NAME"], f"set_language {obj['LANGUAGE_CODE']}")
+                else (obj["NAME"], f"set_language {obj["LANGUAGE_CODE"]}")
             )
             buttons.append((text, data))
 

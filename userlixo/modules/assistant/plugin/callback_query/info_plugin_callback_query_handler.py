@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import CallbackQueryHandler
@@ -27,7 +27,7 @@ class InfoPluginCallbackQueryHandler(CallbackQueryHandler):
 
         is_inline = query.inline_message_id is not None
 
-        text, keyboard = await compose_info_plugin_message(
+        text, keyboard = compose_info_plugin_message(
             lang, plugin_basename, page, use_deeplink=is_inline
         )
 

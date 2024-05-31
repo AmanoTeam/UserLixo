@@ -33,7 +33,7 @@ for strings_path in Path(dir_path).rglob("*.yml"):
     synced = True
     with Path(strings_path).open(encoding="utf-8") as file:
         obj = yaml.safe_load(file)
-        print(f"[blue]\n- {obj['NAME']} ({obj['LANGUAGE_CODE']})[/]")
+        print(f"[blue]\n- {obj["NAME"]} ({obj["LANGUAGE_CODE"]})[/]")
 
     not_in_yml = [key for key in all_keys if key not in obj]
     for key in not_in_yml:

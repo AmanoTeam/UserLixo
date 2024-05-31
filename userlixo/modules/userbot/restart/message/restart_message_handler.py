@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
+from hydrogram import Client
+from hydrogram.types import Message
 from kink import inject
-from pyrogram import Client
-from pyrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.restart import (
@@ -24,6 +24,6 @@ class RestartMessageHandler(MessageHandler):
         text = compose_before_restart_message(lang)
         msg = await message.reply(text)
 
-        await save_before_restart_message_info(msg.id, msg.chat.id, "user")
+        save_before_restart_message_info(msg.id, msg.chat.id, "user")
 
         self_restart_process()

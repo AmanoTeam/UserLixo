@@ -5,46 +5,84 @@
 #   pre: false
 #   features: []
 #   all-features: false
+#   with-sources: false
+#   generate-hashes: false
 
 -e file:.
 activate-virtualenv==0.1.5
+    # via userlixo
 aiocron==1.8
-aiosqlite==0.17.0
+    # via userlixo
+aiosqlite==0.20.0
+    # via hydrogram
 cfgv==3.4.0
+    # via pre-commit
 click==8.1.7
-colorama==0.4.6
-croniter==2.0.1
-distlib==0.3.7
-filelock==3.12.4
-identify==2.5.30
-kink==0.7.0
+    # via userlixo
+croniter==2.0.5
+    # via aiocron
+distlib==0.3.8
+    # via virtualenv
+filelock==3.14.0
+    # via virtualenv
+hydrogram @ git+https://github.com/hydrogram/hydrogram@52a447bda9180830c86cef8f3c9071f3c8a496c1
+    # via userlixo
+identify==2.5.36
+    # via pre-commit
+kink==0.8.0
+    # via userlixo
 langs==0.1.1
+    # via userlixo
 markdown-it-py==3.0.0
+    # via rich
 mdurl==0.1.2
+    # via markdown-it-py
 meval==2.5
+    # via userlixo
 nodeenv==1.8.0
-peewee==3.17.0
-platformdirs==3.11.0
-pre-commit==3.5.0
-psutil==5.9.6
+    # via pre-commit
+peewee==3.17.5
+    # via userlixo
+pip==24.0
+    # via userlixo
+platformdirs==4.2.2
+    # via virtualenv
+pre-commit==3.7.1
+psutil==5.9.8
+    # via userlixo
 pyaes==1.6.1
-pygments==2.16.1
-pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn9
+    # via hydrogram
+pygments==2.18.0
+    # via rich
 pysocks==1.7.1
-python-dateutil==2.8.2
-pytz==2023.3.post1
+    # via hydrogram
+python-dateutil==2.9.0.post0
+    # via croniter
+pytz==2024.1
+    # via croniter
 pyyaml==6.0.1
-requirements-parser==0.5.0
-rich==13.6.0
-ruff==0.1.3
+    # via pre-commit
+    # via userlixo
+requirements-parser==0.9.0
+    # via userlixo
+rich==13.7.1
+    # via userlixo
+ruff==0.4.5
+setuptools==70.0.0
+    # via nodeenv
 six==1.16.0
+    # via python-dateutil
 tgcrypto==1.2.5
+    # via userlixo
 toml==0.10.2
-types-setuptools==68.2.0.0
-typing-extensions==4.8.0
-tzdata==2023.4
+    # via userlixo
+types-setuptools==70.0.0.20240524
+    # via requirements-parser
+typing-extensions==4.12.0
+    # via aiosqlite
+    # via kink
 tzlocal==5.2
-virtualenv==20.24.6
-# The following packages are considered to be unsafe in a requirements file:
-pip==23.3.1
-setuptools==68.2.2
+    # via aiocron
+virtualenv==20.26.2
+    # via pre-commit
+    # via userlixo

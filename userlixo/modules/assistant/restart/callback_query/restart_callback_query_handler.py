@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.types import CallbackQuery
 
 from userlixo.modules.abstract import CallbackQueryHandler
 from userlixo.modules.common.restart import (
@@ -30,6 +30,6 @@ class RestartCallbackQueryHandler(CallbackQueryHandler):
             chat_id = query.message.chat.id
             message_id = query.message.id
 
-        await save_before_restart_message_info(message_id, chat_id, "bot")
+        save_before_restart_message_info(message_id, chat_id, "bot")
 
         self_restart_process()

@@ -5,16 +5,18 @@ import contextlib
 import json
 from enum import Enum
 
-from pyrogram import types
-from pyrogram.helpers import bki, ikb
+from hydrogram import types
+from hydrogram.helpers import bki, ikb
 
 from userlixo.database import Message
 
 
-async def query_edit(self, text: str, reply_markup=None, answer_kwargs={}, *args, **kwargs):
+async def query_edit(self, text: str, reply_markup=None, answer_kwargs=None, *args, **kwargs):
+    if answer_kwargs is None:
+        answer_kwargs = {}
     with contextlib.suppress(BaseException):
         await self.answer(**answer_kwargs)
-    return await self.edit_message_text(text=text, reply_markup=reply_markup, *args, **kwargs)
+    return await self.edit_message_text(text=text, reply_markup=reply_markup, *args, **kwargs)  # noqa: B026
 
 
 def remove_keyboard(self, message_id=None, *args, **kwargs):

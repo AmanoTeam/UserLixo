@@ -6,11 +6,13 @@ import json
 import logging
 import os
 import re
+import sys
 
-import pyrogram
-from pyrogram import filters
-from pyrogram.helpers import bki
-from pyrogram.utils import PyromodConfig
+import hydrogram
+from hydrogram import filters
+from hydrogram.helpers import bki
+from hydrogram.utils import PyromodConfig
+from rich import print
 
 from userlixo.database import Config
 from userlixo.types.client import Client
@@ -18,14 +20,54 @@ from userlixo.types.plugin_info import PluginInfo
 from userlixo.utils.misc import b64decode, b64encode, tryint
 from userlixo.utils.patches import edit_text, query_edit, remove_keyboard, reply_text
 
-from rich import print
-
 sudoers = []
 
 logger = logging.getLogger(__name__)
 
+RESTRICTED_VARS = ["DATABASE_URL"]
+REQUIRED_VARS = ["BOT_TOKEN", "WEB_APP_URL"]
 
-async def load_env():
+
+def handle_missing_var(env_key, default_value, env_info):
+    value_on_env = os.getenv(env_key, default_value)
+    value_on_db = Config.get_or_none(Config.key == env_key)
+
+    if not value_on_db:
+        if env_key in RESTRICTED_VARS:
+            os.environ[env_key] = value_on_env
+        else:
+            RESTRICTED_VARS.append([env_key, value_on_env, env_info])
+        return
+
+    os.environ[env_key] = value_on_db.value
+
+
+def prompt_user_for_value(env_key, value_on_env, env_info):
+    text = f"\n┌ [light_sea_green]{env_key}[/light_sea_green]"
+    if value_on_env:
+        text += f" [deep_sky_blue4](default: {value_on_env})[/]"
+    elif env_key in REQUIRED_VARS:
+        text += " [yellow](required)[/]"
+    text += f"\n├ [medium_purple4 italic]{env_info}[/]"
+    print(text)
+
+    try:
+        user_value = input("└> ")
+    except (KeyboardInterrupt, EOFError):
+        logger.info("[red1]Operation cancelled by user")
+        sys.exit()
+    if not user_value:
+        user_value = value_on_env
+
+    if env_key in REQUIRED_VARS and not user_value:
+        logger.info("[red1]%s is required, cannot be empty.", env_key)
+        sys.exit()
+
+    row = Config.create(key=env_key, value=user_value)
+    os.environ[env_key] = row.value
+
+
+def load_env():
     environment_vars: dict = {
         "DATABASE_URL": [
             "sqlite://userlixo/database/database.sqlite",
@@ -46,53 +88,24 @@ use your userbot/assistant.",
         "WEB_APP_URL": ["https://webapp.pauxis.dev/userlixo/", "URL of the webapp."],
     }
 
-    restricted_vars = ["DATABASE_URL"]
-    required_vars = ["BOT_TOKEN", "WEB_APP_URL"]
     missing_vars = []
+
     for env_key, (default_value, env_info) in environment_vars.items():
-        value_on_env = os.getenv(env_key, default_value)
+        handle_missing_var(env_key, default_value, env_info)
 
-        value_on_db = Config.get_or_none(Config.key == env_key)
+    if not missing_vars:
+        return
 
-        if not value_on_db:
-            if env_key in restricted_vars:
-                os.environ[env_key] = value_on_env
-            else:
-                missing_vars.append([env_key, value_on_env, env_info])
-            continue
-        os.environ[env_key] = value_on_db.value
-
-    if missing_vars:
-        if len(missing_vars) == len(environment_vars.keys()) - len(restricted_vars):
-            text = "[dodger_blue1 bold underline]Welcome to UserLixo![/][deep_sky_blue1]\nAs the \
+    if len(missing_vars) == len(environment_vars) - len(RESTRICTED_VARS):
+        text = "[dodger_blue1 bold underline]Welcome to UserLixo![/][deep_sky_blue1]\nAs the \
 first step we need to setup some config vars.\n\nYou will be asked for a value for each var, but \
 you can just press enter to leave it empty or use the default value. Let's get started![/]"
-        else:
-            text = "[bold yellow]Some required config vars are missing. Let's add them.[/]"
-        logger.info(text)
+    else:
+        text = "[bold yellow]Some required config vars are missing. Let's add them.[/]"
+    logger.info(text)
+
     for env_key, value_on_env, env_info in missing_vars:
-        text = f"\n┌ [light_sea_green]{env_key}[/light_sea_green]"
-        if value_on_env != "":
-            text += f" [deep_sky_blue4](default: {value_on_env})[/]"
-        elif env_key in required_vars:
-            text += " [yellow](required)[/]"
-        text += f"\n├ [medium_purple4 italic]{env_info}[/]"
-        print(text)
-
-        try:
-            user_value = input("└> ")
-        except (KeyboardInterrupt, EOFError):
-            logger.info("[red1]Operation cancelled by user")
-            exit()
-        if not user_value:
-            user_value = value_on_env
-
-        if env_key in required_vars and not user_value:
-            logger.info(f"[red1]{env_key} is required, cannot be empty.")
-            exit()
-
-        row = Config.create(key=env_key, value=user_value)
-        os.environ[env_key] = row.value
+        prompt_user_for_value(env_key, value_on_env, env_info)
 
     # Sanitize sudoers list
     parts = os.getenv("SUDOERS_LIST").split()
@@ -102,16 +115,16 @@ you can just press enter to leave it empty or use the default value. Let's get s
     sudoers.extend(parts)
 
 
-# Extra **kwargs for creating pyrogram.Client (contains api_hash and api_id)
-pyrogram_config = os.getenv("PYROGRAM_CONFIG") or b64encode("{}")
-pyrogram_config = b64decode(pyrogram_config)
-pyrogram_config = json.loads(pyrogram_config)
+# Extra **kwargs for creating hydrogram.Client (contains api_hash and api_id)
+hydrogram_config = os.getenv("PYROGRAM_CONFIG") or b64encode("{}")
+hydrogram_config = b64decode(hydrogram_config)
+hydrogram_config = json.loads(hydrogram_config)
 
 # parse config.ini values
 config = configparser.ConfigParser()
-api_id = config.get("pyrogram", "api_id", fallback=None)
-api_hash = config.get("pyrogram", "api_hash", fallback=None)
-bot_token = config.get("pyrogram", "bot_token", fallback=None)
+api_id = config.get("hydrogram", "api_id", fallback=None)
+api_hash = config.get("hydrogram", "api_hash", fallback=None)
+bot_token = config.get("hydrogram", "bot_token", fallback=None)
 
 
 # All monkeypatch stuff must be done before the Client instance is created
@@ -123,7 +136,7 @@ def filter_sudoers_logic(flt, c, u):
 
 
 def filter_su_cmd(command, prefixes=None, *args, **kwargs):
-    async def callback(flt, c, u):
+    def callback(flt, c, u):
         _prefixes = prefixes or os.getenv("PREFIXES") or "."
         prefix = ""
         if " " in _prefixes:
@@ -135,7 +148,7 @@ def filter_su_cmd(command, prefixes=None, *args, **kwargs):
             prefix = f"[{re.escape(_prefixes)}]"
 
         in_sudoers = filters.sudoers(c, u)
-        matches = await filters.regex(r"^" + prefix + command, *args, **kwargs)(c, u)
+        matches = filters.regex(r"^" + prefix + command, *args, **kwargs)(c, u)
 
         return in_sudoers and matches
 
@@ -147,7 +160,7 @@ def filter_web_app_data(flt, c, u):
 
 
 def filter_web_data_command(command, *args, **kwargs):
-    async def func(flt, c, u):
+    def func(flt, c, u):
         return u.web_app_data and u.web_app_data.data.startswith(command)
 
     return filters.create(func, "FilterWebDataCommand")
@@ -158,15 +171,15 @@ def message_ikb(self):
 
 
 filter_sudoers = filters.create(filter_sudoers_logic, "FilterSudoers")
-pyrogram.filters.sudoers = filter_sudoers
-pyrogram.filters.su_cmd = filter_su_cmd
-pyrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
-pyrogram.filters.web_data_cmd = filter_web_data_command
-pyrogram.types.CallbackQuery.edit = query_edit
-pyrogram.types.Message.remove_keyboard = remove_keyboard
-pyrogram.types.Message.reply = reply_text
-pyrogram.types.Message.edit = edit_text
-pyrogram.types.Message.ikb = message_ikb
+hydrogram.filters.sudoers = filter_sudoers
+hydrogram.filters.su_cmd = filter_su_cmd
+hydrogram.filters.web_app_data = filters.create(filter_web_app_data, "FilterWebAppData")
+hydrogram.filters.web_data_cmd = filter_web_data_command
+hydrogram.types.CallbackQuery.edit = query_edit
+hydrogram.types.Message.remove_keyboard = remove_keyboard
+hydrogram.types.Message.reply = reply_text
+hydrogram.types.Message.edit = edit_text
+hydrogram.types.Message.ikb = message_ikb
 
 # I don't use os.getenv('KEY', fallback) because the fallback wil only be used if the key doesn't
 # exist. I want to use the fallback also when the key exists but it's invalid
@@ -176,7 +189,7 @@ user = Client(
     workdir=".",
     api_id=api_id,
     api_hash=api_hash,
-    **pyrogram_config,
+    **hydrogram_config,
 )
 
 bot = Client(
@@ -186,7 +199,7 @@ bot = Client(
     api_hash=api_hash,
     bot_token=os.getenv("BOT_TOKEN"),
     workdir=".",
-    **pyrogram_config,
+    **hydrogram_config,
 )
 
 PyromodConfig.unallowed_click_alert = False
@@ -204,6 +217,6 @@ cmds_list = [
     "commands",
     "start",
 ]
-cmds = {x: 1 for x in cmds_list}
+cmds = dict.fromkeys(cmds_list, 1)
 
 plugins: dict[str, PluginInfo] = {}

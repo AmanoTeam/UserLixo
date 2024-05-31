@@ -1,9 +1,9 @@
 import os
 from dataclasses import dataclass
 
+from hydrogram.helpers import ikb
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.helpers import ikb
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import cmds
 from userlixo.modules.abstract import CallbackQueryHandler

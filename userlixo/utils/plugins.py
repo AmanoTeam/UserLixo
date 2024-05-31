@@ -30,7 +30,7 @@ from userlixo.utils.validation import ValidateSetting
 logger = logging.getLogger(__name__)
 
 
-async def get_inactive_plugins(plugins):
+def get_inactive_plugins(plugins):
     inactive = (Config.get_or_create(defaults={"value": "[]"}, key="INACTIVE_PLUGINS"))[0].value
     return json.loads(inactive)
 
@@ -111,12 +111,12 @@ def validate_plugin_info(info: PluginInfo | None):
         errors = [f"missing required field: {item}" for item in missing]
         raise InvalidPluginInfoValueError(errors)
 
-    if info.name.strip() == "":
+    if not info.name.strip():
         errors.append("name cannot be empty")
     if not re.match(r"\w+$", info.name):
         errors.append("name must be alphanumeric")
-    if (isinstance(info.author, str) and info.author.strip() == "") or (
-            isinstance(info.author, list) and not len(info.author)
+    if (isinstance(info.author, str) and not info.author.strip()) or (
+        isinstance(info.author, list) and not len(info.author)
     ):
         errors.append("author cannot be empty")
 
@@ -158,17 +158,17 @@ def parse_plugin_requirements_from_info(info: PluginInfo):
         try:
             parsed = requirements.parse(item)
         except ValueError as e:
-            raise InvalidPluginInfoValueError([f"could not parse requirement {item}: {e}"])
+            raise InvalidPluginInfoValueError([f"could not parse requirement {item}: {e}"]) from e
 
         parsed = list(parsed)
 
         if not parsed or not len(parsed):
-            raise InvalidPluginInfoValueError([f"could not parse requirement: {item}"])
+            raise InvalidPluginInfoValueError([f"could not parse requirement: {item}"]) from None
 
         if len(parsed) > 1:
-            raise InvalidPluginInfoValueError(
-                [f"requirement {item} seems to refer to more than one package"]
-            )
+            raise InvalidPluginInfoValueError([
+                f"requirement {item} seems to refer to more than one package"
+            ])
 
         parsed = parsed[0]
 
@@ -208,13 +208,14 @@ async def install_plugin_requirements_in_its_venv(plugin_name: str):
     stdout, process = await shell_exec(f"{venv_path}/bin/pip install -r {requirements_txt_path}")
 
     if process.returncode != 0:
-        raise ValueError(f"Error while installing requirements: {stdout}")
+        msg = f"Error while installing requirements: {stdout}"
+        raise ValueError(msg)
 
     return stdout
 
 
-async def get_plugin_venv_path(
-        plugin_name: str, create_if_not_exists: bool = True, overwrite_if_exists: bool = False
+def get_plugin_venv_path(
+    plugin_name: str, create_if_not_exists: bool = True, overwrite_if_exists: bool = False
 ):
     folder_path = get_plugin_folder_path(plugin_name)
     venv_path = str(folder_path / "venv")
@@ -232,7 +233,7 @@ def create_virtualenv(venv_path: str):
     virtualenv.cli_run([venv_path])
 
 
-async def load_settings_values_for_plugin(plugin_name: str):
+def load_settings_values_for_plugin(plugin_name: str):
     plugin_info = plugins.get(plugin_name, None)
     if not plugin_info:
         return
@@ -245,8 +246,8 @@ async def load_settings_values_for_plugin(plugin_name: str):
         plugin_info.settings[setting.key].value = setting.value
 
 
-async def load_all_installed_plugins():
-    inactive = await get_inactive_plugins(plugins)
+def load_all_installed_plugins():
+    inactive = get_inactive_plugins(plugins)
 
     for folder in Path().glob("userlixo/plugins/*"):
         if not folder.is_dir():
@@ -260,14 +261,14 @@ async def load_all_installed_plugins():
 
                 if info:
                     plugins[info.name] = info
-                    await load_settings_values_for_plugin(info.name)
+                    load_settings_values_for_plugin(info.name)
 
             except Exception as e:
                 logger.exception("Error while loading inactive plugin", exc_info=e)
             continue
 
         try:
-            info = await load_plugin(plugin_name)
+            info = load_plugin(plugin_name)
             plugins[info.name] = info
         except Exception as e:
             logger.exception("Error while loading plugin", exc_info=e)
@@ -331,13 +332,16 @@ def validate_plugin_folder(plugin_name: str):
     folder_path = get_plugin_folder_path(plugin_name)
 
     if not folder_path.is_dir():
-        raise ValueError(f"Invalid folder path: {folder_path} is not a folder")
+        msg = f"Invalid folder path: {folder_path} is not a folder"
+        raise ValueError(msg)
 
     if not (folder_path / "__init__.py").exists():
-        raise ValueError(f"Invalid folder path: __init__.py is missing at folder {folder_path}")
+        msg = f"Invalid folder path: __init__.py is missing at folder {folder_path}"
+        raise ValueError(msg)
 
     if not (folder_path / "plugin.toml").exists():
-        raise ValueError(f"Invalid folder path: plugin.toml is missing at folder {folder_path}")
+        msg = f"Invalid folder path: plugin.toml is missing at folder {folder_path}"
+        raise ValueError(msg)
 
 
 async def load_plugin(plugin_name: str):
@@ -346,62 +350,51 @@ async def load_plugin(plugin_name: str):
     info = get_plugin_info_from_folder(plugin_name)
     validate_plugin_info(info)
 
-    venv_path = await get_plugin_venv_path(plugin_name)
+    venv_path = get_plugin_venv_path(plugin_name)
     await install_plugin_requirements_in_its_venv(plugin_name)
 
     with activate_virtualenv(venv_path):
         elements = fetch_plugin_elements(plugin_name)
-    load_plugin_elements(elements, plugin_name)
+    await load_plugin_elements(elements, plugin_name)
 
     return info
 
 
-def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
+async def load_plugin_elements(elements: PluginElementCollection, plugin_name: str):
     if elements.pre_load:
         for f in elements.pre_load:
+            task = asyncio.create_task(f())
             if iscoroutinefunction(f):
-                asyncio.create_task(f())
-            else:
-                f()
-
-    if elements.user_handlers:
-        for handler in elements.user_handlers:
-            for item in handler.handlers:
-                h, group = item
-                h.plugin_handler = plugin_name
-                user.add_handler(h, group)
-
-    if elements.bot_handlers:
-        for handler in elements.bot_handlers:
-            for item in handler.handlers:
-                h, group = item
-                h.plugin_handler = plugin_name
-                user.add_handler(h, group)
-
-    if elements.user_controllers:
-        for controller in elements.user_controllers:
-            controller.__controller__.register(user, plugin_handler=plugin_name)
-
-    if elements.bot_controllers:
-        for controller in elements.bot_controllers:
-            controller.__controller__.register(bot, plugin_handler=plugin_name)
+                await task
 
     if elements.post_load:
         for f in elements.post_load:
+            task = asyncio.create_task(f())
             if iscoroutinefunction(f):
-                asyncio.create_task(f())
-            else:
-                f()
+                await task
 
 
-async def unload_and_remove_plugin(plugin_name: str):
-    await unload_plugin(plugin_name)
+def add_handlers(handlers: list[HandlerCallable], plugin_name: str, client: Client):
+    for handler in handlers:
+        for item in handler.handlers:
+            h, group = item
+            h.plugin_handler = plugin_name
+            client.add_handler(h, group)
+
+
+def register_controllers(controllers: list[Callable], client: Client, plugin_name: str):
+    for controller in controllers:
+        controller.__controller__.register(client, plugin_handler=plugin_name)
+
+
+def unload_and_remove_plugin(plugin_name: str):
+    unload_plugin(plugin_name)
 
     folder_path = get_plugin_folder_path(plugin_name)
     rmtree(str(folder_path))
 
 
-async def unload_plugin(plugin_name: str):
+def unload_plugin(plugin_name: str):
     validate_plugin_folder(plugin_name)
 
     remove_plugin_handlers(plugin_name, user)

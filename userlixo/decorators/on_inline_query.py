@@ -1,6 +1,6 @@
 from collections.abc import Callable
 
-from pyrogram.filters import Filter
+from hydrogram.filters import Filter
 
 from userlixo.config import filter_sudoers
 

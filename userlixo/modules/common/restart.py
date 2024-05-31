@@ -1,6 +1,6 @@
 import os
 import sys
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Literal
 
 from langs import Langs
@@ -12,13 +12,13 @@ def compose_before_restart_message(lang: Langs):
     return lang.restarting_now_alert
 
 
-async def save_before_restart_message_info(
+def save_before_restart_message_info(
     message_id: int, chat_id: int, from_client: Literal["bot", "user"]
 ):
     query = Config.delete().where(Config.key == "restarting_alert")
     query.execute()
 
-    timestamp = datetime.now().timestamp()
+    timestamp = datetime.now(tz=UTC).timestamp()
 
     Config.create(
         key="restarting_alert",

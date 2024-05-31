@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
+from hydrogram import Client
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram import Client
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.database import PluginSetting
@@ -51,4 +51,3 @@ class PluginSettingResetCallbackQueryHandler(CallbackQueryHandler):
             options_page,
             plugins_page,
         )
-        return

@@ -4,8 +4,8 @@ from .exec_message_handler import ExecMessageHandler
 from .execs_message_controller import ExecsMessageController
 
 __all__ = [
-    "ExecsMessageController",
     "CmdMessageHandler",
     "EvalMessageHandler",
     "ExecMessageHandler",
+    "ExecsMessageController",
 ]

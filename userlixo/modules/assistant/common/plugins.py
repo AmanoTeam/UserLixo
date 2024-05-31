@@ -1,11 +1,11 @@
 import logging
 import urllib.parse
 
+from hydrogram import filters
+from hydrogram.helpers import ikb
+from hydrogram.nav import Pagination
+from hydrogram.types import CallbackQuery, Message
 from langs import Langs
-from pyrogram import filters
-from pyrogram.helpers import ikb
-from pyrogram.nav import Pagination
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import bot, plugins
 from userlixo.database import PluginSetting
@@ -19,12 +19,12 @@ from userlixo.utils.validation import ValidateSettingValue
 logger = logging.getLogger(__name__)
 
 
-async def compose_info_plugin_message(
+def compose_info_plugin_message(
     lang: Langs, plugin_basename: str, page: int, use_deeplink: bool = False
 ):
     plugin = plugins[plugin_basename]
 
-    inactive = await get_inactive_plugins(plugins)
+    inactive = get_inactive_plugins(plugins)
 
     # status = lang.active
     first_btn = (
@@ -63,7 +63,7 @@ async def compose_info_plugin_message(
     return text, keyboard
 
 
-def compose_plugin_settings_open_message(
+def compose_plugin_settings_open_message(  # noqa: PLR0917
     lang: Langs,
     setting: PluginSettings,
     plugin_name: str,
@@ -120,17 +120,15 @@ def compose_plugin_settings_open_message(
         nav = Pagination(setting.options, compose_page_data, compose_item_data, compose_item_title)
         lines.extend(nav.create(options_page, lines=3, columns=2))
     elif setting.type == SettingsType.bool:
-        lines.append(
-            [
-                (
-                    lang.plugin_setting_toggle_enabled
-                    if setting.value
-                    else lang.plugin_setting_toggle_disabled,
-                    f"PS_toggle {plugin_name} {key} {settings_page} {options_page} {plugins_page}",
-                )
-            ]
-        )
-    elif setting.type in [SettingsType.text, SettingsType.range, SettingsType.int]:
+        lines.append([
+            (
+                lang.plugin_setting_toggle_enabled
+                if setting.value
+                else lang.plugin_setting_toggle_disabled,
+                f"PS_toggle {plugin_name} {key} {settings_page} {options_page} {plugins_page}",
+            )
+        ])
+    elif setting.type in {SettingsType.text, SettingsType.range, SettingsType.int}:
         text_lines.extend(["", lang.plugin_setting_open_text_input])
 
     text = "\n".join(text_lines)
@@ -138,14 +136,12 @@ def compose_plugin_settings_open_message(
     if (not setting.default and setting.value is not None) or (
         setting.default and setting.value != setting.default
     ):
-        lines.append(
-            [
-                (
-                    lang.plugin_setting_reset_to_default,
-                    f"PS_reset {plugin_name} {key} {settings_page} {options_page} {plugins_page}",
-                )
-            ]
-        )
+        lines.append([
+            (
+                lang.plugin_setting_reset_to_default,
+                f"PS_reset {plugin_name} {key} {settings_page} {options_page} {plugins_page}",
+            )
+        ])
 
     lines.append([(lang.back, f"plugin_settings {plugin_name} {settings_page} {plugins_page}")])
 
@@ -154,7 +150,7 @@ def compose_plugin_settings_open_message(
     return text, keyboard
 
 
-async def ask_and_handle_plugin_settings(
+async def ask_and_handle_plugin_settings(  # noqa: PLR0917
     client: Client,
     query: CallbackQuery,
     lang: Langs,
@@ -172,62 +168,84 @@ async def ask_and_handle_plugin_settings(
     await query.edit(text, reply_markup=keyboard)
     last_msg = query.message
 
-    if setting.type in [SettingsType.select, SettingsType.bool]:
-        return None
+    if setting.type in {SettingsType.select, SettingsType.bool}:
+        return
 
     try:
-        while True:
-            user_id = query.from_user.id
-            msg = await client.listen(chat_id=user_id, user_id=user_id, filters=filters.text)
-            await last_msg.remove_keyboard()
-
-            plugin_info = plugins.get(plugin_name, None)
-            if not plugin_info:
-                return await msg.reply_text(lang.plugin_not_found(name=plugin_name))
-
-            if not plugin_info.settings:
-                return await msg.reply_text(
-                    lang.plugin_settings_not_found(plugin_name=plugin_name)
-                )
-
-            if key not in plugin_info.settings:
-                return await msg.reply_text(
-                    lang.plugin_setting_not_found(plugin_name=plugin_name, key=key)
-                )
-
-            plugin_setting = plugin_info.settings[key]
-
-            value = msg.text
-            errors = ValidateSettingValue(plugin_setting).check(value)
-            if len(errors):
-                errors_text = "\n".join(errors)
-                await msg.reply(
-                    lang.plugin_invalid_setting_value_error(
-                        key=key, plugin=plugin_name, errors=errors_text
-                    )
-                )
-            else:
-                if plugin_setting.type == SettingsType.int:
-                    value = int(value)
-                elif plugin_setting.type == SettingsType.bool:
-                    value = value.lower() == "true"
-
-                plugin_setting.value = value
-
-                does_exist = PluginSetting.get_or_none(plugin=plugin_name, key=key)
-                if does_exist:
-                    does_exist.value = msg.text
-                    does_exist.save()
-                else:
-                    PluginSetting.create(plugin=plugin_name, key=key, value=msg.text)
-
-            text, keyboard = compose_plugin_settings_open_message(
-                lang, setting, plugin_name, key, settings_page, options_page, plugins_page
-            )
-
-            last_msg = await msg.reply_text(text, reply_markup=keyboard)
+        await handle_plugin_settings_loop(
+            client,
+            last_msg,
+            lang,
+            plugin_name,
+            key,
+            settings_page,
+            options_page,
+            plugins_page,
+            setting,
+        )
     except Exception as e:
         logger.exception(e)
+
+
+async def handle_plugin_settings_loop(  # noqa: PLR0917
+    client: Client,
+    last_msg: Message,
+    lang: Langs,
+    plugin_name: str,
+    key: str,
+    settings_page: int,
+    options_page: int,
+    plugins_page: int,
+    setting: PluginSettings,
+):
+    while True:
+        user_id = last_msg.from_user.id
+        msg = await client.listen(chat_id=user_id, user_id=user_id, filters=filters.text)
+        await last_msg.remove_keyboard()
+
+        plugin_info = plugins.get(plugin_name, None)
+        if not plugin_info:
+            return await msg.reply_text(lang.plugin_not_found(name=plugin_name))
+
+        if not plugin_info.settings:
+            return await msg.reply_text(lang.plugin_settings_not_found(plugin_name=plugin_name))
+
+        if key not in plugin_info.settings:
+            return await msg.reply_text(
+                lang.plugin_setting_not_found(plugin_name=plugin_name, key=key)
+            )
+
+        plugin_setting = plugin_info.settings[key]
+
+        value = msg.text
+        errors = ValidateSettingValue(plugin_setting).check(value)
+        if len(errors):
+            errors_text = "\n".join(errors)
+            await msg.reply(
+                lang.plugin_invalid_setting_value_error(
+                    key=key, plugin=plugin_name, errors=errors_text
+                )
+            )
+        else:
+            if plugin_setting.type == SettingsType.int:
+                value = int(value)
+            elif plugin_setting.type == SettingsType.bool:
+                value = value.lower() == "true"
+
+            plugin_setting.value = value
+
+            does_exist = PluginSetting.get_or_none(plugin=plugin_name, key=key)
+            if does_exist:
+                does_exist.value = msg.text
+                does_exist.save()
+            else:
+                PluginSetting.create(plugin=plugin_name, key=key, value=msg.text)
+
+        text, keyboard = compose_plugin_settings_open_message(
+            lang, setting, plugin_name, key, settings_page, options_page, plugins_page
+        )
+
+        last_msg = await msg.reply_text(text, reply_markup=keyboard)
 
 
 def compose_plugin_settings_message(
@@ -237,11 +255,11 @@ def compose_plugin_settings_message(
         return f"plugin_settings {plugin_name} {page} {plugins_page}"
 
     def compose_title(item: tuple[str, PluginSettings], _page: int):
-        key, value = item
+        _key, value = item
         return f"⚙️ {value.label}"
 
     def compose_data(item: tuple[str, PluginSettings], _page: int):
-        key, value = item
+        key, _value = item
         return f"plugin_setting_open {plugin_name} {key} {settings_page} 0 {plugins_page}"
 
     plugin_info = plugins.get(plugin_name, None)

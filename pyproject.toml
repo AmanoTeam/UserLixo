@@ -4,25 +4,25 @@ version = "1.0.0"
 description = "An Telegram userbot with many functions."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 authors = [{ name = "AmanoTeam", email = "contact@amanoteam.com" }]
 dependencies = [
+    "hydrogram @ git+https://github.com/hydrogram/hydrogram@dev",
     "tgcrypto>=1.2.5",
-    "rich>=13.6.0",
+    "rich>=13.7.1",
     "langs>=0.1.1",
     "aiocron>=1.8",
     "click>=8.1.7",
     "PyYAML>=6.0.1",
     "meval>=2.5",
-    "psutil>=5.9.6",
-    "kink>=0.7.0",
-    "pyrogram @ git+https://github.com/AmanoTeam/Pyrogram.git@v2.0.106+amn9",
-    "pip>=23.3.1",
+    "psutil>=5.9.8",
+    "kink>=0.8.0",
+    "pip>=24.0",
     "activate_virtualenv>=0.1.5",
     "toml>=0.10.2",
-    "requirements-parser>=0.5.0",
-    "virtualenv>=20.24.6",
-    "peewee>=3.17.0",
+    "requirements-parser>=0.9.0",
+    "virtualenv>=20.26.2",
+    "peewee>=3.17.5",
 ]
 
 [tool.hatch.build]
@@ -43,30 +43,51 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = ["ruff>=0.1.0", "pre-commit>=3.5.0"]
+dev-dependencies = ["ruff>=0.4.5", "pre-commit>=3.7.1"]
 
 [tool.ruff]
 line-length = 99
-src = ["userlixo"]
-target-version = "py310"
+target-version = "py312"
+
+[tool.ruff.lint]
 select = [
-    "I", # isort
-    "E", # pycodestyle
-    "W", # pycodestyle
-    "UP", # pyupgrade
-    "F", # pyflakes
-    "SIM", # flake8-simplify
-    "RET", # flake8-return
-    "C4", # flake8-comprehensions
-    "PTH", # flake8-use-pathlib
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "C90",  # mccabe
+    "DTZ",  # flake8-datetimez
+    "E",    # pycodestyle
+    "EM",   # flake8-errmsg
+    "F",    # pyflakes
+    "FURB", # refurb
+    "G",    # flake8-logging-format
+    "I",    # isort
+    "N",    # pep8-naming
     "PERF", # perflint
-    "N", # pep8-naming
-    "RUF", # ruff
+    "PL",   # pylint
+    "PTH",  # flake8-use-pathlib
+    "RET",  # flake8-return
+    "RUF",  # ruff
+    "SIM",  # flake8-simplify
+    "TCH",  # flake8-type-checking
+    "TID",  # flake8-tidy-imports
+    "UP",   # pyupgrade
+    "W",    # pycodestyle
 ]
-ignore = ["RUF001", "RUF002", "RUF003"]
+ignore = [
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "PLR0913",
+    "PLR2004",
+    "PLW2901",
+    "PLW1641",
+]
 preview = true
 
-[tool.ruff.isort]
+[tool.ruff.format]
+preview = true
+
+[tool.ruff.lint.isort]
 known-first-party = ["userlixo"]
 
 [tool.hatch.metadata]

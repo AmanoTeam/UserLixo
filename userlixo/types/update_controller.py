@@ -1,9 +1,9 @@
 import inspect
 from typing import Any
 
+from hydrogram import Client
+from hydrogram.handlers import CallbackQueryHandler, InlineQueryHandler, MessageHandler
 from kink import di
-from pyrogram import Client
-from pyrogram.handlers import CallbackQueryHandler, InlineQueryHandler, MessageHandler
 
 
 class UpdateController:
@@ -82,7 +82,8 @@ class UpdateController:
 
     def import_controller(self, controller: Any):
         if not hasattr(controller, "__controller__"):
-            raise TypeError("controller must be decorated with @Controller")
+            msg = "controller must be decorated with @Controller"
+            raise TypeError(msg)
 
         self.registers.extend(controller.__controller__.registers)
 

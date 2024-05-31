@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
+from hydrogram.types import Message
 from kink import inject
-from pyrogram.types import Message
 
 from userlixo.modules.abstract import MessageHandler
 from userlixo.modules.common.restart import save_before_restart_message_info
@@ -28,7 +28,7 @@ class UpgradeMessageHandler(MessageHandler):
             chat_id = msg.chat.id
             message_id = msg.id
 
-            await save_before_restart_message_info(message_id, chat_id, "bot")
+            save_before_restart_message_info(message_id, chat_id, "bot")
 
         await (
             UpgradeLogicBuilder.set_lang(lang)

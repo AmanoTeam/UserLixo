@@ -1,14 +1,13 @@
-import contextlib
 import logging
 import os
 import platform
 import sys
-from datetime import datetime
+from datetime import UTC, datetime
 
-import pyrogram
+import hydrogram
+from hydrogram.errors import BadRequest
+from hydrogram.helpers import ikb
 from langs import Langs
-from pyrogram.errors import BadRequest
-from pyrogram.helpers import ikb
 from rich import box, print
 from rich.panel import Panel
 
@@ -34,7 +33,7 @@ def update_requirements():
 async def compose_startup_message(lang: Langs):
     local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
     python_version = platform.python_version()
-    pyrogram_version = pyrogram.__version__
+    hydrogram_version = hydrogram.__version__
     system_uname = (await shell_exec("uname -mons"))[0]
 
     pid = os.getpid()
@@ -48,7 +47,7 @@ async def compose_startup_message(lang: Langs):
         version=local_version,
         pid=pid,
         python_version=python_version,
-        pyrogram_version=pyrogram_version,
+        hydrogram_version=hydrogram_version,
         server_uname=system_uname,
         uptime=uptime,
         plugins_total=plugins_total,
@@ -56,13 +55,13 @@ async def compose_startup_message(lang: Langs):
 
 
 async def compose_restarting_message(lang: Langs, cmd_timestamp: float, from_cmd: str):
-    now_timestamp = datetime.now().timestamp()
+    now_timestamp = datetime.now(tz=UTC).timestamp()
     diff = round(now_timestamp - cmd_timestamp, 2)
 
-    title, p = await shell_exec('git log --format="%B" -1')
-    rev, p = await shell_exec("git rev-parse --short HEAD")
-    date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
-    timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
+    _title, _p = await shell_exec('git log --format="%B" -1')
+    rev, _p = await shell_exec("git rev-parse --short HEAD")
+    date, _p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
+    timezone, _p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
     local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
 
     timezone = timezone_shortener(timezone)
@@ -74,8 +73,8 @@ async def compose_restarting_message(lang: Langs, cmd_timestamp: float, from_cmd
 
 
 async def print_cli_startup_alert():
-    date, p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
-    timezone, p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
+    date, _p = await shell_exec('git log -1 --format=%cd --date=format:"%d/%m %H:%M"')
+    timezone, _p = await shell_exec('git log -1 --format=%cd --date=format:"%z"')
     local_version = int((await shell_exec("git rev-list --count HEAD"))[0])
 
     timezone = timezone_shortener(timezone)
@@ -120,7 +119,7 @@ async def alert_startup(lang: Langs):
         except BadRequest:
             await user.send_message(logs_chat, text)
     except Exception as e:
-        logger.error(f"[bold yellow]Error while sending startup alert to LOGS_CHAT: {e}")
+        logger.error("[bold yellow]Error while sending startup alert to LOGS_CHAT: %s", e)
 
 
 async def edit_restarting_alert(lang: Langs):
@@ -144,8 +143,9 @@ async def edit_restarting_alert(lang: Langs):
                 await editor.edit_message_text(tryint(chat_id), tryint(message_id), text, **kwargs)
         except BaseException as e:
             logger.error(
-                f"[yellow]Failed to edit the restarting alert. Maybe the message has been deleted \
-    or somehow it became inaccessible.\n>> {e}[/yellow]"
+                "[yellow]Failed to edit the restarting alert. Maybe the message has been deleted "
+                "or somehow it became inaccessible.\n>> %s[/yellow]",
+                e,
             )
 
         restarting_alert.delete_instance()

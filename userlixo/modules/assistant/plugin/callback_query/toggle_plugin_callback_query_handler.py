@@ -2,8 +2,8 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from hydrogram.types import CallbackQuery
 from kink import inject
-from pyrogram.types import CallbackQuery
 
 from userlixo.config import plugins
 from userlixo.database import Config
@@ -34,7 +34,7 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
         if not Path(plugin.folder_path).exists():
             return await query.edit(lang.plugin_not_exists_on_server)
 
-        inactive = await get_inactive_plugins(plugins)
+        inactive = get_inactive_plugins(plugins)
 
         if deactivate:
             inactive.append(plugin.name)
@@ -46,16 +46,16 @@ class TogglePluginCallbackQueryHandler(CallbackQueryHandler):
         inactive_plugins.update(value=json.dumps(inactive))
 
         if deactivate:
-            await unload_plugin(plugin.name)
+            unload_plugin(plugin.name)
         else:
-            await load_plugin(plugin.name)
+            load_plugin(plugin.name)
 
         text = lang.plugin_has_been_deactivated if deactivate else lang.plugin_has_been_activated
         await query.answer(text)
 
         is_inline = query.inline_message_id is not None
 
-        text, keyboard = await compose_info_plugin_message(
+        text, keyboard = compose_info_plugin_message(
             lang, plugin_basename, page, use_deeplink=is_inline
         )
 

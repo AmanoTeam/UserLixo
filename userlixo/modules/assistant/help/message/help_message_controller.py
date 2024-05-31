@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from pyrogram import filters
+from hydrogram import filters
 
 from userlixo.decorators import controller, on_message
 

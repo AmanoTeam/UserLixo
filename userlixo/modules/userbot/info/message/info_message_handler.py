@@ -4,11 +4,11 @@ import platform
 import time
 from dataclasses import dataclass
 
+import hydrogram
 import psutil
-import pyrogram
+from hydrogram import Client, filters
+from hydrogram.types import Message
 from kink import inject
-from pyrogram import Client, filters
-from pyrogram.types import Message
 
 from userlixo.config import plugins
 from userlixo.modules.abstract import MessageHandler
@@ -24,7 +24,7 @@ class InfoMessageHandler(MessageHandler):
     async def handle_message(self, client: Client, message: Message):
         lang = self.language_selector.get_lang()
 
-        act = message.edit if await filters.me(client, message) else message.reply
+        act = message.edit if filters.me(client, message) else message.reply
 
         pid = os.getpid()
         p = psutil.Process(pid)
@@ -47,13 +47,17 @@ class InfoMessageHandler(MessageHandler):
             remote_version = "???"
 
         python_version = platform.python_version()
-        pyrogram_version = pyrogram.__version__
+        hydrogram_version = hydrogram.__version__
 
         ul_status = (
-            lang.info_upgradable_to(version=remote_version)
-            if local_version < remote_version
-            else lang.info_latest
-        ) if remote_version is int else lang.unknown
+            (
+                lang.info_upgradable_to(version=remote_version)
+                if local_version < remote_version
+                else lang.info_latest
+            )
+            if remote_version is int
+            else lang.unknown
+        )
 
         plugins_total = len(plugins)
 
@@ -64,7 +68,7 @@ class InfoMessageHandler(MessageHandler):
             local_version=local_version,
             ul_status=ul_status,
             python_version=python_version,
-            pyrogram_version=pyrogram_version,
+            hydrogram_version=hydrogram_version,
             plugins_total=plugins_total,
         )
         await act(text)
