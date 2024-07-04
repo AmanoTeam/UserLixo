@@ -5,9 +5,9 @@ FLAG: '🇧🇷'
 back: '« Voltar'
 canceled: Cancelado.
 #backup.py
-initiating_backup: Iniciando backup...
+initiating_backup: Iniciando backup…
 backup_caption: Backup solicitado por {name} em {date}.
-uploading_backup: Enviando backup...
+uploading_backup: Enviando backup…
 backup_completed: Backup concluído em {time} segundos
 #cmd.py
 cmd_no_output: Comando executado com sucesso.
@@ -20,18 +20,19 @@ kibe_choose: Por favor, escolha o formato do kibe
 sticker: Sticker
 emoji: Emoji
 both: Os dois
-kibe_wait: '👍 Processando...'
-kibe_resize_video: '📹 Redimensionando vídeo...'
-kibe_resize_photo: '🖼️ Redimensionando foto...'
-kibe_adding: '📤 Adicionando sticker ao pacote...'
-kibe_creating: '📤 Criando pacote...'
+kibe_wait: '👍 Processando…'
+kibe_resize_video: '📹 Redimensionando vídeo…'
+kibe_resize_photo: '🖼️ Redimensionando foto…'
+kibe_adding: '📤 Adicionando sticker ao pacote…'
+kibe_creating: '📤 Criando pacote…'
 kibes_open: Adicionar Sticker ao Telegram
 kibee_open: Adicionar Emoji ao Telegram
 kibe_done: '👍 Concluído!'
 kibe_config_button: "Configurações do Kibe"
 Kibe_settings: Mudar configurações do Kibe
 kibe_emoji: "Escolher emoji padrão do kibe"
-kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que deseja usar no kibe ou /cancel para cancelar"
+kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que deseja usar no kibe ou
+  /cancel para cancelar"
 kibe_emoji_set: "Emoji padrão do Kibe definido para {emoji}"
 #wiki.py
 wiki_choose: "Escolha dos titulos abaixo:"
@@ -58,14 +59,14 @@ minutes: "**{minutes}** minutos\n"
 seconds: "**{seconds}** segundos\n"
 deleted: Esse usuário não existe mais.
 #fake.py
-fake_init: Iniciando Fake do usuário {mention}...
-fake_back: Voltando para o perfil original...
+fake_init: Iniciando Fake do usuário {mention}…
+fake_back: Voltando para o perfil original…
 fake_done: Agora eu sou o {mention}!
 #ai.py
-ai_bing_searching: "Procurando \"{text}\" no Copilot..."
+ai_bing_searching: "Procurando \"{text}\" no Copilot…"
 ai_no_text: "Você precisa enviar um texto para pesquisar ou fazer imagem."
-ai_making_image: "Fazendo uma imagem com \"{text}\"..."
-ai_bard_searching: "Procurando \"{text}\" no Gemini..."
+ai_making_image: "Fazendo uma imagem com \"{text}\"…"
+ai_bard_searching: "Procurando \"{text}\" no Gemini…"
 bing_config_button: "Configurações do Gemini"
 bing_settings: "Configurações do Copilot"
 ai_mode: "alterar estilo Copilot"
@@ -75,22 +76,25 @@ ai_mode_balanced: "Balanceado"
 ai_mode_precise: "Precisa"
 ai_mode_changed: "Estilo Copilot alterado para o estilo {style}."
 ai_login: "Entrar no Copilot"
-ai_login_text: "Por favor, pressione o botão abaixo para entrar. Depois de concluir o login, envie a URL final aqui. Por exemplo: 'https://login. ive.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. O importante é obter este 'code' para logar"
+ai_login_text: "Por favor, pressione o botão abaixo para entrar. Depois de concluir
+  o login, envie a URL final aqui. Por exemplo: 'https://login. ive.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
+  O importante é obter este 'code' para logar"
 ai_login_success: "Login efetuado!"
 #upgrade.py
 not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
-upgrade_in_progress: "Atualizando a source do branch '{branch}'..."
+upgrade_in_progress: "Atualizando a source do branch '{branch}'…"
 already_up_to_date: "Não há nada para atualizar do branch '{branch}'."
-restarting: "Reiniciando..."
-upgrade_failed: "A atualização do branch '{branch}' falhou (processo encerrado com {returncode}):\n{decode}"
-updating_requirements: "Atualizando requerimentos..."
+restarting: "Reiniciando…"
+upgrade_failed: "A atualização do branch '{branch}' falhou (processo encerrado com
+  {returncode}):\n{decode}"
+updating_requirements: "Atualizando requerimentos…"
 requirements_update_failed: "Atualização dos requerimentos falhou:\n{decode}"
 #youtube.py
 ytdl_missing_argument: "Está faltando uma URL ou um texto para pesquisa."
 ytdl_audio_button: "💿 Áudio"
 ytdl_video_button: "📹 Vídeo"
 ytdl_file_too_big: "O arquivo é muito grande para ser enviado."
-ytdl_downloading: "Baixando..."
+ytdl_downloading: "Baixando…"
 ytdl_send_error: "Ocorreu um erro ao enviar o arquivo.\n{errmsg}"
-ytdl_sending: "Enviando..."
+ytdl_sending: "Enviando…"
 ytdl_sent: "Enviado como bem-sucedido."
