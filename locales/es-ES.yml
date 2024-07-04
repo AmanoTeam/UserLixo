@@ -62,10 +62,10 @@ fake_init: Iniciando Fake del usuario {mention}...
 fake_back: Volviendo al perfil original...
 fake_done: '¡Ahora soy {mention}!'
 #ai.py
-ai_bing_searching: "Buscando \"{text}\" en Bing..."
+ai_bing_searching: "Searching \"{text}\" on Bing..."
 ai_no_text: "Necesita enviar un texto para buscar o hacer una imagen."
 ai_making_image: "Haciendo imagen con \"{text}\"..."
-ai_bard_searching: "Buscando \"{text}\" en Bard..."
+ai_bard_searching: "Searching \"{text}\" on Bard..."
 bing_config_button: "BingAI settings"
 bing_settings: "BingAI settings"
 ai_mode: "change BingAI style"
@@ -74,6 +74,9 @@ ai_mode_creative: "Creative"
 ai_mode_balanced: "Balanced"
 ai_mode_precise: "Precise"
 ai_mode_changed: "BingAI style changed to {style} style."
+ai_login: "Login to BingAI"
+ai_login_text: "Please press the button below to log in. After completing the login, send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. The important thing is to obtain this 'code' to log in"
+ai_login_success: "Login successful!"
 #upgrade.py
 not_git_repo: "Error: Debe estar dentro de un repositorio git para actualizar."
 upgrade_in_progress: "Actualizando source de la branch '{branch}'..."
