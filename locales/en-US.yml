@@ -7,9 +7,9 @@ back: « Back
 canceled: Canceled.
 
 # backup.py
-initiating_backup: Initiating backup...
+initiating_backup: Initiating backup…
 backup_caption: Backup requested by {name} on {date}.
-uploading_backup: Uploading backup...
+uploading_backup: Uploading backup…
 backup_completed: Backup completed in {time} seconds
 
 # cmd.py
@@ -26,18 +26,19 @@ kibe_choose: Please choose the kibe format
 sticker: Sticker
 emoji: Emoji
 both: Both
-kibe_wait: 👍 Processing...
-kibe_resize_video: 📹 Resizing video...
-kibe_resize_photo: 🖼️ Resizing photo...
-kibe_adding: 📤 Adding sticker to pack...
-kibe_creating: 📤 Creating pack...
+kibe_wait: 👍 Processing…
+kibe_resize_video: 📹 Resizing video…
+kibe_resize_photo: 🖼️ Resizing photo…
+kibe_adding: 📤 Adding sticker to pack…
+kibe_creating: 📤 Creating pack…
 kibes_open: Add Sticker to Telegram
 kibee_open: Add Emoji to Telegram
 kibe_done: 👍 Done!
 kibe_config_button: "Kibe settings"
 Kibe_settings: Change Kibe settings
 kibe_emoji: "Choose kibe emoji"
-kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe or /cancel to cancel"
+kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe
+  or /cancel to cancel"
 kibe_emoji_set: "Kibe emoji set to {emoji}"
 
 # wiki.py
@@ -69,15 +70,15 @@ seconds: "**{seconds}** seconds\n"
 deleted: This user no longer exists.
 
 # fake.py
-fake_init: Initiating Fake of user {mention}...
-fake_back: Returning to the original profile...
+fake_init: Initiating Fake of user {mention}…
+fake_back: Returning to the original profile…
 fake_done: Now I'm {mention}!
 
 # ai.py
-ai_bing_searching: "Searching \"{text}\" on Bing..."
+ai_bing_searching: "Searching \"{text}\" on Bing…"
 ai_no_text: "You need to send a text to search or make image."
 ai_making_image: "Making image with \"{text}\"..."
-ai_bard_searching: "Searching \"{text}\" on Bard..."
+ai_bard_searching: "Searching \"{text}\" on Gemini..."
 bing_config_button: "BingAI settings"
 bing_settings: "BingAI settings"
 ai_mode: "change BingAI style"
@@ -87,7 +88,9 @@ ai_mode_balanced: "Balanced"
 ai_mode_precise: "Precise"
 ai_mode_changed: "BingAI style changed to {style} style."
 ai_login: "Login to BingAI"
-ai_login_text: "Please press the button below to log in. After completing the login, send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. The important thing is to obtain this 'code' to log in"
+ai_login_text: "Please press the button below to log in. After completing the login,
+  send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
+  The important thing is to obtain this 'code' to log in"
 ai_login_success: "Login successful!"
 chose_tone: "Choose the tone of the text to be generated:"
 ai_making_text: "<blockquote>{text}</blockquote>\nGenerating text with tone {tone}..."
@@ -105,11 +108,12 @@ quest: Question on use
 
 # upgrade.py
 not_git_repo: "Error: You must be inside a git repository to upgrade."
-upgrade_in_progress: "Upgrading source from branch '{branch}'..."
+upgrade_in_progress: "Upgrading source from branch '{branch}'…"
 already_up_to_date: "There's nothing to upgrade from branch '{branch}'."
-restarting: "Restarting..."
-upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {returncode}):\n{decode}"
-updating_requirements: "Updating requirements..."
+restarting: "Restarting…"
+upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {returncode}):\n\
+  {decode}"
+updating_requirements: "Updating requirements…"
 requirements_update_failed: "Requirements update failed:\n{decode}"
 
 # youtube.py
@@ -117,7 +121,7 @@ ytdl_missing_argument: "Missing argument: URL or search query."
 ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
 ytdl_file_too_big: "The file is too big to be sent."
-ytdl_downloading: "Downloading..."
-ytdl_sending: "Sending..."
+ytdl_downloading: "Downloading…"
+ytdl_sending: "Sending…"
 ytdl_send_error: "An error occurred while sending the file.\n{errmsg}"
 ytdl_sent: "Sent as sucessfully."
