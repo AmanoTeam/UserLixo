@@ -62,10 +62,10 @@ fake_init: Komencante falsaĵon de uzanto {mention}...
 fake_back: Revenante al la originala profilo...
 fake_done: Nun mi estas {mention}!
 #ai.py
-ai_bing_searching: "Serĉante \"{text}\" ĉe Bing..."
+ai_bing_searching: "Searching \"{text}\" on Bing..."
 ai_no_text: "Vi devas sendi tekston por serĉi aŭ fari bildon."
 ai_making_image: "Farante bildon kun \"{text}\"..."
-ai_bard_searching: "Serĉante \"{text}\" ĉe Bard..."
+ai_bard_searching: "Searching \"{text}\" on Bard..."
 bing_config_button: "BingAI settings"
 bing_settings: "BingAI settings"
 ai_mode: "change BingAI style"
@@ -74,6 +74,9 @@ ai_mode_creative: "Creative"
 ai_mode_balanced: "Balanced"
 ai_mode_precise: "Precise"
 ai_mode_changed: "BingAI style changed to {style} style."
+ai_login: "Login to BingAI"
+ai_login_text: "Please press the button below to log in. After completing the login, send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. The important thing is to obtain this 'code' to log in"
+ai_login_success: "Login successful!"
 #upgrade.py
 not_git_repo: "Eraro: Vi devas esti ene de git-deponejo por ĝisdatigi."
 upgrade_in_progress: "Ĝisdatigante fonton de branĉo '{branch}'..."
