@@ -59,3 +59,4 @@ ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
 kibe_choose: Elija el formato kibe
 both: Ambos
+ytdl_missing_argument: 'Falta argumento: URL o consulta de búsqueda.'
