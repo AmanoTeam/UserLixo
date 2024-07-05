@@ -3,8 +3,6 @@ LANGUAGE_CODE: es-ES
 FLAG: '🇪🇸'
 #geral
 back: '« Volver'
-canceled: ''
-#backup.py
 initiating_backup: Iniciando la copia de seguridad…
 backup_caption: Copia de seguridad solicitada por {name} en {date}.
 uploading_backup: Cargando copia de seguridad…
@@ -12,14 +10,9 @@ backup_completed: Copia de seguridad completada en {time} segundos
 #cmd.py
 cmd_no_output: Comando ejecutado correctamente.
 #dicio.py
-choose_options: ""
-#execs.py
 exec_seucess: Aplicación con éxito.
 #kibe.py
-kibe_choose: ''
-sticker: ''
 emoji: Emoji
-both: ''
 kibe_wait: '👍 Procesando…'
 kibe_resize_video: '📹 Redimensionando vídeo…'
 kibe_resize_photo: '🖼️ Redimensionando foto…'
@@ -28,12 +21,6 @@ kibe_creating: '📤 Creando paquete…'
 kibes_open: Añadir pegatina a Telegram
 kibee_open: Añadir Emoji a Telegram
 kibe_done: '👍 ¡Hecho!'
-kibe_config_button: ""
-Kibe_settings: ''
-kibe_emoji: ""
-kibe_emoji_choose: ""
-kibe_emoji_set: ""
-#wiki.py
 wiki_choose: "Elige uno de los siguientes títulos:"
 read_more: Leer más
 wiki_error: Se ha producido un error al obtener la página de Wikipedia.
@@ -43,9 +30,6 @@ config_choose: "Elija una de las opciones a configurar:"
 choose_lang: "Elija uno de los siguientes idiomas:"
 lang_set: El idioma se ha establecido en español.
 lang: Cambiar idioma
-plugins_settings_button: ''
-plugins_settings: ""
-#mix.py on
 not_bot: no funciona con bots.
 no_data: Esta persona ha deshabilitado su último visto.
 online: "{mention} está en línea"
@@ -65,33 +49,11 @@ fake_done: '¡Ahora soy {mention}!'
 ai_bing_searching: "Buscando \"{text}\" en Bing…"
 ai_no_text: "Necesita enviar un texto para buscar o hacer una imagen."
 ai_making_image: "Haciendo imagen con \"{text}\"…"
-ai_bard_searching: ""
-bing_config_button: ""
-bing_settings: ""
-ai_mode: ""
-ai_mode_choose: ""
-ai_mode_creative: ""
-ai_mode_balanced: ""
-ai_mode_precise: ""
-ai_mode_changed: ""
-ai_login: ""
-ai_login_text: ""
-ai_login_success: ""
-#upgrade.py
 not_git_repo: "Error: Debe estar dentro de un repositorio git para actualizar."
 upgrade_in_progress: "Actualizando source de la branch '{branch}'…"
 already_up_to_date: "No hay nada que actualizar desde la branch '{branch}'."
 restarting: "Reiniciando…"
 upgrade_failed: "Falló la actualización de la branch '{branch}' (proceso finalizado
   con {returncode}):\n{decode}"
-updating_requirements: ""
-requirements_update_failed: ""
-#youtube.py
-ytdl_missing_argument: ""
 ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
-ytdl_file_too_big: ""
-ytdl_downloading: ""
-ytdl_send_error: ""
-ytdl_sending: ""
-ytdl_sent: ""
