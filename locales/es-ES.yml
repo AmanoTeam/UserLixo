@@ -75,3 +75,4 @@ ai_login_text: "Por favor, pulse el botón de abajo para iniciar sesión. Una ve
 plugins_settings_button: Configuración de plugins
 ai_mode_precise: Preciso
 ai_login_success: Inicio de sesión correcto.
+ytdl_file_too_big: El archivo es demasiado grande para ser enviado.
