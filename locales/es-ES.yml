@@ -64,3 +64,5 @@ ai_mode_balanced: Equilibrado
 requirements_update_failed: "Error en la actualización de requisitos:\n{decode}"
 kibe_emoji: Elige el emoji kibe
 sticker: Pegatina
+kibe_emoji_choose: "Emoji actual: {emoji}\nEnvía el emoji que quieres usar en kibe
+  o /cancel para cancelar"
