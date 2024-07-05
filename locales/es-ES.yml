@@ -84,3 +84,4 @@ ytdl_downloading: Descargando…
 plugins_settings: 'Elija un plugin para configurar:'
 Kibe_settings: Cambiar la configuración de Kibe
 choose_options: 'Elige una de las opciones:'
+kibe_emoji_set: Kibe emoji set to {emoji}
