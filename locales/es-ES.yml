@@ -63,3 +63,4 @@ ytdl_missing_argument: 'Falta argumento: URL o consulta de búsqueda.'
 ai_mode_balanced: Equilibrado
 requirements_update_failed: "Error en la actualización de requisitos:\n{decode}"
 kibe_emoji: Elige el emoji kibe
+sticker: Pegatina
