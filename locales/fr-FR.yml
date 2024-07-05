@@ -61,3 +61,37 @@ upgrade_failed: "La mise à jour à partir de la branche '{branch}' a échoué (
 updating_requirements: "Mise à jour des exigences…"
 ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
+plugins_settings_button: Paramètres des plugins
+plugins_settings: 'Choisissez un plugin à configurer :'
+bing_settings: Paramètres de BingAI
+ai_mode: changer le style de BingAI
+bing_config_button: Paramètres de BingAI
+requirements_update_failed: "La mise à jour des exigences a échoué :\n{decode}"
+ai_login_text: "Veuillez cliquer sur le bouton ci-dessous pour vous connecter. Une
+  fois la connexion terminée, envoyez l'URL finale ici. Par exemple : 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
+  L'important est d'obtenir ce \"code\" pour se connecter."
+ai_login_success: Connexion réussie !
+ai_bing_searching: Recherche "{text}" sur Bing…
+kibe_choose: Veuillez choisir le format du kibe
+both: Les deux
+ytdl_missing_argument: 'Argument manquant : URL ou requête de recherche.'
+ai_mode_balanced: Équilibré
+kibe_emoji: Choisir l'emoji kibe
+sticker: Autocollant
+kibe_emoji_choose: "Emoji actuel : {emoji}\nEnvoyez l'emoji que vous voulez utiliser
+  dans le kibe ou /cancel pour annuler."
+ytdl_send_error: "Une erreur s'est produite lors de l'envoi du fichier.\n{errmsg}"
+ai_mode_changed: Le style BingAI a été remplacé par le style {style}.
+ai_mode_precise: Précision
+ytdl_file_too_big: Le fichier est trop volumineux pour être envoyé.
+ytdl_sending: Envoi…
+canceled: Annulé.
+ai_login: Se connecter à BingAI
+ytdl_downloading: Téléchargement…
+Kibe_settings: Modifier les paramètres de Kibe
+kibe_emoji_set: Kibe emoji set to {emoji}
+ai_bard_searching: Recherche "{text}" sur Gemini…
+ytdl_sent: Envoyé avec succès.
+kibe_config_button: Paramètres de Kibe
+ai_mode_choose: "Choisissez l'une des options :"
+ai_mode_creative: Créatif
