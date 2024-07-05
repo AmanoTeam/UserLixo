@@ -1,0 +1,108 @@
+NAME: Esperanto
+LANGUAGE_CODE: eo-UY
+FLAG: '🇪🇴'
+#geral
+back: '« Reiru'
+canceled: Canceled.
+#backup.py
+initiating_backup: Komencante sekurkopion...
+backup_caption: Sekurkopio petita de {name} je {date}.
+uploading_backup: Alŝutante sekurkopion...
+backup_completed: Sekurkopio finiĝis post {time} sekundoj
+#cmd.py
+cmd_no_output: Komando efektivigita sukcese.
+#dicio.py
+choose_options: "Elektu unu el la opcioj:"
+#execs.py
+exec_seucess: Ekzekutita sukcese.
+#kibe.py
+kibe_choose: Please choose the kibe format
+sticker: Sticker
+emoji: Emoji
+both: Both
+kibe_wait: '👍 Prilaborado...'
+kibe_resize_video: '📹 Regrandigo de video...'
+kibe_resize_photo: '🖼️ Regrandigo de foto...'
+kibe_adding: '📤 Aldonante sticker al paki...'
+kibe_creating: '📤 Kreante pako...'
+kibes_open: Aldonu glumarkon al Telegram
+kibee_open: Aldonu Emoji al Telegram
+kibe_done: '👍 Farita!'
+kibe_config_button: "Kibe settings"
+Kibe_settings: Change Kibe settings
+kibe_emoji: "Choose kibe emoji"
+kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe or /cancel to cancel"
+kibe_emoji_set: "Kibe emoji set to {emoji}"
+#wiki.py
+wiki_choose: "Elektu unu el la subaj titoloj:"
+read_more: Legu pli
+wiki_error: Okazis eraro dum ricevado de la Vikipedio-paĝo.
+wiki_no_results: Neniuj rezultoj trovitaj por {query}.
+#config.py
+config_choose: "Elektu unu el la opcioj por agordi:"
+choose_lang: "Elektu unu el la malsupraj lingvoj:"
+lang_set: Lingvo agordita al Esperanto.
+lang: Ŝanĝiĝi lingvon
+plugins_settings_button: Plugins settings
+plugins_settings: "Choose one plugin to configure:"
+#mix.py on
+not_bot: Ĉi tio ne funkcias kun robotoj.
+no_data: Ĉi tiu persono malfunkciigis sian lastan viditon.
+online: "{mention} estas interreta"
+offline: "{mention} estas eksterrete por:\n"
+years: "**{years}** jaro\n"
+months: "**{months}** monatoj\n"
+days: "**{days}** tagoj\n"
+hours: "**{hours}** horoj\n"
+minutes: "**{minutes}** minutoj\n"
+seconds: "**{seconds}** sekundoj\n"
+deleted: Ĉi tiu uzanto ne plu ekzistas.
+#fake.py
+fake_init: Komencante falsaĵon de uzanto {mention}...
+fake_back: Revenante al la originala profilo...
+fake_done: Nun mi estas {mention}!
+#ai.py
+ai_bing_searching: "Searching \"{text}\" on Bing..."
+ai_no_text: "Vi devas sendi tekston por serĉi aŭ fari bildon."
+ai_making_image: "Making image with \"{text}\"..."
+ai_bard_searching: "Searching \"{text}\" on Bard..."
+bing_config_button: "BingAI settings"
+bing_settings: "BingAI settings"
+ai_mode: "change BingAI style"
+ai_mode_choose: "Choose one of the options:"
+ai_mode_creative: "Creative"
+ai_mode_balanced: "Balanced"
+ai_mode_precise: "Precise"
+ai_mode_changed: "BingAI style changed to {style} style."
+ai_login: "Login to BingAI"
+ai_login_text: "Please press the button below to log in. After completing the login, send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. The important thing is to obtain this 'code' to log in"
+ai_login_success: "Login successful!"
+chose_tone: "Choose the tone of the text to be generated:"
+ai_making_text: "<blockquote>{text}</blockquote>\nGenerating text with tone {tone}..."
+ai_error: "An error occurred while generating:\n<blockquote>{error}</blockquote>"
+tone_config: "Tone settings"
+#ai.py Tones
+professional: Professional
+casual: Casual
+polite: Polite
+funny: Funny
+social+post: Social Post
+witty: Witty
+quest: Question on use
+#upgrade.py
+not_git_repo: "Eraro: Vi devas esti ene de git-deponejo por ĝisdatigi."
+upgrade_in_progress: "Ĝisdatigante fonton de branĉo '{branch}'..."
+already_up_to_date: "Estas nenio por ĝisdatigi de branĉo '{branch}'."
+restarting: "Rekomencante..."
+upgrade_failed: "Ĝisdatigo de branĉo '{branch}' malsukcesis (procezo eliris kun {returncode}):\n {decode}"
+updating_requirements: "Updating requirements..."
+requirements_update_failed: "Requirements update failed:\n{decode}"
+#youtube.py
+ytdl_missing_argument: "Mankas argumento: URL aŭ salamandredoj."
+ytdl_audio_button: "💿 Aŭdio"
+ytdl_video_button: "📹 Video"
+ytdl_file_too_big: "La dosiero estas tro granda por esti sendita."
+ytdl_downloading: "Elŝutado..."
+ytdl_sending: "Sendante..."
+ytdl_send_error: "Okazis eraro dum sendado de la dosiero.\n {errmsg}"
+ytdl_sent: "Sendita sukcese."
