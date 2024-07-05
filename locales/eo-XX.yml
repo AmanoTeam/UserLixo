@@ -66,3 +66,30 @@ ytdl_downloading: "Elŝutado…"
 ytdl_send_error: "Okazis eraro dum sendado de la dosiero.\n {errmsg}"
 ytdl_sending: "Sendante…"
 ytdl_sent: "Sendita sukcese."
+kibe_choose: Bonvolu elekti la kibe-formaton
+sticker: Glumarko
+canceled: Nuligite.
+kibe_emoji: Elektu kibe-emojon
+Kibe_settings: Ŝanĝu Kibe-agordojn
+kibe_config_button: Kibe-agordoj
+ai_bard_searching: Serĉante " {text} " ĉe Gemini…
+bing_settings: Agordoj de BingAI
+ai_mode: ŝanĝi BingAI-stilon
+ai_login_success: Ensalutu sukcesa!
+requirements_update_failed: "Ĝisdatigo de postuloj malsukcesis:\n {decode}"
+bing_config_button: Agordoj de BingAI
+ai_login_text: "Bonvolu premi la suban butonon por ensaluti. Post kompletigado de
+  la ensaluto, sendu la finan URL ĉi tie. Ekzemple: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
+  La grava afero estas akiri ĉi tiun 'kodon' por ensaluti"
+ai_login: Ensalutu al BingAI
+ai_mode_changed: BingAI-stilo ŝanĝiĝis al {style} stilo.
+both: Ambaŭ
+ai_mode_balanced: Ekvilibrata
+kibe_emoji_choose: "Nuna emoji: {emoji}\n Sendu la emoji kiun vi volas uzi en kibe
+  aŭ /nuligi por nuligi"
+plugins_settings_button: Agordoj de kromprogramoj
+ai_mode_precise: Precize
+plugins_settings: 'Elektu unu kromaĵon por agordi:'
+kibe_emoji_set: Kibe-emoji agordita al {emoji}
+ai_mode_choose: 'Elektu unu el la opcioj:'
+ai_mode_creative: Kreema
