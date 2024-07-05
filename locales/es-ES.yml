@@ -81,3 +81,4 @@ bing_settings: Configuración de BingAI
 canceled: Cancelado.
 ai_login: Iniciar sesión en BingAI
 ytdl_downloading: Descargando…
+plugins_settings: 'Elija un plugin para configurar:'
