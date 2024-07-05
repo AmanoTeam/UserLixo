@@ -98,3 +98,15 @@ ytdl_downloading: "Baixando…"
 ytdl_send_error: "Ocorreu um erro ao enviar o arquivo.\n{errmsg}"
 ytdl_sending: "Enviando…"
 ytdl_sent: "Enviado como bem-sucedido."
+chose_tone: 'Escolha o tom do texto a ser gerado:'
+ai_making_text: "<blockquote> {text} </blockquote>\nGerando texto com o tom {tone}
+  …"
+ai_error: "Ocorreu um erro ao gerar:\n<blockquote>{error}</blockquote>"
+tone_config: Configurações de tom
+professional: Profissional
+casual: Casual
+polite: Educado
+funny: Engraçado
+social+post: Postagem Social
+witty: Inteligente
+quest: Pergunta sobre o uso
