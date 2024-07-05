@@ -74,3 +74,4 @@ ai_login_text: "Por favor, pulse el botón de abajo para iniciar sesión. Una ve
   Lo importante es obtener este 'código' para iniciar sesión"
 plugins_settings_button: Configuración de plugins
 ai_mode_precise: Preciso
+ai_login_success: Inicio de sesión correcto.
