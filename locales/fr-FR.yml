@@ -3,11 +3,11 @@ LANGUAGE_CODE: fr-FR
 FLAG: '🇫🇷'
 #geral
 back: '« Retour'
-canceled: Canceled.
+canceled: ''
 #backup.py
-initiating_backup: Lancement de la sauvegarde...
+initiating_backup: Lancement de la sauvegarde…
 backup_caption: Sauvegarde demandée par {name} le {date}.
-uploading_backup: Téléchargement de la sauvegarde...
+uploading_backup: Téléchargement de la sauvegarde…
 backup_completed: Sauvegarde terminée en {time} secondes
 #cmd.py
 cmd_no_output: Commande exécutée avec succès.
@@ -16,35 +16,35 @@ choose_options: "Choisissez l'une des options :"
 #execs.py
 exec_seucess: Exécuté avec succès.
 #kibe.py
-kibe_choose: Please choose the kibe format
-sticker: Sticker
+kibe_choose: ''
+sticker: ''
 emoji: Emoji
-both: Both
-kibe_wait: '👍 Traitement...'
-kibe_resize_video: '📹 Redimensionnement de la vidéo...'
-kibe_resize_photo: '🖼️ Redimensionnement de la photo...'
-kibe_adding: '📤 Ajout d''autocollant au pack...'
-kibe_creating: '📤 Création du pack...'
+both: ''
+kibe_wait: '👍 Traitement…'
+kibe_resize_video: '📹 Redimensionnement de la vidéo…'
+kibe_resize_photo: '🖼️ Redimensionnement de la photo…'
+kibe_adding: '📤 Ajout d''autocollant au pack…'
+kibe_creating: '📤 Création du pack…'
 kibes_open: Ajouter un autocollant à Telegram
 kibee_open: Ajouter un emoji à Telegram
-kibe_done: '👍 Terminé!'
-kibe_config_button: "Kibe settings"
-Kibe_settings: Change Kibe settings
-kibe_emoji: "Choose kibe emoji"
-kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe or /cancel to cancel"
-kibe_emoji_set: "Kibe emoji set to {emoji}"
+kibe_done: '👍 Terminé !'
+kibe_config_button: ""
+Kibe_settings: ''
+kibe_emoji: ""
+kibe_emoji_choose: ""
+kibe_emoji_set: ""
 #wiki.py
-wiki_choose: "Choisissez l'un des titres ci-dessous:"
+wiki_choose: "Choisissez l'un des titres ci-dessous :"
 read_more: Lire la suite
 wiki_error: Une erreur s'est produite lors de l'obtention de la page Wikipédia.
 wiki_no_results: Aucun résultat trouvé pour {query}.
 #config.py
-config_choose: "Choisissez l'une des options de configuration:"
-choose_lang: "Choisissez l'une des langues ci-dessous:"
+config_choose: "Choisissez l'une des options de configuration :"
+choose_lang: "Choisissez l'une des langues ci-dessous :"
 lang_set: Langue définie sur l'anglais.
 lang: Changer de langue
-plugins_settings_button: Plugins settings
-plugins_settings: "Choose one plugin to configure:"
+plugins_settings_button: ''
+plugins_settings: ""
 #mix.py on
 not_bot: ne fonctionne pas avec les bots.
 no_data: Cette personne a désactivé sa dernière vue.
@@ -58,39 +58,42 @@ minutes: "**{minutes}** minutes\n"
 seconds: "**{seconds}** secondes\n"
 deleted: Cet utilisateur n'existe plus.
 #fake.py
-fake_init: Lancement du faux profil de l'utilisateur {mention}...
-fake_back: Retour au profil original...
-fake_done: Je suis maintenant {mention}!
+fake_init: Lancement du faux profil de l'utilisateur {mention}…
+fake_back: Retour au profil original…
+fake_done: Je suis maintenant {mention} !
 #ai.py
-ai_bing_searching: "Searching \"{text}\" on Bing..."
-ai_no_text: "Vous devez envoyer un texte pour effectuer une recherche ou créer une image."
-ai_making_image: "Création d'une image avec \"{text}\"..."
-ai_bard_searching: "Searching \"{text}\" on Bard..."
-bing_config_button: "BingAI settings"
-bing_settings: "BingAI settings"
-ai_mode: "change BingAI style"
-ai_mode_choose: "Choose one of the options:"
-ai_mode_creative: "Creative"
-ai_mode_balanced: "Balanced"
-ai_mode_precise: "Precise"
-ai_mode_changed: "BingAI style changed to {style} style."
-ai_login: "Login to BingAI"
-ai_login_text: "Please press the button below to log in. After completing the login, send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. The important thing is to obtain this 'code' to log in"
-ai_login_success: "Login successful!"
+ai_bing_searching: ""
+ai_no_text: "Vous devez envoyer un texte pour effectuer une recherche ou créer une
+  image."
+ai_making_image: "Création d'une image avec \"{text}\"…"
+ai_bard_searching: ""
+bing_config_button: ""
+bing_settings: ""
+ai_mode: ""
+ai_mode_choose: ""
+ai_mode_creative: ""
+ai_mode_balanced: ""
+ai_mode_precise: ""
+ai_mode_changed: ""
+ai_login: ""
+ai_login_text: ""
+ai_login_success: ""
 #upgrade.py
-not_git_repo: "Erreur: Vous devez être dans un dépôt git pour effectuer la mise à jour."
-upgrade_in_progress: "\"Mise à jour des sources à partir de la branche '{branch}'..."
+not_git_repo: "Erreur : Vous devez être dans un dépôt git pour effectuer la mise à
+  jour."
+upgrade_in_progress: "\"Mise à jour des sources à partir de la branche '{branch}'…"
 already_up_to_date: "Il n'y a rien à mettre à jour à partir de la branche '{branch}'."
-restarting: "Redémarrage..."
-upgrade_failed: "La mise à jour à partir de la branche '{branch}' a échoué (le processus s'est terminé avec le code de retour {returncode}) : \\n{decode}"
-updating_requirements: "Updating requirements..."
-requirements_update_failed: "Requirements update failed:\n{decode}"
+restarting: "Redémarrage…"
+upgrade_failed: "La mise à jour à partir de la branche '{branch}' a échoué (le processus
+  s'est terminé avec le code de retour {returncode}) :\n{decode}"
+updating_requirements: "Mise à jour des exigences…"
+requirements_update_failed: ""
 #youtube.py
-ytdl_missing_argument: "Missing argument: URL or search query."
+ytdl_missing_argument: ""
 ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
-ytdl_file_too_big: "The file is too big to be sent."
-ytdl_downloading: "Downloading..."
-ytdl_send_error: "An error occurred while sending the file.\n{errmsg}"
-ytdl_sending: "Sending..."
-ytdl_sent: "Sent as sucessfully."
+ytdl_file_too_big: ""
+ytdl_downloading: ""
+ytdl_send_error: ""
+ytdl_sending: ""
+ytdl_sent: ""
