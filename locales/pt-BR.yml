@@ -64,7 +64,7 @@ fake_done: Agora eu sou o {mention}!
 #ai.py
 ai_bing_searching: "Procurando \"{text}\" no Copilot..."
 ai_no_text: "Você precisa enviar um texto para pesquisar ou fazer imagem."
-ai_making_image: "Fazendo uma imagem com \"{text}\"..."
+ai_making_image: "Making image with \"{text}\"..."
 ai_bard_searching: "Procurando \"{text}\" no Gemini..."
 bing_config_button: "Configurações do Gemini"
 bing_settings: "Configurações do Copilot"
@@ -77,6 +77,18 @@ ai_mode_changed: "Estilo Copilot alterado para o estilo {style}."
 ai_login: "Entrar no Copilot"
 ai_login_text: "Por favor, pressione o botão abaixo para entrar. Depois de concluir o login, envie a URL final aqui. Por exemplo: 'https://login. ive.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. O importante é obter este 'code' para logar"
 ai_login_success: "Login efetuado!"
+chose_tone: "Choose the tone of the text to be generated:"
+ai_making_text: "<blockquote>{text}</blockquote>\nGenerating text with tone {tone}..."
+ai_error: "An error occurred while generating:\n<blockquote>{error}</blockquote>"
+tone_config: "Tone settings"
+#ai.py Tones
+professional: Professional
+casual: Casual
+polite: Polite
+funny: Funny
+social+post: Social Post
+witty: Witty
+quest: Question on use
 #upgrade.py
 not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
 upgrade_in_progress: "Atualizando a source do branch '{branch}'..."
@@ -91,6 +103,6 @@ ytdl_audio_button: "💿 Áudio"
 ytdl_video_button: "📹 Vídeo"
 ytdl_file_too_big: "O arquivo é muito grande para ser enviado."
 ytdl_downloading: "Baixando..."
-ytdl_send_error: "Ocorreu um erro ao enviar o arquivo.\n{errmsg}"
 ytdl_sending: "Enviando..."
+ytdl_send_error: "Ocorreu um erro ao enviar o arquivo.\n{errmsg}"
 ytdl_sent: "Enviado como bem-sucedido."
