@@ -89,3 +89,4 @@ ai_bard_searching: Buscando "{text}" en Gemini…
 ai_mode: cambiar el estilo de BingAI
 ytdl_sent: Enviado como con éxito.
 kibe_config_button: Ajustes de Kibe
+ai_mode_choose: 'Elige una de las opciones:'
