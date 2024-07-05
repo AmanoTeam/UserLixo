@@ -72,3 +72,4 @@ ai_mode_changed: El estilo BingAI ha cambiado al estilo {style}.
 ai_login_text: "Por favor, pulse el botón de abajo para iniciar sesión. Una vez completado
   el inicio de sesión, envíe aquí la URL final. Por ejemplo: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
   Lo importante es obtener este 'código' para iniciar sesión"
+plugins_settings_button: Configuración de plugins
