@@ -64,7 +64,7 @@ fake_done: '¡Ahora soy {mention}!'
 #ai.py
 ai_bing_searching: "Searching \"{text}\" on Bing..."
 ai_no_text: "Necesita enviar un texto para buscar o hacer una imagen."
-ai_making_image: "Haciendo imagen con \"{text}\"..."
+ai_making_image: "Making image with \"{text}\"..."
 ai_bard_searching: "Searching \"{text}\" on Bard..."
 bing_config_button: "BingAI settings"
 bing_settings: "BingAI settings"
@@ -77,6 +77,18 @@ ai_mode_changed: "BingAI style changed to {style} style."
 ai_login: "Login to BingAI"
 ai_login_text: "Please press the button below to log in. After completing the login, send the final URL here. For example: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'. The important thing is to obtain this 'code' to log in"
 ai_login_success: "Login successful!"
+chose_tone: "Choose the tone of the text to be generated:"
+ai_making_text: "<blockquote>{text}</blockquote>\nGenerating text with tone {tone}..."
+ai_error: "An error occurred while generating:\n<blockquote>{error}</blockquote>"
+tone_config: "Tone settings"
+#ai.py Tones
+professional: Professional
+casual: Casual
+polite: Polite
+funny: Funny
+social+post: Social Post
+witty: Witty
+quest: Question on use
 #upgrade.py
 not_git_repo: "Error: Debe estar dentro de un repositorio git para actualizar."
 upgrade_in_progress: "Actualizando source de la branch '{branch}'..."
@@ -91,6 +103,6 @@ ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
 ytdl_file_too_big: "The file is too big to be sent."
 ytdl_downloading: "Downloading..."
-ytdl_send_error: "An error occurred while sending the file.\n{errmsg}"
 ytdl_sending: "Sending..."
+ytdl_send_error: "An error occurred while sending the file.\n{errmsg}"
 ytdl_sent: "Sent as sucessfully."
