@@ -8,3 +8,6 @@ wiki_error: Ocorreu um erro ao obter a página da Wikipédia.
 kibe_choose: Por favor, escolha o formato kibe
 kibe_adding: 📤 Adicionando adesivo ao pacote…
 kibe_resize_video: 📹 Redimensionando vídeo…
+NAME: Português (Portugal)
+LANGUAGE_CODE: pt-PT
+FLAG: 🇵🇹
