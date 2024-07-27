@@ -3,3 +3,8 @@ polite: Bem-educado
 restarting: Reiniciar
 both: Ambas
 hours: "<ph id=\"mtc_1\" ctype=\"x-twig\" equiv-text=\"base64:e3tob3Vyc319\"/> horas\n"
+bard_settings: Configurações GeminiAI
+wiki_error: Ocorreu um erro ao obter a página da Wikipédia.
+kibe_choose: Por favor, escolha o formato kibe
+kibe_adding: 📤 Adicionando adesivo ao pacote…
+kibe_resize_video: 📹 Redimensionando vídeo…
