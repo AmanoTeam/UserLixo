@@ -5,9 +5,45 @@ both: Ambas
 hours: "<ph id=\"mtc_1\" ctype=\"x-twig\" equiv-text=\"base64:e3tob3Vyc319\"/> horas\n"
 bard_settings: Configurações GeminiAI
 wiki_error: Ocorreu um erro ao obter a página da Wikipédia.
-kibe_choose: Por favor, escolha o formato kibe
+kibe_choose: Por favor, escolha o formato do kibe
 kibe_adding: 📤 Adicionando adesivo ao pacote…
-kibe_resize_video: 📹 Redimensionando vídeo…
+kibe_resize_video: 📹 A redimensionar vídeo…
 NAME: Português (Portugal)
 LANGUAGE_CODE: pt-PT
 FLAG: 🇵🇹
+back: « Voltar
+canceled: Cancelado.
+initiating_backup: Iniciando backup…
+backup_caption: Backup solicitado por {name} em {date}.
+uploading_backup: Envio de backup…
+backup_completed: Backup concluído em {time} segundos
+cmd_no_output: Comando executado com sucesso.
+choose_options: 'Escolha uma das opções:'
+exec_seucess: Executado com sucesso.
+sticker: Autocolante
+emoji: Emoji
+kibe_wait: 👍 A processar…
+kibe_resize_photo: 🖼️ A redimensionar foto…
+kibe_creating: 📤 Criação de pacote…
+kibes_open: Adicionar Autocolante ao Telegram
+kibee_open: Adicionar Emoji ao Telegram
+kibe_done: 👍 Concluído!
+kibe_config_button: Definições do Kibe
+Kibe_settings: Mudar as definições do Kibe
+kibe_emoji: Escolher emoji padrão do kibe
+wiki_choose: 'Escolha dos títulos abaixo:'
+read_more: Ler mais
+wiki_no_results: Não foram encontrados resultados para {query}.
+config_choose: 'Escolha uma das opções para configurar:'
+choose_lang: 'Escolha um dos idiomas abaixo:'
+lang: Alterar idioma
+online: '{mention} está online'
+plugins_settings_button: Definições dos Plugins
+plugins_settings: 'Escolha um plugin para configurar:'
+no_data: Esta pessoa desactivou o seu visto por último.
+lang_set: Idioma definido para Português.
+not_bot: não funciona com bots.
+kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que pretende usar no kibe
+  ou /cancel para cancelar"
+kibe_emoji_set: Emoji padrão do Kibe definido para {emoji}
+offline: "{mention} está offline por: \n"
