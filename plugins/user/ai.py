@@ -417,7 +417,7 @@ async def bardc(c: Client, m: Message, t):
         page_title = f"Gemini-userlixo-{c.me.first_name}"
         author_info = {"author_name": "Gemini", "author_url": "https://t.me/UserLixo"}
 
-        page_content = re.sub(r"<h2.*?>(.*?)</h2>", r"<h3>\1</h3>", page_content)
+        page_content = re.sub(r"<h[12].*?>(.*?)</h[12]>", r"<h3>\1</h3>", page_content)
         page = await update_page(taccount, path, page_title, page_content, author_info)
         if len(text) > 4096 or mmode == "telegraph":
             newm = await m.edit(f'<blockquote>{mtext}</blockquote>\n\n{page["url"]}')
