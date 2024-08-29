@@ -2,9 +2,11 @@ import base64
 import io
 import json
 import re
+import uuid
 from datetime import datetime
-from tempfile import NamedTemporaryFile
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 
+import httpx
 import markdown
 from EdgeGPT.EdgeGPT import Chatbot, ConversationStyle
 from gemini import Gemini
@@ -14,7 +16,6 @@ from hydrogram.types import (
     CallbackQuery,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
-    InputMediaDocument,
     InputMediaPhoto,
     Message,
 )
@@ -29,6 +30,7 @@ from utils import http
 
 bing_instances = {}
 bard_instances = {}
+gpt_instances = {}
 
 tones = ["professional", "casual", "polite", "funny", "social+post", "witty"]
 
@@ -59,6 +61,18 @@ async def filter_bard_logic(flt, client: Client, message: Message):
 
 
 filter_bard = filters.create(filter_bard_logic)
+
+async def filter_gpt_logic(flt, client: Client, message: Message):
+    if message:
+        if (
+            message.reply_to_message_id
+            and message.reply_to_message_id in gpt_instances
+        ):
+            return True
+        else:
+            return False
+
+filter_gpt = filters.create(filter_gpt_logic)
 
 
 async def update_page(taccount, path, page_title, page_content, author_info):
@@ -341,6 +355,76 @@ async def tone(c: Client, m: Message | CallbackQuery, t):
         return await m.edit(t("ai_error").format(error=error_desc))
 
     await m.edit(rtext["tones"][tone.replace("+", " ")])
+
+
+@Client.on_message((filters.command("gpt", prefixes=".") | filter_gpt) & filters.sudoers)
+@use_lang()
+async def gpt(c: Client, m: Message, t):
+    await m.edit(t("wait"))
+    if m.reply_to_message_id and m.reply_to_message_id in gpt_instances:
+        form = gpt_instances.pop(m.reply_to_message_id)
+        form.append(dict(
+            role="user",
+            content=[{"type": "text", "text": m.text}],
+            name=m.from_user.first_name,
+        ))
+    else:
+        mes = m
+        form = [{
+        "role": "system",
+        "content": f"You are an open source user bot called UserLixo that was developed by amanoteam, {c.me.first_name} is running it"
+        }]
+        for _ in range(10):
+            print(mes)
+            content = []
+            if mes.photo:
+                taccount = Telegraph()
+                await taccount.create_account(short_name="GPT-4o")
+                with TemporaryDirectory() as tempdir:
+                    photo = await c.download_media(mes.photo, file_name=tempdir, in_memory=True)
+                    photo = await taccount.upload_file(photo)
+                content.append({"type": "image_url", "image_url": f"https://telegra.ph{photo[0]['src']}"})
+                if mes.caption:
+                    content.append({"type": "text", "text": mes.caption})
+                else:
+                    content.append({"type": "text", "text": "Photo"})
+            else:
+                content.append({"type": "text", "text": mes.text})
+            form.append(dict(
+                role="user",
+                content=content,
+                name=mes.from_user.first_name,
+            ))
+            if mes.reply_to_message_id:
+                mes = await c.get_messages(m.chat.id, mes.reply_to_message_id)
+            else:
+                break
+        form = form[::-1]
+    
+    headers = {
+        'Content-Type': "application/json",
+        'x-device-id': str(uuid.uuid4()),
+    }
+    
+    payload = {
+        "messages": form,
+        "model": "gpt-4o",
+        "stream": False,
+    }
+    
+    print(payload)
+    async with httpx.AsyncClient() as httpx_client:
+        response = await httpx_client.post("https://api.amigochat.io/v1/chat/completions", json=payload, headers=headers)
+    
+    text = f"<blockquote>{m.text}</blockquote>\n\n{response.json()['message']}"
+    await m.edit(text)
+    
+    form.append(dict(
+        role="assistant",
+        content=response.json()["message"],
+    ))
+    
+    gpt_instances[m.id] = form
 
 
 @Client.on_message(
