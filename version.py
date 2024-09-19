@@ -1,4 +1,4 @@
-version = "2.1.8"
+version = "2.1.9"
 
 ascii_art = f"""
 

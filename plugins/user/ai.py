@@ -464,7 +464,18 @@ async def gpt(c: Client, m: Message, t):
     if response.status_code != 201:
         return await m.edit(response.text)
     else:
-        rtext = response.json()["message"]["choices"][0]["message"]["content"]
+        rtext = ""
+        for line in response.iter_lines():
+            if line:
+                # Remove the "data: " prefix
+                print(line)
+                line = line.replace("data: ", "")
+                if line == "[DONE]":
+                    break
+                data = json.loads(line)
+                delta = data.get('choices', [{}])[0].get('delta', {})
+                content = delta.get('content', "")
+                rtext += content
         text = f"<blockquote>{mtext}</blockquote>\n\n{rtext}"
         await m.edit(text)
 
