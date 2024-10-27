@@ -2,7 +2,7 @@ https://github.com/hydrogram/hydrogram/archive/dev.zip
 git+https://github.com/F33RNI/EdgeGPT
 NewBingImageCreator==2.2.6
 tortoise-orm
-https://github.com/RianFC/Gemini-API.git
+git+https://github.com/RianFC/Gemini-API.git
 tgcrypto
 PyYAML
 dicioinformal
