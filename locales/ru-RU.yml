@@ -1,17 +1,17 @@
-deleted: (этот пользователь больше не существует)
+deleted: Этот пользователь больше не существует.
 both: И то, и другое
 NAME: Russian
 emoji: Эмодзи
 LANGUAGE_CODE: ru-RU
 sticker: Блок-липучка
 restarting: Перезапуск…
-ytdl_sending: Отправка
+ytdl_sending: Посылаю…
 ytdl_downloading: Загрузка…
 polite: Вежливый
 hours: "часы, часы\n"
 ai_mode_balanced: Сбалансированная
 days: "дни., дни\n"
-lang_set: Установлен английский язык
+lang_set: Язык установлен на английский.
 casual: Обычный
 witty: остроумный
 seconds: "секунды, секунды\n"
@@ -25,7 +25,7 @@ ai_login_success: Войти успешно!
 canceled: Отменено.
 minutes: "минуты, минуты\n"
 lang: Изменить язык
-exec_seucess: Выполнено успешно
+exec_seucess: Выполнено успешно.
 read_more: Узнать больше
 funny: Забавный
 social+post: '- Социальная афиша'
@@ -73,14 +73,13 @@ offline: "{mention} отключено для: \n"
 ai_mode_telegraph: Отправить результат как Telegraph
 not_bot: не работает с ботами.
 ytdl_sent: Успешно отправлено.
-ai_error: "Произошла ошибка при создании:\n<blockquote>{error}</blockquote> Я не знаю,
-  что делать."
+ai_error: "При генерации произошла ошибка:\n<blockquote>{error}</blockquote>"
 cmd_no_output: Команда выполнена успешно.
 bing_settings: Настройки BingAI
 ai_login: Вход в BingAI
 wiki_no_results: Никаких результатов не найдено для {запрос}.
 no_data: Этот человек отключил свой последний вид.
-kibe_creating: ⁇  Создание стаи…
+kibe_creating: 📤 Создание пакета…
 bard_config_button: Настройки GeminiAI
 plugins_settings: 'Выберите один плагин для настройки:'
 Kibe_settings: Изменить настройки Kibe
@@ -103,3 +102,4 @@ upgrade_failed: "Ошибка обновления от ветки '{branch}' (�
 fake_done: А теперь я!
 bing_config_button: Настройки BingAI
 fake_back: Возвращаясь к первоначальному профилю…
+ai_mode_voice: Отправьте результат в виде голосового сообщения и телеграммы
