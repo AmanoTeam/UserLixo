@@ -92,3 +92,20 @@ kibe_config_button: Ajustes de Kibe
 ai_mode_choose: 'Elige una de las opciones:'
 bing_config_button: Configuración de BingAI
 ai_mode_creative: Creativo
+chose_tone: 'Elija el tono del texto a generar:'
+ai_error: "Ocurrió un error al generar:\n<blockquote>{error}</blockquote>"
+tone_config: Ajustes de tono
+ai_mode_telegraph: Enviar resultado como Telegraph
+ai_mode_message: Enviar resultado como mensaje
+professional: Profesional
+casual: Casual
+polite: Cortés
+funny: Divertido
+social+post: Social Post
+witty: Ingenioso
+quest: Pregunta sobre el uso
+bard_config_button: Configuración de GeminiAI
+bard_settings: Configuración de GeminiAI
+bard_ai_mode: cambiar el estilo de GeminiAI
+ai_making_text: "<blockquote>{text}</blockquote>\nGenerando texto con tono {tone}…"
+ai_mode_voice: Enviar resultado como mensaje de voz y Telegraph
