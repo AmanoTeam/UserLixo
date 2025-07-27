@@ -1,6 +1,6 @@
-deleted: (este utilizador já não existe)
+deleted: Este utilizador já não existe.
 polite: Bem-educado
-restarting: Reiniciar
+restarting: A reiniciar…
 both: Ambas
 hours: "<ph id=\"mtc_1\" ctype=\"x-twig\" equiv-text=\"base64:e3tob3Vyc319\"/> horas\n"
 bard_settings: Configurações GeminiAI
@@ -47,3 +47,58 @@ kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que pretende usar no kib
   ou /cancel para cancelar"
 kibe_emoji_set: Emoji padrão do Kibe definido para {emoji}
 offline: "{mention} está offline por: \n"
+years: "**{years}** ano\n"
+minutes: "**{minutes}** minutos\n"
+ai_mode_balanced: Equilibrado
+months: "**{months}** meses\n"
+days: "**{days}** dias\n"
+seconds: "**{seconds}** segundos\n"
+fake_init: A iniciar imitação do utilizador {mention}…
+fake_back: A regressar ao perfil original…
+fake_done: Agora sou {mention}!
+ai_no_text: Precisas de enviar um texto para pesquisar ou criar uma imagem.
+ai_making_image: A criar imagem com "{text}"…
+ai_bard_searching: A pesquisar "{text}" no Gemini…
+bing_config_button: Definições do BingAI
+bing_settings: Definições do BingAI
+ai_mode: alterar o estilo do BingAI
+ai_login: Iniciar sessão no BingAI
+ai_login_success: Início de sessão bem-sucedido!
+chose_tone: 'Escolha o tom do texto a ser gerado:'
+ai_making_text: "<blockquote>{text}</blockquote>\nA gerar texto com tom {tone}…"
+ai_error: "Ocorreu um erro ao gerar:\n<blockquote>{error}</blockquote>"
+tone_config: Definições de tom
+ai_mode_telegraph: Enviar resultado como Telegraph
+ai_mode_message: Enviar resultado como mensagem
+ai_mode_voice: Enviar o resultado como mensagem de voz e Telegraph
+professional: Profissional
+casual: Casual
+funny: Engraçado
+social+post: Correio social
+witty: Inteligente
+not_git_repo: 'Erro: Tem de estar dentro de um repositório git para fazer a atualização.'
+already_up_to_date: Não há nada para atualizar a partir da branch '{branch}'.
+updating_requirements: A actualizar os requisitos…
+requirements_update_failed: "Falha na actualização dos requisitos:\n{decode}"
+ytdl_missing_argument: 'Argumento em falta: URL ou consulta de pesquisa.'
+ytdl_audio_button: 💿 Áudio
+ytdl_video_button: 📹 Vídeo
+ytdl_file_too_big: O ficheiro é demasiado grande para ser enviado.
+ytdl_downloading: A transferir…
+ytdl_sending: A enviar…
+ytdl_send_error: "Ocorreu um erro ao enviar o ficheiro.\n{errmsg}"
+ytdl_sent: Enviado com sucesso.
+ai_mode_creative: Criativo
+ai_bing_searching: A pesquisar "{text}" no Bing…
+bard_config_button: Configurações GeminiAI
+bard_ai_mode: alterar o estilo da GeminiAI
+ai_mode_choose: 'Escolha uma das opções:'
+ai_mode_precise: Preciso
+quest: Questão sobre a utilização
+ai_mode_changed: O estilo do BingAI foi alterado para o estilo {style}.
+upgrade_failed: "A atualização a partir da branch '{branch}' falhou (o processo terminou
+  com {returncode}):\n{decode}"
+ai_login_text: "Por favor, carregue no botão abaixo para iniciar sessão. Depois de
+  concluir o login, envie aqui o URL final. Por exemplo: 'https://login.live.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
+  O importante é obter este 'code' para iniciar sessão"
+upgrade_in_progress: A actualizar a origem a partir da branch '{branch}'…
