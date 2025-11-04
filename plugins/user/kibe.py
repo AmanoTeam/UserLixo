@@ -256,8 +256,6 @@ async def kibes(rmessage: Message, q: CallbackQuery, t, emoji, issticker):
                         emoji=emoji,
                     )
                 ],
-                animated=True if media_type == "animated" else False,
-                videos=True if media_type == "video" else False,
                 emojis=False if issticker else True,
             )
         )

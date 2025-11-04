@@ -10,8 +10,8 @@ from db import Config
 from locales import get_locale_string, langdict, use_lang
 
 
-@Client.on_message(filters.command("config"))
-@Client.on_callback_query(filters.regex(r"\bconfig\b"))
+@Client.on_message(filters.command("config") & filters.sudoers)
+@Client.on_callback_query(filters.regex(r"\bconfig\b") & filters.sudoers)
 @use_lang()
 async def config(c: Client, m: Union[Message, CallbackQuery], t):
     keyb = [
@@ -25,7 +25,7 @@ async def config(c: Client, m: Union[Message, CallbackQuery], t):
         await m.edit(t("config_choose"), reply_markup=ikb(keyb))
 
 
-@Client.on_callback_query(filters.regex(r"^config_lang"))
+@Client.on_callback_query(filters.regex(r"^config_lang") & filters.sudoers)
 @use_lang()
 async def config_lang(c: Client, m: CallbackQuery, t):
     langs = list(langdict)
@@ -42,7 +42,7 @@ async def config_lang(c: Client, m: CallbackQuery, t):
     await m.edit(t("choose_lang"), reply_markup=ikb(keyb))
 
 
-@Client.on_callback_query(filters.regex(r"^config_setlang_"))
+@Client.on_callback_query(filters.regex(r"^config_setlang_") & filters.sudoers)
 @use_lang()
 async def config_lang_cq(c: Client, m: CallbackQuery, t):
     lang = m.data.split("_", 2)[2]
@@ -53,7 +53,7 @@ async def config_lang_cq(c: Client, m: CallbackQuery, t):
     )
 
 
-@Client.on_callback_query(filters.regex(r"^config_plugins"))
+@Client.on_callback_query(filters.regex(r"^config_plugins") & filters.sudoers)
 @use_lang()
 async def config_plugins(c: Client, m: CallbackQuery, t):
     table = []

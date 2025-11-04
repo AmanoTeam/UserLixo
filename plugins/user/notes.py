@@ -48,10 +48,24 @@ async def onote(c: Client, m: Message):
                     await m.delete()
                     await c.send_cached_media(m.chat.id, exists.file)
 
+@Client.on_message(filters.command("notes", prefixes=".") & filters.sudoers)
+async def onotes(c: Client, m: Message):
+    notes = await Notes.all()
+    if not notes:
+        return await m.edit("No notes saved")
+    note_list = "Saved notes:\n\n"
+    for note in notes:
+        note_list += f"- {note.name} ({note.type})\n"
+    await m.edit(note_list)
+
 
 @Client.on_message(filters.regex("^#") & filters.sudoers)
 async def onsharp(c: Client, m: Message):
-    note_key = m.text[1:]
+    # Suporte a input extra após o note_key
+    if " " in m.text:
+        note_key, input_value = m.text[1:].split(" ", 1)
+    else:
+        note_key, input_value = m.text[1:], None
     exists = await Notes.get_or_none(name=note_key)
 
     if exists:
@@ -61,6 +75,9 @@ async def onsharp(c: Client, m: Message):
             if text.startswith(".exec"):
                 from plugins.user.execs import execs
 
+                # Passa input_value como argumento extra para execs
+                if input_value:
+                    msg.text += f"\n\n#input={input_value}"
                 await execs(c, msg)
         elif exists.type == "media":
             await m.delete()
