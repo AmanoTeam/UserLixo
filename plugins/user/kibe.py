@@ -211,7 +211,7 @@ async def kibes(rmessage: Message, q: CallbackQuery, t, emoji, issticker):
             media=InputMediaUploadedDocument(
                 file=ufile,
                 mime_type=mime_type,
-                attributes=[DocumentAttributeFilename(file_name=photo)],
+                attributes=[DocumentAttributeFilename(file_name=os.path.basename(str(photo)))],
             ),
             message="#Sticker kibe",
             random_id=bot.rnd_id(),
