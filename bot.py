@@ -9,6 +9,7 @@ import reload
 from config import bot, user
 from db import Config
 from version import ascii_art, version
+import asyncio
 
 
 async def main():
@@ -73,4 +74,4 @@ async def main():
 
 
 # Run the main function asynchronously
-run_async(main())
+asyncio.run(main())
