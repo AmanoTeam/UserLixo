@@ -1,6 +1,5 @@
 https://github.com/hydrogram/hydrogram/archive/dev.zip
 git+https://github.com/F33RNI/EdgeGPT
-NewBingImageCreator==2.2.6
 tortoise-orm
 git+https://github.com/RianFC/Gemini-API.git
 tgcrypto
@@ -14,3 +13,5 @@ wikipedia
 yt_dlp
 markdown
 telegraph
+setuptools
+NewBingImageCreator==2.2.6
