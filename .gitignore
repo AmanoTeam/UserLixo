@@ -2,7 +2,6 @@ __pycache__/
 bard_coockies.json
 database.sqlite*
 *.session*
-config.py
 downloads/
 cookies.json
 venv/
