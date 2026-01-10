@@ -19,6 +19,7 @@ RUN apt-get update && \
         libgl1 \
         libglib2.0-0 \
         git \
+        tzdata \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
