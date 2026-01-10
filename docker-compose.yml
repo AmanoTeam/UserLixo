@@ -24,7 +24,10 @@ services:
       # 2. ACESSO AMPLO AO SISTEMA DO HOST (Variável .env)
       # O caminho no host é injetado pela variável HOST_HOME_PATH (lida do .env).
       # Se a variável não for definida (fallback), ele tenta usar a variável padrão $HOME do shell.
-      - ${HOST_HOME_PATH:-$HOME}:/host_access
+      - ${HOST_HOME_PATH:-$HOME}:/host_home
+      - /usr/bin:/usr/bin:ro
+      - /usr/lib:/usr/lib:ro
+      - /etc:/etc:ro
       
       # 3. (acesso ao daemon do host)
       - /var/run/docker.sock:/var/run/docker.sock
