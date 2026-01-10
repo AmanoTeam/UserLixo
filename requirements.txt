@@ -15,3 +15,5 @@ markdown
 telegraph
 setuptools
 NewBingImageCreator==2.2.6
+docker
+python-dotenv
