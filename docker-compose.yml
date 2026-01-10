@@ -20,3 +20,9 @@ services:
       # O caminho no host é injetado pela variável HOST_HOME_PATH (lida do .env).
       # Se a variável não for definida (fallback), ele tenta usar a variável padrão $HOME do shell.
       - ${HOST_HOME_PATH:-$HOME}:/host_access
+      
+      # 3. (acesso ao daemon do host)
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # 4. BINÁRIO DO DOCKER
+      - /usr/bin/docker:/usr/bin/docker
