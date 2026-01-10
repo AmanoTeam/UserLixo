@@ -8,3 +8,4 @@ cookies.json
 venv/
 .venv/
 db.json
+.env
