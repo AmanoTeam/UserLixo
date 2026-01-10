@@ -20,6 +20,7 @@ RUN apt-get update && \
         libglib2.0-0 \
         git \
         tzdata \
+        ffmpeg \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
