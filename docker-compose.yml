@@ -6,31 +6,25 @@ services:
     # Reinicia automaticamente se o bot cair ou o host for reiniciado
     restart: always
 
-    # Permite a interação terminal necessária para o login inicial do Telegram
+    # Permite a interação terminal necessária para o login inicial do Telegram (docker attach)
     stdin_open: true
     tty: true
 
+    # Permite acesso privilegiado para uso do cmd
+    privileged: true
+
     environment:
-      # ADICIONADO: Define o fuso horário para Brasília. 
-      # Isso afeta o clock interno do sistema e o Python.
+      # Define o fuso horário para Brasília
       - TZ=America/Sao_Paulo
+      
+      # Necessário para que o comando cmd.py saiba qual é a pasta raiz do projeto no HOST
+      - HOST_PROJECT_ROOT=${HOST_PROJECT_PATH_ABSOLUTE} 
 
     volumes:
-      # 1. VOLUME DE PERSISTÊNCIA (Dados do Bot)
-      # O ponto (.) no host (onde estão os arquivos do bot) é mapeado para /app.
-      # Isso garante que o código, as sessions e o DB sejam lidos/escritos de forma persistente.
+      # 1. VOLUME DE PERSISTÊNCIA (Código, Sessions, DB)
+      # Mapeia o diretório atual do seu projeto (onde o compose está rodando) para /app.
       - .:/app
 
-      # 2. ACESSO AMPLO AO SISTEMA DO HOST (Variável .env)
-      # O caminho no host é injetado pela variável HOST_HOME_PATH (lida do .env).
-      # Se a variável não for definida (fallback), ele tenta usar a variável padrão $HOME do shell.
-      - ${HOST_HOME_PATH:-$HOME}:/host_home
-      - /usr/bin:/usr/bin:ro
-      - /usr/lib:/usr/lib:ro
-      - /etc:/etc:ro
-      
-      # 3. (acesso ao daemon do host)
+      # 2. ACESSO AO DAEMON DO DOCKER (DIND)
+      # Permite que o código Python (com a lib 'docker') execute comandos no HOST de forma segura.
       - /var/run/docker.sock:/var/run/docker.sock
-
-      # 4. BINÁRIO DO DOCKER
-      - /usr/bin/docker:/usr/bin/docker
