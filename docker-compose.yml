@@ -10,6 +10,11 @@ services:
     stdin_open: true
     tty: true
 
+    environment:
+      # ADICIONADO: Define o fuso horário para Brasília. 
+      # Isso afeta o clock interno do sistema e o Python.
+      - TZ=America/Sao_Paulo
+
     volumes:
       # 1. VOLUME DE PERSISTÊNCIA (Dados do Bot)
       # O ponto (.) no host (onde estão os arquivos do bot) é mapeado para /app.
