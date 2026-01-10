@@ -1,15 +1,17 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 from hydrogram import idle
 from tortoise import run_async
+import asyncio
 
 import db
 import reload
 from config import bot, user
 from db import Config
 from version import ascii_art, version
-import asyncio
 
 
 async def main():
