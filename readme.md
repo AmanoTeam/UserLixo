@@ -6,10 +6,11 @@ Multipurpose Python userbot for Telegram
 
 ## Requirements
 
-To run locally
+### To run locally
 *   Python 3.10+
 *   An Unix-like operating system
-To run with Docker
+
+### To run with Docker
 *   Docker and Docker compose
 *   An Docker-compatible operating system
 
@@ -44,7 +45,7 @@ To run with Docker
 
 ## Notes
 
-Don't forget to run `/config` in the bot's DM to set the language.
+Don't forget to run `/config` in the bot's DM to set the language. <br/>
 Don't forget to edit ``docker-compose.yml`` file to set the timezone.
 
 If you find any bugs/issues you can report them by:
