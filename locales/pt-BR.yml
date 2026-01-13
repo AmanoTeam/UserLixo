@@ -94,6 +94,21 @@ upgrade_failed: "A atualização do branch '{branch}' falhou (processo encerrado
   {returncode}):\n{decode}"
 updating_requirements: "Atualizando requerimentos…"
 requirements_update_failed: "Atualização dos requerimentos falhou:\n{decode}"
+#weather.py
+weather_usage: "<b>Uso:</b> <code>.clima cidade</code> - Obtém informações meteorológicas."
+no_location: "Por favor, especifique uma cidade ou localização."
+location_not_found: "Não consegui encontrar a localização: <b>{location}</b>"
+weather_language: "pt-BR"
+measurement_unit: "m"
+details: |
+  <b>{location}</b>:
+
+  Temperatura: <code>{temperature} °C</code>
+  Sensação térmica: <code>{feels_like} °C</code>
+  Umidade do ar: <code>{air_humidity}%</code>
+  Vento: <code>{wind_speed} km/h</code>
+
+  - <i>{overview}</i>
 #youtube.py
 ytdl_missing_argument: "Está faltando uma URL ou um texto para pesquisa."
 ytdl_audio_button: "💿 Áudio"
