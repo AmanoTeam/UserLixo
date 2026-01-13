@@ -15,6 +15,11 @@ cmd_no_output: Comando executado com sucesso.
 choose_options: "Escolha uma das opções:"
 #execs.py
 exec_seucess: Executado com sucesso.
+#ip.py
+ip_err_no_ip: "Você deve especificar um nome de domínio ou endereço IP. Ex: <code>.ip google.com</code>"
+ip_err_no_ips: "Nenhum endereço IP encontrado para <b>{domain}</b>."
+ip_err_bogon_ip: "O endereço <code>{ip}</code> é um IP <i>bogon</i> (reservado/privado)."
+ip_select_ip: "O domínio <b>{domain}</b> possui vários IPs. Selecione um abaixo:"
 #kibe.py
 kibe_choose: Por favor, escolha o formato do kibe
 sticker: Sticker
