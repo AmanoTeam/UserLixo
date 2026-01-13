@@ -128,6 +128,22 @@ upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {ret
 updating_requirements: "Updating requirements…"
 requirements_update_failed: "Requirements update failed:\n{decode}"
 
+# weather.py
+weather_usage: "<b>Usage:</b> <code>.weather city</code> - Gets meteorological information."
+no_location: "Please specify a city or location."
+location_not_found: "I couldn't find the location: <b>{location}</b>"
+weather_language: "en"
+measurement_unit: "m"
+details: |
+  <b>{location}</b>:
+
+  Temperature: <code>{temperature} °C</code>
+  Feels like: <code>{feels_like} °C</code>
+  Humidity: <code>{air_humidity}%</code>
+  Wind: <code>{wind_speed} km/h</code>
+
+  - <i>{overview}</i>
+
 # youtube.py
 ytdl_missing_argument: "Missing argument: URL or search query."
 ytdl_audio_button: "💿 Audio"
