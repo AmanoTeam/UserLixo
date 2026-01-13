@@ -21,6 +21,12 @@ choose_options: "Choose one of the options:"
 # execs.py
 exec_seucess: Executed successfully.
 
+# ip.py
+ip_err_no_ip: "You must specify a domain name or IP address. Ex: <code>.ip google.com</code>"
+ip_err_no_ips: "No IP addresses found for <b>{domain}</b>."
+ip_err_bogon_ip: "The address <code>{ip}</code> is a <i>bogon</i> IP (reserved/private)."
+ip_select_ip: "The domain <b>{domain}</b> has multiple IPs. Select one below:"
+
 # kibe.py
 kibe_choose: Please choose the kibe format
 sticker: Sticker
