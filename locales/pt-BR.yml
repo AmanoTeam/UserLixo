@@ -116,6 +116,20 @@ minutes: "**{minutes}** minutos\n"
 seconds: "**{seconds}** segundos\n"
 deleted: Esse usuário não existe mais.
 
+#ping.py
+ping_start: "Pingando {host}..."
+ping_success: "Ping para {host}"
+ping_stats: "Estatísticas"
+ping_min: "Mínima"
+ping_avg: "Média"
+ping_max: "Máxima"
+ping_unreachable: "Host não alcançável"
+ping_timeout: "Timeout - sem resposta"
+ping_error: "Erro ao pingar"
+ping_invalid_host: "Host inválido"
+ping_network_error: "Erro de rede"
+ping_bot_latency: "Latência: {latency}ms"
+
 #upgrade.py
 not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
 upgrade_in_progress: "Atualizando a source do branch '{branch}'…"
