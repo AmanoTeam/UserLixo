@@ -111,13 +111,16 @@ details: |
   - <i>{overview}</i>
 #youtube.py
 ytdl_missing_argument: "Está faltando uma URL ou um texto para pesquisa."
+ytdl_search_error: "❌ Erro ao buscar: {clean_err[:500]}"
 ytdl_audio_button: "💿 Áudio"
 ytdl_video_button: "📹 Vídeo"
-ytdl_file_too_big: "O arquivo é muito grande para ser enviado."
-ytdl_downloading: "Baixando…"
-ytdl_send_error: "Ocorreu um erro ao enviar o arquivo.\n{errmsg}"
-ytdl_sending: "Enviando…"
-ytdl_sent: "Enviado como bem-sucedido."
+ytdl_video_error: "Erro nos dados."
+ytdl_file_too_big: "O arquivo é muito grande. Máximo suportado: {pretty_size(MAX_FILESIZE)}"
+ytdl_downloading: "⏳ Baixando…"
+ytdl_send_error: "❌ Ocorreu um erro ao enviar o arquivo: {e}"
+ytdl_sending: "📤 Enviando…"
+ytdl_sent: "✅ Enviado!"
+#ai.py?
 chose_tone: 'Escolha o tom do texto a ser gerado:'
 ai_making_text: "<blockquote> {text} </blockquote>\nGerando texto com o tom {tone}
   …"
