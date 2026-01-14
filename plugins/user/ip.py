@@ -3,7 +3,7 @@ from hydrogram import Client, filters
 from hydrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 
 from config import bot, user
-from utils import http  # Usando o seu cliente httpx global
+from utils import http  
 from locales import use_lang
 
 # --- Funções de Suporte ---
@@ -15,7 +15,7 @@ async def get_api_return(ip: str):
         if r.status_code != 200:
             return None
         data = r.json()
-        data.pop("readme", None) # Remove propaganda da API
+        data.pop("readme", None) 
         return data
     except Exception:
         return None
@@ -58,10 +58,10 @@ async def ip_cmd(c: Client, m: Message, t):
 
     query = m.command[1]
     
-    # 2. Limpeza de URL para extrair apenas o Host (Sem YARL para ser eficiente)
+    # 2. Limpeza de URL para extrair apenas o Host 
     host = query.split("://")[-1].split("/")[0].split(":")[0]
 
-    msg = await m.edit("🔎 <code>Consultando...</code>")
+    msg = await m.edit(strings("ip_search"))
 
     # 3. Identificação (IP ou Domínio)
     try:
@@ -73,14 +73,14 @@ async def ip_cmd(c: Client, m: Message, t):
     if not ips:
         return await msg.edit(t("ip_err_no_ips").format(domain=host))
 
-    # 4. Resultado Único (Edição Direta)
+    # 4. Resultado Único 
     if len(ips) == 1:
         data = await get_api_return(ips[0])
         if not data:
-            return await msg.edit("❌ Erro ao obter dados da API.")
+            return await msg.edit(strings("ip_err_search"))
         return await msg.edit(format_api_return(data, t))
 
-    # 5. Múltiplos Resultados (Interface de Botões via Bot Assistente)
+    # 5. Múltiplos Resultados 
     keyboard = []
     for ip in ips[:10]: # Limite de 10 botões para não poluir o chat
         keyboard.append([InlineKeyboardButton(ip, callback_data=f"ip_info|{ip}")])
@@ -99,7 +99,7 @@ async def ip_callback(c: Client, cb: CallbackQuery, t):
     ip = cb.data.split("|")[1]
     
     # Feedback visual de carregamento
-    await cb.answer("Consultando detalhes...", show_alert=False)
+    await cb.answer(strings("ip_search_loading"), show_alert=False)
     
     data = await get_api_return(ip)
     if data:
@@ -108,4 +108,4 @@ async def ip_callback(c: Client, cb: CallbackQuery, t):
             reply_markup=None # Remove os botões após a escolha
         )
     else:
-        await cb.answer("Erro na API ipinfo.io", show_alert=True)
+        await cb.answer(strings("ytdl_missing_argument"), show_alert=True)
