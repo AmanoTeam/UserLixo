@@ -146,10 +146,12 @@ details: |
 
 # youtube.py
 ytdl_missing_argument: "Missing argument: URL or search query."
+ytdl_search_error: "❌ Error searching: {clean_err[:500]}"
 ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
-ytdl_file_too_big: "The file is too big to be sent."
-ytdl_downloading: "Downloading…"
-ytdl_sending: "Sending…"
-ytdl_send_error: "An error occurred while sending the file.\n{errmsg}"
-ytdl_sent: "Sent as sucessfully."
+ytdl_video_error: "Data error."
+ytdl_file_too_big: "The file is too big. Max supported: {pretty_size(MAX_FILESIZE)}"
+ytdl_downloading: "⏳ Downloading…"
+ytdl_sending: "📤 Sending…"
+ytdl_send_error: "❌ An error occurred while sending the file: {e}"
+ytdl_sent: "✅ Sent!"
