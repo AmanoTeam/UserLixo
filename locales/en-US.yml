@@ -2,84 +2,6 @@ NAME: English
 LANGUAGE_CODE: en-US
 FLAG: 🇺🇸
 
-# geral
-back: « Back
-canceled: Canceled.
-
-# backup.py
-initiating_backup: Initiating backup…
-backup_caption: Backup requested by {name} on {date}.
-uploading_backup: Uploading backup…
-backup_completed: Backup completed in {time} seconds
-
-# cmd.py
-cmd_no_output: Command executed successfully.
-
-# dicio.py
-choose_options: "Choose one of the options:"
-
-# execs.py
-exec_seucess: Executed successfully.
-
-# ip.py
-ip_err_no_ip: "You must specify a domain name or IP address. Ex: <code>.ip google.com</code>"
-ip_err_no_ips: "No IP addresses found for <b>{domain}</b>."
-ip_err_bogon_ip: "The address <code>{ip}</code> is a <i>bogon</i> IP (reserved/private)."
-ip_select_ip: "The domain <b>{domain}</b> has multiple IPs. Select one below:"
-
-# kibe.py
-kibe_choose: Please choose the kibe format
-sticker: Sticker
-emoji: Emoji
-both: Both
-kibe_wait: 👍 Processing…
-kibe_resize_video: 📹 Resizing video…
-kibe_resize_photo: 🖼️ Resizing photo…
-kibe_adding: 📤 Adding sticker to pack…
-kibe_creating: 📤 Creating pack…
-kibes_open: Add Sticker to Telegram
-kibee_open: Add Emoji to Telegram
-kibe_done: 👍 Done!
-kibe_config_button: "Kibe settings"
-Kibe_settings: Change Kibe settings
-kibe_emoji: "Choose kibe emoji"
-kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe
-  or /cancel to cancel"
-kibe_emoji_set: "Kibe emoji set to {emoji}"
-
-# wiki.py
-wiki_choose: "Choose one of the titles below:"
-read_more: Read more
-wiki_error: An error occurred while getting the Wikipedia page.
-wiki_no_results: No results found for {query}.
-
-# config.py
-config_choose: "Choose one of the options to configure:"
-choose_lang: "Choose one of the languages below:"
-lang_set: Language set to English.
-lang: Change language
-plugins_settings_button: Plugins settings
-plugins_settings: "Choose one plugin to configure:"
-
-
-# mix.py on
-not_bot: does not work with bots.
-no_data: This person has disabled his last seen.
-online: "{mention} is on"
-offline: "{mention} is off for: \n"
-years: "**{years}** year\n"
-months: "**{months}** months\n"
-days: "**{days}** days\n"
-hours: "**{hours}** hours\n"
-minutes: "**{minutes}** minutes\n"
-seconds: "**{seconds}** seconds\n"
-deleted: This user no longer exists.
-
-# fake.py
-fake_init: Initiating Fake of user {mention}…
-fake_back: Returning to the original profile…
-fake_done: Now I'm {mention}!
-
 # ai.py
 ai_bing_searching: "Searching \"{text}\" on Bing…"
 ai_no_text: "You need to send a text to search or make image."
@@ -118,6 +40,81 @@ social+post: Social Post
 witty: Witty
 quest: Question on use
 
+# backup.py
+initiating_backup: Initiating backup…
+backup_caption: Backup requested by {name} on {date}.
+uploading_backup: Uploading backup…
+backup_completed: Backup completed in {time} seconds
+
+# cmd.py
+cmd_no_output: Command executed successfully.
+
+# config.py
+config_choose: "Choose one of the options to configure:"
+choose_lang: "Choose one of the languages below:"
+lang_set: Language set to English.
+lang: Change language
+plugins_settings_button: Plugins settings
+plugins_settings: "Choose one plugin to configure:"
+
+# dicio.py
+choose_options: "Choose one of the options:"
+
+# execs.py
+exec_seucess: Executed successfully.
+
+# fake.py
+fake_init: Initiating Fake of user {mention}…
+fake_back: Returning to the original profile…
+fake_done: Now I'm {mention}!
+
+# geral
+back: « Back
+canceled: Canceled.
+
+# ip.py
+ip_search: "🔎 Consulting..."
+ip_err_search: "❌ Error retrieving data from the API."
+ip_search_loading: "Consulting details..."
+ip_err_api: "Error in the ipinfo.io API."
+ip_err_no_ip: "You must specify a domain name or IP address. Ex: <code>.ip google.com</code>"
+ip_err_no_ips: "No IP addresses found for <b>{domain}</b>."
+ip_err_bogon_ip: "The address <code>{ip}</code> is a <i>bogon</i> IP (reserved/private)."
+ip_select_ip: "The domain <b>{domain}</b> has multiple IPs. Select one below:"
+
+# kibe.py
+kibe_choose: Please choose the kibe format
+sticker: Sticker
+emoji: Emoji
+both: Both
+kibe_wait: 👍 Processing…
+kibe_resize_video: 📹 Resizing video…
+kibe_resize_photo: 🖼️ Resizing photo…
+kibe_adding: 📤 Adding sticker to pack…
+kibe_creating: 📤 Creating pack…
+kibes_open: Add Sticker to Telegram
+kibee_open: Add Emoji to Telegram
+kibe_done: 👍 Done!
+kibe_config_button: "Kibe settings"
+Kibe_settings: Change Kibe settings
+kibe_emoji: "Choose kibe emoji"
+kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in kibe
+  or /cancel to cancel"
+kibe_emoji_set: "Kibe emoji set to {emoji}"
+
+# mix.py
+not_bot: does not work with bots.
+no_data: This person has disabled his last seen.
+online: "{mention} is on"
+offline: "{mention} is off for: \n"
+years: "**{years}** year\n"
+months: "**{months}** months\n"
+days: "**{days}** days\n"
+hours: "**{hours}** hours\n"
+minutes: "**{minutes}** minutes\n"
+seconds: "**{seconds}** seconds\n"
+deleted: This user no longer exists.
+
 # upgrade.py
 not_git_repo: "Error: You must be inside a git repository to upgrade."
 upgrade_in_progress: "Upgrading source from branch '{branch}'…"
@@ -131,6 +128,9 @@ requirements_update_failed: "Requirements update failed:\n{decode}"
 # weather.py
 weather_usage: "<b>Usage:</b> <code>.weather city</code> - Gets meteorological information."
 no_location: "Please specify a city or location."
+weather_search: "🔎 <code>Consulting weather for: {location_query}...</code>"
+weather_err_data: "❌ <code>Unable to retrieve weather data at the moment.</code>"
+weather_err_search: "❌ <b>Error in query:</b> <code>{str(e)}</code>"
 location_not_found: "I couldn't find the location: <b>{location}</b>"
 weather_language: "en"
 measurement_unit: "m"
@@ -143,6 +143,12 @@ details: |
   Wind: <code>{wind_speed} km/h</code>
 
   - <i>{overview}</i>
+
+# wiki.py
+wiki_choose: "Choose one of the titles below:"
+read_more: Read more
+wiki_error: An error occurred while getting the Wikipedia page.
+wiki_no_results: No results found for {query}.
 
 # youtube.py
 ytdl_missing_argument: "Missing argument: URL or search query."
