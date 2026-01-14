@@ -60,15 +60,6 @@ async def on(c: Client, m: Message, t):
         await m.edit(frase)
 
 
-@Client.on_message(filters.command("ping", prefixes=".") & filters.sudoers)
-@use_lang()
-async def ping(c: Client, m: Message, t):
-    t1 = datetime.now()
-    msg = await m.edit("Pong!")
-    t2 = datetime.now()
-    await msg.edit(f"**Pong!** `{(t2 - t1).microseconds / 1000}`ms")
-
-
 @Client.on_message(filters.command("doc", prefixes=".") & filters.sudoers)
 @use_lang()
 async def doc(c: Client, m: Message, t):
