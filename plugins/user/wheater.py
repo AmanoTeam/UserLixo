@@ -2,7 +2,7 @@ import re
 from hydrogram import Client, filters
 from hydrogram.types import Message
 
-from utils import http  # Seu cliente HTTP global
+from utils import http 
 from locales import use_lang
 
 # Configurações da API Weather.com (IBM)
@@ -35,7 +35,7 @@ async def weather_cmd(c: Client, m: Message, t):
         return await m.edit(t("weather_usage"))
 
     location_query = " ".join(m.command[1:])
-    await m.edit(f"🔎 <code>Consultando clima para: {location_query}...</code>")
+    await m.edit(t("weather_search").format(location_query=location_query))
 
     try:
         # 1. Busca as Coordenadas (Geocoding)
@@ -71,7 +71,7 @@ async def weather_cmd(c: Client, m: Message, t):
 
         obs = res_json.get("v3-wx-observations-current")
         if not obs:
-            return await m.edit("❌ <code>Não foi possível obter dados meteorológicos no momento.</code>")
+            return await m.edit(t("weather_err_data"))
 
         # 3. Formata a Resposta Final
         emoji = get_emoji(obs.get("iconCode"))
@@ -90,4 +90,4 @@ async def weather_cmd(c: Client, m: Message, t):
 
     except Exception as e:
         # Log de erro básico para não travar o userbot
-        await m.edit(f"❌ <b>Erro na consulta:</b> <code>{str(e)}</code>")
+        await m.edit(t("ip_err_search")) 
