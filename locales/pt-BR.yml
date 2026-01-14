@@ -1,72 +1,7 @@
 NAME: Português (Brasil)
 LANGUAGE_CODE: pt-BR
 FLAG: '🇧🇷'
-#geral
-back: '« Voltar'
-canceled: Cancelado.
-#backup.py
-initiating_backup: Iniciando backup…
-backup_caption: Backup solicitado por {name} em {date}.
-uploading_backup: Enviando backup…
-backup_completed: Backup concluído em {time} segundos
-#cmd.py
-cmd_no_output: Comando executado com sucesso.
-#dicio.py
-choose_options: "Escolha uma das opções:"
-#execs.py
-exec_seucess: Executado com sucesso.
-#ip.py
-ip_err_no_ip: "Você deve especificar um nome de domínio ou endereço IP. Ex: <code>.ip google.com</code>"
-ip_err_no_ips: "Nenhum endereço IP encontrado para <b>{domain}</b>."
-ip_err_bogon_ip: "O endereço <code>{ip}</code> é um IP <i>bogon</i> (reservado/privado)."
-ip_select_ip: "O domínio <b>{domain}</b> possui vários IPs. Selecione um abaixo:"
-#kibe.py
-kibe_choose: Por favor, escolha o formato do kibe
-sticker: Sticker
-emoji: Emoji
-both: Os dois
-kibe_wait: '👍 Processando…'
-kibe_resize_video: '📹 Redimensionando vídeo…'
-kibe_resize_photo: '🖼️ Redimensionando foto…'
-kibe_adding: '📤 Adicionando sticker ao pacote…'
-kibe_creating: '📤 Criando pacote…'
-kibes_open: Adicionar Sticker ao Telegram
-kibee_open: Adicionar Emoji ao Telegram
-kibe_done: '👍 Concluído!'
-kibe_config_button: "Configurações do Kibe"
-Kibe_settings: Mudar configurações do Kibe
-kibe_emoji: "Escolher emoji padrão do kibe"
-kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que deseja usar no kibe ou
-  /cancel para cancelar"
-kibe_emoji_set: "Emoji padrão do Kibe definido para {emoji}"
-#wiki.py
-wiki_choose: "Escolha dos titulos abaixo:"
-read_more: Ler mais
-wiki_error: Ocorreu um erro ao pegar a pagina da Wikipedia.
-wiki_no_results: Nenhum resultado encontrado para {query}.
-#config.py
-config_choose: "Escolha uma das opções para configurar:"
-choose_lang: "Escolha um dos idiomas abaixo:"
-lang_set: Idioma definido para Português.
-lang: Alterar idioma
-plugins_settings_button: Configurações dos Plugins
-plugins_settings: "Escolha um plugin para configurar:"
-#mix.py on
-not_bot: não funciona com bots.
-no_data: Esta pessoa desativou seu visto por último.
-online: "{mention} está online"
-offline: "{mention} está offline por: \n"
-years: "**{years}** ano\n"
-months: "**{months}** meses\n"
-days: "**{days}** dias\n"
-hours: "**{hours}** horas\n"
-minutes: "**{minutes}** minutos\n"
-seconds: "**{seconds}** segundos\n"
-deleted: Esse usuário não existe mais.
-#fake.py
-fake_init: Iniciando Fake do usuário {mention}…
-fake_back: Voltando para o perfil original…
-fake_done: Agora eu sou o {mention}!
+
 #ai.py
 ai_bing_searching: "Procurando \"{text}\" no Copilot…"
 ai_no_text: "Você precisa enviar um texto para pesquisar ou fazer imagem."
@@ -85,41 +20,7 @@ ai_login_text: "Por favor, pressione o botão abaixo para entrar. Depois de conc
   o login, envie a URL final aqui. Por exemplo: 'https://login. ive.com/oauth20_desktop.srf?code=xxx&state=yyy&lc=zzz'.
   O importante é obter este 'code' para logar"
 ai_login_success: "Login efetuado!"
-#upgrade.py
-not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
-upgrade_in_progress: "Atualizando a source do branch '{branch}'…"
-already_up_to_date: "Não há nada para atualizar do branch '{branch}'."
-restarting: "Reiniciando…"
-upgrade_failed: "A atualização do branch '{branch}' falhou (processo encerrado com
-  {returncode}):\n{decode}"
-updating_requirements: "Atualizando requerimentos…"
-requirements_update_failed: "Atualização dos requerimentos falhou:\n{decode}"
-#weather.py
-weather_usage: "<b>Uso:</b> <code>.clima cidade</code> - Obtém informações meteorológicas."
-no_location: "Por favor, especifique uma cidade ou localização."
-location_not_found: "Não consegui encontrar a localização: <b>{location}</b>"
-weather_language: "pt-BR"
-measurement_unit: "m"
-details: |
-  <b>{location}</b>:
 
-  Temperatura: <code>{temperature} °C</code>
-  Sensação térmica: <code>{feels_like} °C</code>
-  Umidade do ar: <code>{air_humidity}%</code>
-  Vento: <code>{wind_speed} km/h</code>
-
-  - <i>{overview}</i>
-#youtube.py
-ytdl_missing_argument: "Está faltando uma URL ou um texto para pesquisa."
-ytdl_search_error: "❌ Erro ao buscar: {clean_err[:500]}"
-ytdl_audio_button: "💿 Áudio"
-ytdl_video_button: "📹 Vídeo"
-ytdl_video_error: "Erro nos dados."
-ytdl_file_too_big: "O arquivo é muito grande. Máximo suportado: {pretty_size(MAX_FILESIZE)}"
-ytdl_downloading: "⏳ Baixando…"
-ytdl_send_error: "❌ Ocorreu um erro ao enviar o arquivo: {e}"
-ytdl_sending: "📤 Enviando…"
-ytdl_sent: "✅ Enviado!"
 #ai.py?
 chose_tone: 'Escolha o tom do texto a ser gerado:'
 ai_making_text: "<blockquote> {text} </blockquote>\nGerando texto com o tom {tone}
@@ -139,3 +40,125 @@ bard_ai_mode: alterar o estilo GeminiAI
 ai_mode_telegraph: Enviar o resultado como Telegraph
 ai_mode_message: Enviar o resultado como mensagem
 ai_mode_voice: Enviar resultado como mensagem de voz e Telegraph
+
+#backup.py
+initiating_backup: Iniciando backup…
+backup_caption: Backup solicitado por {name} em {date}.
+uploading_backup: Enviando backup…
+backup_completed: Backup concluído em {time} segundos
+
+#cmd.py
+cmd_no_output: Comando executado com sucesso.
+
+#config.py
+config_choose: "Escolha uma das opções para configurar:"
+choose_lang: "Escolha um dos idiomas abaixo:"
+lang_set: Idioma definido para Português.
+lang: Alterar idioma
+plugins_settings_button: Configurações dos Plugins
+plugins_settings: "Escolha um plugin para configurar:"
+
+#dicio.py
+choose_options: "Escolha uma das opções:"
+
+#execs.py
+exec_seucess: Executado com sucesso.
+
+#fake.py
+fake_init: Iniciando Fake do usuário {mention}…
+fake_back: Voltando para o perfil original…
+fake_done: Agora eu sou o {mention}!
+
+#geral
+back: '« Voltar'
+canceled: Cancelado.
+
+#ip.py
+ip_search: "🔎 <code>Consultando...</code>"
+ip_err_search: "❌ Erro ao obter dados da API."
+ip_search_loading: "Consultando detalhes..."
+ip_err_api: "Erro na API ipinfo.io"
+ip_err_no_ip: "Você deve especificar um nome de domínio ou endereço IP. Ex: <code>.ip google.com</code>"
+ip_err_no_ips: "Nenhum endereço IP encontrado para <b>{domain}</b>."
+ip_err_bogon_ip: "O endereço <code>{ip}</code> é um IP <i>bogon</i> (reservado/privado)."
+ip_select_ip: "O domínio <b>{domain}</b> possui vários IPs. Selecione um abaixo:"
+
+#kibe.py
+kibe_choose: Por favor, escolha o formato do kibe
+sticker: Sticker
+emoji: Emoji
+both: Os dois
+kibe_wait: '👍 Processando…'
+kibe_resize_video: '📹 Redimensionando vídeo…'
+kibe_resize_photo: '🖼️ Redimensionando foto…'
+kibe_adding: '📤 Adicionando sticker ao pacote…'
+kibe_creating: '📤 Criando pacote…'
+kibes_open: Adicionar Sticker ao Telegram
+kibee_open: Adicionar Emoji ao Telegram
+kibe_done: '👍 Concluído!'
+kibe_config_button: "Configurações do Kibe"
+Kibe_settings: Mudar configurações do Kibe
+kibe_emoji: "Escolher emoji padrão do kibe"
+kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que deseja usar no kibe ou
+  /cancel para cancelar"
+kibe_emoji_set: "Emoji padrão do Kibe definido para {emoji}"
+
+#mix.py
+not_bot: não funciona com bots.
+no_data: Esta pessoa desativou seu visto por último.
+online: "{mention} está online"
+offline: "{mention} está offline por: \n"
+years: "**{years}** ano\n"
+months: "**{months}** meses\n"
+days: "**{days}** dias\n"
+hours: "**{hours}** horas\n"
+minutes: "**{minutes}** minutos\n"
+seconds: "**{seconds}** segundos\n"
+deleted: Esse usuário não existe mais.
+
+#upgrade.py
+not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
+upgrade_in_progress: "Atualizando a source do branch '{branch}'…"
+already_up_to_date: "Não há nada para atualizar do branch '{branch}'."
+restarting: "Reiniciando…"
+upgrade_failed: "A atualização do branch '{branch}' falhou (processo encerrado com
+  {returncode}):\n{decode}"
+updating_requirements: "Atualizando requerimentos…"
+requirements_update_failed: "Atualização dos requerimentos falhou:\n{decode}"
+
+#weather.py
+weather_usage: "<b>Uso:</b> <code>.clima cidade</code> - Obtém informações meteorológicas."
+no_location: "Por favor, especifique uma cidade ou localização."
+weather_search: "🔎 <code>Consultando clima para: {location_query}...</code>"
+weather_err_data: "❌ <code>Não foi possível obter dados meteorológicos no momento.</code>"
+weather_err_search: "❌ <b>Erro na consulta:</b> <code>{str(e)}</code>"
+location_not_found: "Não consegui encontrar a localização: <b>{location}</b>"
+weather_language: "pt-BR"
+measurement_unit: "m"
+details: |
+  <b>{location}</b>:
+
+  Temperatura: <code>{temperature} °C</code>
+  Sensação térmica: <code>{feels_like} °C</code>
+  Umidade do ar: <code>{air_humidity}%</code>
+  Vento: <code>{wind_speed} km/h</code>
+
+  - <i>{overview}</i>
+
+#wiki.py
+wiki_choose: "Escolha dos titulos abaixo:"
+read_more: Ler mais
+wiki_error: Ocorreu um erro ao pegar a pagina da Wikipedia.
+wiki_no_results: Nenhum resultado encontrado para {query}.
+
+#youtube.py
+ytdl_missing_argument: "Está faltando uma URL ou um texto para pesquisa."
+ytdl_search_error: "❌ Erro ao buscar: {clean_err[:500]}"
+ytdl_audio_button: "💿 Áudio"
+ytdl_video_button: "📹 Vídeo"
+ytdl_video_error: "Erro nos dados."
+ytdl_file_too_big: "O arquivo é muito grande. Máximo suportado: {pretty_size(MAX_FILESIZE)}"
+ytdl_downloading: "⏳ Baixando…"
+ytdl_send_error: "❌ Ocorreu um erro ao enviar o arquivo: {e}"
+ytdl_sending: "📤 Enviando…"
+ytdl_sent: "✅ Enviado!"
