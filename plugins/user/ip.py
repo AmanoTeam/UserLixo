@@ -61,7 +61,7 @@ async def ip_cmd(c: Client, m: Message, t):
     # 2. Limpeza de URL para extrair apenas o Host 
     host = query.split("://")[-1].split("/")[0].split(":")[0]
 
-    msg = await m.edit(strings("ip_search"))
+    msg = await m.edit(t("ip_search"))
 
     # 3. Identificação (IP ou Domínio)
     try:
@@ -77,7 +77,7 @@ async def ip_cmd(c: Client, m: Message, t):
     if len(ips) == 1:
         data = await get_api_return(ips[0])
         if not data:
-            return await msg.edit(strings("ip_err_search"))
+            return await msg.edit(t("ip_err_search"))
         return await msg.edit(format_api_return(data, t))
 
     # 5. Múltiplos Resultados 
@@ -99,7 +99,7 @@ async def ip_callback(c: Client, cb: CallbackQuery, t):
     ip = cb.data.split("|")[1]
     
     # Feedback visual de carregamento
-    await cb.answer(strings("ip_search_loading"), show_alert=False)
+    await cb.answer(t("ip_search_loading"), show_alert=False)
     
     data = await get_api_return(ip)
     if data:
@@ -108,4 +108,4 @@ async def ip_callback(c: Client, cb: CallbackQuery, t):
             reply_markup=None # Remove os botões após a escolha
         )
     else:
-        await cb.answer(strings("ytdl_missing_argument"), show_alert=True)
+        await cb.answer(t("ytdl_missing_argument"), show_alert=True)
