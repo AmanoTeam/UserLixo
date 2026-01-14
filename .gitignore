@@ -8,3 +8,4 @@ venv/
 .venv/
 db.json
 .env
+ytdl-cookies.txt
