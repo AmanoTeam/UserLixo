@@ -1,30 +1,37 @@
 services:
-  userbot:
-    container_name: UserLixo
-    build: .
-    
-    # Reinicia automaticamente se o bot cair ou o host for reiniciado
-    restart: always
-
-    # Permite a interação terminal necessária para o login inicial do Telegram (docker attach)
-    stdin_open: true
-    tty: true
-
-    # Permite acesso privilegiado para uso do cmd
-    privileged: true
-
-    environment:
-      # Define o fuso horário para Brasília
-      - TZ=America/Sao_Paulo
-      
-      # Necessário para que o comando cmd.py saiba qual é a pasta raiz do projeto no HOST
-      - HOST_PROJECT_ROOT=${HOST_PROJECT_PATH_ABSOLUTE} 
-
+  # Service to create sessions (run once)
+  setup:
+    image: ghcr.io/erysthon/userlixo:latest
+    # For local build, comment the line above and uncomment below:
+    # build: .
+    container_name: userlixo-setup
+    env_file:
+      - .env
     volumes:
-      # 1. VOLUME DE PERSISTÊNCIA (Código, Sessions, DB)
-      # Mapeia o diretório atual do seu projeto (onde o compose está rodando) para /app.
-      - .:/app
+      - ./sessions:/app/sessions
+    command: python setup_sessions.py
+    tty: true
+    stdin_open: true
+    profiles:
+      - setup
 
-      # 2. ACESSO AO DAEMON DO DOCKER (DIND)
-      # Permite que o código Python (com a lib 'docker') execute comandos no HOST de forma segura.
-      - /var/run/docker.sock:/var/run/docker.sock
+  # Main bot (run after setup)
+  userlixo:
+    image: ghcr.io/erysthon/userlixo:latest
+    # For local build, comment the line above and uncomment below:
+    # build: .
+    container_name: userlixo-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Telegram sessions (persistent)
+      - ./sessions:/app/sessions
+      # Database (if using SQLite)
+      - ./data:/app/data
+    tty: true
+    stdin_open: true
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+        required: false

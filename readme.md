@@ -36,15 +36,46 @@ Multipurpose Python userbot for Telegram
 ## Setup (docker execution)
 
 *   Go to https://my.telegram.org/apps, create a new app and save its api_id and api_hash
-*   Edit ``.env`` file and fill in the data
+*   Edit ``.env`` file and fill in the data (use `.env.example` as a template)
 *   If you have userlixo-rfc 1.0, run the ```convert.py``` to convert the database.
-*   Run `docker compose up -d --build`
-*   To view the logs, run `docker logs UserLixo`
-*   Run `docker attach UserLixo` and login user and bot.
+
+### Using the GitHub Container Registry image (recommended)
+
+1. **Create Telegram sessions (only once):**
+```bash
+docker compose --profile setup run --rm setup
+```
+This will ask for:
+- Bot token (obtained from @BotFather)
+- Phone number and verification code for the userbot
+
+2. **Run the bot:**
+```bash
+docker compose up -d userlixo
+```
+
+### Local build (alternative)
+
+If you prefer to build locally, edit `docker-compose.yml` and replace:
+```yaml
+image: ghcr.io/erysthon/userlixo:latest
+```
+with:
+```yaml
+build: .
+```
+
+Then run:
+```bash
+docker compose --profile setup run --rm setup
+docker compose up -d userlixo
+```
 
 ## Running (docker execution)
 
-*   Just run `docker compose up -d` (you may also want to run `docker logs UserLixo` to view the logs)
+*   View logs: `docker compose logs -f userlixo`
+*   Stop: `docker compose down`
+*   Update: `docker compose pull && docker compose up -d userlixo`
 
 ## Notes
 
