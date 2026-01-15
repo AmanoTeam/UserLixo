@@ -29,6 +29,8 @@ services:
       - ./sessions:/app/sessions
       # Database (if using SQLite)
       - ./data:/app/data
+      # Docker Daemon Acess (DIND)
+      - /var/run/docker.sock:/var/run/docker.sock
     tty: true
     stdin_open: true
     depends_on:
