@@ -63,7 +63,7 @@ async def ytdlcmd(c: Client, m: Message, strings):
             yt = yt["entries"][0]
     except Exception as e:
         clean_err = re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', str(e))
-        await m.reply(strings("ytdl_search_error"))
+        await m.reply(strings("ytdl_search_error").format(error=clean_err[:500]))
         return
 
     # --- NOVA LÓGICA DE TAMANHO ROBUSTA ---
@@ -109,7 +109,7 @@ async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
     except: return await cq.answer(strings("ytdl_missing_argument"))
 
     if fsize and int(fsize) > MAX_FILESIZE:
-        return await cq.answer(strings("ytdl_file_too_big"), show_alert=True) 
+        return await cq.answer(strings("ytdl_file_too_big").format(size=pretty_size(MAX_FILESIZE)), show_alert=True) 
 
     vid_id = re.sub(r"^\_(vid|aud)\.", "", data)
     url = f"https://www.youtube.com/watch?v={vid_id}"
@@ -182,6 +182,6 @@ async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
                     reply_to_message_id=int(mid)
                 )
         except Exception as e:
-            await cq.edit_message_text(strings("ytdl_send_error"))
+            await cq.edit_message_text(strings("ytdl_send_error").format(e=e))
         else:
             await cq.edit_message_text(strings("ytdl_sent")) 
