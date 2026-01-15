@@ -1,12 +1,9 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2022 Amano Team
-
 import os
 
 from tortoise import Tortoise, connections, fields
 from tortoise.backends.base.client import Capabilities
 from tortoise.models import Model
-
+from pathlib import Path
 
 class Message(Model):
     key = fields.IntField(pk=True)
@@ -51,10 +48,13 @@ class Fake(Model):
 
 
 async def connect_database():
+    data_path = Path("data")
+    data_path.mkdir(exist_ok=True)
+    database_url = os.getenv("DATABASE_URL", f"sqlite://{data_path}/database.sqlite")
     await Tortoise.init(
         {
             "connections": {
-                "bot_db": os.getenv("DATABASE_URL", "sqlite://database.sqlite")
+                "bot_db": database_url
             },
             "apps": {"bot": {"models": [__name__], "default_connection": "bot_db"}},
         }
