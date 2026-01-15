@@ -41,21 +41,40 @@ async def reply_text(self, text: str, reply_markup=None, *args, **kwargs):
     if not reply_markup or self._client.name == "bot":
         if type(reply_markup) == list:
             reply_markup = ikb(reply_markup)
-        return await self.reply_text(text, reply_markup=reply_markup, *args, **kwargs)
+        return await self._client.send_message(
+            self.chat.id,
+            text,
+            reply_markup=reply_markup,
+            reply_to_message_id=kwargs.get("reply_to_message_id", self.id),
+            **{k: v for k, v in kwargs.items() if k != "reply_to_message_id"}
+        )
+    
+    if not hasattr(self._client, 'assistant'):
+        if type(reply_markup) == list:
+            reply_markup = ikb(reply_markup)
+        return await self._client.send_message(
+            self.chat.id,
+            text,
+            reply_markup=reply_markup,
+            reply_to_message_id=kwargs.get("reply_to_message_id", self.id),
+            **{k: v for k, v in kwargs.items() if k != "reply_to_message_id"}
+        )
+    
     if type(reply_markup) == types.InlineKeyboardMarkup:
         reply_markup = bki(reply_markup)
     message = await Message.create(text=text, keyboard=reply_markup)
     bot = self._client.assistant
-    inline_results = await self._client.get_inline_bot_results(
-        bot.me.username or bot.me.id, str(message.key)
-    )
-    result = inline_results.results[0]
 
     reply_to = None
     if kwargs.get("reply_to_message_id"):
         reply_to = kwargs.get("reply_to_message_id")
     else:
         reply_to = self.id
+
+    inline_results = await self._client.get_inline_bot_results(
+        bot.me.username or bot.me.id, str(message.key)
+    )
+    result = inline_results.results[0]
 
     return await self._client.send_inline_bot_result(
         self.chat.id,
@@ -74,10 +93,16 @@ async def filter_sudoers_logic(flt, c, u):
 
 
 async def main():
+    original_reply = hydrogram.types.Message.reply
+    
+    async def smart_reply(self, *args, **kwargs):
+        return await reply_text(self, *args, **kwargs)
+    
+    hydrogram.types.Message.reply = smart_reply
     hydrogram.types.CallbackQuery.edit = query_edit
     hydrogram.types.Message.remove_keyboard = remove_keyboard
-    hydrogram.types.Message.reply = reply_text
     hydrogram.types.Message.edit = edit_text
+    
     if not await Config.get_or_none(id="sudoers"):
         await Config.create(id="sudoers", valuej=[])
 
