@@ -1,10 +1,13 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches:
-      - userlixo-rfc
   workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
 
 env:
   REGISTRY: ghcr.io
