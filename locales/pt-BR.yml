@@ -75,8 +75,11 @@ canceled: Cancelado.
 
 #ip.py
 ip_search: "🔎 <code>Consultando...</code>"
+ip_err_format: "Formato inválido"
 ip_err_search: "❌ Erro ao obter dados da API."
+ip_err_nf: "Erro ao obter IP"
 ip_search_loading: "Consultando detalhes..."
+ip_err_data_nf: "Dados não encontrados"
 ip_err_api: "Erro na API ipinfo.io"
 ip_err_no_ip: "Você deve especificar um nome de domínio ou endereço IP. Ex: <code>.ip google.com</code>"
 ip_err_no_ips: "Nenhum endereço IP encontrado para <b>{domain}</b>."
@@ -102,6 +105,17 @@ kibe_emoji: "Escolher emoji padrão do kibe"
 kibe_emoji_choose: "Emoji atual: {emoji}\nEnvie o emoji que deseja usar no kibe ou
   /cancel para cancelar"
 kibe_emoji_set: "Emoji padrão do Kibe definido para {emoji}"
+
+#makeqr.py
+mkqr_generating: "🔄 Gerando QR Code..."
+mkqr_caption_link: "🔗 QR Code do link: `{link}`"
+mkqr_caption_text: "📝 QR Code do texto: `{preview}`"
+mkqr_no_input: "❌ Use: `.mkqr <texto>` ou responda uma mensagem com `.mkqr`"
+mkqr_no_text: "❌ A mensagem respondida não contém texto."
+mkqr_no_links: "❌ Nenhum link encontrado na mensagem."
+mkqr_too_long: "❌ Texto muito longo ({actual} chars). Máximo: {max} caracteres."
+mkqr_error: "❌ Erro: `{error}`"
+mkqr_success: "✅ QR Code gerado com sucesso!"
 
 #mix.py
 not_bot: não funciona com bots.
@@ -130,6 +144,30 @@ ping_invalid_host: "Host inválido"
 ping_network_error: "Erro de rede"
 ping_bot_latency: "Latência: {latency}ms"
 
+#speedtest.py
+speedtest_start: "🚀 Iniciando teste de velocidade..."
+speedtest_testing: "⏳ Testando..."
+speedtest_downloading_image: "🖼️ Baixando imagem dos resultados..."
+speedtest_result: |
+  **📊 Resultado do teste**
+  
+  ⏱️ **Duração:** `{duration}` segundos
+  **⬇️ Download:**
+  `{download_speed}` | `{download_mbps} MB/s`
+  **⬆️ Upload:**
+  `{upload_speed}` | `{upload_mbps} MB/s`
+  **📡 Ping:** `{ping} ms`
+  
+  **🌍 Servidor:** `{server}`
+  **🔌 ISP:** `{isp}`
+  **⭐ Avaliação ISP:** `{isp_rating}`
+speedtest_timeout: "⏰ Timeout: O teste demorou mais de 3 minutos. Sua conexão pode estar muito lenta."
+speedtest_no_internet: "❌ Não foi possível conectar ao speedtest.net. Verifique sua conexão com a internet."
+speedtest_no_servers: "❌ Nenhum servidor de teste compatível encontrado."
+speedtest_error: "❌ Erro durante o teste: `{error}`"
+speedtest_image_fallback: "Não foi possível enviar a imagem, mostrando apenas texto"
+speedtest_invalid_arg: "❌ Argumento inválido. Use:\n`.speedtest` - Imagem\n`.speedtest -t` - Apenas texto\n`.speedtest -f` - Arquivo (documento)"
+
 #upgrade.py
 not_git_repo: "Erro: Você deve estar dentro de um repositório git para atualizá-lo."
 upgrade_in_progress: "Atualizando a source do branch '{branch}'…"
@@ -139,6 +177,36 @@ upgrade_failed: "A atualização do branch '{branch}' falhou (processo encerrado
   {returncode}):\n{decode}"
 updating_requirements: "Atualizando requerimentos…"
 requirements_update_failed: "Atualização dos requerimentos falhou:\n{decode}"
+
+#virustotal.py
+virustotal_config_button: "Configurações do VirusTotal"
+vt_settings_title: "⚙️ Configurações do VirusTotal"
+vt_set_key: "🔑 Definir Chave API"
+vt_remove_key: "🗑️ Remover Chave API"
+vt_has_key: "✅ Você tem uma chave configurada: `{masked}`"
+vt_no_key: "❌ Você não tem uma chave API configurada."
+vt_enter_key_instructions: "📝 Por favor, envie sua chave API do VirusTotal.\n\nObtenha uma em: https://www.virustotal.com/gui/join-us\n\nEnvie `/cancel` para cancelar."
+vt_timeout: "⏰ Tempo esgotado. Operação cancelada."
+vt_validating_key: "🔍 Validando chave API..."
+vt_invalid_key: "❌ Chave API inválida!\n\nVerifique se:\n1. A chave está correta\n2. Sua conta tem créditos disponíveis\n3. A API está ativada em sua conta"
+vt_key_set: "✅ Chave API configurada com sucesso!"
+vt_key_removed: "✅ Chave API removida com sucesso!"
+vt_no_key_to_remove: "ℹ️ Você não tem uma chave API para remover."
+vt_no_api_key: "❌ Você não configurou uma chave API do VirusTotal.\n\nUse o menu de configurações para definir sua chave."
+vt_configure: "⚙️ Configurar Chave"
+vt_no_file: "❌ Envie ou responda a um arquivo para análise.\n\nTipos suportados:\n• Documentos (PDF, EXE, DOC, etc.)\n• Imagens\n• Vídeos\n• Arquivos de áudio"
+vt_downloading: "📥 Baixando arquivo..."
+vt_calculating_hash: "🔢 Calculando hash do arquivo..."
+vt_checking_cache: "🔍 Verificando análises anteriores..."
+vt_uploading: "📤 Enviando para VirusTotal..."
+vt_analyzing: "🧬 Analisando arquivo..."
+vt_file_too_big: "❌ Arquivo muito grande!\n\nMáximo permitido: {max}\nSeu arquivo: {actual}\n\nUse a versão paga do VirusTotal para arquivos maiores."
+vt_download_error: "❌ Erro ao baixar o arquivo."
+vt_upload_error: "❌ Erro ao enviar arquivo para o VirusTotal.\n\nVerifique:\n1. Sua conexão com a internet\n2. Se sua chave API tem créditos\n3. O tamanho do arquivo"
+vt_analysis_error: "❌ Erro durante a análise do arquivo.\n\nTente novamente em alguns instantes."
+vt_still_queued: "⏳ A análise ainda está na fila...\n\nTente novamente em alguns segundos com o mesmo arquivo."
+vt_error: "❌ Erro: `{error}`"
+try_again: "🔄 Tentar Novamente"
 
 #weather.py
 weather_usage: "<b>Uso:</b> <code>.clima cidade</code> - Obtém informações meteorológicas."
@@ -167,11 +235,11 @@ wiki_no_results: Nenhum resultado encontrado para {query}.
 
 #youtube.py
 ytdl_missing_argument: "Está faltando uma URL ou um texto para pesquisa."
-ytdl_search_error: "❌ Erro ao buscar: {clean_err[:500]}"
+ytdl_search_error: "❌ Erro ao buscar: {error}"
 ytdl_audio_button: "💿 Áudio"
 ytdl_video_button: "📹 Vídeo"
 ytdl_video_error: "Erro nos dados."
-ytdl_file_too_big: "O arquivo é muito grande. Máximo suportado: {pretty_size(MAX_FILESIZE)}"
+ytdl_file_too_big: "O arquivo é muito grande. Máximo suportado: {size}"
 ytdl_downloading: "⏳ Baixando…"
 ytdl_send_error: "❌ Ocorreu um erro ao enviar o arquivo: {e}"
 ytdl_sending: "📤 Enviando…"
