@@ -18,7 +18,7 @@ Multipurpose Python userbot for Telegram
 *   To configure the artificial intelligences, you need to download the cookie editor in the browser (for Bing to work it needs to be Edge) and open the sites: https://bing.com/chat, and https://gemini.google.com/app. Using the cookie editor, export to JSON and save in the files `cookies.json` and `bard_cookies.json` respectively.
 
 ## Ytdl command
-*   To configure the ytdl, you need to download an Netscape compatible cookie editor in the browser and open the youtube site. Using the cookie editor, export to TXT and save in the file `ytdl-cookies.txt`.
+*   To configure the ytdl, you need to download an Netscape compatible cookie editor in the browser and open the youtube site. Using the cookie editor, export to TXT and save in the file `ytdl-cookies.txt` inside the data folder (Note: if this is your first time running it, you can either create the `data` folder manually or start the bot and it will create the folder).
 
 ## Setup (local execution)
 
@@ -27,7 +27,8 @@ Multipurpose Python userbot for Telegram
 *   Go to https://my.telegram.org/apps, create a new app and save its api_id and api_hash
 *   Edit ``.env`` file and fill in the data
 *   If you have userlixo-rfc 1.0, run the ```convert.py``` to convert the database.
-*   Run `python3 bot.py` and login user and bot.
+*   Run `python3 setup_sessions.py` and login user and bot.
+*   Run `python3 bot.py` to start the bot.
 
 ## Running (local execution)
 
