@@ -74,8 +74,11 @@ canceled: Canceled.
 
 # ip.py
 ip_search: "🔎 Consulting..."
+ip_err_format: "Invalid format"
 ip_err_search: "❌ Error retrieving data from the API."
+ip_err_nf: "Failed to obtain IP address"
 ip_search_loading: "Consulting details..."
+ip_err_data_nf: "Data not found"
 ip_err_api: "Error in the ipinfo.io API."
 ip_err_no_ip: "You must specify a domain name or IP address. Ex: <code>.ip google.com</code>"
 ip_err_no_ips: "No IP addresses found for <b>{domain}</b>."
@@ -102,6 +105,17 @@ kibe_emoji_choose: "Current emoji: {emoji}\nSend the emoji you want to use in ki
   or /cancel to cancel"
 kibe_emoji_set: "Kibe emoji set to {emoji}"
 
+# makeqr.py
+mkqr_generating: "🔄 Generating QR Code..."
+mkqr_caption_link: "🔗 QR Code for link: `{link}`"
+mkqr_caption_text: "📝 QR Code for text: `{preview}`"
+mkqr_no_input: "❌ Usage: `.mkqr <text>` or reply to a message with `.mkqr`"
+mkqr_no_text: "❌ The replied message has no text."
+mkqr_no_links: "❌ No links found in the message."
+mkqr_too_long: "❌ Text too long ({actual} chars). Maximum: {max} characters."
+mkqr_error: "❌ Error: `{error}`"
+mkqr_success: "✅ QR Code generated successfully!"
+
 # mix.py
 not_bot: does not work with bots.
 no_data: This person has disabled his last seen.
@@ -115,7 +129,7 @@ minutes: "**{minutes}** minutes\n"
 seconds: "**{seconds}** seconds\n"
 deleted: This user no longer exists.
 
-#ping.py
+# ping.py
 ping_start: "Pinging {host}..."
 ping_success: "Ping to {host}"
 ping_stats: "Statistics"
@@ -129,6 +143,30 @@ ping_invalid_host: "Invalid host"
 ping_network_error: "Network error"
 ping_bot_latency: "Latency: {latency}ms"
 
+# speedtest.py  
+speedtest_start: "🚀 Starting speed test..."
+speedtest_testing: "⏳ Testing..."
+speedtest_downloading_image: "🖼️ Downloading results image..."
+speedtest_result: |
+  **📊 Speedtest results**
+  
+  ⏱️ **Duration:** `{duration}` seconds
+  **⬇️ Download:**
+  `{download_speed}` | `{download_mbps} MB/s`
+  **⬆️ Upload:**
+  `{upload_speed}` | `{upload_mbps} MB/s`
+  **📡 Ping:** `{ping} ms`
+  
+  **🌍 Server:** `{server}`
+  **🔌 ISP:** `{isp}`
+  **⭐ ISP Rating:** `{isp_rating}`
+speedtest_timeout: "⏰ Timeout: Test took longer than 3 minutes. Your connection might be very slow."
+speedtest_no_internet: "❌ Could not connect to speedtest.net. Check your internet connection."
+speedtest_no_servers: "❌ No compatible test servers found."
+speedtest_error: "❌ Error during test: `{error}`"
+speedtest_image_fallback: "Could not send image, showing text only"
+speedtest_invalid_arg: "❌ Invalid argument. Use:\n`.speedtest` - Image\n`.speedtest -t` - Text only\n`.speedtest -f` - File (document)"
+
 # upgrade.py
 not_git_repo: "Error: You must be inside a git repository to upgrade."
 upgrade_in_progress: "Upgrading source from branch '{branch}'…"
@@ -138,6 +176,36 @@ upgrade_failed: "Upgrade from branch '{branch}' failed (process exited with {ret
   {decode}"
 updating_requirements: "Updating requirements…"
 requirements_update_failed: "Requirements update failed:\n{decode}"
+
+# virustotal.py
+virustotal_config_button: "VirusTotal settings"
+vt_settings_title: "⚙️ VirusTotal Settings"
+vt_set_key: "🔑 Set API Key"
+vt_remove_key: "🗑️ Remove API Key"
+vt_has_key: "✅ You have a key configured: `{masked}`"
+vt_no_key: "❌ You don't have an API key configured."
+vt_enter_key_instructions: "📝 Please send your VirusTotal API key.\n\nGet one at: https://www.virustotal.com/gui/join-us\n\nSend `/cancel` to cancel."
+vt_timeout: "⏰ Timeout. Operation cancelled."
+vt_validating_key: "🔍 Validating API key..."
+vt_invalid_key: "❌ Invalid API key!\n\nCheck if:\n1. The key is correct\n2. Your account has available credits\n3. API is enabled in your account"
+vt_key_set: "✅ API key set successfully!"
+vt_key_removed: "✅ API key removed successfully!"
+vt_no_key_to_remove: "ℹ️ You don't have an API key to remove."
+vt_no_api_key: "❌ You haven't set a VirusTotal API key.\n\nUse the settings menu to configure your key."
+vt_configure: "⚙️ Configure Key"
+vt_no_file: "❌ Send or reply to a file for analysis.\n\nSupported types:\n• Documents (PDF, EXE, DOC, etc.)\n• Images\n• Videos\n• Audio files"
+vt_downloading: "📥 Downloading file..."
+vt_calculating_hash: "🔢 Calculating file hash..."
+vt_checking_cache: "🔍 Checking previous analyses..."
+vt_uploading: "📤 Uploading to VirusTotal..."
+vt_analyzing: "🧬 Analyzing file..."
+vt_file_too_big: "❌ File too large!\n\nMaximum allowed: {max}\nYour file: {actual}\n\nUse VirusTotal paid version for larger files."
+vt_download_error: "❌ Error downloading file."
+vt_upload_error: "❌ Error uploading file to VirusTotal.\n\nCheck:\n1. Your internet connection\n2. If your API key has credits\n3. File size"
+vt_analysis_error: "❌ Error during file analysis.\n\nTry again in a few moments."
+vt_still_queued: "⏳ Analysis still queued...\n\nTry again in a few seconds with the same file."
+vt_error: "❌ Error: `{error}`"
+try_again: "🔄 Try Again"
 
 # weather.py
 weather_usage: "<b>Usage:</b> <code>.weather city</code> - Gets meteorological information."
@@ -166,11 +234,11 @@ wiki_no_results: No results found for {query}.
 
 # youtube.py
 ytdl_missing_argument: "Missing argument: URL or search query."
-ytdl_search_error: "❌ Error searching: {clean_err[:500]}"
+ytdl_search_error: "❌ Error searching: {error}"
 ytdl_audio_button: "💿 Audio"
 ytdl_video_button: "📹 Video"
 ytdl_video_error: "Data error."
-ytdl_file_too_big: "The file is too big. Max supported: {pretty_size(MAX_FILESIZE)}"
+ytdl_file_too_big: "The file is too big. Max supported: {size}"
 ytdl_downloading: "⏳ Downloading…"
 ytdl_sending: "📤 Sending…"
 ytdl_send_error: "❌ An error occurred while sending the file: {e}"
