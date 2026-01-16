@@ -1,9 +1,11 @@
 import os
+from datetime import datetime
+from pathlib import Path
 
 from tortoise import Tortoise, connections, fields
 from tortoise.backends.base.client import Capabilities
 from tortoise.models import Model
-from pathlib import Path
+
 
 class Message(Model):
     key = fields.IntField(pk=True)
@@ -15,6 +17,16 @@ class Config(Model):
     id = fields.CharField(max_length=255, pk=True)
     value = fields.CharField(max_length=255, default="")
     valuej = fields.JSONField(default={})
+
+
+class VirusTotalKey(Model):
+    id = fields.IntField(pk=True)  
+    api_key = fields.CharField(max_length=64)  
+    created_at = fields.DatetimeField(auto_now_add=True)
+    updated_at = fields.DatetimeField(auto_now=True)
+    
+    class Meta:
+        table = "virustotal_keys"
 
 
 class Personal(Model):
