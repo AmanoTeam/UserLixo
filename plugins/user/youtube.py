@@ -16,7 +16,10 @@ from locales import use_lang
 from utils import aiowrap, http, pretty_size
 
 # --- CONFIGURAÇÃO ---
-COOKIES_FILE = "ytdl-cookies.txt"
+# Agora os cookies ficam na pasta data/
+DATA_DIR = Path("data")
+DATA_DIR.mkdir(exist_ok=True)  # Cria a pasta se não existir
+COOKIES_FILE = DATA_DIR / "ytdl-cookies.txt"
 MAX_FILESIZE = 2000 * 1024 * 1024  # 2GB
 
 YOUTUBE_REGEX = re.compile(
@@ -47,8 +50,10 @@ async def ytdlcmd(c: Client, m: Message, strings):
         "quiet": True,
         "no_warnings": True,
     }
-    if os.path.exists(COOKIES_FILE):
-        ydl_opts["cookiefile"] = COOKIES_FILE
+    # Verifica se o arquivo de cookies existe na pasta data/
+    if COOKIES_FILE.exists():
+        ydl_opts["cookiefile"] = str(COOKIES_FILE)
+        print(f"[YTDL] Usando cookies de: {COOKIES_FILE}")
 
     ydl = YoutubeDL(ydl_opts)
     match = YOUTUBE_REGEX.match(url)
@@ -106,7 +111,8 @@ async def ytdlcmd(c: Client, m: Message, strings):
 async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
     try:
         data, fsize, temp, cid, userid, mid = cq.data.split("|")
-    except: return await cq.answer(strings("ytdl_missing_argument"))
+    except: 
+        return await cq.answer(strings("ytdl_missing_argument"))
 
     if fsize and int(fsize) > MAX_FILESIZE:
         return await cq.answer(strings("ytdl_file_too_big").format(size=pretty_size(MAX_FILESIZE)), show_alert=True) 
@@ -124,8 +130,10 @@ async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
             "quiet": True,
             "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         }
-        if os.path.exists(COOKIES_FILE):
-            opts["cookiefile"] = COOKIES_FILE
+        # Verifica se o arquivo de cookies existe na pasta data/
+        if COOKIES_FILE.exists():
+            opts["cookiefile"] = str(COOKIES_FILE)
+            print(f"[YTDL-DOWNLOAD] Usando cookies de: {COOKIES_FILE}")
 
         # --- SELETORES DE FORMATO CORRIGIDOS ---
         if "vid" in data:
@@ -184,4 +192,4 @@ async def cli_ytdl(c: Client, cq: CallbackQuery, strings):
         except Exception as e:
             await cq.edit_message_text(strings("ytdl_send_error").format(e=e))
         else:
-            await cq.edit_message_text(strings("ytdl_sent")) 
+            await cq.edit_message_text(strings("ytdl_sent"))
