@@ -34,6 +34,7 @@ services:
     tty: true
     stdin_open: true
     environment:
+      # Change to your timezone
       - TZ=America/Sao_Paulo
     depends_on:
       setup:
