@@ -33,6 +33,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     tty: true
     stdin_open: true
+    environment:
+      - TZ=America/Sao_Paulo
     depends_on:
       setup:
         condition: service_completed_successfully
