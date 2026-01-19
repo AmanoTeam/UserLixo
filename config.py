@@ -4,7 +4,7 @@ from hydrogram import Client
 plugins = []
 
 # Sessions directory (absolute path for Docker)
-SESSIONS_DIR = "/app/sessions"
+SESSIONS_DIR = "/app/data/sessions"
 
 try:
     # API_ID is an integer
