@@ -10,3 +10,4 @@ db.json
 .env
 ytdl-cookies.txt
 unknown_errors.txt
+data/
