@@ -131,18 +131,30 @@ seconds: "**{seconds}** segundos\n"
 deleted: Esse usuário não existe mais.
 
 #ping.py
-ping_start: "Pingando {host}..."
-ping_success: "Ping para {host}"
-ping_stats: "Estatísticas"
-ping_min: "Mínima"
-ping_avg: "Média"
-ping_max: "Máxima"
-ping_unreachable: "Host não alcançável"
-ping_timeout: "Timeout - sem resposta"
-ping_error: "Erro ao pingar"
-ping_invalid_host: "Host inválido"
-ping_network_error: "Erro de rede"
-ping_bot_latency: "Latência: {latency}ms"
+ping_start: "🔄 Pingando `{host}`..."
+ping_bot_latency: "Pong! `{latency}ms`"
+ping_invalid_host: "❌ Host inválido: `{host}`"
+ping_response: |
+  **📡 Ping: {host}**
+  IP: `{ip}`
+  Pacotes: {received}/{sent} (perda: {loss}%)
+
+  **Latência:**
+ping_min: "• Mínima: `{min}ms`"
+ping_avg: "• Média: `{avg}ms`"
+ping_max: "• Máxima: `{max}ms`"
+ping_status: "\n**Status:** {status}"
+ping_status_excellent: "✅ Excelente"
+ping_status_good: "✅ Boa"
+ping_status_regular: "⚠️ Regular (latência alta)"
+ping_status_bad: "⚠️ Ruim (perda moderada)"
+ping_status_terrible: "❌ Péssima (alta perda)"
+ping_fail: |
+  **❌ Falha ao pingar**
+  Host: `{host}`
+  IP: `{ip}`
+  Erro: {error}
+ping_unexpected_error: "**💥 Erro inesperado**\n\n```\n{error}\n```"
 
 #speedtest.py
 speedtest_start: "🚀 Iniciando teste de velocidade..."
