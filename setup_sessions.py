@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Sessions directory (absolute path)
-SESSIONS_DIR = Path("/app/sessions")
+SESSIONS_DIR = Path("/app/data/sessions")
 SESSIONS_DIR.mkdir(parents=True, exist_ok=True)
 
 try:
