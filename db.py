@@ -60,7 +60,7 @@ class Fake(Model):
 
 
 async def connect_database():
-    data_path = Path("data")
+    data_path = Path("data/database")
     data_path.mkdir(exist_ok=True)
     database_url = os.getenv("DATABASE_URL", f"sqlite://{data_path}/database.sqlite")
     await Tortoise.init(
