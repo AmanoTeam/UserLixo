@@ -1,0 +1,40 @@
+services:
+  # Service to create sessions (run once)
+  setup:
+    image: ghcr.io/erysthon/userlixo:latest
+    # For local build, comment the line above and uncomment below:
+    # build: .
+    container_name: userlixo-setup
+    env_file:
+      - .env
+    volumes:
+      - ./data/sessions:/app/data/sessions
+    command: python setup_sessions.py
+    tty: true
+    stdin_open: true
+    profiles:
+      - setup
+
+  # Main bot (run after setup)
+  userlixo:
+    image: ghcr.io/erysthon/userlixo:latest
+    # For local build, comment the line above and uncomment below:
+    # build: .
+    container_name: userlixo-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Database, sessions, cookies, etc 
+      - ./data:/app/data
+      # Docker Daemon Acess (DIND)
+      - /var/run/docker.sock:/var/run/docker.sock
+    tty: true
+    stdin_open: true
+    environment:
+      # Change to your timezone
+      - TZ=America/Sao_Paulo
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+        required: false

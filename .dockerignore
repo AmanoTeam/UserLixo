@@ -1,0 +1,24 @@
+# Ignora versionamento git
+.git
+.gitignore
+
+# Ignora ambientes virtuais locais (o Docker terá o próprio)
+venv
+.venv
+env
+
+# Ignora cache do Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignora arquivos de sistema operacional temporários
+.DS_Store
+Thumbs.db
+
+# Ignora arquivos desnecessários
+config.py.example
+LICENSE
+readme.md
+unknown_errors.txt

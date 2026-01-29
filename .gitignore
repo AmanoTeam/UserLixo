@@ -2,9 +2,12 @@ __pycache__/
 bard_coockies.json
 database.sqlite*
 *.session*
-config.py
 downloads/
 cookies.json
 venv/
 .venv/
 db.json
+.env
+ytdl-cookies.txt
+unknown_errors.txt
+data/

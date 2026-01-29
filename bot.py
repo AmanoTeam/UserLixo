@@ -1,8 +1,11 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 from hydrogram import idle
 from tortoise import run_async
+import asyncio
 
 import db
 import reload
@@ -73,4 +76,4 @@ async def main():
 
 
 # Run the main function asynchronously
-run_async(main())
+asyncio.run(main())

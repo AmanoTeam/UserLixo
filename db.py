@@ -1,7 +1,6 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2018-2022 Amano Team
-
 import os
+from datetime import datetime
+from pathlib import Path
 
 from tortoise import Tortoise, connections, fields
 from tortoise.backends.base.client import Capabilities
@@ -18,6 +17,16 @@ class Config(Model):
     id = fields.CharField(max_length=255, pk=True)
     value = fields.CharField(max_length=255, default="")
     valuej = fields.JSONField(default={})
+
+
+class VirusTotalKey(Model):
+    id = fields.IntField(pk=True)  
+    api_key = fields.CharField(max_length=64)  
+    created_at = fields.DatetimeField(auto_now_add=True)
+    updated_at = fields.DatetimeField(auto_now=True)
+    
+    class Meta:
+        table = "virustotal_keys"
 
 
 class Personal(Model):
@@ -51,10 +60,13 @@ class Fake(Model):
 
 
 async def connect_database():
+    data_path = Path("data/database")
+    data_path.mkdir(exist_ok=True)
+    database_url = os.getenv("DATABASE_URL", f"sqlite://{data_path}/database.sqlite")
     await Tortoise.init(
         {
             "connections": {
-                "bot_db": os.getenv("DATABASE_URL", "sqlite://database.sqlite")
+                "bot_db": database_url
             },
             "apps": {"bot": {"models": [__name__], "default_connection": "bot_db"}},
         }

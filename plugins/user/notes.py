@@ -88,3 +88,18 @@ async def onsharp(c: Client, m: Message):
                     m.reply_to_message.id if m.reply_to_message else None
                 ),
             )
+
+@Client.on_message(filters.command("rnote", prefixes=".") & filters.sudoers)
+async def delete_note(c: Client, m: Message):
+    parts = m.text.split(" ", 1)
+    if len(parts) == 1:  # Usuário não forneceu a chave da nota
+        return await m.edit("Please specify the note key to delete.")
+    
+    note_key = parts[1]
+    note_to_delete = await Notes.get_or_none(name=note_key)
+
+    if note_to_delete:  # Nota encontrada
+        await note_to_delete.delete()  # Deleta a nota
+        await m.edit(f"Note {note_key} has been deleted.")
+    else:  # Nota não encontrada
+        await m.edit("Note not found.")
