@@ -55,8 +55,8 @@ not_git_repo: "Eraro: Vi devas esti ene de git-deponejo por ĝisdatigi."
 upgrade_in_progress: "Ĝisdatigante fonton de branĉo '{branch}'…"
 already_up_to_date: "Estas nenio por ĝisdatigi de branĉo '{branch}'."
 restarting: "Rekomencante…"
-upgrade_failed: "Ĝisdatigo de branĉo '{branch}' malsukcesis (procezo eliris kun {returncode}):\n
-  {decode}"
+upgrade_failed: "Ĝisdatigo de branĉo '{branch}' malsukcesis (procezo eliris kun {returncode}):\n\
+  \ {decode}"
 updating_requirements: "Ĝisdatigante postulojn…"
 ytdl_missing_argument: "Mankas argumento: URL aŭ salamandredoj."
 ytdl_audio_button: "💿 Aŭdio"
@@ -93,3 +93,20 @@ plugins_settings: 'Elektu unu kromaĵon por agordi:'
 kibe_emoji_set: Kibe-emoji agordita al {emoji}
 ai_mode_choose: 'Elektu unu el la opcioj:'
 ai_mode_creative: Kreema
+bard_settings: Agordoj de GeminiAI
+bard_ai_mode: ŝanĝi GeminiAI-stilon
+ai_error: "Eraro okazis dum generado:\n<blockquote>{error}</blockquote>"
+tone_config: Agordoj de tono
+ai_mode_telegraph: Sendu rezulton kiel Telegrapho
+ai_mode_message: Sendu rezulton kiel mesaĝon
+ai_mode_voice: Sendu rezulton kiel voĉmesaĝon kaj per Telegraph
+professional: Profesia
+casual: Neformala
+polite: Ĝentila
+funny: Amuza
+witty: Sprita
+quest: Demando pri uzo
+ai_making_text: "<blockquote>{teksto}</blockquote>\nGenerante tekston kun tono {tono}…"
+social+post: Socia afiŝo
+bard_config_button: Agordoj de GeminiAI
+chose_tone: 'Elektu la tonon de la generota teksto:'

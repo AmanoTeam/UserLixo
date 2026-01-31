@@ -95,10 +95,11 @@ ytdl_sent: Envoyé avec succès.
 kibe_config_button: Paramètres de Kibe
 ai_mode_choose: "Choisissez l'une des options :"
 ai_mode_creative: Créatif
-chose_tone: 'Sélectionnez le ton du texte à générer:'
-ai_error: "Une erreur s'est produite lors de la génération:\nJe ne peux pas le faire."
+chose_tone: 'Sélectionnez le ton du texte à générer :'
+ai_error: "Une erreur s'est produite lors de la génération :\n<blockquote>{erreur}</blockquote>"
 tone_config: Paramètres de la tonalité
-ai_making_text: "Je ne peux pas le faire.\nGénération de texte avec ton {ton}…"
+ai_making_text: "<blockquote>{texte}</blockquote>\nGénération d'un texte avec ton
+  {tone}…"
 bard_config_button: Paramètres de GeminiAI
 bard_settings: Paramètres de GeminiAI
 bard_ai_mode: modifier le style GeminiAI
@@ -111,3 +112,4 @@ polite: Poli(e)
 funny: j'aime lire des livres comiques
 social+post: Publication sociale
 witty: Plein d'esprit***
+ai_mode_voice: Envoyer le résultat sous forme de message vocal et de télégraphe
